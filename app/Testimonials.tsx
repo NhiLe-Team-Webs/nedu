@@ -46,8 +46,8 @@ const Testimonials = () => {
         </div>
 
         <div className="flex justify-center mt-8">
-          <Button asChild>
-            <a href="/program/" className="inline-flex items-center bg-amber-400 hover:bg-amber-500 text-white px-6 py-3 rounded-full font-semibold">
+          <Button className="bg-amber-400 hover:bg-amber-500 text-white">
+            <a href="/program/" className="inline-flex items-center">
               Đăng ký ngay
               <svg className="ml-3 w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />

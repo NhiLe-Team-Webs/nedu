@@ -1,15 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
+import { Menu, ShoppingCart } from "lucide-react";
 import { useState } from "react";
+import { useCart } from "@/lib/cart-context";
 
 const Header = () => {
   const pathname = usePathname() || "/";
+  const router = useRouter();
   const isActive = (path: string) => pathname === path;
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { getTotalItems } = useCart();
+  const totalItems = getTotalItems();
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm flex justify-center">
@@ -61,7 +65,20 @@ const Header = () => {
 
         {/* right column: actions aligned to the end */}
         <div className="flex items-center justify-end gap-4">
-          <Button className="hidden md:inline-flex bg-amber-400 hover:bg-amber-500 text-white rounded-full px-6 py-2" size="lg">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="hidden md:inline-flex text-text-secondary hover:text-primary relative"
+            onClick={() => router.push('/cart')}
+          >
+            <ShoppingCart className="h-6 w-6" />
+            {totalItems > 0 && (
+              <span className="absolute -top-1 -right-1 bg-warning text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
+                {totalItems}
+              </span>
+            )}
+          </Button>
+          <Button className="btn-primary hidden md:inline-flex">
             ĐĂNG KÝ NGAY
           </Button>
           <Button
@@ -109,9 +126,24 @@ const Header = () => {
             >
               LIÊN HỆ
             </a>
-            <Button className="bg-amber-400 hover:bg-amber-500 text-white rounded-full px-6 py-2 text-center">
-              ĐĂNG KÝ NGAY
-            </Button>
+            <div className="flex items-center gap-3">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-text-secondary hover:text-primary relative"
+                onClick={() => router.push('/cart')}
+              >
+                <ShoppingCart className="h-6 w-6" />
+                {totalItems > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-warning text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
+                    {totalItems}
+                  </span>
+                )}
+              </Button>
+              <Button className="btn-primary">
+                ĐĂNG KÝ NGAY
+              </Button>
+            </div>
           </div>
         </nav>
       )}
