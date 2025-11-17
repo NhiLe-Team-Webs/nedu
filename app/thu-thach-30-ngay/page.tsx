@@ -23,7 +23,8 @@ const BORDER_SOFT = "#E5E7EB";
 const ThirtyDayPage = () => {
   return (
     <>
-      {/* Các class custom từ bản HTML gốc */}
+
+
       <style jsx global>{`
         .btn-primary {
           background-color: ${CTA_YELLOW};
@@ -128,7 +129,7 @@ const ThirtyDayPage = () => {
           backgroundColor: "#ffffff",
         }}
       >
-        {/* FLOATING CONTACT BUTTONS */}
+
         <div className="floating-buttons">
           <a href="#hero" className="floating-btn" title="Lên đầu trang">
             <ChevronsRight className="w-7 h-7" />
@@ -148,7 +149,7 @@ const ThirtyDayPage = () => {
           </a>
         </div>
 
-        {/* HEADER */}
+
         <header className="bg-white shadow-sm sticky top-0 z-40">
           <div className="max-w-6xl mx-auto px-6">
             <nav className="flex items-center justify-between py-3 text-xs md:text-sm font-medium">
@@ -202,7 +203,7 @@ const ThirtyDayPage = () => {
         </header>
 
         <main>
-          {/* HERO */}
+
           <section id="hero" className="pt-10 md:pt-14 pb-10 text-center">
             <div className="max-w-5xl mx-auto px-6">
               <h1
@@ -235,7 +236,7 @@ const ThirtyDayPage = () => {
                 </a>
               </div>
 
-              {/* Logo N-Education (phần 1 phóng to) */}
+
               <div className="mt-4 flex justify-center">
                 <Image
                   src={neduLogo}
@@ -244,7 +245,7 @@ const ThirtyDayPage = () => {
                 />
               </div>
 
-              {/* Banner 30 ngày */}
+
               <div className="mt-10 hero-banner-gradient rounded-[40px] shadow-[0_22px_60px_rgba(0,0,0,0.08)] px-8 py-10 flex items-center justify-center">
                 <div className="flex flex-col items-center gap-4">
                   <Image
@@ -256,14 +257,14 @@ const ThirtyDayPage = () => {
                     className="text-sm md:text-base font-medium"
                     style={{ color: DARK_GRAY }}
                   >
-                    Thử Thách 30 Ngày
+
                   </p>
                 </div>
               </div>
             </div>
           </section>
 
-          {/* INTRO TEXT */}
+
           <section id="about" className="pb-14">
             <div
               className="max-w-4xl mx-auto px-6 text-[13px] md:text-[14px] leading-relaxed"
@@ -281,7 +282,7 @@ const ThirtyDayPage = () => {
             </div>
           </section>
 
-          {/* 30 NGÀY CÓ GÌ */}
+
           <section className="pb-18 pb-16">
             <div className="max-w-6xl mx-auto px-6">
               <h2 className="section-title mb-10">30 NGÀY CÓ GÌ?</h2>
@@ -339,7 +340,7 @@ const ThirtyDayPage = () => {
             </div>
           </section>
 
-          {/* GIẢNG VIÊN / NGƯỜI DẪN ĐƯỜNG */}
+
           <section
             id="mentor"
             className="relative py-20"
@@ -419,7 +420,7 @@ const ThirtyDayPage = () => {
             </div>
           </section>
 
-          {/* THÔNG TIN THỬ THÁCH */}
+
           <section id="course-info" className="py-18 pb-16 bg-white">
             <div className="max-w-6xl mx-auto px-6">
               <h2 className="section-title mb-10">THÔNG TIN THỬ THÁCH</h2>
@@ -466,8 +467,8 @@ const ThirtyDayPage = () => {
               </div>
             </div>
           </section>
-
-          {/* ĐƠN VỊ TỔ CHỨC & VẬN HÀNH */}
+ 
+ 
           <section className="py-14 bg-white">
             <div className="max-w-6xl mx-auto px-6 text-center">
               <h2 className="section-title mb-10">
