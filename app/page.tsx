@@ -2,6 +2,12 @@
 
 import YouTube from 'react-youtube'
 import Link from 'next/link'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation, Pagination, Autoplay } from 'swiper/modules'
+import { courses } from '@/data/courses'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
 
 export default function Home() {
   const youtubeOpts = {
@@ -129,53 +135,63 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Courses Grid */}
+      {/* Courses Carousel */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 shadow-lg">
-              <h3 className="text-2xl font-bold mb-2">Find your x-factor preview</h3>
-              <p className="text-sm text-primary font-semibold mb-4">#marketing</p>
-              <p className="text-gray-700 mb-4">
-                Kiến thức thực tế và cơ bản về marketing cho doanh nghiệp. Làm sao để khách hàng nhìn thấy sản phẩm và quyết định mua sản phẩm của bạn một cách tự nhiên.
-              </p>
-              <button className="bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-full font-semibold transition">
-                Đăng ký ngay
-              </button>
-            </div>
-
-            <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-6 shadow-lg">
-              <h3 className="text-2xl font-bold mb-2">Sức mạnh vô hạn</h3>
-              <p className="text-sm text-primary font-semibold mb-4">#doanh nhân #doanh nghiệp</p>
-              <p className="text-gray-700 mb-4">
-                Chương trình học 6 tháng liên tục cùng những Bậc thầy quốc tế, đặt nền móng vững chãi cho sự bắt đầu của những doanh nhân thực thụ.
-              </p>
-              <Link href="/program-offline/suc-manh-vo-han" className="inline-block bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-full font-semibold transition">
-                Đăng ký ngay
-              </Link>
-            </div>
-
-            <div className="bg-gradient-to-br from-pink-50 to-pink-100 rounded-xl p-6 shadow-lg">
-              <h3 className="text-2xl font-bold mb-2">Là chính mình</h3>
-              <p className="text-sm text-primary font-semibold mb-4">#phát triển bản thân #là chính mình</p>
-              <p className="text-gray-700 mb-4">
-                Ba ngày học trực tiếp với những Người dẫn đường Quốc tế, nơi nhìn rõ cảm xúc của chính bạn và khai mở những khúc mắc - thứ cản bước bạn sống một cuộc đời đáng sống.
-              </p>
-              <Link href="/program-offline/la-chinh-minh" className="inline-block bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-full font-semibold transition">
-                Đăng ký ngay
-              </Link>
-            </div>
-
-            <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 shadow-lg">
-              <h3 className="text-2xl font-bold mb-2">FINd your x-factor</h3>
-              <p className="text-sm text-primary font-semibold mb-4">#marketing</p>
-              <p className="text-gray-700 mb-4">
-                Kiến thức marketing chính thống từ Người dẫn đường Melvin Soh. Cách bước cụ thể để khách hàng tiềm năng nhìn thấy và chọn mua sản phẩm từ bạn.
-              </p>
-              <Link href="/program-online/x-factor" className="inline-block bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-full font-semibold transition">
-                Đăng ký ngay
-              </Link>
-            </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-800">
+            Khóa học <span className="text-primary">nổi bật</span>
+          </h2>
+          <div className="max-w-6xl mx-auto">
+            <Swiper
+              modules={[Navigation, Pagination, Autoplay]}
+              spaceBetween={30}
+              slidesPerView={1}
+              navigation
+              pagination={{ clickable: true }}
+              autoplay={{ delay: 5000, disableOnInteraction: false }}
+              breakpoints={{
+                640: { slidesPerView: 1 },
+                768: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 }
+              }}
+              className="courses-swiper pb-12"
+            >
+              {courses.map((course) => (
+                <SwiperSlide key={course.id}>
+                  <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow h-full flex flex-col">
+                    <div className="mb-4">
+                      <img 
+                        src={course.heroImage} 
+                        alt={course.title} 
+                        className="w-full h-48 object-cover rounded-lg"
+                      />
+                    </div>
+                    <h3 className="text-xl font-bold mb-2 line-clamp-2">{course.title}</h3>
+                    <div className="mb-3">
+                      {course.category.map((cat, index) => (
+                        <span key={index} className="inline-block text-xs text-primary font-semibold mr-2">
+                          #{cat}
+                        </span>
+                      ))}
+                    </div>
+                    <p className="text-gray-700 mb-4 text-sm line-clamp-3 flex-grow">
+                      {course.mission}
+                    </p>
+                    <div className="mb-4">
+                      <p className="text-sm text-gray-600">
+                        Chi phí: <span className="text-lg font-bold text-green-600">{course.price.amount} {course.price.currency}</span>
+                      </p>
+                    </div>
+                    <Link 
+                      href={`/program-${course.mode}/${course.slug}`} 
+                      className="inline-block bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-full font-semibold transition text-center"
+                    >
+                      Tìm hiểu thêm
+                    </Link>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </div>
         </div>
       </section>
