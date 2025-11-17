@@ -1,79 +1,122 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import { useState } from 'react'
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Menu } from "lucide-react";
+import { useState } from "react";
 
-export default function Header() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+const Header = () => {
+  const pathname = usePathname() || "/";
+  const isActive = (path: string) => pathname === path;
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-50">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex-shrink-0">
-            <img src="https://nedu.nhi.sg/images/logo-mobile.svg" alt="N-Edu Logo" className="h-8" />
+    <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm flex justify-center">
+      <div className="w-full max-w-[1280px] flex justify-between gap-4 px-12 items-center h-20 bg-white/95 shadow-lg">
+        {/* center column: nav centered by grid */}
+        <nav className="hidden md:flex justify-between items-center gap-12 w-full font-semibold">
+          <Link
+            href="/"
+            className={
+              isActive("/")
+                ? "text-amber-400 font-semibold uppercase tracking-wide"
+                : "text-gray-600 hover:text-amber-400 uppercase tracking-wide"
+            }
+          >
+            TRANG CHỦ
           </Link>
 
-          <nav className="hidden md:flex items-center space-x-8">
-            <Link href="/" className="text-gray-700 hover:text-primary font-medium uppercase text-sm">
-              TRANG CHỦ
-            </Link>
-            <a href="https://www.nhi.sg/" className="text-gray-700 hover:text-primary font-medium uppercase text-sm" target="_blank" rel="noopener noreferrer">
-              VỀ CHÚNG TÔI
-            </a>
-            <Link href="/program" className="text-gray-700 hover:text-primary font-medium uppercase text-sm">
-              KHÓA HỌC
-            </Link>
-            <Link href="/thu-thach-30-ngay" className="text-gray-700 hover:text-primary font-medium uppercase text-sm">
-              THỬ THÁCH 30N
-            </Link>
-            <Link href="/contact" className="text-gray-700 hover:text-primary font-medium uppercase text-sm">
-              LIÊN HỆ
-            </Link>
-            <Link href="/program" className="bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-full font-medium uppercase text-sm transition">
-              ĐĂNG KÝ NGAY
-            </Link>
-          </nav>
+          <a href="#about" className="text-gray-600 hover:text-amber-400 uppercase tracking-wide">
+            VỀ CHÚNG TÔI
+          </a>
 
-          <button
-            className="md:hidden p-2"
+          <Link
+            href="/program"
+            className={
+              isActive("/program")
+                ? "text-amber-400 font-semibold uppercase tracking-wide"
+                : "text-gray-600 hover:text-amber-400 uppercase tracking-wide"
+            }
+          >
+            KHÓA HỌC
+          </Link>
+
+          <a href="/thu-thach-30-ngay" className={
+              isActive("/thu-thach-30-ngay")
+                ? "text-amber-400 font-semibold uppercase tracking-wide"
+                : "text-gray-600 hover:text-amber-400 uppercase tracking-wide"
+            }>
+            THỬ THÁCH 30N
+          </a>
+
+          <a href="/contact" className={
+              isActive("/contact")
+                ? "text-amber-400 font-semibold uppercase tracking-wide"
+                : "text-gray-600 hover:text-amber-400 uppercase tracking-wide"
+            }>
+            LIÊN HỆ
+          </a>
+        </nav>
+
+        {/* right column: actions aligned to the end */}
+        <div className="flex items-center justify-end gap-4">
+          <Button className="hidden md:inline-flex bg-amber-400 hover:bg-amber-500 text-white rounded-full px-6 py-2" size="lg">
+            ĐĂNG KÝ NGAY
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              {isMobileMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </button>
+            <Menu className="h-6 w-6" />
+          </Button>
         </div>
-
-        {isMobileMenuOpen && (
-          <nav className="md:hidden py-4 border-t">
-            <div className="flex flex-col space-y-4">
-              <Link href="/" className="text-gray-700 hover:text-primary font-medium uppercase text-sm">
-                TRANG CHỦ
-              </Link>
-              <a href="https://www.nhi.sg/" className="text-gray-700 hover:text-primary font-medium uppercase text-sm" target="_blank" rel="noopener noreferrer">
-                VỀ CHÚNG TÔI
-              </a>
-              <Link href="/program" className="text-gray-700 hover:text-primary font-medium uppercase text-sm">
-                KHÓA HỌC
-              </Link>
-              <Link href="/thu-thach-30-ngay" className="text-gray-700 hover:text-primary font-medium uppercase text-sm">
-                THỬ THÁCH 30N
-              </Link>
-              <Link href="/contact" className="text-gray-700 hover:text-primary font-medium uppercase text-sm">
-                LIÊN HỆ
-              </Link>
-              <Link href="/program" className="bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-full font-medium uppercase text-sm text-center transition">
-                ĐĂNG KÝ NGAY
-              </Link>
-            </div>
-          </nav>
-        )}
       </div>
+
+      {/* Mobile menu */}
+      {isMobileMenuOpen && (
+        <nav className="md:hidden py-4 border-t">
+          <div className="flex flex-col space-y-4">
+            <Link
+              href="/"
+              className="text-gray-700 hover:text-amber-400 font-medium uppercase text-sm"
+            >
+              TRANG CHỦ
+            </Link>
+            <a
+              href="#about"
+              className="text-gray-700 hover:text-amber-400 font-medium uppercase text-sm"
+            >
+              VỀ CHÚNG TÔI
+            </a>
+            <Link
+              href="/khoa-hoc"
+              className="text-gray-700 hover:text-amber-400 font-medium uppercase text-sm"
+            >
+              KHÓA HỌC
+            </Link>
+            <a
+              href="#challenge"
+              className="text-gray-700 hover:text-amber-400 font-medium uppercase text-sm"
+            >
+              THỬ THÁCH 30N
+            </a>
+            <a
+              href="#contact"
+              className="text-gray-700 hover:text-amber-400 font-medium uppercase text-sm"
+            >
+              LIÊN HỆ
+            </a>
+            <Button className="bg-amber-400 hover:bg-amber-500 text-white rounded-full px-6 py-2 text-center">
+              ĐĂNG KÝ NGAY
+            </Button>
+          </div>
+        </nav>
+      )}
     </header>
-  )
-}
+  );
+};
+
+export default Header;

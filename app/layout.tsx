@@ -18,6 +18,7 @@ export default function RootLayout({
     <html lang="vi">
       <body>
         <Header />
+        <div className="h-20" />
         <main>{children}</main>
         <Sidebar />
         <Footer />
