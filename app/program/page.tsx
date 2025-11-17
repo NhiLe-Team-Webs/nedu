@@ -1,153 +1,135 @@
 'use client'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import Link from 'next/link'
+import { courseCatalog } from '@/data/courseCatalog'
+import { useCart } from '@/components/cart/CartContext'
+
+const filters = [
+  { id: 'all', label: 'Tat ca' },
+  { id: 'offline', label: 'Offline' },
+  { id: 'online', label: 'Online' },
+  { id: 'business', label: 'Doanh nghiep' },
+]
+
+const currencyFormatter = new Intl.NumberFormat('vi-VN', {
+  style: 'currency',
+  currency: 'VND',
+  minimumFractionDigits: 0,
+})
 
 export default function ProgramPage() {
   const [filter, setFilter] = useState('all')
+  const { addToCart } = useCart()
 
-  const courses = [
-    {
-      id: 1,
-      title: 'Sức Mạnh Vô Hạn 2',
-      tags: ['Doanh nhân', 'Doanh nghiệp'],
-      duration: '6 tháng online và 4,5 ngày offline',
-      instructor: 'NhiLe x Melvin',
-      image: 'https://nedu.nhi.sg/images/2_3.jpg',
-      link: '/program-offline/suc-manh-vo-han',
-      type: 'offline'
-    },
-    {
-      id: 2,
-      title: 'Là chính mình 3',
-      tags: ['Phát triển bản thân', 'Là chính mình'],
-      duration: '3,5 ngày',
-      instructor: 'NhiLe x Guest Instructors',
-      image: 'https://nedu.nhi.sg/images/1_3.jpg',
-      link: '/program-offline/la-chinh-minh',
-      type: 'offline'
-    },
-    {
-      id: 3,
-      title: 'Gen AI 101',
-      tags: ['AI', 'Phát triển kỹ năng số'],
-      duration: '2 buổi',
-      instructor: 'Linda Hui',
-      image: 'https://nedu.nhi.sg/images/thum_yt_1.png',
-      link: '/program-online/gen-ai-101',
-      type: 'online'
-    },
-    {
-      id: 4,
-      title: 'Thương hiệu của bạn',
-      tags: ['Thương hiệu', 'Doanh nghiệp'],
-      duration: '4 ngày',
-      instructor: 'NhiLe',
-      image: 'https://nedu.nhi.sg/images/thuonghieucuaban.png',
-      link: '/program-online/thuong-hieu-cua-ban',
-      type: 'online'
-    },
-    {
-      id: 5,
-      title: 'Cuộc sống của bạn',
-      tags: ['Phát triển bản thân', 'Cảm xúc'],
-      duration: '3 ngày',
-      instructor: 'NhiLe',
-      image: 'https://nedu.nhi.sg/images/cuocsongcuaban.png',
-      link: '/program-online/cuoc-song-cua-ban',
-      type: 'online'
-    },
-    {
-      id: 6,
-      title: 'AI for Business Communication',
-      tags: ['AI'],
-      duration: '3 buổi',
-      instructor: 'Linda Hui',
-      image: 'https://nedu.nhi.sg/images/thum_yt_2.png',
-      link: '/program-online/ai-for-business-communication',
-      type: 'online'
-    },
-    {
-      id: 7,
-      title: 'AI In Marketing',
-      tags: ['Marketing số'],
-      duration: '2 ngày',
-      instructor: 'Linda Hui',
-      image: 'https://nedu.nhi.sg/images/thum_yt_3.png',
-      link: '/program-online/ai-in-marketing',
-      type: 'online'
-    },
-  ]
-
-  const filteredCourses = filter === 'all' 
-    ? courses 
-    : filter === 'offline'
-    ? courses.filter(c => c.type === 'offline')
-    : filter === 'online'
-    ? courses.filter(c => c.type === 'online')
-    : courses.filter(c => c.tags.includes('Doanh nghiệp'))
+  const filteredCourses = useMemo(() => {
+    if (filter === 'offline') return courseCatalog.filter((course) => course.mode === 'offline')
+    if (filter === 'online') return courseCatalog.filter((course) => course.mode === 'online')
+    if (filter === 'business')
+      return courseCatalog.filter((course) => course.tags.includes('Doanh nghiep'))
+    return courseCatalog
+  }, [filter])
 
   return (
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="container mx-auto px-4">
-        <h1 className="text-4xl md:text-5xl font-bold text-center mb-4 text-primary">
-          CÁC KHÓA HỌC CHẤT LƯỢNG
+        <h1 className="text-4xl md:text-5xl font-bold text-center mb-4 text-primary uppercase">
+          Cac khoa hoc chat luong
         </h1>
+        <p className="text-center text-gray-600 mb-10 max-w-3xl mx-auto">
+          Lua chon chuong trinh phu hop voi hanh trinh phat trien ban than va doanh nghiep cua
+          ban. Moi khoa hoc deu di kem cong cu thuc hanh va co the tham gia ngay.
+        </p>
 
-        <div className="flex justify-center space-x-4 mb-12">
-          <button
-            onClick={() => setFilter('all')}
-            className={`px-6 py-2 rounded-full font-semibold transition ${
-              filter === 'all' ? 'bg-primary text-white' : 'bg-white text-gray-700 hover:bg-gray-100'
-            }`}
-          >
-            Tất cả
-          </button>
-          <button
-            onClick={() => setFilter('offline')}
-            className={`px-6 py-2 rounded-full font-semibold transition ${
-              filter === 'offline' ? 'bg-primary text-white' : 'bg-white text-gray-700 hover:bg-gray-100'
-            }`}
-          >
-            Offline
-          </button>
-          <button
-            onClick={() => setFilter('online')}
-            className={`px-6 py-2 rounded-full font-semibold transition ${
-              filter === 'online' ? 'bg-primary text-white' : 'bg-white text-gray-700 hover:bg-gray-100'
-            }`}
-          >
-            Online
-          </button>
-          <button
-            onClick={() => setFilter('business')}
-            className={`px-6 py-2 rounded-full font-semibold transition ${
-              filter === 'business' ? 'bg-primary text-white' : 'bg-white text-gray-700 hover:bg-gray-100'
-            }`}
-          >
-            Doanh nghiệp
-          </button>
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
+          {filters.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => setFilter(item.id)}
+              className={`px-6 py-2 rounded-full font-semibold transition ${
+                filter === item.id ? 'bg-primary text-white' : 'bg-white text-gray-700 shadow-sm'
+              }`}
+            >
+              {item.label}
+            </button>
+          ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
           {filteredCourses.map((course) => (
-            <Link key={course.id} href={course.link} className="group">
-              <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition">
-                <img src={course.image} alt={course.title} className="w-full h-64 object-cover" />
-                <div className="p-6">
-                  <div className="flex flex-wrap gap-2 mb-3">
-                    {course.tags.map((tag, index) => (
-                      <span key={index} className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full font-semibold">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition">{course.title}</h3>
-                  <p className="text-sm text-gray-600 mb-2">📚 Số buổi học: <span className="font-semibold">{course.duration}</span></p>
-                  <p className="text-sm text-gray-600">👨‍🏫 Người dẫn đường: <span className="font-semibold">{course.instructor}</span></p>
+            <article
+              key={course.id}
+              className="bg-white rounded-[24px] shadow-md hover:shadow-lg transition flex flex-col overflow-hidden border border-gray-100 min-h-[360px] w-full"
+            >
+              <Link href={course.link}>
+                <img
+                  src={course.image}
+                  alt={course.title}
+                  className="w-full h-40 object-cover"
+                />
+              </Link>
+              <div className="p-5 flex flex-col flex-1">
+                <div className="flex flex-wrap gap-2 mb-3">
+                  {course.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-xs bg-amber-100 text-amber-600 px-3 py-1 rounded-full font-semibold"
+                    >
+                      {tag}
+                    </span>
+                  ))}
                 </div>
+                <Link href={course.link}>
+                  <h3 className="text-xl font-bold mb-2 text-gray-900 hover:text-primary transition">
+                    {course.title}
+                  </h3>
+                </Link>
+                <div className="flex items-baseline gap-3 mb-4">
+                  <div className="text-xl font-extrabold text-primary">
+                    {currencyFormatter.format(course.price)}
+                  </div>
+                  {course.originalPrice && (
+                    <div className="text-sm text-gray-400 line-through">
+                      {currencyFormatter.format(course.originalPrice)}
+                    </div>
+                  )}
+                </div>
+                <div className="space-y-2 text-sm text-gray-700 mb-4">
+                  <div className="flex items-center gap-2">
+                    <span role="img" aria-label="duration">
+                      📚
+                    </span>
+                    <p>
+                      So buoi hoc:{' '}
+                      <span className="font-semibold text-gray-900">{course.duration}</span>
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span role="img" aria-label="mentor">
+                      👩‍🏫
+                    </span>
+                    <p>
+                      Nguoi dan duong:{' '}
+                      <span className="font-semibold text-gray-900">{course.instructor}</span>
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={() =>
+                    addToCart({
+                      id: course.id,
+                      slug: course.slug,
+                      title: course.title,
+                      price: course.price,
+                      image: course.image,
+                    })
+                  }
+                  className="mt-auto w-full bg-yellow-400 text-gray-900 font-semibold uppercase tracking-wide py-3 rounded-full shadow hover:bg-yellow-300 transition"
+                >
+                  Them vao gio hang
+                </button>
               </div>
-            </Link>
+            </article>
           ))}
         </div>
       </div>
