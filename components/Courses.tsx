@@ -3,7 +3,7 @@
 import * as React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Calendar } from "lucide-react";
+import { ChevronRight, Calendar } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -14,21 +14,21 @@ import {
 const slides = [
   {
     id: 1,
-    image: '/lachinhminh.jpg',
-    date: "02/09/2024",
-    title: "KHÓA HỌC ONLINE THAY TƯ DUY ĐỔI CUỘC ĐỜI TỪ DIỄN GIẢ NHI LÊ",
+    image: "/lachinhminh.jpg",
+    date: "14-17 tháng 8 năm 2025",
+    title: "LÀ CHÍNH MÌNH",
     label: "Khóa học sắp diễn ra",
   },
   {
     id: 2,
-    image: '/THCB.jpg',
+    image: "/THCB.jpg",
     date: "10/10/2024",
     title: "KỸ NĂNG GIAO TIẾP VÀ THUYẾT TRÌNH",
     label: "Giới thiệu",
   },
   {
     id: 3,
-    image: '/CSCB.jpg',
+    image: "/CSCB.jpg",
     date: "15/11/2024",
     title: "QUẢN LÝ THỜI GIAN VÀ NĂNG SUẤT LÀM VIỆC",
     label: "Các khóa học Online",
@@ -75,7 +75,7 @@ const Courses: React.FC = () => {
     <section className="relative flex items-center justify-center overflow-hidden">
       <div className="relative flex flex-col justify-center items-center h-screen w-full max-w-[1200px]">
         <Image
-          src='/coming-bg.jpg'
+          src="/coming-bg.jpg"
           alt="bg"
           fill
           className="absolute inset-0 w-full h-full object-cover"
@@ -92,7 +92,7 @@ const Courses: React.FC = () => {
                 <CarouselContent className="items-center">
                   {slides.map((s) => (
                     <CarouselItem key={s.id}>
-                      <div className="bg-white/5 rounded-md p-6 flex flex-col md:flex-row items-center gap-6 shadow-lg bg-gradient-to-r from-slate-800 via-slate-900 to-black">
+                      <div className="bg-[rgba(0,0,0,0.7)] rounded-md p-[16px] flex flex-col md:flex-row items-center gap-6 shadow-lg">
                         <div className="w-full md:w-80 flex-shrink-0">
                           <div className="bg-white rounded-md overflow-hidden shadow-sm flex items-center justify-center">
                             <Image
@@ -100,35 +100,36 @@ const Courses: React.FC = () => {
                               alt={s.title}
                               width={400}
                               height={160}
-                              className="w-full h-44 md:h-40 object-cover"
+                              className="w-full h-auto md:h-40 object-cover"
                             />
                           </div>
                         </div>
 
-                        <div className="flex-1 text-white">
-                          <div className="flex items-center gap-4 mb-4">
-                            <Calendar className="w-5 h-5 text-white/90" />
-                            <span className="text-sm text-white/90">
-                              {s.date}
-                            </span>
-                          </div>
-
-                          <h3 className="text-xl md:text-2xl font-semibold uppercase leading-tight mb-4">
-                            {s.title}
-                          </h3>
-
-                          <div className="flex items-center gap-4">
-                            <Button
-                              variant="hero"
-                              size="icon"
-                              className="!bg-yellow-400 !text-white h-12 w-12 rounded-full flex items-center justify-center"
-                            >
-                              <ArrowRight className="w-5 h-5" />
-                            </Button>
-
-                            <div className="hidden md:block text-white/80">
+                        <div className="flex flex-col justify-between text-white h-full">
+                          <div className="flex flex-col items-start">
+                            <p className="text-[16px] text-white/80">
                               {s.label}
+                            </p>
+                            <h3 className="text-xl md:text-[24px] font-bold uppercase leading-tight mb-4">
+                              {s.title}
+                            </h3>
+                          </div>
+                          
+                          <div className="flex items-center justify-between gap-4">
+                            <div className="flex flex-row items-center justify-between">
+                              <Calendar className="w-5 h-5 text-white/90 mr-2" />
+                              <span className="text-sm text-white/90 font-semibold">
+                                {s.date}
+                              </span>
                             </div>
+                              <Button
+                                variant="hero"
+                                size="icon"
+                                className="rounded-b-full rounded-t-full text-[16px] uppercase !bg-[#F7B50C] !text-white w-auto flex items-center justify-center py-[12px] px-[20px]"
+                              >
+                                Đăng ký ngay
+                                <ChevronRight className="font-extrabold" />
+                              </Button>
                           </div>
                         </div>
                       </div>
