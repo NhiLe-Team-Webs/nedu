@@ -4,6 +4,8 @@ import * as React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Calendar, ShoppingCart } from "lucide-react";
+import { useCart } from "@/lib/cart-context";
+import { courses } from "@/data/courses";
 import {
   Carousel,
   CarouselContent,
@@ -38,6 +40,7 @@ const slides = [
 const Courses: React.FC = () => {
   const [api, setApi] = React.useState<CarouselApi | undefined>(undefined);
   const [active, setActive] = React.useState(0);
+  const { addToCart } = useCart();
 
   React.useEffect(() => {
     if (!api) return;
@@ -124,6 +127,10 @@ const Courses: React.FC = () => {
                             </div>
                             <div className="flex gap-2">
                               <Button
+                                onClick={() => {
+                                  const course = courses.find(c => c.title === s.title);
+                                  if (course) addToCart(course);
+                                }}
                                 variant="hero"
                                 size="icon"
                                 className="rounded-b-full rounded-t-full text-[16px] uppercase !bg-[#F7B50C] !text-white w-auto flex items-center justify-center py-[12px] px-[20px]"

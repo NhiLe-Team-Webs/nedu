@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { Tag } from 'lucide-react'
 
 export default function PaymentPage() {
   const [formData, setFormData] = useState({
@@ -13,9 +14,27 @@ export default function PaymentPage() {
     gender: ''
   })
   const [agreed, setAgreed] = useState(false)
+  const [discountCode, setDiscountCode] = useState('')
+  const [discount, setDiscount] = useState(0)
+
+  const handleApplyDiscount = () => {
+    // Simple discount logic for demo
+    if (discountCode === 'SAVE10') {
+      setDiscount(10)
+    } else if (discountCode === 'SAVE20') {
+      setDiscount(20)
+    } else {
+      setDiscount(0)
+      alert('Mã giảm giá không hợp lệ')
+    }
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    if (!agreed) {
+      alert('Vui lòng đồng ý với điều khoản sử dụng')
+      return
+    }
     alert('Đăng ký thành công! (This is a demo)')
   }
 
@@ -41,6 +60,35 @@ export default function PaymentPage() {
         <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 mb-8">
           <h2 className="text-2xl font-bold mb-2 text-primary">1. ĐIỀN THÔNG TIN</h2>
           <p className="text-gray-600 mb-8">Điền đầy đủ thông tin người mua khóa học</p>
+
+          {/* Discount Code Section */}
+          <div className="bg-gray-50 rounded-xl p-6 mb-6">
+            <h3 className="font-bold text-lg mb-4 text-gray-800">Mã giảm giá</h3>
+            <div className="flex gap-2">
+              <div className="flex-1 relative">
+                <Tag className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Nhập mã giảm giá"
+                  value={discountCode}
+                  onChange={(e) => setDiscountCode(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition"
+                />
+              </div>
+              <button
+                type="button"
+                onClick={handleApplyDiscount}
+                className="bg-amber-400 hover:bg-amber-500 text-white px-6 py-3 rounded-lg font-semibold transition"
+              >
+                Áp dụng
+              </button>
+            </div>
+            {discount > 0 && (
+              <div className="mt-2 text-green-600 text-sm font-semibold">
+                Đã áp dụng mã giảm giá: {discount}%
+              </div>
+            )}
+          </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="bg-gray-50 rounded-xl p-6">
@@ -183,6 +231,11 @@ export default function PaymentPage() {
                       Điều khoản sử dụng
                     </Link>{' '}
                     của chúng tôi.
+                    {discount > 0 && (
+                      <span className="block mt-2 text-green-600 font-semibold">
+                        Bạn được giảm giá {discount}% trên tổng hóa đơn
+                      </span>
+                    )}
                   </label>
                 </div>
               </div>

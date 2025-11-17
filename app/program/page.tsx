@@ -3,6 +3,8 @@
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import { ShoppingCart } from 'lucide-react'
+import { useCart } from '@/lib/cart-context'
+import { courses } from '@/data/courses'
 
 // Course data based on actual course pages in folders
 const coursesData = [
@@ -137,6 +139,7 @@ const currencyFormatter = new Intl.NumberFormat('vi-VN', {
 
 export default function ProgramPage() {
   const [filter, setFilter] = useState('all')
+  const { addToCart } = useCart()
 
   const filteredCourses = useMemo(() => {
     if (filter === 'offline') return coursesData.filter((course) => course.mode === 'offline')
@@ -230,6 +233,7 @@ export default function ProgramPage() {
                 </div>
                 <div className="mt-auto flex gap-3">
                   <button
+                    onClick={() => addToCart(courses.find(c => c.id === course.id)!)}
                     className="flex-1 bg-amber-400 hover:bg-amber-500 text-white font-semibold uppercase tracking-wide py-3 rounded-full shadow transition flex items-center justify-center gap-2"
                   >
                     <ShoppingCart className="h-4 w-4" />
