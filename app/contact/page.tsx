@@ -10,11 +10,47 @@ export default function ContactPage() {
     message: ''
   })
   const [status, setStatus] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setStatus('success')
-    setTimeout(() => setStatus(''), 3000)
+    setIsSubmitting(true)
+    setStatus('')
+
+    try {
+      // URL của Google Apps Script - CẦN CẬP NHẬT URL NÀY SAU KHI DEPLOY APPS SCRIPT MỚI
+      const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbxKIMyc18J9EiRmJJLyrAUM80mKeA64CFmWoehLR-SjBylwufnae0xrFyTK2Q4crn2F/exec';
+      
+      // Chuẩn bị dữ liệu để gửi
+      const dataToSend = {
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone.trim(),
+        message: formData.message.trim()
+      };
+      
+      const response = await fetch(googleScriptUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams(dataToSend).toString(),
+        // Thêm mode: 'no-cors' để tránh CORS issues với Google Apps Script
+        mode: 'no-cors'
+      });
+
+      // Với mode: 'no-cors', chúng ta không thể đọc response
+      // nên sẽ giả định thành công nếu không có error
+      setStatus('success')
+      setFormData({ name: '', phone: '', email: '', message: '' })
+      setTimeout(() => setStatus(''), 5000)
+    } catch (error) {
+      console.error('Error submitting form:', error)
+      setStatus('error')
+      setTimeout(() => setStatus(''), 5000)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -116,14 +152,21 @@ export default function ContactPage() {
 
                 <button
                   type="submit"
-                  className="w-full bg-primary hover:bg-primary-dark text-white py-3 rounded-lg font-semibold transition"
+                  disabled={isSubmitting}
+                  className="w-full bg-primary hover:bg-primary-dark text-white py-3 rounded-lg font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Gửi
+                  {isSubmitting ? 'Đang gửi...' : 'Gửi'}
                 </button>
 
                 {status === 'success' && (
                   <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg">
-                    Đã gửi thành công!
+                    Đã gửi thành công! Chúng tôi sẽ liên hệ với bạn sớm nhất.
+                  </div>
+                )}
+
+                {status === 'error' && (
+                  <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
+                    Đã có lỗi xảy ra. Vui lòng thử lại sau.
                   </div>
                 )}
               </form>
