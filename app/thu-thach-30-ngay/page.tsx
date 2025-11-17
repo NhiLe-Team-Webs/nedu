@@ -60,28 +60,9 @@ const ThirtyDayPage = () => {
           box-shadow: 0 18px 28px -12px rgba(0, 0, 0, 0.16);
         }
 
-        .floating-buttons {
-          position: fixed;
-          right: 26px;
-          top: 35%;
-          z-index: 60;
-          display: flex;
-          flex-direction: column;
-          gap: 14px;
+       
         }
-        .floating-btn {
-          width: 78px;
-          height: 78px;
-          background-color: ${CTA_YELLOW};
-          border-radius: 18px 0 0 18px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
-          cursor: pointer;
-          transition: all 0.25s ease;
-          color: #ffffff;
-        }
+        
         .floating-btn:hover {
           transform: translateX(-4px);
           box-shadow: 0 14px 26px rgba(0, 0, 0, 0.22);
@@ -150,58 +131,7 @@ const ThirtyDayPage = () => {
         </div>
 
 
-        <header className="bg-white shadow-sm sticky top-0 z-40">
-          <div className="max-w-6xl mx-auto px-6">
-            <nav className="flex items-center justify-between py-3 text-xs md:text-sm font-medium">
-              <ul className="hidden md:flex items-center gap-8">
-                <li>
-                  <a
-                    href="#hero"
-                    className="hover:text-[var(--cta-yellow)]"
-                    style={{ color: DARK_GRAY }}
-                  >
-                    TRANG CHỦ
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#about"
-                    className="hover:text-[var(--cta-yellow)]"
-                    style={{ color: DARK_GRAY }}
-                  >
-                    30 NGÀY CÓ GÌ
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#mentor"
-                    className="hover:text-[var(--cta-yellow)]"
-                    style={{ color: DARK_GRAY }}
-                  >
-                    NGƯỜI DẪN ĐƯỜNG
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#course-info"
-                    className="hover:text-[var(--cta-yellow)]"
-                    style={{ color: DARK_GRAY }}
-                  >
-                    THÔNG TIN THỬ THÁCH
-                  </a>
-                </li>
-              </ul>
-              <a
-                href="#register"
-                className="px-7 py-2.5 rounded-full text-white text-xs font-semibold shadow-md hover:bg-[#ffc94a]"
-                style={{ backgroundColor: CTA_YELLOW }}
-              >
-                ĐĂNG KÝ NGAY
-              </a>
-            </nav>
-          </div>
-        </header>
-
+      
         <main>
 
           <section id="hero" className="pt-10 md:pt-14 pb-10 text-center">
