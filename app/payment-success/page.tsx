@@ -3,10 +3,12 @@
 import { useEffect, useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
+import { useCart } from '@/lib/cart-context'
 
 function PaymentSuccessContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const { clearCart } = useCart()
   const [status, setStatus] = useState<'loading' | 'success' | 'failed'>('loading')
   const [message, setMessage] = useState('Đang kiểm tra trạng thái thanh toán...')
 
@@ -28,6 +30,9 @@ function PaymentSuccessContent() {
           // Payment successful
           setStatus('success')
           setMessage('Thanh toán thành công! Cảm ơn bạn đã đăng ký khóa học.')
+          
+          // Clear the cart after successful payment
+          clearCart()
           
           // Optionally check order status with API
           if (vnp_TxnRef) {

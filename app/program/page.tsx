@@ -229,7 +229,7 @@ export default function ProgramPage() {
                   <button
                     onClick={(event) => {
                       event.stopPropagation()
-                      addToCart(courses.find(c => c.id === course.id)!)
+                      addToCart(courses.find(c => c.slug === course.slug)!)
                     }}
                     className="btn-secondary flex-1"
                   >

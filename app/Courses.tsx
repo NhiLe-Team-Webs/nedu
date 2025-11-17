@@ -15,24 +15,27 @@ import {
 
 const slides = [
   {
-    id: 1,
+    id: 2,
+    slug: "la-chinh-minh",
     image: "/lachinhminh.jpg",
     date: "14-17 tháng 8 năm 2025",
-    title: "LÀ CHÍNH MÌNH",
+    title: "Là Chính Mình 03",
     label: "Khóa học sắp diễn ra",
   },
   {
-    id: 2,
+    id: 1,
+    slug: "suc-manh-vo-han",
     image: "/THCB.jpg",
     date: "10/10/2024",
-    title: "KỸ NĂNG GIAO TIẾP VÀ THUYẾT TRÌNH",
+    title: "Sức Mạnh Vô Hạn",
     label: "Giới thiệu",
   },
   {
     id: 3,
+    slug: "gen-ai-101",
     image: "/CSCB.jpg",
     date: "15/11/2024",
-    title: "QUẢN LÝ THỜI GIAN VÀ NĂNG SUẤT LÀM VIỆC",
+    title: "GEN AI 101",
     label: "Các khóa học Online",
   },
 ];
@@ -128,7 +131,7 @@ const Courses: React.FC = () => {
                             <div className="flex gap-2">
                               <Button
                                 onClick={() => {
-                                  const course = courses.find(c => c.title === s.title);
+                                  const course = courses.find(c => c.slug === s.slug);
                                   if (course) addToCart(course);
                                 }}
                                 variant="hero"

@@ -4,12 +4,17 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Tag } from 'lucide-react'
 import { useRouter, useParams } from 'next/navigation'
+import { courses } from '@/data/courses'
 
 export default function PaymentPage() {
   const router = useRouter()
   const params = useParams()
   const programId = params.programId as string
   
+  // Find the course based on programId (which is the paymentId)
+  const course = courses.find(c => c.paymentId.toString() === programId)
+  
+  const [currentStep, setCurrentStep] = useState(1) // 1: Information, 2: Confirmation
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -26,6 +31,16 @@ export default function PaymentPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [errors, setErrors] = useState<string[]>([])
 
+  const currencyFormatter = new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+    minimumFractionDigits: 0,
+  })
+
+  const subtotal = course ? parseFloat(course.price.amount.replace(/\./g, '')) : 0
+  const discountAmount = subtotal * (discount / 100)
+  const total = subtotal - discountAmount
+
   const handleApplyDiscount = () => {
     // Simple discount logic for demo
     if (discountCode === 'SAVE10') {
@@ -36,6 +51,27 @@ export default function PaymentPage() {
       setDiscount(0)
       alert('Mã giảm giá không hợp lệ')
     }
+  }
+
+  const handleNextStep = (e: React.FormEvent) => {
+    e.preventDefault()
+    setErrors([])
+    
+    // Validate required fields
+    const requiredFields = ['name', 'email', 'phone', 'telegram', 'birthdate', 'gender']
+    const missingFields = requiredFields.filter(field => !formData[field as keyof typeof formData])
+    
+    if (missingFields.length > 0) {
+      setErrors(['Vui lòng điền đầy đủ các trường bắt buộc'])
+      return
+    }
+
+    // Move to confirmation step
+    setCurrentStep(2)
+  }
+
+  const handleBackStep = () => {
+    setCurrentStep(1)
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -121,52 +157,89 @@ export default function PaymentPage() {
           TIẾN HÀNH THANH TOÁN
         </h1>
 
+        {/* Step Indicators */}
         <div className="flex justify-center items-center mb-12">
           <div className="flex items-center">
-            <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xl">
+            <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl ${
+              currentStep >= 1
+                ? 'bg-primary text-white'
+                : 'bg-gray-300 text-gray-600'
+            }`}>
               1
             </div>
-            <div className="w-32 h-1 bg-gray-300"></div>
-            <div className="w-12 h-12 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center font-bold text-xl">
+            <div className={`w-32 h-1 ${
+              currentStep >= 2 ? 'bg-primary' : 'bg-gray-300'
+            }`}></div>
+            <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl ${
+              currentStep >= 2
+                ? 'bg-primary text-white'
+                : 'bg-gray-300 text-gray-600'
+            }`}>
               2
             </div>
           </div>
         </div>
 
-        <div className="card mb-8">
-          <h2 className="text-2xl font-bold mb-2 text-text-primary">1. ĐIỀN THÔNG TIN</h2>
-          <p className="text-text-secondary mb-8">Điền đầy đủ thông tin người mua khóa học</p>
+        {currentStep === 1 ? (
+          /* Step 1: Information Form */
+          <div className="card mb-8">
+            <h2 className="text-2xl font-bold mb-2 text-text-primary">1. ĐIỀN THÔNG TIN</h2>
+            <p className="text-text-secondary mb-8">Điền đầy đủ thông tin người mua khóa học</p>
 
-          {/* Discount Code Section */}
-          <div className="warning-message mb-6">
-            <h3 className="font-bold text-lg mb-4 text-text-primary">Mã giảm giá</h3>
-            <div className="flex gap-2">
-              <div className="flex-1 relative">
-                <Tag className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-text-tertiary" />
-                <input
-                  type="text"
-                  placeholder="Nhập mã giảm giá"
-                  value={discountCode}
-                  onChange={(e) => setDiscountCode(e.target.value)}
-                  className="input-field pl-10"
-                />
-              </div>
-              <button
-                type="button"
-                onClick={handleApplyDiscount}
-                className="btn-secondary"
-              >
-                Áp dụng
-              </button>
-            </div>
-            {discount > 0 && (
-              <div className="mt-2 text-success text-sm font-semibold">
-                Đã áp dụng mã giảm giá: {discount}%
+            {/* Course Info */}
+            {course && (
+              <div className="bg-gray-50 rounded-xl p-6 mb-6">
+                <h3 className="font-bold text-lg mb-4 text-text-primary">Khóa học đã chọn</h3>
+                <div className="flex flex-col md:flex-row gap-4">
+                  <img
+                    src={course.heroImage}
+                    alt={course.title}
+                    className="w-full md:w-24 h-24 object-cover rounded-xl"
+                  />
+                  <div className="flex-1">
+                    <h4 className="font-bold text-lg text-text-primary">{course.title}</h4>
+                    <p className="text-text-secondary mb-2">{course.category.join(', ')}</p>
+                    <div className="price">
+                      {course.price.currency === 'VNĐ'
+                        ? currencyFormatter.format(parseInt(course.price.amount.replace(/\./g, '')))
+                        : `${course.price.currency} ${course.price.amount}`
+                      }
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
-          </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Discount Code Section */}
+            <div className="warning-message mb-6">
+              <h3 className="font-bold text-lg mb-4 text-text-primary">Mã giảm giá</h3>
+              <div className="flex gap-2">
+                <div className="flex-1 relative">
+                  <Tag className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-text-tertiary" />
+                  <input
+                    type="text"
+                    placeholder="Nhập mã giảm giá"
+                    value={discountCode}
+                    onChange={(e) => setDiscountCode(e.target.value)}
+                    className="input-field pl-10"
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={handleApplyDiscount}
+                  className="btn-secondary"
+                >
+                  Áp dụng
+                </button>
+              </div>
+              {discount > 0 && (
+                <div className="mt-2 text-success text-sm font-semibold">
+                  Đã áp dụng mã giảm giá: {discount}%
+                </div>
+              )}
+            </div>
+
+            <form onSubmit={handleNextStep} className="space-y-6">
             <div className="bg-gray-50 rounded-xl p-6">
               <h3 className="font-bold text-lg mb-6 text-gray-800">Thông tin người mua</h3>
 
@@ -381,6 +454,180 @@ export default function PaymentPage() {
             </div>
           </form>
         </div>
+      ) : (
+        /* Step 2: Confirmation */
+        <div className="card">
+          <h2 className="text-2xl font-bold mb-6 text-text-primary">2. XÁC NHẬN THÔNG TIN</h2>
+          
+          <div className="space-y-6">
+            {/* Course Summary */}
+            <div>
+              <h3 className="font-semibold text-lg mb-4 text-text-primary">Khóa học đã chọn</h3>
+              {course && (
+                <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                  <div>
+                    <h4 className="font-semibold text-text-primary">{course.title}</h4>
+                    <p className="text-sm text-text-secondary">{course.category.join(', ')}</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="font-semibold price">
+                      {course.price.currency === 'VNĐ'
+                        ? currencyFormatter.format(parseInt(course.price.amount.replace(/\./g, '')))
+                        : `${course.price.currency} ${course.price.amount}`
+                      }
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Personal Information */}
+            <div>
+              <h3 className="font-semibold text-lg mb-4 text-text-primary">Thông tin cá nhân</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-gray-50 rounded-lg">
+                <div>
+                  <span className="text-text-secondary">Họ và tên:</span>
+                  <p className="font-semibold">{formData.name}</p>
+                </div>
+                <div>
+                  <span className="text-text-secondary">Email:</span>
+                  <p className="font-semibold">{formData.email}</p>
+                </div>
+                <div>
+                  <span className="text-text-secondary">Số điện thoại:</span>
+                  <p className="font-semibold">{formData.phone}</p>
+                </div>
+                <div>
+                  <span className="text-text-secondary">Telegram:</span>
+                  <p className="font-semibold">{formData.telegram}</p>
+                </div>
+                <div>
+                  <span className="text-text-secondary">Ngày sinh:</span>
+                  <p className="font-semibold">{formData.birthdate}</p>
+                </div>
+                <div>
+                  <span className="text-text-secondary">Giới tính:</span>
+                  <p className="font-semibold">{formData.gender === 'male' ? 'Nam' : formData.gender === 'female' ? 'Nữ' : 'Khác'}</p>
+                </div>
+                {formData.address && (
+                  <div className="md:col-span-2">
+                    <span className="text-text-secondary">Địa chỉ:</span>
+                    <p className="font-semibold">{formData.address}</p>
+                  </div>
+                )}
+                {formData.note && (
+                  <div className="md:col-span-2">
+                    <span className="text-text-secondary">Ghi chú:</span>
+                    <p className="font-semibold">{formData.note}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Order Summary */}
+            <div>
+              <h3 className="font-semibold text-lg mb-4 text-text-primary">Tóm tắt thanh toán</h3>
+              <div className="bg-gray-50 rounded-lg p-4">
+                <div className="space-y-3 mb-4">
+                  <div className="flex justify-between">
+                    <span className="text-text-secondary">Tạm tính:</span>
+                    <span className="font-semibold">
+                      {course && course.price.currency === 'VNĐ'
+                        ? currencyFormatter.format(parseInt(course.price.amount.replace(/\./g, '')))
+                        : course ? `${course.price.currency} ${course.price.amount}` : '0'
+                      }
+                    </span>
+                  </div>
+                  {discount > 0 && (
+                    <div className="flex justify-between">
+                      <span className="text-success">Giảm giá:</span>
+                      <span className="font-semibold text-success">
+                        {course && course.price.currency === 'VNĐ'
+                          ? currencyFormatter.format(discountAmount)
+                          : course ? `${course.price.currency} ${discountAmount.toFixed(2)}` : '0'
+                        }
+                      </span>
+                    </div>
+                  )}
+                  <div className="flex justify-between text-lg font-bold">
+                    <span>Tổng cộng:</span>
+                    <span className="price">
+                      {course && course.price.currency === 'VNĐ'
+                        ? currencyFormatter.format(total)
+                        : course ? `${course.price.currency} ${total.toFixed(2)}` : '0'
+                      }
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-start">
+              <input
+                type="checkbox"
+                id="terms"
+                required
+                checked={agreed}
+                onChange={(e) => setAgreed(e.target.checked)}
+                className="mt-1 mr-3"
+              />
+              <label htmlFor="terms" className="text-sm text-text-primary">
+                Bằng cách tích vào ô này, bạn xác nhận đã đọc, hiểu và đồng ý với{' '}
+                <Link href="/policy" className="text-primary font-semibold hover:underline">
+                  Chính sách bảo mật
+                </Link>{' '}
+                và{' '}
+                <Link href="/terms" className="text-primary font-semibold hover:underline">
+                  Điều khoản sử dụng
+                </Link>{' '}
+                của chúng tôi.
+              </label>
+            </div>
+
+            {/* Error Display */}
+            {errors.length > 0 && (
+              <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+                <h4 className="text-red-800 font-semibold mb-2">Lỗi:</h4>
+                <ul className="list-disc list-inside text-red-700">
+                  {errors.map((error, index) => (
+                    <li key={index}>{error}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            <div className="flex justify-between">
+              <button
+                type="button"
+                onClick={handleBackStep}
+                className="btn-secondary"
+              >
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                Quay lại
+              </button>
+              <button
+                onClick={handleSubmit}
+                disabled={isLoading || !agreed}
+                className="btn-primary disabled:bg-gray-400"
+              >
+                {isLoading ? (
+                  <div className="flex items-center">
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Đang xử lý...
+                  </div>
+                ) : (
+                  'Xác nhận và thanh toán'
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       </div>
     </div>
   )

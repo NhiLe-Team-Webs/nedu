@@ -90,12 +90,14 @@ export default function CheckoutPage() {
     setIsLoading(true);
 
     try {
-      // Get program IDs from cart items
-      const programIds = items.map(item => item.paymentId || item.id);
+      // Calculate total amount for all items in cart
+      const totalAmount = getTotalPrice();
       
-      // For each program in cart, send a separate API call
-      const promises = programIds.map(async (programId) => {
-        // Prepare data for API according to payment-api-template.md
+      // Call API for each course simultaneously
+      const apiPromises = items.map(async (item) => {
+        const programId = item.paymentId || item.id;
+        
+        // Prepare data for API according to API requirements
         const apiData = {
           fullName: formData.name,
           email: formData.email,
@@ -105,13 +107,10 @@ export default function CheckoutPage() {
           gender: formData.gender,
           address: formData.address || '',
           note: formData.note || '',
-          programId: programId.toString()
+          programId: programId // Send only single programId as required by API
         };
 
-        // Note: Do NOT include returnUrl as it causes API error
-        // VNPAY will handle the callback automatically
-
-        console.log('Sending payment data for program', programId, ':', apiData);
+        console.log(`Sending payment data for course "${item.title}":`, apiData);
 
         const response = await fetch('https://api.nedu.nhi.sg/api/order/payment', {
           method: 'POST',
@@ -123,24 +122,43 @@ export default function CheckoutPage() {
 
         if (!response.ok) {
           const errorText = await response.text();
-          console.error('API Error Response for program', programId, ':', errorText);
-          throw new Error(`API Error for program ${programId}: ${response.status} - ${errorText}`);
+          console.error(`API Error Response for "${item.title}":`, errorText);
+          throw new Error(`API Error: ${response.status} - ${errorText}`);
         }
 
         const result = await response.json();
-        console.log('API Success Response for program', programId, ':', result);
-        return result;
+        console.log(`API Success Response for "${item.title}":`, result);
+        
+        return {
+          item,
+          result
+        };
       });
 
-      const results = await Promise.all(promises);
+      // Wait for all API calls to complete
+      const results = await Promise.all(apiPromises);
       
-      // Check if any response contains paymentUrl (VNPAY redirect)
-      const paymentUrls = results.filter(result => result.paymentUrl);
-      
-      if (paymentUrls.length > 0) {
-        // For multiple programs, redirect to first payment URL
-        // In a real implementation, you might want to handle multiple payments differently
-        window.location.href = paymentUrls[0].paymentUrl;
+      // Use the first successful result to redirect to VNPAY
+      // The total amount will be calculated on the frontend
+      if (results.length > 0 && results[0].result.paymentUrl) {
+        // Get the payment URL from the first result
+        let paymentUrl = results[0].result.paymentUrl;
+        
+        // Try to modify the payment URL to include the total amount
+        // This is a workaround since the API only accepts one course at a time
+        try {
+          const url = new URL(paymentUrl);
+          // Update the amount to reflect the total for all courses
+          url.searchParams.set('vnp_Amount', Math.round(totalAmount).toString());
+          paymentUrl = url.toString();
+          console.log('Updated payment URL with total amount:', paymentUrl);
+        } catch (error) {
+          console.error('Error updating payment URL:', error);
+          // If we can't modify the URL, use the original one
+        }
+        
+        // Redirect to VNPAY payment page
+        window.location.href = paymentUrl;
       } else {
         // Show success message for non-VNPAY payments
         alert('Đặt hàng thành công!');
@@ -194,7 +212,8 @@ export default function CheckoutPage() {
           </Link>
         </div>
 
-        <h1 className="text-3xl md:text-4xl font-bold mb-8 text-text-primary">Thanh toán</h1>
+        <h1 className="text-3xl md:text-4xl font-bold mb-4 text-text-primary">Thanh toán</h1>
+        
         
         {/* Step Indicators */}
         <div className="flex justify-center items-center mb-12">
