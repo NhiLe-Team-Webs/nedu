@@ -3,7 +3,7 @@
 import * as React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, Calendar } from "lucide-react";
+import { ChevronRight, Calendar, ShoppingCart } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -122,6 +122,15 @@ const Courses: React.FC = () => {
                                 {s.date}
                               </span>
                             </div>
+                            <div className="flex gap-2">
+                              <Button
+                                variant="hero"
+                                size="icon"
+                                className="rounded-b-full rounded-t-full text-[16px] uppercase !bg-[#F7B50C] !text-white w-auto flex items-center justify-center py-[12px] px-[20px]"
+                              >
+                                <ShoppingCart className="h-4 w-4 mr-1" />
+                                Thêm vào giỏ
+                              </Button>
                               <Button
                                 variant="hero"
                                 size="icon"
@@ -130,6 +139,7 @@ const Courses: React.FC = () => {
                                 Đăng ký ngay
                                 <ChevronRight className="font-extrabold" />
                               </Button>
+                            </div>
                           </div>
                         </div>
                       </div>

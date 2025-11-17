@@ -1,99 +1,269 @@
 "use client";
 import React from 'react';
+
 const partners = [
-  { name: "NLF", logo: '/nlf.png' },
-  { name: "Family Cloud", logo: '/familycloud.jpg' },
-  { name: "S&W", logo: '/S&W_avatar-1.jpg' },
-  { name: "Nhi's House", logo: '/photo_6073197126956990329_y.jpg' },
-  { name: "This is home", logo: '/thisishome.jpg' },
-  { name: "Factor Method", logo: '/XFactor_Method_Logo_-_Blue.png' },
-  { name: "Nhile Team", logo: '/nlt.png' },
-  { name: "Soniche", logo: '/Soniche.png' },
-  { name: "Hush", logo: '/hush.jpg' },
-  { name: "MsNhi", logo: '/MsNhi_Logo.png' },
-  { name: "Meta", logo: '/meta.jpg' }
+  { name: "NLF", logo: '/images/nlf.png' },
+  { name: "Family Cloud", logo: '/images/familycloud.jpg' },
+  { name: "S&W", logo: '/images/S&W_avatar-1.jpg' },
+  { name: "Nhi's House", logo: '/images/photo_6073197126956990329_y.jpg' },
+  { name: "This is home", logo: '/images/thisishome.jpg' },
+  { name: "Factor Method", logo: '/images/XFactor_Method_Logo_-_Blue.png' },
+  { name: "Nhile Team", logo: '/images/nlt.png' },
+  { name: "Soniche", logo: '/images/Soniche.png' },
+  { name: "Hush", logo: '/images/hush.jpg' },
+  { name: "MsNhi", logo: '/images/MsNhi_Logo.png' },
+  { name: "Meta", logo: '/images/meta.jpg' }
 ];
 
 const Partners = () => {
   return (
-    <section id="partners" className="bg-background overflow-hidden">
-      <div className="relative max-w-[1280px] mx-auto py-[80px] z-10">
-        <p className="pointer-events-none absolute inset-x-0 top-0 text-center text-[110px] font-bold text-amber-50 h-auto uppercase select-none">
-          PARTNERS
-        </p>
+    <section id="partner" className="relative min-h-screen flex items-center justify-center bg-gradient-to-b from-background to-secondary/20">
+      <div className="ww-section ww-section-d339226d-c645-44c1-b466-0081e70467c7" style={{ height: 'auto', zIndex: 'unset', minHeight: 'unset', maxHeight: 'unset', display: 'flex', background: 'none' }}>
+        <div className="hash-anchor" id="partner"></div>
+        <div className="ww-layout section-base ww-section-element" style={{ display: 'flex', flexFlow: 'column', alignItems: 'flex-start', width: '100%', maxWidth: '1280px', minWidth: 'unset', minHeight: 'unset', maxHeight: 'unset' }}>
+          
+          {/* Background "Partners" text */}
+          <p className="ww-text-content ww-text ww-element" style={{
+            margin: '0px',
+            padding: '0px',
+            zIndex: '10',
+            alignSelf: 'unset',
+            display: 'block',
+            position: 'absolute',
+            top: '0px',
+            left: '0px',
+            right: '0px',
+            maxWidth: 'unset',
+            minWidth: 'unset',
+            height: 'auto',
+            maxHeight: 'unset',
+            minHeight: 'unset',
+            background: 'none',
+            fontSize: '110px',
+            fontFamily: 'var(--ww-default-font-family)',
+            fontWeight: '700',
+            textAlign: 'center',
+            color: 'rgba(247, 181, 12, 0.08)',
+            textTransform: 'uppercase',
+            textOverflow: 'initial',
+            whiteSpace: 'pre-wrap'
+          }}>
+            Partners
+          </p>
 
-        <h2 className="relative z-20 md:text-[68px] font-extrabold text-center mb-4">
-            <span className="text-[#F7B50C]">30+ ĐỐI TÁC</span>
-        </h2>
+          <div className="ww-layout ww-flexbox ww-element" style={{
+            display: 'flex',
+            flexFlow: 'column',
+            margin: '0px',
+            padding: '80px 0px',
+            zIndex: 'unset',
+            alignSelf: 'unset',
+            width: '100%',
+            maxWidth: '1200px',
+            minWidth: 'unset',
+            height: 'auto',
+            maxHeight: 'unset',
+            minHeight: 'unset',
+            background: 'none'
+          }}>
+            
+            {/* Main heading */}
+            <p className="ww-text-content ww-text ww-element ww-flexbox__object" style={{
+              margin: '0px 0px 40px',
+              padding: '0px',
+              zIndex: '10',
+              alignSelf: 'unset',
+              display: 'block',
+              maxWidth: 'unset',
+              minWidth: 'unset',
+              height: 'auto',
+              maxHeight: 'unset',
+              minHeight: 'unset',
+              background: 'none',
+              fontSize: '68px',
+              fontFamily: 'var(--ww-default-font-family)',
+              fontWeight: '900',
+              textAlign: 'center',
+              color: '#F7B50C',
+              textTransform: 'uppercase',
+              textOverflow: 'initial',
+              whiteSpace: 'pre-wrap'
+            }}>
+              30+ đối tác
+            </p>
 
-        {/* First row (6 cols) */}
-        <div className="grid grid-cols-3 md:grid-cols-6 gap-8 max-w-6xl mx-auto px-4">
-          {partners.slice(0, 6).map((partner, index) => (
-            <div
-              key={index}
-              className="flex flex-col justify-center items-center p-0 rounded-2xl bg-[rgba(255,255,255,0.3)] shadow-sm border border-[rgba(0,0,0,0.05)] backdrop-blur-md max-h-[120px] h-full"
-              title={partner.name}
-            >
-              <div className="ww-image-basic block w-full h-full flex items-center justify-center overflow-hidden">
-                <img
-                  src={partner.logo}
-                  alt={partner.name}
-                  loading="lazy"
-                  className="h-[80%] w-[90%] object-contain"
-                  onError={(e) => {
-                    const el = e.currentTarget;
-                    el.style.display = "none";
-                    const parent = el.parentElement;
-                    if (parent && !parent.querySelector("span")) {
-                      const span = document.createElement("span");
-                      span.className = "font-bold text-2xl text-muted-foreground";
-                      span.textContent = partner.name
-                        .split(" ")
-                        .map((s) => s[0])
-                        .join("")
-                        .slice(0, 3);
-                      parent.appendChild(span);
-                    }
+            {/* First row of partners (6 columns) */}
+            <div className="ww-layout ww-flexbox ww-element ww-flexbox__object" style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(6, 1fr)',
+              columnGap: '32px',
+              margin: '0px',
+              padding: '40px',
+              zIndex: 'unset',
+              alignSelf: 'unset',
+              width: '100%',
+              maxWidth: 'unset',
+              minWidth: 'unset',
+              height: 'auto',
+              maxHeight: 'unset',
+              minHeight: 'unset',
+              background: 'none'
+            }}>
+              {partners.slice(0, 6).map((partner, index) => (
+                <div
+                  key={index}
+                  className="ww-layout ww-flexbox ww-element ww-flexbox__object"
+                  style={{
+                    display: 'flex',
+                    flexFlow: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    margin: '0px',
+                    padding: '0px',
+                    zIndex: 'unset',
+                    alignSelf: 'unset',
+                    maxWidth: 'unset',
+                    minWidth: 'unset',
+                    height: 'auto',
+                    maxHeight: '100px',
+                    minHeight: 'unset',
+                    background: 'rgba(255, 255, 255, 0.2)',
+                    boxShadow: 'rgba(0, 0, 0, 0.05) 0px 4px 4px 0px',
+                    borderRadius: '10px',
+                    backdropFilter: 'blur(4px)'
                   }}
-                />
-              </div>
+                  title={partner.name}
+                >
+                  <div className="ww-image-basic ww-element ww-flexbox__object" style={{
+                    margin: '0px',
+                    padding: '0px',
+                    zIndex: 'unset',
+                    alignSelf: 'unset',
+                    display: 'block',
+                    maxWidth: 'unset',
+                    minWidth: 'unset',
+                    height: 'auto',
+                    maxHeight: 'unset',
+                    minHeight: 'unset',
+                    background: 'none'
+                  }}>
+                    <div className="ww-image-basic-overlay"></div>
+                    <img
+                      src={partner.logo}
+                      alt={partner.name}
+                      loading="lazy"
+                      style={{
+                        maxWidth: '90%',
+                        maxHeight: '80%',
+                        objectFit: 'contain'
+                      }}
+                      onError={(e) => {
+                        const el = e.currentTarget;
+                        el.style.display = "none";
+                        const parent = el.parentElement;
+                        if (parent && !parent.querySelector("span")) {
+                          const span = document.createElement("span");
+                          span.className = "font-bold text-2xl text-muted-foreground";
+                          span.textContent = partner.name
+                            .split(" ")
+                            .map((s) => s[0])
+                            .join("")
+                            .slice(0, 3);
+                          parent.appendChild(span);
+                        }
+                      }}
+                    />
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
 
-        {/* Second row (5 cols) similar to the original HTML layout */}
-        <div className="grid grid-cols-3 md:grid-cols-5 gap-8 max-w-6xl mx-auto px-8 mt-6">
-          {partners.slice(6).map((partner, index) => (
-            <div
-              key={index}
-              className="flex flex-col justify-center items-center p-0 rounded-2xl bg-[rgba(255,255,255,0.3)] shadow-sm border border-[rgba(0,0,0,0.05)] backdrop-blur-md max-h-[120px] h-full"
-              title={partner.name}
-            >
-              <div className="ww-image-basic block w-full h-full flex items-center justify-center p-4">
-                <img
-                  src={partner.logo}
-                  alt={partner.name}
-                  loading="lazy"
-                  className="max-h-[80%] max-w-[90%] object-contain"
-                  onError={(e) => {
-                    const el = e.currentTarget;
-                    el.style.display = "none";
-                    const parent = el.parentElement;
-                    if (parent && !parent.querySelector("span")) {
-                      const span = document.createElement("span");
-                      span.className = "font-bold text-2xl text-muted-foreground";
-                      span.textContent = partner.name
-                        .split(" ")
-                        .map((s) => s[0])
-                        .join("")
-                        .slice(0, 3);
-                      parent.appendChild(span);
-                    }
+            {/* Second row of partners (5 columns) */}
+            <div className="ww-layout ww-flexbox ww-element ww-flexbox__object" style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(5, 1fr)',
+              columnGap: '32px',
+              margin: '0px',
+              padding: '40px 80px',
+              zIndex: 'unset',
+              alignSelf: 'unset',
+              width: '100%',
+              maxWidth: 'unset',
+              minWidth: 'unset',
+              height: 'auto',
+              maxHeight: 'unset',
+              minHeight: 'unset',
+              background: 'none'
+            }}>
+              {partners.slice(6).map((partner, index) => (
+                <div
+                  key={index + 6}
+                  className="ww-layout ww-flexbox ww-element ww-flexbox__object"
+                  style={{
+                    display: 'flex',
+                    flexFlow: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    margin: '0px',
+                    padding: '0px',
+                    zIndex: 'unset',
+                    alignSelf: 'unset',
+                    maxWidth: 'unset',
+                    minWidth: 'unset',
+                    height: 'auto',
+                    maxHeight: '100px',
+                    minHeight: 'unset',
+                    background: 'rgba(255, 255, 255, 0.2)',
+                    boxShadow: 'rgba(0, 0, 0, 0.05) 0px 4px 4px 0px',
+                    borderRadius: '10px',
+                    backdropFilter: 'blur(4px)'
                   }}
-                />
-              </div>
+                  title={partner.name}
+                >
+                  <div className="ww-image-basic ww-element ww-flexbox__object" style={{
+                    margin: '0px',
+                    padding: '0px',
+                    zIndex: 'unset',
+                    alignSelf: 'unset',
+                    display: 'block',
+                    maxWidth: 'unset',
+                    minWidth: 'unset',
+                    height: 'auto',
+                    maxHeight: '80%',
+                    minHeight: 'unset',
+                    background: 'none'
+                  }}>
+                    <div className="ww-image-basic-overlay"></div>
+                    <img
+                      src={partner.logo}
+                      alt={partner.name}
+                      loading="lazy"
+                      style={{
+                        maxWidth: '90%',
+                        maxHeight: '80%',
+                        objectFit: 'contain'
+                      }}
+                      onError={(e) => {
+                        const el = e.currentTarget;
+                        el.style.display = "none";
+                        const parent = el.parentElement;
+                        if (parent && !parent.querySelector("span")) {
+                          const span = document.createElement("span");
+                          span.className = "font-bold text-2xl text-muted-foreground";
+                          span.textContent = partner.name
+                            .split(" ")
+                            .map((s) => s[0])
+                            .join("")
+                            .slice(0, 3);
+                          parent.appendChild(span);
+                        }
+                      }}
+                    />
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </section>

@@ -3,6 +3,8 @@ import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Sidebar from '@/components/Sidebar'
+import { CartProvider } from '@/lib/cart-context'
+import CartSuccessPopup from '@/components/CartSuccessPopup'
 
 export const metadata: Metadata = {
   title: 'N-Edu - Giáo dục chất lượng cho người Việt',
@@ -17,11 +19,14 @@ export default function RootLayout({
   return (
     <html lang="vi">
       <body>
-        <Header />
-        <div className="h-20" />
-        <main>{children}</main>
-        <Sidebar />
-        <Footer />
+        <CartProvider>
+          <Header />
+          <div className="h-20" />
+          <main>{children}</main>
+          <Sidebar />
+          <Footer />
+          <CartSuccessPopup />
+        </CartProvider>
       </body>
     </html>
   )

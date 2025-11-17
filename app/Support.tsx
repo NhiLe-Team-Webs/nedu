@@ -19,7 +19,7 @@ const Supports = () => {
             <input
               type="email"
               name="email"
-              placeholder="Vui lòng để lại email, chúng tôi sẽ liên lạc sớm nhất"
+              placeholder="Vui lòng để lại email, chúng tôi sẽ liên hệ sớm nhất"
               className="w-full bg-transparent border-b border-white/40 placeholder-white/80 text-white py-2 pr-12"
               required
             />

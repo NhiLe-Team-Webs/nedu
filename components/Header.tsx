@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
+import { Menu, ShoppingCart } from "lucide-react";
 import { useState } from "react";
 
 const Header = () => {
@@ -61,6 +61,13 @@ const Header = () => {
 
         {/* right column: actions aligned to the end */}
         <div className="flex items-center justify-end gap-4">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="hidden md:inline-flex text-gray-600 hover:text-amber-400"
+          >
+            <ShoppingCart className="h-6 w-6" />
+          </Button>
           <Button className="hidden md:inline-flex bg-amber-400 hover:bg-amber-500 text-white rounded-full px-6 py-2" size="lg">
             ĐĂNG KÝ NGAY
           </Button>
@@ -109,9 +116,18 @@ const Header = () => {
             >
               LIÊN HỆ
             </a>
-            <Button className="bg-amber-400 hover:bg-amber-500 text-white rounded-full px-6 py-2 text-center">
-              ĐĂNG KÝ NGAY
-            </Button>
+            <div className="flex items-center gap-3">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-gray-600 hover:text-amber-400"
+              >
+                <ShoppingCart className="h-6 w-6" />
+              </Button>
+              <Button className="bg-amber-400 hover:bg-amber-500 text-white rounded-full px-6 py-2 text-center">
+                ĐĂNG KÝ NGAY
+              </Button>
+            </div>
           </div>
         </nav>
       )}

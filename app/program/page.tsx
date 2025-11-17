@@ -2,8 +2,9 @@
 
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
+import { ShoppingCart } from 'lucide-react'
 
-// Course data based on actual course pages in the folders
+// Course data based on actual course pages in folders
 const coursesData = [
   // Offline courses
   {
@@ -12,7 +13,7 @@ const coursesData = [
     mode: 'offline',
     title: 'Là Chính Mình 03',
     category: ['Phát triển bản thân', 'Là chính mình'],
-    heroImage: 'https://nedu.nhi.sg/images/1_3.jpg',
+    heroImage: 'https://nedu.nhi.sg/images/lachinhminh.png',
     price: {
       amount: '59.696.000',
       currency: 'VNĐ'
@@ -122,10 +123,10 @@ const coursesData = [
 ]
 
 const filters = [
-  { id: 'all', label: 'Tat ca' },
+  { id: 'all', label: 'Tất cả' },
   { id: 'offline', label: 'Offline' },
   { id: 'online', label: 'Online' },
-  { id: 'business', label: 'Doanh nghiep' },
+  { id: 'business', label: 'Doanh nghiệp' },
 ]
 
 const currencyFormatter = new Intl.NumberFormat('vi-VN', {
@@ -149,11 +150,11 @@ export default function ProgramPage() {
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="container mx-auto px-4">
         <h1 className="text-4xl md:text-5xl font-bold text-center mb-4 text-primary uppercase">
-          Cac khoa hoc chat luong
+          Các khóa học chất lượng
         </h1>
         <p className="text-center text-gray-600 mb-10 max-w-3xl mx-auto">
-          Lua chon chuong trinh phu hop voi hanh trinh phat trien ban than va doanh nghiep cua
-          ban. Moi khoa hoc deu di kem cong cu thuc hanh va co the tham gia ngay.
+          Lựa chọn chương trình phù hợp với hành trình phát triển bản thân và doanh nghiệp của
+          bạn. Mỗi khóa học đều đi kèm công cụ thực hành và có thể tham gia ngay.
         </p>
 
         <div className="flex flex-wrap justify-center gap-3 mb-12">
@@ -222,17 +223,25 @@ export default function ProgramPage() {
                       👩‍🏫
                     </span>
                     <p>
-                      Người dẫn đường:{' '}
+                      Giảng viên:{' '}
                       <span className="font-semibold text-gray-900">{course.info.instructor}</span>
                     </p>
                   </div>
                 </div>
-                <Link
-                  href={`/program-${course.mode}/${course.slug}`}
-                  className="mt-auto w-full bg-primary text-white font-semibold uppercase tracking-wide py-3 rounded-full shadow hover:bg-primary/90 transition text-center"
-                >
-                  Xem chi tiết
-                </Link>
+                <div className="mt-auto flex gap-3">
+                  <button
+                    className="flex-1 bg-amber-400 hover:bg-amber-500 text-white font-semibold uppercase tracking-wide py-3 rounded-full shadow transition flex items-center justify-center gap-2"
+                  >
+                    <ShoppingCart className="h-4 w-4" />
+                    Thêm vào giỏ
+                  </button>
+                  <Link
+                    href={`/program-${course.mode}/${course.slug}`}
+                    className="flex-1 bg-primary text-white font-semibold uppercase tracking-wide py-3 rounded-full shadow hover:bg-primary/90 transition text-center"
+                  >
+                    Xem chi tiết
+                  </Link>
+                </div>
               </div>
             </article>
           ))}
