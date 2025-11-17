@@ -1,7 +1,7 @@
 'use client'
 
-import { useMemo, useState } from 'react'
-import Link from 'next/link'
+import { useMemo, useState, MouseEvent, KeyboardEvent } from 'react'
+import { useRouter } from 'next/navigation'
 import { ShoppingCart } from 'lucide-react'
 import { useCart } from '@/lib/cart-context'
 import { courses } from '@/data/courses'
@@ -16,10 +16,6 @@ const coursesData = [
     title: 'Là Chính Mình 03',
     category: ['Phát triển bản thân', 'Là chính mình'],
     heroImage: 'https://nedu.nhi.sg/images/lachinhminh.png',
-    price: {
-      amount: '59.696.000',
-      currency: 'VNĐ'
-    },
     info: {
       sessions: '3,5 ngày',
       instructor: 'NhiLe x Guest Instructors'
@@ -32,10 +28,6 @@ const coursesData = [
     title: 'Sức Mạnh Vô Hạn',
     category: ['Doanh nhân', 'Doanh nghiệp'],
     heroImage: 'https://nedu.nhi.sg/images/2_3.jpg',
-    price: {
-      amount: '23.960',
-      currency: 'USD'
-    },
     info: {
       sessions: '6 tháng online và 4,5 ngày offline',
       instructor: 'Mel x NhiLe'
@@ -49,10 +41,6 @@ const coursesData = [
     title: 'GEN AI 101',
     category: ['AI'],
     heroImage: 'https://nedu.nhi.sg/images/thum_yt_1.png',
-    price: {
-      amount: '13.069.000',
-      currency: 'VNĐ'
-    },
     info: {
       sessions: '2 buổi',
       instructor: 'Linda Hui-Isaac'
@@ -65,10 +53,6 @@ const coursesData = [
     title: 'Thương Hiệu Của Bạn',
     category: ['Thương hiệu'],
     heroImage: 'https://nedu.nhi.sg/images/thuonghieucuaban.png',
-    price: {
-      amount: '18.960.000',
-      currency: 'VNĐ'
-    },
     info: {
       sessions: '4 buổi',
       instructor: 'NhiLe'
@@ -81,10 +65,6 @@ const coursesData = [
     title: 'CUỘC SỐNG CỦA BẠN',
     category: ['Phát triển bản thân'],
     heroImage: 'https://nedu.nhi.sg/images/cuocsongcuaban.png',
-    price: {
-      amount: '18.960.000',
-      currency: 'VNĐ'
-    },
     info: {
       sessions: '3 buổi',
       instructor: 'NhiLe'
@@ -97,10 +77,6 @@ const coursesData = [
     title: 'AI FOR BUSINESS COMMUNICATION',
     category: ['Trí tuệ nhân tạo ứng dụng'],
     heroImage: 'https://nedu.nhi.sg/images/thum_yt_2.png',
-    price: {
-      amount: '23.609.000',
-      currency: 'VNĐ'
-    },
     info: {
       sessions: '3 buổi',
       instructor: 'Linda Hui-Isaac'
@@ -113,10 +89,6 @@ const coursesData = [
     title: 'CERTIFIED GEN AI FOUNDATION IN MARKETING & BUSINESS STRATEGY',
     category: ['Marketing số'],
     heroImage: 'https://nedu.nhi.sg/images/thum_yt_3.png',
-    price: {
-      amount: '28.985.000',
-      currency: 'VNĐ'
-    },
     info: {
       sessions: '2 buổi',
       instructor: 'Linda Hui-Isaac'
@@ -131,15 +103,42 @@ const filters = [
   { id: 'business', label: 'Doanh nghiệp' },
 ]
 
-const currencyFormatter = new Intl.NumberFormat('vi-VN', {
-  style: 'currency',
-  currency: 'VND',
-  minimumFractionDigits: 0,
-})
+const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max)
 
 export default function ProgramPage() {
   const [filter, setFilter] = useState('all')
   const { addToCart } = useCart()
+  const router = useRouter()
+
+  const handleCardMouseMove = (event: MouseEvent<HTMLElement>) => {
+    const card = event.currentTarget
+    const rect = card.getBoundingClientRect()
+    const offsetX = event.clientX - rect.left - rect.width / 2
+    const offsetY = event.clientY - rect.top - rect.height / 2
+    const rotateX = clamp((-offsetY / (rect.height / 2)) * 4, -6, 6)
+    const rotateY = clamp((offsetX / (rect.width / 2)) * 4, -6, 6)
+
+    card.style.willChange = 'transform'
+    card.style.transition = 'transform 80ms ease-out'
+    card.style.transform = `perspective(900px) scale(1.01) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`
+  }
+
+  const handleCardMouseLeave = (event: MouseEvent<HTMLElement>) => {
+    const card = event.currentTarget
+    card.style.transition = 'transform 160ms ease'
+    card.style.transform = ''
+  }
+
+  const navigateToCourse = (mode: string, slug: string) => {
+    router.push(`/program-${mode}/${slug}`)
+  }
+
+  const handleCardKeyDown = (event: KeyboardEvent<HTMLElement>, mode: string, slug: string) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      navigateToCourse(mode, slug)
+    }
+  }
 
   const filteredCourses = useMemo(() => {
     if (filter === 'offline') return coursesData.filter((course) => course.mode === 'offline')
@@ -178,15 +177,20 @@ export default function ProgramPage() {
           {filteredCourses.map((course) => (
             <article
               key={course.id}
-              className="bg-white rounded-[24px] shadow-md hover:shadow-lg transition flex flex-col overflow-hidden border border-gray-100 min-h-[360px] w-full"
+              role="button"
+              tabIndex={0}
+              aria-label={`Xem chi tiết ${course.title}`}
+              onClick={() => navigateToCourse(course.mode, course.slug)}
+              onKeyDown={(event) => handleCardKeyDown(event, course.mode, course.slug)}
+              onMouseMove={handleCardMouseMove}
+              onMouseLeave={handleCardMouseLeave}
+              className="bg-white rounded-[24px] shadow-md hover:shadow-lg transition flex flex-col overflow-hidden border border-gray-100 min-h-[360px] w-full cursor-pointer"
             >
-              <Link href={`/program-${course.mode}/${course.slug}`}>
-                <img
-                  src={course.heroImage}
-                  alt={course.title}
-                  className="w-full h-40 object-cover"
-                />
-              </Link>
+              <img
+                src={course.heroImage}
+                alt={course.title}
+                className="w-full h-42 object-cover"
+              />
               <div className="p-5 flex flex-col flex-1">
                 <div className="flex flex-wrap gap-2 mb-3">
                   {course.category.map((category) => (
@@ -198,19 +202,9 @@ export default function ProgramPage() {
                     </span>
                   ))}
                 </div>
-                <Link href={`/program-${course.mode}/${course.slug}`}>
-                  <h3 className="text-xl font-bold mb-2 text-gray-900 hover:text-primary transition">
-                    {course.title}
-                  </h3>
-                </Link>
-                <div className="flex items-baseline gap-3 mb-4">
-                  <div className="text-xl font-extrabold text-primary">
-                    {course.price.currency === 'VNĐ'
-                      ? currencyFormatter.format(parseInt(course.price.amount.replace(/\./g, '')))
-                      : `${course.price.currency} ${course.price.amount}`
-                    }
-                  </div>
-                </div>
+                <h3 className="text-xl font-bold mb-2 text-gray-900 hover:text-primary transition">
+                  {course.title}
+                </h3>
                 <div className="space-y-2 text-sm text-gray-700 mb-4">
                   <div className="flex items-center gap-2">
                     <span role="img" aria-label="duration">
@@ -233,18 +227,15 @@ export default function ProgramPage() {
                 </div>
                 <div className="mt-auto flex gap-3">
                   <button
-                    onClick={() => addToCart(courses.find(c => c.id === course.id)!)}
+                    onClick={(event) => {
+                      event.stopPropagation()
+                      addToCart(courses.find(c => c.id === course.id)!)
+                    }}
                     className="btn-secondary flex-1"
                   >
                     <ShoppingCart className="h-4 w-4" />
-                    Thêm vào giỏ
+                    Thêm vào giỏ hàng
                   </button>
-                  <Link
-                    href={`/program-${course.mode}/${course.slug}`}
-                    className="flex-1 bg-primary text-white font-semibold uppercase tracking-wide py-3 rounded-full shadow hover:bg-primary/90 transition text-center"
-                  >
-                    Xem chi tiết
-                  </Link>
                 </div>
               </div>
             </article>
