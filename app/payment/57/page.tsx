@@ -57,34 +57,34 @@ export default function PaymentPage() {
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 mb-8">
-          <h2 className="text-2xl font-bold mb-2 text-primary">1. ĐIỀN THÔNG TIN</h2>
-          <p className="text-gray-600 mb-8">Điền đầy đủ thông tin người mua khóa học</p>
+        <div className="card mb-8">
+          <h2 className="text-2xl font-bold mb-2 text-text-primary">1. ĐIỀN THÔNG TIN</h2>
+          <p className="text-text-secondary mb-8">Điền đầy đủ thông tin người mua khóa học</p>
 
           {/* Discount Code Section */}
-          <div className="bg-gray-50 rounded-xl p-6 mb-6">
-            <h3 className="font-bold text-lg mb-4 text-gray-800">Mã giảm giá</h3>
+          <div className="warning-message mb-6">
+            <h3 className="font-bold text-lg mb-4 text-text-primary">Mã giảm giá</h3>
             <div className="flex gap-2">
               <div className="flex-1 relative">
-                <Tag className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <Tag className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-text-tertiary" />
                 <input
                   type="text"
                   placeholder="Nhập mã giảm giá"
                   value={discountCode}
                   onChange={(e) => setDiscountCode(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition"
+                  className="input-field pl-10"
                 />
               </div>
               <button
                 type="button"
                 onClick={handleApplyDiscount}
-                className="bg-amber-400 hover:bg-amber-500 text-white px-6 py-3 rounded-lg font-semibold transition"
+                className="btn-secondary"
               >
                 Áp dụng
               </button>
             </div>
             {discount > 0 && (
-              <div className="mt-2 text-green-600 text-sm font-semibold">
+              <div className="mt-2 text-success text-sm font-semibold">
                 Đã áp dụng mã giảm giá: {discount}%
               </div>
             )}

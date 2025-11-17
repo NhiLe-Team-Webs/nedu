@@ -68,17 +68,17 @@ const Header = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="hidden md:inline-flex text-gray-600 hover:text-amber-400 relative"
+            className="hidden md:inline-flex text-text-secondary hover:text-primary relative"
             onClick={() => router.push('/cart')}
           >
             <ShoppingCart className="h-6 w-6" />
             {totalItems > 0 && (
-              <span className="absolute -top-1 -right-1 bg-amber-400 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
+              <span className="absolute -top-1 -right-1 bg-warning text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
                 {totalItems}
               </span>
             )}
           </Button>
-          <Button className="hidden md:inline-flex bg-amber-400 hover:bg-amber-500 text-white rounded-full px-6 py-2" size="lg">
+          <Button className="btn-primary hidden md:inline-flex">
             ĐĂNG KÝ NGAY
           </Button>
           <Button
@@ -130,17 +130,17 @@ const Header = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                className="text-gray-600 hover:text-amber-400 relative"
+                className="text-text-secondary hover:text-primary relative"
                 onClick={() => router.push('/cart')}
               >
                 <ShoppingCart className="h-6 w-6" />
                 {totalItems > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-amber-400 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
+                  <span className="absolute -top-1 -right-1 bg-warning text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
                     {totalItems}
                   </span>
                 )}
               </Button>
-              <Button className="bg-amber-400 hover:bg-amber-500 text-white rounded-full px-6 py-2 text-center">
+              <Button className="btn-primary">
                 ĐĂNG KÝ NGAY
               </Button>
             </div>

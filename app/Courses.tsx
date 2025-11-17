@@ -133,7 +133,7 @@ const Courses: React.FC = () => {
                                 }}
                                 variant="hero"
                                 size="icon"
-                                className="rounded-b-full rounded-t-full text-[16px] uppercase !bg-[#F7B50C] !text-white w-auto flex items-center justify-center py-[12px] px-[20px]"
+                                className="btn-secondary rounded-b-full rounded-t-full text-[16px] uppercase w-auto flex items-center justify-center py-[12px] px-[20px]"
                               >
                                 <ShoppingCart className="h-4 w-4 mr-1" />
                                 Thêm vào giỏ
@@ -141,7 +141,7 @@ const Courses: React.FC = () => {
                               <Button
                                 variant="hero"
                                 size="icon"
-                                className="rounded-b-full rounded-t-full text-[16px] uppercase !bg-[#F7B50C] !text-white w-auto flex items-center justify-center py-[12px] px-[20px]"
+                                className="btn-primary rounded-b-full rounded-t-full text-[16px] uppercase w-auto flex items-center justify-center py-[12px] px-[20px]"
                               >
                                 Đăng ký ngay
                                 <ChevronRight className="font-extrabold" />

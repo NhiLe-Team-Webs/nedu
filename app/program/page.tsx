@@ -234,7 +234,7 @@ export default function ProgramPage() {
                 <div className="mt-auto flex gap-3">
                   <button
                     onClick={() => addToCart(courses.find(c => c.id === course.id)!)}
-                    className="flex-1 bg-amber-400 hover:bg-amber-500 text-white font-semibold uppercase tracking-wide py-3 rounded-full shadow transition flex items-center justify-center gap-2"
+                    className="btn-secondary flex-1"
                   >
                     <ShoppingCart className="h-4 w-4" />
                     Thêm vào giỏ
