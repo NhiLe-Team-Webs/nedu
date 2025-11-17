@@ -1,10 +1,25 @@
-import Image from "next/image";
+import Courses from "@/components/Courses";
+import Mission from "@/components/Mission";
+import ProgramsSection from "@/components/Programs";
+import Supports from "@/components/Supports";
+import Testimonials from "@/components/Testimonials";
+import Benefits from "@/components/Benefits";
+import Partners from "@/components/Partners";
+import Connection from "@/components/Connection";
+import Hero from "@/components/Hero";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white sm:items-start">
+      <main className="h-full">
+        <Hero />
+        <Courses />
+        <Mission />
+        <ProgramsSection />
+        <Supports />
+        <Testimonials />
+        <Benefits />
+        <Partners />
+        <Connection />
       </main>
-    </div>
   );
 }

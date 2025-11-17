@@ -9,7 +9,7 @@ const Header = () => {
   const isActive = (path: string) => pathname === path;
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm flex justify-center">
+    <header className="sticky top-0 left-0 right-0 z-50 backdrop-blur-sm flex justify-center">
       <div className="w-full max-w-[1280px] flex justify-between gap-4 px-12 items-center h-20 bg-white/95 shadow-lg">
         {/* center column: nav centered by grid */}
         <nav className="hidden md:flex justify-between items-center gap-12 w-full font-semibold">
