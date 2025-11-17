@@ -2,14 +2,106 @@
 
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
-import { courseCatalog } from '@/data/courseCatalog'
-import { useCart } from '@/components/cart/CartContext'
 
 const filters = [
   { id: 'all', label: 'Tat ca' },
   { id: 'offline', label: 'Offline' },
   { id: 'online', label: 'Online' },
   { id: 'business', label: 'Doanh nghiep' },
+]
+
+const courseCatalog = [
+  {
+    id: 'la-chinh-minh',
+    slug: 'la-chinh-minh',
+    title: 'Là chính mình 3',
+    price: null,
+    originalPrice: null,
+    image: 'https://nedu.nhi.sg/images/lachinhminh.png',
+    tags: ['Phat trien ban than', 'Offline'],
+    mode: 'offline',
+    duration: '3,5 ngày',
+    instructor: 'NhiLe x Guest Instructors',
+    link: '/program-offline/la-chinh-minh',
+  },
+  {
+    id: 'suc-manh-vo-han',
+    slug: 'suc-manh-vo-han',
+    title: 'Sức mạnh vô hạn',
+    price: 180000000,
+    originalPrice: 575000000,
+    image: 'https://nedu.nhi.sg/images/lachinhminh.png',
+    tags: ['Doanh nghiep', 'Offline'],
+    mode: 'offline',
+    duration: '6 tháng online + 4,5 ngày offline',
+    instructor: 'Mel x NhiLe',
+    link: '/program-offline/suc-manh-vo-han',
+  },
+  {
+    id: 'ai-for-business-communication',
+    slug: 'ai-for-business-communication',
+    title: 'AI for Business Communication',
+    price: null,
+    originalPrice: null,
+    image: 'https://nedu.nhi.sg/images/thum_yt_2.png',
+    tags: ['Online', 'AI', 'Giao tiep kinh doanh'],
+    mode: 'online',
+    duration: '3 buổi',
+    instructor: 'Linda Hui',
+    link: '/program-online/ai-for-business-communication',
+  },
+  {
+    id: 'ai-in-marketing',
+    slug: 'ai-in-marketing',
+    title: 'AI In Marketing',
+    price: null,
+    originalPrice: null,
+    image: 'https://nedu.nhi.sg/images/thum_yt_3.png',
+    tags: ['Online', 'AI', 'Marketing'],
+    mode: 'online',
+    duration: '2 ngày',
+    instructor: 'Linda Hui',
+    link: '/program-online/ai-in-marketing',
+  },
+  {
+    id: 'cuoc-song-cua-ban',
+    slug: 'cuoc-song-cua-ban',
+    title: 'Cuộc sống của bạn',
+    price: null,
+    originalPrice: null,
+    image: 'https://nedu.nhi.sg/images/cuocsongcuaban.png',
+    tags: ['Online', 'Phat trien ban than'],
+    mode: 'online',
+    duration: '3 ngày',
+    instructor: 'NhiLe',
+    link: '/program-online/cuoc-song-cua-ban',
+  },
+  {
+    id: 'gen-ai-101',
+    slug: 'gen-ai-101',
+    title: 'Gen AI 101',
+    price: null,
+    originalPrice: null,
+    image: 'https://nedu.nhi.sg/images/thum_yt_1.png',
+    tags: ['Online', 'AI', 'Ky nang so'],
+    mode: 'online',
+    duration: '2 buổi',
+    instructor: 'Linda Hui',
+    link: '/program-online/gen-ai-101',
+  },
+  {
+    id: 'thuong-hieu-cua-ban',
+    slug: 'thuong-hieu-cua-ban',
+    title: 'Thương hiệu của bạn',
+    price: null,
+    originalPrice: null,
+    image: 'https://nedu.nhi.sg/images/thuonghieucuaban.png',
+    tags: ['Online', 'Doanh nghiep'],
+    mode: 'online',
+    duration: '4 ngày',
+    instructor: 'NhiLe',
+    link: '/program-online/thuong-hieu-cua-ban',
+  },
 ]
 
 const currencyFormatter = new Intl.NumberFormat('vi-VN', {
@@ -20,7 +112,6 @@ const currencyFormatter = new Intl.NumberFormat('vi-VN', {
 
 export default function ProgramPage() {
   const [filter, setFilter] = useState('all')
-  const { addToCart } = useCart()
 
   const filteredCourses = useMemo(() => {
     if (filter === 'offline') return courseCatalog.filter((course) => course.mode === 'offline')
@@ -70,9 +161,9 @@ export default function ProgramPage() {
               </Link>
               <div className="p-5 flex flex-col flex-1">
                 <div className="flex flex-wrap gap-2 mb-3">
-                  {course.tags.map((tag) => (
+                  {course.tags.map((tag, tagIndex) => (
                     <span
-                      key={tag}
+                      key={`${course.id}-${tag}-${tagIndex}`}
                       className="text-xs bg-amber-100 text-amber-600 px-3 py-1 rounded-full font-semibold"
                     >
                       {tag}
@@ -86,7 +177,7 @@ export default function ProgramPage() {
                 </Link>
                 <div className="flex items-baseline gap-3 mb-4">
                   <div className="text-xl font-extrabold text-primary">
-                    {currencyFormatter.format(course.price)}
+                    {course.price !== null ? currencyFormatter.format(course.price) : 'Liên hệ'}
                   </div>
                   {course.originalPrice && (
                     <div className="text-sm text-gray-400 line-through">
@@ -114,20 +205,9 @@ export default function ProgramPage() {
                     </p>
                   </div>
                 </div>
-                <button
-                  onClick={() =>
-                    addToCart({
-                      id: course.id,
-                      slug: course.slug,
-                      title: course.title,
-                      price: course.price,
-                      image: course.image,
-                    })
-                  }
-                  className="mt-auto w-full bg-yellow-400 text-gray-900 font-semibold uppercase tracking-wide py-3 rounded-full shadow hover:bg-yellow-300 transition"
-                >
-                  Them vao gio hang
-                </button>
+                <p className="mt-auto text-sm text-gray-500 italic">
+                  Dang mo dang ky. Vui long lien he de biet them chi tiet.
+                </p>
               </div>
             </article>
           ))}
