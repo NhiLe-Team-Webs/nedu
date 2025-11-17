@@ -3,19 +3,28 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Tag } from 'lucide-react'
+import { useRouter, useParams } from 'next/navigation'
 
 export default function PaymentPage() {
+  const router = useRouter()
+  const params = useParams()
+  const programId = params.programId as string
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
     telegram: '',
     birthdate: '',
-    gender: ''
+    gender: '',
+    address: '',
+    note: ''
   })
   const [agreed, setAgreed] = useState(false)
   const [discountCode, setDiscountCode] = useState('')
   const [discount, setDiscount] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
+  const [errors, setErrors] = useState<string[]>([])
 
   const handleApplyDiscount = () => {
     // Simple discount logic for demo
@@ -29,13 +38,80 @@ export default function PaymentPage() {
     }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setErrors([])
+    
     if (!agreed) {
-      alert('Vui lòng đồng ý với điều khoản sử dụng')
+      setErrors(['Vui lòng đồng ý với điều khoản sử dụng'])
       return
     }
-    alert('Đăng ký thành công! (This is a demo)')
+
+    // Validate required fields
+    const requiredFields = ['name', 'email', 'phone', 'telegram', 'birthdate', 'gender']
+    const missingFields = requiredFields.filter(field => !formData[field as keyof typeof formData])
+    
+    if (missingFields.length > 0) {
+      setErrors(['Vui lòng điền đầy đủ các trường bắt buộc'])
+      return
+    }
+
+    setIsLoading(true)
+
+    try {
+      // Prepare data for API according to payment-api-template.md
+      const apiData = {
+        fullName: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        telegram: formData.telegram,
+        birthday: formData.birthdate ? new Date(formData.birthdate).toISOString() : '',
+        gender: formData.gender,
+        address: formData.address || '',
+        note: formData.note || '',
+        programId: programId
+      }
+
+      // Note: Do NOT include returnUrl as it causes API error
+      // VNPAY will handle the callback automatically
+
+      console.log('Sending payment data:', apiData)
+
+      const response = await fetch('https://api.nedu.nhi.sg/api/order/payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(apiData)
+      })
+
+      if (!response.ok) {
+        const errorText = await response.text()
+        console.error('API Error Response:', errorText)
+        throw new Error(`API Error: ${response.status} - ${errorText}`)
+      }
+
+      const result = await response.json()
+      console.log('API Success Response:', result)
+      
+      // Check if response contains paymentUrl (VNPAY redirect)
+      if (result.paymentUrl) {
+        // Redirect to VNPAY payment page
+        window.location.href = result.paymentUrl
+      } else {
+        // Show success message for non-VNPAY payments
+        alert('Đăng ký thành công!')
+        router.push('/')
+      }
+      
+    } catch (error) {
+      console.error('Payment submission error:', error)
+      const errorMessage = error instanceof Error ? error.message : 'Đã xảy ra lỗi không xác định'
+      setErrors([`Lỗi khi gửi thông tin: ${errorMessage}`])
+      alert(`Lỗi khi gửi thông tin: ${errorMessage}`)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -212,6 +288,44 @@ export default function PaymentPage() {
                   </div>
                 </div>
 
+                <div>
+                  <label className="block text-gray-700 font-semibold mb-2">
+                    Địa chỉ
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Nhập địa chỉ của bạn"
+                    value={formData.address}
+                    onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-700 font-semibold mb-2">
+                    Ghi chú
+                  </label>
+                  <textarea
+                    rows={3}
+                    placeholder="Nhập ghi chú (nếu có)"
+                    value={formData.note}
+                    onChange={(e) => setFormData({ ...formData, note: e.target.value })}
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition"
+                  />
+                </div>
+
+                {/* Error Display */}
+                {errors.length > 0 && (
+                  <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                    <h4 className="text-red-800 font-semibold mb-2">Lỗi:</h4>
+                    <ul className="list-disc list-inside text-red-700">
+                      {errors.map((error, index) => (
+                        <li key={index}>{error}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
                 <div className="flex items-start">
                   <input
                     type="checkbox"
@@ -244,12 +358,25 @@ export default function PaymentPage() {
             <div className="text-center">
               <button
                 type="submit"
-                className="bg-primary hover:bg-primary-dark text-white px-12 py-3 rounded-full font-semibold transition text-lg inline-flex items-center"
+                disabled={isLoading}
+                className="bg-primary hover:bg-primary-dark disabled:bg-gray-400 text-white px-12 py-3 rounded-full font-semibold transition text-lg inline-flex items-center"
               >
-                Bước tiếp theo
-                <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
+                {isLoading ? (
+                  <>
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Đang xử lý...
+                  </>
+                ) : (
+                  <>
+                    Bước tiếp theo
+                    <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </>
+                )}
               </button>
             </div>
           </form>

@@ -172,7 +172,7 @@ export default function AIInMarketingPage() {
           </div>
 
           <div className="text-center">
-            <Link href="/payment/56" className="inline-block bg-primary hover:bg-primary-dark text-white px-12 py-4 rounded-full font-semibold transition text-lg">
+            <Link href="/payment/80" className="inline-block bg-primary hover:bg-primary-dark text-white px-12 py-4 rounded-full font-semibold transition text-lg">
               ĐĂNG KÝ NGAY
             </Link>
           </div>

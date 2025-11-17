@@ -4,9 +4,12 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Tag } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
+import { useRouter } from 'next/navigation';
 
 export default function CheckoutPage() {
+  const router = useRouter();
   const { items, getTotalPrice, clearCart } = useCart();
+  const [currentStep, setCurrentStep] = useState(1); // 1: Information, 2: Confirmation
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -20,6 +23,8 @@ export default function CheckoutPage() {
   const [discountCode, setDiscountCode] = useState('');
   const [discount, setDiscount] = useState(0);
   const [agreed, setAgreed] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState<string[]>([]);
 
   const currencyFormatter = new Intl.NumberFormat('vi-VN', {
     style: 'currency',
@@ -43,14 +48,114 @@ export default function CheckoutPage() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleNextStep = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!agreed) {
-      alert('Vui lòng đồng ý với điều khoản sử dụng');
+    setErrors([]);
+    
+    // Validate required fields
+    const requiredFields = ['name', 'email', 'phone', 'telegram', 'birthdate', 'gender'];
+    const missingFields = requiredFields.filter(field => !formData[field as keyof typeof formData]);
+    
+    if (missingFields.length > 0) {
+      setErrors(['Vui lòng điền đầy đủ các trường bắt buộc']);
       return;
     }
-    alert('Đặt hàng thành công! (This is a demo)');
-    clearCart();
+
+    // Move to confirmation step
+    setCurrentStep(2);
+  };
+
+  const handleBackStep = () => {
+    setCurrentStep(1);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrors([]);
+    
+    if (!agreed) {
+      setErrors(['Vui lòng đồng ý với điều khoản sử dụng']);
+      return;
+    }
+
+    // Validate required fields
+    const requiredFields = ['name', 'email', 'phone', 'telegram', 'birthdate', 'gender'];
+    const missingFields = requiredFields.filter(field => !formData[field as keyof typeof formData]);
+    
+    if (missingFields.length > 0) {
+      setErrors(['Vui lòng điền đầy đủ các trường bắt buộc']);
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      // Get program IDs from cart items
+      const programIds = items.map(item => item.paymentId || item.id);
+      
+      // For each program in cart, send a separate API call
+      const promises = programIds.map(async (programId) => {
+        // Prepare data for API according to payment-api-template.md
+        const apiData = {
+          fullName: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          telegram: formData.telegram,
+          birthday: formData.birthdate ? new Date(formData.birthdate).toISOString() : '',
+          gender: formData.gender,
+          address: formData.address || '',
+          note: formData.note || '',
+          programId: programId.toString()
+        };
+
+        // Note: Do NOT include returnUrl as it causes API error
+        // VNPAY will handle the callback automatically
+
+        console.log('Sending payment data for program', programId, ':', apiData);
+
+        const response = await fetch('https://api.nedu.nhi.sg/api/order/payment', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(apiData)
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error('API Error Response for program', programId, ':', errorText);
+          throw new Error(`API Error for program ${programId}: ${response.status} - ${errorText}`);
+        }
+
+        const result = await response.json();
+        console.log('API Success Response for program', programId, ':', result);
+        return result;
+      });
+
+      const results = await Promise.all(promises);
+      
+      // Check if any response contains paymentUrl (VNPAY redirect)
+      const paymentUrls = results.filter(result => result.paymentUrl);
+      
+      if (paymentUrls.length > 0) {
+        // For multiple programs, redirect to first payment URL
+        // In a real implementation, you might want to handle multiple payments differently
+        window.location.href = paymentUrls[0].paymentUrl;
+      } else {
+        // Show success message for non-VNPAY payments
+        alert('Đặt hàng thành công!');
+        clearCart();
+        router.push('/');
+      }
+      
+    } catch (error) {
+      console.error('Payment submission error:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Đã xảy ra lỗi không xác định';
+      setErrors([`Lỗi khi gửi thông tin: ${errorMessage}`]);
+      alert(`Lỗi khi gửi thông tin: ${errorMessage}`);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleInputChange = (field: string, value: string) => {
@@ -91,6 +196,29 @@ export default function CheckoutPage() {
 
         <h1 className="text-3xl md:text-4xl font-bold mb-8 text-text-primary">Thanh toán</h1>
         
+        {/* Step Indicators */}
+        <div className="flex justify-center items-center mb-12">
+          <div className="flex items-center">
+            <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl ${
+              currentStep >= 1
+                ? 'bg-primary text-white'
+                : 'bg-gray-300 text-gray-600'
+            }`}>
+              1
+            </div>
+            <div className={`w-32 h-1 ${
+              currentStep >= 2 ? 'bg-primary' : 'bg-gray-300'
+            }`}></div>
+            <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl ${
+              currentStep >= 2
+                ? 'bg-primary text-white'
+                : 'bg-gray-300 text-gray-600'
+            }`}>
+              2
+            </div>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Order Items */}
           <div className="lg:col-span-2">
@@ -265,6 +393,18 @@ export default function CheckoutPage() {
                     của chúng tôi.
                   </label>
                 </div>
+
+                {/* Error Display */}
+                {errors.length > 0 && (
+                  <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+                    <h4 className="text-red-800 font-semibold mb-2">Lỗi:</h4>
+                    <ul className="list-disc list-inside text-red-700">
+                      {errors.map((error, index) => (
+                        <li key={index}>{error}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </form>
             </div>
           </div>
@@ -324,9 +464,20 @@ export default function CheckoutPage() {
 
               <button
                 onClick={handleSubmit}
-                className="btn-primary w-full text-center block"
+                disabled={isLoading}
+                className="btn-primary w-full text-center block disabled:bg-gray-400"
               >
-                Hoàn tất thanh toán
+                {isLoading ? (
+                  <div className="flex items-center justify-center">
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Đang xử lý...
+                  </div>
+                ) : (
+                  'Hoàn tất thanh toán'
+                )}
               </button>
               
               <Link
