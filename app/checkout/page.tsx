@@ -220,230 +220,366 @@ export default function CheckoutPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Order Items */}
           <div className="lg:col-span-2">
-            <div className="card mb-6">
-              <h2 className="text-xl font-bold mb-4 text-text-primary">Các khóa học trong giỏ hàng</h2>
-              <div className="space-y-4">
-                {items.map((item) => (
-                  <div key={item.id} className="flex flex-col md:flex-row gap-4 pb-4 border-b last:border-b-0 border-border-color">
-                    <img
-                      src={item.heroImage}
-                      alt={item.title}
-                      className="w-full md:w-24 h-24 object-cover rounded-xl"
-                    />
-                    
-                    <div className="flex-1">
-                      <h3 className="text-lg font-bold mb-1 text-text-primary">{item.title}</h3>
-                      <p className="text-text-secondary mb-2">{item.category.join(', ')}</p>
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <span className="text-text-secondary">Số lượng: {item.quantity}</span>
-                        </div>
-                        <div className="price">
-                          {item.price.currency === 'VNĐ'
-                            ? currencyFormatter.format(parseInt(item.price.amount.replace(/\./g, '')) * item.quantity)
-                            : `${item.price.currency} ${item.price.amount}`
-                          }
+            {currentStep === 1 ? (
+              /* Step 1: Information Form */
+              <>
+                <div className="card mb-6">
+                  <h2 className="text-xl font-bold mb-4 text-text-primary">Các khóa học trong giỏ hàng</h2>
+                  <div className="space-y-4">
+                    {items.map((item) => (
+                      <div key={item.id} className="flex flex-col md:flex-row gap-4 pb-4 border-b last:border-b-0 border-border-color">
+                        <img
+                          src={item.heroImage}
+                          alt={item.title}
+                          className="w-full md:w-24 h-24 object-cover rounded-xl"
+                        />
+                        
+                        <div className="flex-1">
+                          <h3 className="text-lg font-bold mb-1 text-text-primary">{item.title}</h3>
+                          <p className="text-text-secondary mb-2">{item.category.join(', ')}</p>
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <span className="text-text-secondary">Số lượng: {item.quantity}</span>
+                            </div>
+                            <div className="price">
+                              {item.price.currency === 'VNĐ'
+                                ? currencyFormatter.format(parseInt(item.price.amount.replace(/\./g, '')) * item.quantity)
+                                : `${item.price.currency} ${item.price.amount}`
+                              }
+                            </div>
+                          </div>
                         </div>
                       </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Payment Form */}
+                <div className="card">
+                  <h2 className="text-xl font-bold mb-4 text-text-primary">1. THÔNG TIN THANH TOÁN</h2>
+                  
+                  <form id="checkout-form" onSubmit={handleNextStep} className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-text-primary font-semibold mb-2">
+                          Họ và tên <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          placeholder="Nhập họ và tên của bạn"
+                          value={formData.name}
+                          onChange={(e) => handleInputChange('name', e.target.value)}
+                          className="input-field"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-text-primary font-semibold mb-2">
+                          Email <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="email"
+                          required
+                          placeholder="Nhập email của bạn"
+                          value={formData.email}
+                          onChange={(e) => handleInputChange('email', e.target.value)}
+                          className="input-field"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-text-primary font-semibold mb-2">
+                          Số điện thoại <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="tel"
+                          required
+                          placeholder="Nhập số điện thoại"
+                          value={formData.phone}
+                          onChange={(e) => handleInputChange('phone', e.target.value)}
+                          className="input-field"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-text-primary font-semibold mb-2">
+                          Username Telegram <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          placeholder="@username"
+                          value={formData.telegram}
+                          onChange={(e) => handleInputChange('telegram', e.target.value)}
+                          className="input-field"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-text-primary font-semibold mb-2">
+                          Ngày sinh <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="date"
+                          required
+                          value={formData.birthdate}
+                          onChange={(e) => handleInputChange('birthdate', e.target.value)}
+                          className="input-field"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-text-primary font-semibold mb-2">
+                          Giới tính <span className="text-red-500">*</span>
+                        </label>
+                        <select
+                          required
+                          value={formData.gender}
+                          onChange={(e) => handleInputChange('gender', e.target.value)}
+                          className="input-field"
+                        >
+                          <option value="">Chọn giới tính</option>
+                          <option value="female">Nữ</option>
+                          <option value="male">Nam</option>
+                          <option value="other">Khác</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-text-primary font-semibold mb-2">
+                        Địa chỉ
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Nhập địa chỉ của bạn"
+                        value={formData.address}
+                        onChange={(e) => handleInputChange('address', e.target.value)}
+                        className="input-field"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-text-primary font-semibold mb-2">
+                        Ghi chú
+                      </label>
+                      <textarea
+                        rows={3}
+                        placeholder="Nhập ghi chú (nếu có)"
+                        value={formData.note}
+                        onChange={(e) => handleInputChange('note', e.target.value)}
+                        className="input-field"
+                      />
+                    </div>
+
+                    {/* Error Display */}
+                    {errors.length > 0 && (
+                      <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+                        <h4 className="text-red-800 font-semibold mb-2">Lỗi:</h4>
+                        <ul className="list-disc list-inside text-red-700">
+                          {errors.map((error, index) => (
+                            <li key={index}>{error}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    <div className="flex justify-end">
+                      <button
+                        type="submit"
+                        className="btn-primary"
+                      >
+                        Tiếp tục đến bước xác nhận
+                        <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </>
+            ) : (
+              /* Step 2: Confirmation */
+              <div className="card">
+                <h2 className="text-xl font-bold mb-6 text-text-primary">2. XÁC NHẬN THÔNG TIN</h2>
+                
+                <div className="space-y-6">
+                  {/* Course Summary */}
+                  <div>
+                    <h3 className="font-semibold text-lg mb-4 text-text-primary">Khóa học đã chọn</h3>
+                    <div className="space-y-3">
+                      {items.map((item) => (
+                        <div key={item.id} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                          <div>
+                            <h4 className="font-semibold text-text-primary">{item.title}</h4>
+                            <p className="text-sm text-text-secondary">{item.category.join(', ')}</p>
+                          </div>
+                          <div className="text-right">
+                            <div className="font-semibold price">
+                              {item.price.currency === 'VNĐ'
+                                ? currencyFormatter.format(parseInt(item.price.amount.replace(/\./g, '')) * item.quantity)
+                                : `${item.price.currency} ${item.price.amount}`
+                              }
+                            </div>
+                            <div className="text-sm text-text-secondary">Số lượng: {item.quantity}</div>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                ))}
-              </div>
-            </div>
 
-            {/* Payment Form */}
-            <div className="card">
-              <h2 className="text-xl font-bold mb-4 text-text-primary">Thông tin thanh toán</h2>
-              
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Personal Information */}
                   <div>
-                    <label className="block text-text-primary font-semibold mb-2">
-                      Họ và tên <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="Nhập họ và tên của bạn"
-                      value={formData.name}
-                      onChange={(e) => handleInputChange('name', e.target.value)}
-                      className="input-field"
-                    />
+                    <h3 className="font-semibold text-lg mb-4 text-text-primary">Thông tin cá nhân</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-gray-50 rounded-lg">
+                      <div>
+                        <span className="text-text-secondary">Họ và tên:</span>
+                        <p className="font-semibold">{formData.name}</p>
+                      </div>
+                      <div>
+                        <span className="text-text-secondary">Email:</span>
+                        <p className="font-semibold">{formData.email}</p>
+                      </div>
+                      <div>
+                        <span className="text-text-secondary">Số điện thoại:</span>
+                        <p className="font-semibold">{formData.phone}</p>
+                      </div>
+                      <div>
+                        <span className="text-text-secondary">Telegram:</span>
+                        <p className="font-semibold">{formData.telegram}</p>
+                      </div>
+                      <div>
+                        <span className="text-text-secondary">Ngày sinh:</span>
+                        <p className="font-semibold">{formData.birthdate}</p>
+                      </div>
+                      <div>
+                        <span className="text-text-secondary">Giới tính:</span>
+                        <p className="font-semibold">{formData.gender === 'male' ? 'Nam' : formData.gender === 'female' ? 'Nữ' : 'Khác'}</p>
+                      </div>
+                      {formData.address && (
+                        <div className="md:col-span-2">
+                          <span className="text-text-secondary">Địa chỉ:</span>
+                          <p className="font-semibold">{formData.address}</p>
+                        </div>
+                      )}
+                      {formData.note && (
+                        <div className="md:col-span-2">
+                          <span className="text-text-secondary">Ghi chú:</span>
+                          <p className="font-semibold">{formData.note}</p>
+                        </div>
+                      )}
+                    </div>
                   </div>
 
-                  <div>
-                    <label className="block text-text-primary font-semibold mb-2">
-                      Email <span className="text-red-500">*</span>
-                    </label>
+                  <div className="flex items-start">
                     <input
-                      type="email"
+                      type="checkbox"
+                      id="terms"
                       required
-                      placeholder="Nhập email của bạn"
-                      value={formData.email}
-                      onChange={(e) => handleInputChange('email', e.target.value)}
-                      className="input-field"
+                      checked={agreed}
+                      onChange={(e) => setAgreed(e.target.checked)}
+                      className="mt-1 mr-3"
                     />
+                    <label htmlFor="terms" className="text-sm text-text-primary">
+                      Bằng cách tích vào ô này, bạn xác nhận đã đọc, hiểu và đồng ý với{' '}
+                      <Link href="/policy" className="text-primary font-semibold hover:underline">
+                        Chính sách bảo mật
+                      </Link>{' '}
+                      và{' '}
+                      <Link href="/terms" className="text-primary font-semibold hover:underline">
+                        Điều khoản sử dụng
+                      </Link>{' '}
+                      của chúng tôi.
+                    </label>
                   </div>
 
-                  <div>
-                    <label className="block text-text-primary font-semibold mb-2">
-                      Số điện thoại <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="tel"
-                      required
-                      placeholder="Nhập số điện thoại"
-                      value={formData.phone}
-                      onChange={(e) => handleInputChange('phone', e.target.value)}
-                      className="input-field"
-                    />
-                  </div>
+                  {/* Error Display */}
+                  {errors.length > 0 && (
+                    <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+                      <h4 className="text-red-800 font-semibold mb-2">Lỗi:</h4>
+                      <ul className="list-disc list-inside text-red-700">
+                        {errors.map((error, index) => (
+                          <li key={index}>{error}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
 
-                  <div>
-                    <label className="block text-text-primary font-semibold mb-2">
-                      Username Telegram <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="@username"
-                      value={formData.telegram}
-                      onChange={(e) => handleInputChange('telegram', e.target.value)}
-                      className="input-field"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-text-primary font-semibold mb-2">
-                      Ngày sinh <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="date"
-                      required
-                      value={formData.birthdate}
-                      onChange={(e) => handleInputChange('birthdate', e.target.value)}
-                      className="input-field"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-text-primary font-semibold mb-2">
-                      Giới tính <span className="text-red-500">*</span>
-                    </label>
-                    <select
-                      required
-                      value={formData.gender}
-                      onChange={(e) => handleInputChange('gender', e.target.value)}
-                      className="input-field"
+                  <div className="flex justify-between">
+                    <button
+                      type="button"
+                      onClick={handleBackStep}
+                      className="btn-secondary"
                     >
-                      <option value="">Chọn giới tính</option>
-                      <option value="female">Nữ</option>
-                      <option value="male">Nam</option>
-                      <option value="other">Khác</option>
-                    </select>
+                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                      </svg>
+                      Quay lại
+                    </button>
+                    <button
+                      onClick={handleSubmit}
+                      disabled={isLoading || !agreed}
+                      className="btn-primary disabled:bg-gray-400"
+                    >
+                      {isLoading ? (
+                        <div className="flex items-center">
+                          <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          Đang xử lý...
+                        </div>
+                      ) : (
+                        'Xác nhận và thanh toán'
+                      )}
+                    </button>
                   </div>
                 </div>
-
-                <div>
-                  <label className="block text-text-primary font-semibold mb-2">
-                    Địa chỉ
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Nhập địa chỉ của bạn"
-                    value={formData.address}
-                    onChange={(e) => handleInputChange('address', e.target.value)}
-                    className="input-field"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-text-primary font-semibold mb-2">
-                    Ghi chú
-                  </label>
-                  <textarea
-                    rows={3}
-                    placeholder="Nhập ghi chú (nếu có)"
-                    value={formData.note}
-                    onChange={(e) => handleInputChange('note', e.target.value)}
-                    className="input-field"
-                  />
-                </div>
-
-                <div className="flex items-start">
-                  <input
-                    type="checkbox"
-                    id="terms"
-                    required
-                    checked={agreed}
-                    onChange={(e) => setAgreed(e.target.checked)}
-                    className="mt-1 mr-3"
-                  />
-                  <label htmlFor="terms" className="text-sm text-text-primary">
-                    Bằng cách tích vào ô này, bạn xác nhận đã đọc, hiểu và đồng ý với{' '}
-                    <Link href="/policy" className="text-primary font-semibold hover:underline">
-                      Chính sách bảo mật
-                    </Link>{' '}
-                    và{' '}
-                    <Link href="/terms" className="text-primary font-semibold hover:underline">
-                      Điều khoản sử dụng
-                    </Link>{' '}
-                    của chúng tôi.
-                  </label>
-                </div>
-
-                {/* Error Display */}
-                {errors.length > 0 && (
-                  <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-                    <h4 className="text-red-800 font-semibold mb-2">Lỗi:</h4>
-                    <ul className="list-disc list-inside text-red-700">
-                      {errors.map((error, index) => (
-                        <li key={index}>{error}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </form>
-            </div>
+              </div>
+            )}
           </div>
 
           {/* Order Summary */}
           <div className="lg:col-span-1">
             <div className="card sticky top-24">
-              <h2 className="text-xl font-bold mb-4 text-text-primary">Tóm tắt đơn hàng</h2>
+              <h2 className="text-xl font-bold mb-4 text-text-primary">
+                {currentStep === 1 ? 'Tóm tắt đơn hàng' : 'Tóm tắt thanh toán'}
+              </h2>
               
-              {/* Discount Code */}
-              <div className="mb-6">
-                <label className="block text-text-primary font-semibold mb-2">
-                  Mã giảm giá
-                </label>
-                <div className="flex gap-2">
-                  <div className="flex-1 relative">
-                    <Tag className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-text-tertiary" />
-                    <input
-                      type="text"
-                      placeholder="Nhập mã giảm giá"
-                      value={discountCode}
-                      onChange={(e) => setDiscountCode(e.target.value)}
-                      className="input-field pl-10"
-                    />
+              {/* Discount Code - Only show in Step 1 */}
+              {currentStep === 1 && (
+                <div className="mb-6">
+                  <label className="block text-text-primary font-semibold mb-2">
+                    Mã giảm giá
+                  </label>
+                  <div className="flex gap-2">
+                    <div className="flex-1 relative">
+                      <Tag className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-text-tertiary" />
+                      <input
+                        type="text"
+                        placeholder="Nhập mã giảm giá"
+                        value={discountCode}
+                        onChange={(e) => setDiscountCode(e.target.value)}
+                        className="input-field pl-10"
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={handleApplyDiscount}
+                      className="btn-secondary"
+                    >
+                      Áp dụng
+                    </button>
                   </div>
-                  <button
-                    type="button"
-                    onClick={handleApplyDiscount}
-                    className="btn-secondary"
-                  >
-                    Áp dụng
-                  </button>
+                  {discount > 0 && (
+                    <div className="mt-2 text-success text-sm font-semibold">
+                      Đã áp dụng mã giảm giá: {discount}%
+                    </div>
+                  )}
                 </div>
-                {discount > 0 && (
-                  <div className="mt-2 text-success text-sm font-semibold">
-                    Đã áp dụng mã giảm giá: {discount}%
-                  </div>
-                )}
-              </div>
+              )}
               
               <div className="space-y-3 mb-6">
                 <div className="flex justify-between">
@@ -462,23 +598,38 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
-              <button
-                onClick={handleSubmit}
-                disabled={isLoading}
-                className="btn-primary w-full text-center block disabled:bg-gray-400"
-              >
-                {isLoading ? (
-                  <div className="flex items-center justify-center">
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Đang xử lý...
-                  </div>
-                ) : (
-                  'Hoàn tất thanh toán'
-                )}
-              </button>
+              {currentStep === 1 ? (
+                /* Step 1: Continue button */
+                <button
+                  form="checkout-form"
+                  type="submit"
+                  className="btn-primary w-full text-center block"
+                >
+                  Tiếp tục đến bước xác nhận
+                  <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              ) : (
+                /* Step 2: Payment button */
+                <button
+                  onClick={handleSubmit}
+                  disabled={isLoading || !agreed}
+                  className="btn-primary w-full text-center block disabled:bg-gray-400"
+                >
+                  {isLoading ? (
+                    <div className="flex items-center justify-center">
+                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Đang xử lý...
+                    </div>
+                  ) : (
+                    'Xác nhận và thanh toán'
+                  )}
+                </button>
+              )}
               
               <Link
                 href="/cart"
