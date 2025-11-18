@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { ChevronRight } from "lucide-react";
 
 const Testimonials = () => {
   const videos = [
@@ -46,12 +47,10 @@ const Testimonials = () => {
         </div>
 
         <div className="flex justify-center mt-8">
-          <Button className="bg-amber-400 hover:bg-amber-500 text-white">
-            <a href="/program/" className="inline-flex items-center">
+          <Button className="bg-amber-400 hover:bg-amber-500 text-white rounded-full">
+            <a href="/program/" className="inline-flex items-center text-white uppercase">
               Đăng ký ngay
-              <svg className="ml-3 w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              <ChevronRight />
             </a>
           </Button>
         </div>
