@@ -53,7 +53,7 @@ const Privilege = () => {
   return (
     <section className="py-16 md:py-24 bg-white">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-extrabold text-center text-gray-800 mb-4">
+        <h2 className="text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[68px] font-black text-[#f7b50c] uppercase mb-8">
           Đặc Quyền Học Viên
         </h2>
         <p className="text-lg text-center text-gray-500 max-w-2xl mx-auto mb-12">
