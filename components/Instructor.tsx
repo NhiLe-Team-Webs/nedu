@@ -65,86 +65,95 @@ const Instructor: React.FC<{ instructors: InstructorProps[] }> = ({
           <CarouselContent>
             {instructors.map((instructor, index) => (
               <CarouselItem key={index}>
-                <div className="bg-gray-50 p-4 sm:p-6 border border-gray-300 rounded-lg shadow-md">
-                  <h2 className="text-center text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-gray-700">
-                    {instructor.name}
-                  </h2>
-                  <div className="bg-amber-400 aspect-square w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 flex items-center justify-center mb-3 sm:mb-4 rounded-md mx-auto">
-                    <img
-                      src={instructor.image}
-                      alt={`${instructor.name} avatar`}
-                      loading="lazy"
-                      className="object-cover w-full h-full rounded-md"
-                    />
-                  </div>
-                  <table className="w-full mt-3 sm:mt-4 text-sm">
-                    <tbody>
-                      <tr className="border-t border-gray-300">
-                        <th className="py-1 sm:py-2 pr-2 sm:pr-4 text-left font-semibold align-top">
+                <div className="bg-white border border-gray-200 rounded-3xl p-6 sm:p-8 lg:p-10 shadow-xl">
+                  <div className="grid gap-8 lg:gap-12 lg:grid-cols-[minmax(0,2.3fr)_minmax(0,1fr)] items-start">
+                    <div>
+                      <p className="text-base sm:text-lg lg:text-xl text-gray-600 leading-relaxed mb-6 sm:mb-8">
+                        {instructor.bio}
+                      </p>
+
+                      <div className="space-y-6 sm:space-y-8">
+                        <section>
+                          <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800 mb-3 sm:mb-4">
+                            Học vấn
+                          </h3>
+                          <div className="space-y-3 text-sm sm:text-base text-gray-600 leading-relaxed">
+                            {Array.isArray(instructor.education) ? (
+                              instructor.education.map((edu, index) => (
+                                <p key={index}>{edu}</p>
+                              ))
+                            ) : (
+                              <p>{instructor.education}</p>
+                            )}
+                          </div>
+                        </section>
+
+                        <section>
+                          <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800 mb-3 sm:mb-4">
+                            Sự nghiệp và các dự án nổi bật
+                          </h3>
+                          <p className="text-sm sm:text-base text-gray-600 leading-relaxed mb-4">
+                            {instructor.career}
+                          </p>
+                          <ul className="space-y-2 text-sm sm:text-base text-gray-700">
+                            {instructor.projects.map((project, index) => (
+                              <li key={index} className="flex gap-2">
+                                <span className="text-amber-400 font-semibold">
+                                  •
+                                </span>
+                                <span>
+                                  <strong>{project.title}:</strong>{" "}
+                                  {project.description}
+                                </span>
+                              </li>
+                            ))}
+                          </ul>
+                        </section>
+
+                        <section>
+                          <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800 mb-3 sm:mb-4">
+                            Thành tích và giải thưởng
+                          </h3>
+                          <ul className="space-y-2 text-sm sm:text-base text-gray-700">
+                            {instructor.achievements.map((achievement, index) => (
+                              <li key={index} className="flex gap-2">
+                                <span className="text-amber-400 font-semibold whitespace-nowrap">
+                                  {achievement.date}
+                                </span>
+                                <span>{achievement.description}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </section>
+                      </div>
+                    </div>
+
+                    <aside className="bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 shadow-lg">
+                      <div className="text-center">
+                        <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">
+                          {instructor.name}
+                        </h3>
+                        <div className="bg-amber-400 rounded-xl aspect-square max-w-[220px] mx-auto flex items-center justify-center mb-6">
+                          <img
+                            src={instructor.image}
+                            alt={`${instructor.name} avatar`}
+                            loading="lazy"
+                            className="object-cover w-full h-full rounded-xl"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">
                           Nghề nghiệp
-                        </th>
-                        <td className="py-1 sm:py-2">
+                        </h4>
+                        <div className="space-y-1 text-base text-gray-800">
                           {instructor.profession.map((job, index) => (
-                            <span key={index} className="block text-xs sm:text-sm">
-                              {job}
-                            </span>
+                            <p key={index}>{job}</p>
                           ))}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-
-                <div className="mt-4 sm:mt-6">
-                  <p className="mb-4 sm:mb-6 text-gray-600 leading-relaxed text-sm sm:text-base">
-                    {instructor.bio}
-                  </p>
-
-                  <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-3 sm:mb-4 text-gray-700">
-                    Học vấn
-                  </h3>
-                  {Array.isArray(instructor.education) ? (
-                    instructor.education.map((edu, index) => {
-                      return (
-                        <p
-                          key={index}
-                          className="mb-2 text-gray-600 leading-relaxed text-sm sm:text-base"
-                        >
-                          {edu}
-                        </p>
-                      );
-                    })
-                  ) : (
-                    <p className="mb-2 text-gray-600 leading-relaxed text-sm sm:text-base">
-                      {instructor.education}
-                    </p>
-                  )}
-
-                  <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-3 sm:mb-4 text-gray-700">
-                    Sự nghiệp và các dự án nổi bật
-                  </h3>
-                  <p className="mb-3 sm:mb-4 text-gray-600 leading-relaxed text-sm sm:text-base">
-                    {instructor.career}
-                  </p>
-                  <ul className="list-disc list-inside space-y-1 sm:space-y-2 mb-4 sm:mb-6 text-gray-600 text-sm sm:text-base">
-                    {instructor.projects.map((project, index) => (
-                      <li key={index}>
-                        <strong>{project.title}:</strong> {project.description}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-3 sm:mb-4 text-gray-700">
-                    Thành tích và giải thưởng
-                  </h3>
-                  <ul className="list-disc list-inside space-y-1 sm:space-y-2 text-gray-600 text-sm sm:text-base">
-                    {instructor.achievements.map((achievement, index) => (
-                      <li key={index}>
-                        <strong>{achievement.date}</strong>{" "}
-                        {achievement.description}
-                      </li>
-                    ))}
-                  </ul>
+                        </div>
+                      </div>
+                    </aside>
+                  </div>
                 </div>
               </CarouselItem>
             ))}
