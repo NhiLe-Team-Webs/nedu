@@ -25,8 +25,7 @@ export default function AIInMarketingPage() {
       name: "Linda Hui-Isaac",
       profession: ["Doanh nhân"],
       bio: "Linda Hui-Isaac là một Chiến lược gia Lãnh đạo về Xây dựng Thương hiệu & AI-Marketing (Branding & AI-Marketing Consultant Lead Trainer). Bà có hơn hai thập kỷ kinh nghiệm toàn cầu, chuyên tư vấn và đào tạo về các chiến lược tiếp thị kỹ thuật số hiệu quả.",
-      image:
-        "	https://nedu.nhi.sg/images/hi%CC%80nh_co%CC%82_linda.jpg?_wwcv=130",
+      image: "/picture/linda.jpg",
       education: [
         "- Thạc sĩ Quản trị Kinh doanh Toàn cầu (MBA in Global Business) tại Coventry University (Anh).",
         "- Chứng chỉ Nâng cao về Học tập & Hiệu suất (Advanced Certificate in Learning & Performance) tại Institute of Adult Learning (IAL).",
@@ -152,17 +151,17 @@ export default function AIInMarketingPage() {
   };
   return (
     <div className="min-h-screen bg-white">
-      <CourseHeader
-        imageUrl="https://nedu.nhi.sg/images/ai_in_mkt.png"
-        imageUrl_bot=""
-        altText="AI In Marketing"
-        time="Khóa học Online"
-        tags={["AI", "Marketing"]}
-        title="AI In Marketing"
-        description="Khóa học chuyên sâu về ứng dụng AI trong marketing, giúp các marketer hiện đại hóa chiến lược và tối ưu hóa hiệu quả chiến dịch."
-        cost="13.069.000"
-        paymentLink="/payment/57"
-      />
+    <CourseHeader
+      imageUrl="/picture/ai_in_mkt.png"
+      imageUrl_bot=""
+      altText="AI In Marketing"
+      time="Khóa học Online"
+      tags={["AI", "Marketing"]}
+      title="AI In Marketing"
+      description="Khóa học chuyên sâu về ứng dụng AI trong marketing, giúp các marketer hiện đại hóa chiến lược và tối ưu hóa hiệu quả chiến dịch."
+      cost="13.069.000"
+      paymentLink="/payment/57"
+    />
       <Instructor instructors={instructors} />
       <Whom title="Ai nên tham gia khóa học này?" items={whomItems} />
       <CourseInfo {...courseInfo} />

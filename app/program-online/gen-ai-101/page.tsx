@@ -24,8 +24,7 @@ export default function GenAI101Page() {
       name: "Linda Hui-Isaac",
       profession: ["Doanh nhân"],
       bio: "Linda Hui-Isaac là một Chiến lược gia Lãnh đạo về Xây dựng Thương hiệu & AI-Marketing (Branding & AI-Marketing Consultant Lead Trainer). Bà có hơn hai thập kỷ kinh nghiệm toàn cầu, chuyên tư vấn và đào tạo về các chiến lược tiếp thị kỹ thuật số hiệu quả.",
-      image:
-        "	https://nedu.nhi.sg/images/hi%CC%80nh_co%CC%82_linda.jpg?_wwcv=130",
+      image: "/picture/linda.jpg",
       education: [
         "- Thạc sĩ Quản trị Kinh doanh Toàn cầu (MBA in Global Business) tại Coventry University (Anh).",
         "- Chứng chỉ Nâng cao về Học tập & Hiệu suất (Advanced Certificate in Learning & Performance) tại Institute of Adult Learning (IAL).",
@@ -152,7 +151,7 @@ export default function GenAI101Page() {
   return (
     <div className="min-h-screen bg-white">
       <CourseHeader
-        imageUrl="https://nedu.nhi.sg/images/gen_ai.png"
+        imageUrl="/picture/gen_ai.png"
         imageUrl_bot=""
         altText="GEN AI 101"
         time="Khóa học Online"
