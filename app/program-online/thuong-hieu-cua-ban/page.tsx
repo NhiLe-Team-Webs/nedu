@@ -90,7 +90,6 @@ export default function ThuongHieuCuaBanPage() {
   return (
     <div className="min-h-screen bg-white">
       <CourseHeader
-        imageUrl_bot="https://youtu.be/NtNTPMODvb"
         altText="Thương hiệu của bạn"
         time="KHÓA HỌC ONLINE"
         tags={["Thương hiệu"]}
