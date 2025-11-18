@@ -26,7 +26,7 @@ const Header = () => {
             alt="N-Edu Logo"
             width={120}
             height={30}
-            className="w-20 h-8 sm:w-32 sm:h-10 lg:w-48 lg:h-12"
+            className="w-20 sm:w-32 lg:w-48 h-auto object-contain"
           />
         </div>
 
