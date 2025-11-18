@@ -6,7 +6,7 @@ interface CourseInfoProps {
   details: {
     label: string;
     value: string;
-    icon: keyof typeof Icon;
+    icon: keyof typeof Icon; // Ensures compatibility with lucide-react icons
   }[];
   buttonText: string;
   buttonLink: string;

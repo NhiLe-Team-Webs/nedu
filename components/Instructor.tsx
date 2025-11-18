@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Carousel,
   CarouselContent,
@@ -6,20 +6,22 @@ import {
   CarouselPrevious,
   CarouselNext,
   type CarouselApi,
-} from '@/components/ui/carousel';
+} from "@/components/ui/carousel";
 
 interface InstructorProps {
   name: string;
   profession: string[];
   bio: string;
-  education: string;
+  education: string | string[];
   career: string;
   achievements: { date: string; description: string }[];
   projects: { title: string; description: string }[];
   image: string;
 }
 
-const Instructor: React.FC<{ instructors: InstructorProps[] }> = ({ instructors }) => {
+const Instructor: React.FC<{ instructors: InstructorProps[] }> = ({
+  instructors,
+}) => {
   const [api, setApi] = React.useState<CarouselApi | null>(null);
   const [selected, setSelected] = React.useState(0);
 
@@ -41,11 +43,11 @@ const Instructor: React.FC<{ instructors: InstructorProps[] }> = ({ instructors 
     if (!api) return;
     const onSelect = () => setSelected(api.selectedScrollSnap());
     onSelect();
-    api.on('select', onSelect);
-    api.on('reInit', onSelect);
+    api.on("select", onSelect);
+    api.on("reInit", onSelect);
     return () => {
-      api.off('select', onSelect);
-      api.off('reInit', onSelect);
+      api.off("select", onSelect);
+      api.off("reInit", onSelect);
     };
   }, [api]);
 
@@ -78,7 +80,9 @@ const Instructor: React.FC<{ instructors: InstructorProps[] }> = ({ instructors 
                   <table className="w-full mt-4">
                     <tbody>
                       <tr className="border-t border-gray-300">
-                        <th className="py-2 pr-4 text-left font-semibold align-top">Nghề nghiệp</th>
+                        <th className="py-2 pr-4 text-left font-semibold align-top">
+                          Nghề nghiệp
+                        </th>
                         <td className="py-2">
                           {instructor.profession.map((job, index) => (
                             <span key={index} className="block">
@@ -92,13 +96,36 @@ const Instructor: React.FC<{ instructors: InstructorProps[] }> = ({ instructors 
                 </div>
 
                 <div>
-                  <p className="mb-6 text-gray-600 leading-relaxed">{instructor.bio}</p>
+                  <p className="mb-6 text-gray-600 leading-relaxed">
+                    {instructor.bio}
+                  </p>
 
-                  <h3 className="text-2xl font-bold mb-4 text-gray-700">Học vấn</h3>
-                  <p className="mb-6 text-gray-600 leading-relaxed">{instructor.education}</p>
+                  <h3 className="text-2xl font-bold mb-4 text-gray-700">
+                    Học vấn
+                  </h3>
+                  {Array.isArray(instructor.education) ? (
+                    instructor.education.map((edu, index) => {
+                      return (
+                        <p
+                          key={index}
+                          className="mb-2 text-gray-600 leading-relaxed"
+                        >
+                          {edu}
+                        </p>
+                      );
+                    })
+                  ) : (
+                    <p className="mb-2 text-gray-600 leading-relaxed">
+                      {instructor.education}
+                    </p>
+                  )}
 
-                  <h3 className="text-2xl font-bold mb-4 text-gray-700">Sự nghiệp và các dự án nổi bật</h3>
-                  <p className="mb-4 text-gray-600 leading-relaxed">{instructor.career}</p>
+                  <h3 className="text-2xl font-bold mb-4 text-gray-700">
+                    Sự nghiệp và các dự án nổi bật
+                  </h3>
+                  <p className="mb-4 text-gray-600 leading-relaxed">
+                    {instructor.career}
+                  </p>
                   <ul className="list-disc list-inside space-y-2 mb-6 text-gray-600">
                     {instructor.projects.map((project, index) => (
                       <li key={index}>
@@ -107,11 +134,14 @@ const Instructor: React.FC<{ instructors: InstructorProps[] }> = ({ instructors 
                     ))}
                   </ul>
 
-                  <h3 className="text-2xl font-bold mb-4 text-gray-700">Thành tích và giải thưởng</h3>
+                  <h3 className="text-2xl font-bold mb-4 text-gray-700">
+                    Thành tích và giải thưởng
+                  </h3>
                   <ul className="list-disc list-inside space-y-2 text-gray-600">
                     {instructor.achievements.map((achievement, index) => (
                       <li key={index}>
-                        <strong>{achievement.date}:</strong> {achievement.description}
+                        <strong>{achievement.date}</strong>{" "}
+                        {achievement.description}
                       </li>
                     ))}
                   </ul>
