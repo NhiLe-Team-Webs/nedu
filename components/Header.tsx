@@ -18,19 +18,20 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm flex justify-center">
-      <div className="w-full flex justify-between gap-4 px-12 items-center h-20 bg-white/95 shadow-lg">
+      <div className="w-full flex justify-between gap-2 sm:gap-4 px-4 sm:px-8 lg:px-12 items-center h-16 sm:h-20 bg-white/95 shadow-lg">
         {/* left column: logo */}
         <div className="flex items-center">
           <Image
             src="/250317_MsNhi_N-Edu_Logo Nedu.png"
             alt="N-Edu Logo"
-            width={200}
-            height={50}
+            width={120}
+            height={30}
+            className="w-20 h-8 sm:w-32 sm:h-10 lg:w-48 lg:h-12"
           />
         </div>
 
         {/* center column: nav centered by grid */}
-        <nav className="hidden md:flex justify-between items-center gap-10 w-auto font-semibold">
+        <nav className="hidden lg:flex justify-between items-center gap-6 xl:gap-10 w-auto font-semibold text-sm xl:text-base">
           <Link
             href="/"
             className={
@@ -75,17 +76,17 @@ const Header = () => {
         </nav>
 
         {/* right column: actions aligned to the end */}
-        <div className="flex items-center justify-end gap-4">
+        <div className="flex items-center justify-end gap-2 sm:gap-4">
           <Button
             variant="ghost"
             size="icon"
-            className="inline-flex items-center justify-center gap-2 h-10 w-10 hidden md:inline-flex text-text-secondary hover:text-primary relative"
+            className="hidden lg:flex items-center justify-center gap-2 h-8 w-8 xl:h-10 xl:w-10 text-text-secondary hover:text-primary relative"
             onClick={() => router.push('/cart')}
             aria-label="Giỏ hàng"
           >
-            <ShoppingCart className="h-5 w-5" />
+            <ShoppingCart className="h-4 w-4 xl:h-5 xl:w-5" />
             {totalItems > 0 && (
-              <span className="absolute -top-1 -right-1 bg-warning text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
+              <span className="absolute -top-1 -right-1 bg-warning text-white text-xs rounded-full h-4 w-4 xl:h-5 xl:w-5 flex items-center justify-center font-bold">
                 {totalItems}
               </span>
             )}
@@ -93,56 +94,56 @@ const Header = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden"
+            className="lg:hidden"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
-            <Menu className="h-6 w-6" />
+            <Menu className="h-5 w-5" />
           </Button>
         </div>
       </div>
 
       {/* Mobile menu */}
       {isMobileMenuOpen && (
-        <nav className="md:hidden py-4 border-t">
-          <div className="flex flex-col space-y-4">
+        <nav className="lg:hidden py-3 sm:py-4 border-t bg-white/95 backdrop-blur-sm">
+          <div className="flex flex-col space-y-3 sm:space-y-4 px-4 sm:px-8">
             <Link
               href="/"
-              className="text-gray-700 hover:text-amber-400 font-medium uppercase text-sm"
+              className="text-gray-700 hover:text-amber-400 font-medium uppercase text-sm sm:text-base py-2"
             >
               TRANG CHỦ
             </Link>
             <a
               href="#about"
-              className="text-gray-700 hover:text-amber-400 font-medium uppercase text-sm"
+              className="text-gray-700 hover:text-amber-400 font-medium uppercase text-sm sm:text-base py-2"
             >
               VỀ CHÚNG TÔI
             </a>
             <Link
-              href="/khoa-hoc"
-              className="text-gray-700 hover:text-amber-400 font-medium uppercase text-sm"
+              href="/program"
+              className="text-gray-700 hover:text-amber-400 font-medium uppercase text-sm sm:text-base py-2"
             >
               KHÓA HỌC
             </Link>
             <a
-              href="#challenge"
-              className="text-gray-700 hover:text-amber-400 font-medium uppercase text-sm"
+              href="/thu-thach-30-ngay"
+              className="text-gray-700 hover:text-amber-400 font-medium uppercase text-sm sm:text-base py-2"
             >
               THỬ THÁCH 30N
             </a>
             <a
-              href="#contact"
-              className="text-gray-700 hover:text-amber-400 font-medium uppercase text-sm"
+              href="/contact"
+              className="text-gray-700 hover:text-amber-400 font-medium uppercase text-sm sm:text-base py-2"
             >
               LIÊN HỆ
             </a>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 pt-2 border-t">
               <Button
                 variant="ghost"
                 size="icon"
-                className="text-text-secondary hover:text-primary relative"
+                className="text-text-secondary hover:text-primary relative h-10 w-10"
                 onClick={() => router.push('/cart')}
               >
-                <ShoppingCart className="h-6 w-6" />
+                <ShoppingCart className="h-5 w-5" />
                 {totalItems > 0 && (
                   <span className="absolute -top-1 -right-1 bg-warning text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
                     {totalItems}

@@ -102,46 +102,46 @@ const Courses: React.FC = () => {
   }, [api]);
 
   return (
-    <section className="relative flex flex-col items-center justify-center overflow-hidden h-screen">
-      <div className="relative flex flex-col justify-center items-center h-[90%] w-full max-w-[1200px]">
+    <section className="relative flex flex-col items-center justify-center overflow-hidden min-h-screen">
+      <div className="relative flex flex-col justify-center items-center h-[90%] w-full max-w-[1000px] sm:max-w-[1200px]">
         <div className="container mx-auto px-4 z-10 w-full">
-          <h2 className="relative md:text-5xl font-extrabold text-yellow-500 text-center mb-[32px] uppercase">
+          <h2 className="relative text-2xl sm:text-3xl md:text-5xl font-extrabold text-yellow-500 text-center mb-6 sm:mb-8 md:mb-[32px] uppercase">
             Người Việt, làm hàng Việt, cho người Việt
           </h2>
 
-          <div className="relative w-full my-8">
-            <div className="mx-auto max-w-[800px]">
+          <div className="relative w-full my-6 sm:my-8">
+            <div className="mx-auto max-w-[600px] sm:max-w-[800px]">
               <Carousel setApi={setApi} opts={{ loop: true }} className="">
                 <CarouselContent className="items-center">
                   {slides.map((s) => (
                     <CarouselItem key={s.id}>
-                      <div className="bg-[rgba(0,0,0,0.7)] rounded-md p-[16px] flex flex-col md:flex-row items-center gap-6 shadow-lg">
-                        <div className="w-full md:w-80 flex-shrink-0">
+                      <div className="bg-[rgba(0,0,0,0.7)] rounded-md p-3 sm:p-4 lg:p-[16px] flex flex-col lg:flex-row items-center gap-4 lg:gap-6 shadow-lg">
+                        <div className="w-full lg:w-80 flex-shrink-0">
                           <div className="bg-white rounded-md overflow-hidden shadow-sm flex items-center justify-center">
                             <Image
                               src={s.image}
                               alt={s.title}
-                              width={400}
-                              height={160}
-                              className="w-full h-auto md:h-40 object-cover"
+                              width={300}
+                              height={120}
+                              className="w-full h-auto lg:h-40 object-cover"
                             />
                           </div>
                         </div>
 
                         <div className="flex flex-col justify-between text-white h-full">
                           <div className="flex flex-col items-start">
-                            <p className="text-[16px] text-white">
+                            <p className="text-sm sm:text-[16px] text-white">
                               {s.label}
                             </p>
-                            <h3 className="text-xl md:text-[24px] font-bold uppercase leading-tight mb-4 text-white">
+                            <h3 className="text-lg sm:text-xl lg:text-[24px] font-bold uppercase leading-tight mb-3 sm:mb-4 text-white">
                               {s.title}
                             </h3>
                           </div>
                            
-                          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mt-4">
+                          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mt-4">
                             <div className="flex flex-row items-center justify-between">
-                              <Calendar className="w-5 h-5 text-white mr-2" />
-                              <span className="text-sm text-white font-semibold">
+                              <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-white mr-2" />
+                              <span className="text-xs sm:text-sm text-white font-semibold">
                                 {s.date}
                               </span>
                             </div>
@@ -153,9 +153,9 @@ const Courses: React.FC = () => {
                                 }}
                                 variant="hero"
                                 size="icon"
-                                className="btn-secondary rounded-b-full rounded-t-full text-[12px] uppercase w-auto flex items-center justify-center py-[6px] px-[12px]"
+                                className="btn-secondary rounded-b-full rounded-t-full text-[10px] sm:text-[12px] uppercase w-auto flex items-center justify-center py-1 sm:py-[6px] px-2 sm:px-[12px]"
                               >
-                                <ShoppingCart className="h-3 w-3 mr-1" />
+                                <ShoppingCart className="h-3 w-3 sm:h-3 sm:w-3 mr-1" />
                               </Button>
                               <Button
                                 onClick={() => {
@@ -166,7 +166,7 @@ const Courses: React.FC = () => {
                                 }}
                                 variant="hero"
                                 size="icon"
-                                className="btn-primary rounded-b-full rounded-t-full text-[12px] uppercase w-auto flex items-center justify-center py-[6px] px-[12px]"
+                                className="btn-primary rounded-b-full rounded-t-full text-[10px] sm:text-[12px] uppercase w-auto flex items-center justify-center py-1 sm:py-[6px] px-2 sm:px-[12px]"
                               >
                                 Tìm hiểu thêm
                                 <ChevronRight className="font-extrabold" />
@@ -182,10 +182,10 @@ const Courses: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="text-center mb-8">
-          <a href="/program" className="inline-flex items-center text-white hover:bg-yellow-500 transition-colors bg-yellow-400 px-6 py-3 rounded-full">
-            <span className="text-lg font-medium text-white">Khám phá thêm</span>
-            <ChevronRight className="ml-2 w-5 h-5 text-white" />
+        <div className="text-center mb-6 sm:mb-8">
+          <a href="/program" className="inline-flex items-center text-white hover:bg-yellow-500 transition-colors bg-yellow-400 px-4 sm:px-6 py-2 sm:py-3 rounded-full">
+            <span className="text-base sm:text-lg font-medium text-white">Khám phá thêm</span>
+            <ChevronRight className="ml-1 sm:ml-2 w-4 h-4 sm:w-5 sm:h-5 text-white" />
           </a>
         </div>
       </div>
