@@ -1,5 +1,9 @@
 
 
+"use client";
+
+import * as React from "react";
+
 const Mission = () => {
   return (
     <section id="mission" className="relative bg-white min-h-screen flex items-center">
@@ -17,7 +21,7 @@ const Mission = () => {
             <div className="flex items-start">
               <div className="mr-4" aria-hidden>
                 {/* quote icon approx 90px */}
-                <img src='/quote.svg' alt="Quote icon" />
+                <img src='/picture/quote.svg' alt="Quote icon" />
               </div>
 
               <div>
@@ -43,7 +47,7 @@ const Mission = () => {
 
           {/* right column */}
           <div className="flex flex-col items-start">
-            <img src='/nhile.png' alt="Nhi Le" className="w-[320px] mb-4" />
+            <img src='/picture/nhile.png' alt="Nhi Le" className="w-[320px] mb-4" />
 
             <div className="flex flex-row justify-between items-end w-full max-w-[320px]">
               <div className="flex flex-col">

@@ -16,7 +16,7 @@ export default function AIBusinessCommunicationPage() {
     <div className="min-h-screen bg-white">
       <section className="py-8 bg-gradient-to-br from-purple-100 to-blue-100">
         <div className="container mx-auto px-4">
-          <img src="https://nedu.nhi.sg/images/thum_yt_2.png" alt="AI for Business Communication" className="w-full max-w-4xl mx-auto rounded-lg shadow-xl" />
+          <img src="/picture/ai_for_business.png" alt="AI for Business Communication" className="w-full max-w-4xl mx-auto rounded-lg shadow-xl" />
         </div>
       </section>
 
@@ -149,18 +149,18 @@ export default function AIBusinessCommunicationPage() {
             <h2 className="text-3xl font-bold mb-8 text-primary text-center">Người dẫn đường</h2>
             
             <div className="bg-white rounded-xl shadow-lg p-8 max-w-2xl mx-auto">
-              <img src="https://nedu.nhi.sg/images/linda_hui.jpg" alt="Linda Hui" className="w-32 h-32 rounded-full object-cover mx-auto mb-4" />
+              <img src="/picture/nhile.jpg" alt="Linda Hui" className="w-32 h-32 rounded-full object-cover mx-auto mb-4" />
               <h3 className="text-2xl font-bold text-center mb-2">Linda Hui</h3>
               <p className="text-gray-600 text-center mb-4">Chuyên gia AI & Business Communication</p>
               <div className="flex justify-center space-x-3 mb-4">
                 <a href="https://www.linkedin.com/in/linda-hui" target="_blank" rel="noopener noreferrer">
-                  <img src="https://nedu.nhi.sg/images/linkedin.svg" alt="LinkedIn" className="w-6 h-6" />
+                  <img src="/picture/linkedin-footer.svg" alt="LinkedIn" className="w-6 h-6" />
                 </a>
                 <a href="https://www.facebook.com/linda.hui" target="_blank" rel="noopener noreferrer">
-                  <img src="https://nedu.nhi.sg/images/fb.svg" alt="Facebook" className="w-6 h-6" />
+                  <img src="/picture/facebook-footer.svg" alt="Facebook" className="w-6 h-6" />
                 </a>
                 <a href="https://www.instagram.com/linda.hui" target="_blank" rel="noopener noreferrer">
-                  <img src="https://nedu.nhi.sg/images/instagram.svg" alt="Instagram" className="w-6 h-6" />
+                  <img src="/picture/instagram-footer.svg" alt="Instagram" className="w-6 h-6" />
                 </a>
               </div>
               <p className="text-sm text-gray-700">

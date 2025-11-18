@@ -17,25 +17,49 @@ const slides = [
   {
     id: 2,
     slug: "la-chinh-minh",
-    image: "/lachinhminh.jpg",
-    date: "14-17 tháng 8 năm 2025",
+    image: "/picture/la_chinh_minh.jpg",
+    date: "18/03/2026",
     title: "Là Chính Mình 03",
     label: "Khóa học sắp diễn ra",
   },
   {
     id: 1,
     slug: "suc-manh-vo-han",
-    image: "/THCB.jpg",
-    date: "10/10/2024",
+    image: "/picture/suc_manh_vo_han.jpg",
+    date: "01/04/2026",
     title: "Sức Mạnh Vô Hạn",
     label: "Giới thiệu",
   },
   {
-    id: 3,
-    slug: "gen-ai-101",
-    image: "/CSCB.jpg",
-    date: "15/11/2024",
-    title: "GEN AI 101",
+    id: 4,
+    slug: "thuong-hieu-cua-ban",
+    image: "/picture/thuong_hieu_cua_ban.png",
+    date: "01/11/2025",
+    title: "Thương Hiệu Của Bạn",
+    label: "Các khóa học Online",
+  },
+  {
+    id: 5,
+    slug: "cuoc-song-cua-ban",
+    image: "/picture/cuoc_song_cua_ban.png",
+    date: "01/11/2025",
+    title: "Cuộc Sống Của Bạn",
+    label: "Các khóa học Online",
+  },
+  {
+    id: 6,
+    slug: "ai-for-business-communication",
+    image: "/picture/ai_for_business.png",
+    date: "30/07/2025",
+    title: "AI For Business Communication",
+    label: "Các khóa học Online",
+  },
+  {
+    id: 7,
+    slug: "ai-in-marketing",
+    image: "/picture/ai_in_mkt.png",
+    date: "05/08/2025",
+    title: "AI In Marketing",
     label: "Các khóa học Online",
   },
 ];
@@ -116,11 +140,11 @@ const Courses: React.FC = () => {
                             <p className="text-[16px] text-white/80">
                               {s.label}
                             </p>
-                            <h3 className="text-xl md:text-[24px] font-bold uppercase leading-tight mb-4">
+                            <h3 className="text-xl md:text-[24px] font-bold uppercase leading-tight mb-4 text-white">
                               {s.title}
                             </h3>
                           </div>
-                          
+                           
                           <div className="flex items-center justify-between gap-4">
                             <div className="flex flex-row items-center justify-between">
                               <Calendar className="w-5 h-5 text-white/90 mr-2" />
@@ -139,9 +163,26 @@ const Courses: React.FC = () => {
                                 className="btn-secondary rounded-b-full rounded-t-full text-[16px] uppercase w-auto flex items-center justify-center py-[12px] px-[20px]"
                               >
                                 <ShoppingCart className="h-4 w-4 mr-1" />
-                                Thêm vào giỏ
                               </Button>
                               <Button
+                                onClick={() => {
+                                  const course = courses.find(c => c.slug === s.slug);
+                                  if (course) addToCart(course);
+                                }}
+                                variant="hero"
+                                size="icon"
+                                className="btn-primary rounded-b-full rounded-t-full text-[16px] uppercase w-auto flex items-center justify-center py-[12px] px-[20px]"
+                              >
+                                Thêm giỏ hàng
+                                <ChevronRight className="font-extrabold" />
+                              </Button>
+                              <Button
+                                onClick={() => {
+                                  const course = courses.find(c => c.slug === s.slug);
+                                  if (course) {
+                                    window.location.href = `/payment/${course.paymentId}`;
+                                  }
+                                }}
                                 variant="hero"
                                 size="icon"
                                 className="btn-primary rounded-b-full rounded-t-full text-[16px] uppercase w-auto flex items-center justify-center py-[12px] px-[20px]"
@@ -159,6 +200,12 @@ const Courses: React.FC = () => {
               </Carousel>
             </div>
           </div>
+        </div>
+        <div className="text-center mb-8">
+          <a href="/program" className="inline-flex items-center text-white hover:bg-yellow-500 transition-colors bg-yellow-400 px-6 py-3 rounded-full">
+            <span className="text-lg font-medium text-white">Khám phá thêm</span>
+            <ChevronRight className="ml-2 w-5 h-5 text-white" />
+          </a>
         </div>
       </div>
     </section>
