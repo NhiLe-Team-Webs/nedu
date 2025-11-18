@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, ShoppingCart } from "lucide-react";
 import { useState } from "react";
 import { useCart } from "@/lib/cart-context";
+import Image from "next/image";
 
 const Header = () => {
   const pathname = usePathname() || "/";
@@ -17,9 +18,19 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm flex justify-center">
-      <div className="w-full max-w-[1280px] flex justify-between gap-4 px-12 items-center h-20 bg-white/95 shadow-lg">
+      <div className="w-full flex justify-between gap-4 px-12 items-center h-20 bg-white/95 shadow-lg">
+        {/* left column: logo */}
+        <div className="flex items-center">
+          <Image
+            src="/250317_MsNhi_N-Edu_Logo Nedu.png"
+            alt="N-Edu Logo"
+            width={200}
+            height={50}
+          />
+        </div>
+
         {/* center column: nav centered by grid */}
-        <nav className="hidden md:flex justify-between items-center gap-12 w-full font-semibold">
+        <nav className="hidden md:flex justify-between items-center gap-10 w-auto font-semibold">
           <Link
             href="/"
             className={
@@ -77,9 +88,6 @@ const Header = () => {
                 {totalItems}
               </span>
             )}
-          </Button>
-          <Button className="btn-primary hidden md:inline-flex">
-            TÌM HIỂU THÊM
           </Button>
           <Button
             variant="ghost"
@@ -139,9 +147,6 @@ const Header = () => {
                     {totalItems}
                   </span>
                 )}
-              </Button>
-              <Button className="btn-primary">
-                TÌM HIỂU THÊM
               </Button>
             </div>
           </div>
