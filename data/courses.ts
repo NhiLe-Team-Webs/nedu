@@ -76,7 +76,7 @@ export const courses: Course[] = [
     },
     mission: 'Sức Mạnh Vô Hạn được thiết kế để giúp doanh nhân Việt vươn tầm thế giới. Bằng cách kết nối với các Chuyên gia quốc tế, bạn sẽ học những chiến lược đột phá và xây dựng những nền tảng căn bản nhất cho doanh nghiệp, nâng cấp khả năng kinh doanh và mở rộng thị trường.',
     testimonials: ['Dm6gg-LHGqs', 'qEBZwBE449o', 'RDKjAQLf5w0'],
-    curriculum: '/picture/la_chinh_minh.jpg',
+    curriculum: '/picture/lachinhminh.jpg',
     instructors: [
       {
         name: 'NhiLe',
