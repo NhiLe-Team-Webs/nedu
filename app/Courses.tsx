@@ -130,7 +130,9 @@ const Courses: React.FC = () => {
   return (
     <section className="relative flex flex-col items-center justify-center overflow-hidden min-h-screen bg-gray-100 pt-20 pb-16">
       <div className="relative flex flex-col justify-center items-center h-[90%] w-full max-w-7xl px-4">
-        <h2 className="text-4xl font-extrabold mb-12" style={{ color: '#FDB913' }}>Người Việt, làm hàng Việt, cho người Việt</h2>
+        <h2 className="text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[68px] font-black text-[#f7b50c] uppercase mb-12">
+          Người Việt, làm hàng Việt, cho người Việt
+        </h2>
 
         {/* Carousel Container */}
         <div
