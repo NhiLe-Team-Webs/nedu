@@ -107,7 +107,7 @@ const Programs = () => {
                     href="#"
                     className="inline-flex items-center mt-8 bg-amber-400 hover:bg-amber-500 text-white font-semibold px-6 py-3 rounded-full"
                   >
-                    Đăng ký ngay
+                    Tìm hiểu thêm
                     <svg
                       className="ml-3 w-4 h-4"
                       viewBox="0 0 24 24"

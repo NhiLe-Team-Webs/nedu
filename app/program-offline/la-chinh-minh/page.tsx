@@ -75,7 +75,7 @@ export default function LaChinhMinhPage() {
     ],
     title: "Testimonials",
     subtitle: "Lời chứng thực",
-    buttonText: "Đăng ký ngay",
+    buttonText: "Tìm hiểu thêm",
     buttonLink: "/testimonials",
   };
 

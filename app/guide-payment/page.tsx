@@ -17,9 +17,9 @@ export default function GuidePaymentPage() {
             <h2 className="text-2xl font-bold text-gray-800">
               Bước 1. Chọn khóa học và lựa chọn đăng ký
             </h2>
-            <img 
-              src="https://nedu.nhi.sg/images/register.jpg" 
-              alt="Chọn khóa học và đăng ký" 
+            <img
+              src="/picture/register.jpg"
+              alt="Chọn khóa học và đăng ký"
               className="w-full rounded-lg shadow-lg"
             />
           </div>
@@ -28,9 +28,9 @@ export default function GuidePaymentPage() {
             <h2 className="text-2xl font-bold text-gray-800">
               Bước 2. Điền thông tin và nhấn tiếp theo
             </h2>
-            <img 
-              src="https://nedu.nhi.sg/images/b2.jpg" 
-              alt="Điền thông tin" 
+            <img
+              src="/picture/b2.jpg"
+              alt="Điền thông tin"
               className="w-full rounded-lg shadow-lg"
             />
           </div>
@@ -39,9 +39,9 @@ export default function GuidePaymentPage() {
             <h2 className="text-2xl font-bold text-gray-800">
               Bước 3. Kiểm tra lại thông tin và nhấn thanh toán
             </h2>
-            <img 
-              src="https://nedu.nhi.sg/images/b3.jpg" 
-              alt="Kiểm tra thông tin" 
+            <img
+              src="/picture/b3.jpg"
+              alt="Kiểm tra thông tin"
               className="w-full rounded-lg shadow-lg"
             />
           </div>
@@ -50,9 +50,9 @@ export default function GuidePaymentPage() {
             <h2 className="text-2xl font-bold text-gray-800">
               Bước 4. Chọn phương thức thanh toán của VNPay và tiến hành thanh toán
             </h2>
-            <img 
-              src="https://nedu.nhi.sg/images/b4.jpg" 
-              alt="Chọn phương thức thanh toán" 
+            <img
+              src="/picture/b4.jpg"
+              alt="Chọn phương thức thanh toán"
               className="w-full rounded-lg shadow-lg"
             />
           </div>
@@ -61,9 +61,9 @@ export default function GuidePaymentPage() {
             <h2 className="text-2xl font-bold text-gray-800">
               Bước 5. Sau khi thanh toán thành công, bạn vào email để kiểm tra thông tin
             </h2>
-            <img 
-              src="https://nedu.nhi.sg/images/b5.png" 
-              alt="Email xác nhận" 
+            <img
+              src="/picture/b5.png"
+              alt="Email xác nhận"
               className="w-full rounded-lg shadow-lg"
             />
           </div>

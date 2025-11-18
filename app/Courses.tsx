@@ -180,7 +180,7 @@ const Courses: React.FC = () => {
                                 size="icon"
                                 className="btn-primary rounded-b-full rounded-t-full text-[14px] uppercase w-auto flex items-center justify-center py-[8px] px-[16px]"
                               >
-                                Đăng ký ngay
+                                Tìm hiểu thêm
                                 <ChevronRight className="font-extrabold" />
                               </Button>
                             </div>

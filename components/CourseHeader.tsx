@@ -66,7 +66,7 @@ const CourseHeader: React.FC<CourseHeaderProps> = ({
           href={paymentLink}
           className="inline-flex items-center bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-full font-semibold text-lg transition mt-[24px]"
         >
-          Đăng ký ngay
+          Tìm hiểu thêm
           <i className="fas fa-chevron-right ml-2"></i>
         </Link>
       </div>

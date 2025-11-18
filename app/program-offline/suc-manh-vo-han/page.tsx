@@ -49,7 +49,7 @@ export default function SucManhVoHanPage() {
     ],
     title: "Testimonials",
     subtitle: "Lời chứng thực",
-    buttonText: "Đăng ký ngay",
+    buttonText: "Tìm hiểu thêm",
     buttonLink: "/payment/58",
   };
 
@@ -92,7 +92,7 @@ export default function SucManhVoHanPage() {
       <CourseInfo
         title="Thông tin khóa học"
         details={courseDetails as any}
-        buttonText="Đăng ký ngay"
+        buttonText="Tìm hiểu thêm"
         buttonLink="/payment/58"
       />
 
