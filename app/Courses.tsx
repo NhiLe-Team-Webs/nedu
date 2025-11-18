@@ -3,9 +3,7 @@
 import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { ChevronRight, Calendar, ShoppingCart } from "lucide-react";
-import { useCart } from "@/lib/cart-context";
+import { ChevronRight, Calendar } from "lucide-react";
 import { courses } from "@/data/courses";
 
 const slides = [
@@ -73,8 +71,42 @@ const slides = [
 
 const Courses: React.FC = () => {
   const [currentIndex, setCurrentIndex] = React.useState(1); // Start with "Sức Mạnh Vô Hạn" in center
-  const { addToCart } = useCart();
   const totalCourses = slides.length;
+  const [viewportWidth, setViewportWidth] = React.useState(
+    typeof window !== "undefined" ? window.innerWidth : 1440
+  );
+
+  React.useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const handleResize = () => setViewportWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const isMobile = viewportWidth < 640;
+  const isTablet = viewportWidth >= 640 && viewportWidth < 1024;
+  const cardWidth = React.useMemo(() => {
+    if (isMobile) {
+      return Math.max(260, Math.min(viewportWidth - 48, 320));
+    }
+    if (isTablet) {
+      return 360;
+    }
+    return 400;
+  }, [viewportWidth, isMobile, isTablet]);
+
+  const cardHeight = React.useMemo(() => {
+    if (isMobile) return 400;
+    if (isTablet) return 430;
+    return 450;
+  }, [isMobile, isTablet]);
+
+  const trackHeight = React.useMemo(() => {
+    if (isMobile) return 420;
+    if (isTablet) return 500;
+    return 550;
+  }, [isMobile, isTablet]);
 
   const getPositionClass = (index: number) => {
     let relativeIndex = index - currentIndex;
@@ -136,7 +168,8 @@ const Courses: React.FC = () => {
 
         {/* Carousel Container */}
         <div
-          className="relative w-full max-w-6xl h-[550px] flex items-center justify-center"
+          className="relative w-full max-w-6xl flex items-center justify-center px-2 sm:px-0"
+          style={{ height: trackHeight }}
           onTouchStart={(e) => setTouchStart(handleTouchStart(e))}
           onTouchEnd={(e) => handleTouchEnd(e, touchStart)}
         >
@@ -150,49 +183,49 @@ const Courses: React.FC = () => {
                 className={`carousel-item ${positionClass} rounded-xl shadow-xl cursor-pointer transition-all duration-500 ease-in-out overflow-hidden`}
                 onClick={() => handleItemClick(index)}
                 style={{
-                  width: '400px',
-                  height: '450px',
+                  width: `${cardWidth}px`,
+                  height: `${cardHeight}px`,
                   position: 'absolute',
                   willChange: 'transform, opacity, z-index',
                   ...(positionClass === 'pos-0' && {
-                    transform: 'translateX(-600px) scale(0.5)',
+                    transform: `translateX(-${cardWidth * 1.7}px) scale(0.5)`,
                     opacity: 0,
                     zIndex: 10,
                     pointerEvents: 'none'
                   }),
                   ...(positionClass === 'pos-1' && {
-                    transform: 'translateX(-350px) scale(0.7)',
+                    transform: `translateX(-${cardWidth * 1.1}px) scale(0.7)`,
                     opacity: 0.6,
                     zIndex: 20,
                     filter: 'brightness(0.8)'
                   }),
                   ...(positionClass === 'pos-2' && {
-                    transform: 'translateX(-200px) scale(0.9)',
+                    transform: `translateX(-${cardWidth * 0.55}px) scale(0.9)`,
                     opacity: 0.9,
                     zIndex: 30,
                     filter: 'brightness(0.95)'
                   }),
                   ...(positionClass === 'pos-3' && {
-                    transform: 'translateX(0) scale(1.1)',
+                    transform: 'translateX(0) scale(1.05)',
                     opacity: 1,
                     zIndex: 40,
                     backgroundColor: '#10B981',
                     boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
                   }),
                   ...(positionClass === 'pos-4' && {
-                    transform: 'translateX(200px) scale(0.9)',
+                    transform: `translateX(${cardWidth * 0.55}px) scale(0.9)`,
                     opacity: 0.9,
                     zIndex: 30,
                     filter: 'brightness(0.95)'
                   }),
                   ...(positionClass === 'pos-5' && {
-                    transform: 'translateX(350px) scale(0.7)',
+                    transform: `translateX(${cardWidth * 1.1}px) scale(0.7)`,
                     opacity: 0.6,
                     zIndex: 20,
                     filter: 'brightness(0.8)'
                   }),
                   ...(positionClass === 'pos-6' && {
-                    transform: 'translateX(600px) scale(0.5)',
+                    transform: `translateX(${cardWidth * 1.7}px) scale(0.5)`,
                     opacity: 0,
                     zIndex: 10,
                     pointerEvents: 'none'
