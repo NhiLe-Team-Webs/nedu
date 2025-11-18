@@ -94,6 +94,7 @@ export default function LaChinhMinhPage() {
         title="THÔNG TIN KHÓA HỌC"
         buttonText="ĐĂNG KÝ NGAY"
         buttonLink="/payment/57"
+        courseSlug="la-chinh-minh"
         details={[
           {
             icon: "Star",

@@ -2,8 +2,12 @@
 
 import Link from 'next/link'
 import YouTube from 'react-youtube'
+import { ShoppingCart } from 'lucide-react'
+import { useCart } from '@/lib/cart-context'
+import { courses } from '@/data/courses'
 
 export default function AIInMarketingPage() {
+  const { addToCart } = useCart();
   const youtubeOpts = {
     height: '100%',
     width: '100%',
@@ -29,9 +33,21 @@ export default function AIInMarketingPage() {
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-primary mb-4">AI In Marketing</h1>
           <p className="text-gray-600 mb-2">Chi phí: <span className="text-3xl font-bold text-gray-800">Liên hệ</span></p>
-          <Link href="/payment/80" className="inline-block bg-primary hover:bg-primary-dark text-white px-8 py-3 rounded-full font-semibold transition text-lg">
-            ĐĂNG KÝ NGAY
-          </Link>
+          <div className="flex gap-4 justify-center">
+            <button
+              onClick={() => {
+                const course = courses.find(c => c.slug === "ai-in-marketing");
+                if (course) addToCart(course);
+              }}
+              className="inline-flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-3 rounded-full font-semibold transition text-lg"
+            >
+              <ShoppingCart className="w-5 h-5" />
+              Thêm vào giỏ hàng
+            </button>
+            <Link href="/payment/80" className="inline-block bg-primary hover:bg-primary-dark text-white px-8 py-3 rounded-full font-semibold transition text-lg">
+              ĐĂNG KÝ NGAY
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -172,9 +188,21 @@ export default function AIInMarketingPage() {
           </div>
 
           <div className="text-center">
-            <Link href="/payment/80" className="inline-block bg-primary hover:bg-primary-dark text-white px-12 py-4 rounded-full font-semibold transition text-lg">
-              ĐĂNG KÝ NGAY
-            </Link>
+            <div className="flex gap-4 justify-center">
+              <button
+                onClick={() => {
+                  const course = courses.find(c => c.slug === "ai-in-marketing");
+                  if (course) addToCart(course);
+                }}
+                className="inline-flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-3 rounded-full font-semibold transition text-lg"
+              >
+                <ShoppingCart className="w-5 h-5" />
+                Thêm vào giỏ hàng
+              </button>
+              <Link href="/payment/80" className="inline-block bg-primary hover:bg-primary-dark text-white px-12 py-4 rounded-full font-semibold transition text-lg">
+                ĐĂNG KÝ NGAY
+              </Link>
+            </div>
           </div>
         </div>
       </section>
