@@ -59,7 +59,7 @@ export const courses: Course[] = [
     mode: 'offline',
     title: 'Sức Mạnh Vô Hạn',
     category: ['Doanh nhân', 'Doanh nghiệp'],
-    heroImage: '/picture/2_3.jpg',
+    heroImage: '/picture/suc_manh_vo_han.jpg',
     price: {
       amount: '23.960',
       currency: 'USD',
@@ -147,7 +147,7 @@ export const courses: Course[] = [
     mode: 'offline',
     title: 'Là Chính Mình 03',
     category: ['Phát triển bản thân', 'Là chính mình'],
-    heroImage: '/picture/b2.jpg',
+    heroImage: '/picture/la_chinh_minh.jpg',
     price: {
       amount: '59.696.000',
       currency: 'VNĐ'
