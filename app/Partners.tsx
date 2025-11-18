@@ -155,6 +155,7 @@ const Partners = () => {
                       alt={partner.name}
                       width={120}
                       height={80}
+                      className="w-16 h-12 sm:w-24 sm:h-16 md:w-28 md:h-20 lg:w-32 lg:h-24 object-contain"
                       style={{
                         maxWidth: '100%',
                         maxHeight: '100%',
@@ -243,6 +244,7 @@ const Partners = () => {
                       alt={partner.name}
                       width={120}
                       height={80}
+                      className="w-16 h-12 sm:w-24 sm:h-16 md:w-28 md:h-20 lg:w-32 lg:h-24 object-contain"
                       style={{
                         maxWidth: '100%',
                         maxHeight: '100%',

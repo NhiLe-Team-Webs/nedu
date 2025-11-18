@@ -11,17 +11,17 @@ const Footer = () => {
           {/* Left Side: Logo & Company Info */}
           <div className="space-y-3 lg:space-y-4 w-full lg:w-auto">
             <div className="flex items-center space-x-2 lg:space-x-3">
-               <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 flex-shrink-0">
-      <Image
-        src="/picture/logo-footer.png"
-        alt="N Education"
-        width={48}
-        height={48}
-        className="w-full h-full object-contain"
-        priority
-      />
-    </div>
-    </div>
+               <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 flex-shrink-0">
+     <Image
+       src="/picture/logo-footer.png"
+       alt="N Education"
+       width={64}
+       height={64}
+       className="w-full h-full object-contain"
+       priority
+     />
+   </div>
+   </div>
             <div className="pt-1 lg:pt-2">
               <p className="font-semibold text-xs sm:text-sm lg:text-base text-white">CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ NHILE</p>
               <ul className="text-xs sm:text-xs lg:text-sm space-y-1 text-white/90 mt-1 lg:mt-2">
