@@ -11,7 +11,7 @@ const Mission: React.FC<MissionProps> = ({ title, subtitle, description }) => {
   return (
     <div className="relative flex flex-col items-center justify-center w-full h-screen relative">
       <Image
-        src="/coming-bg.jpg"
+        src="/picture/suc_manh_vo_han.jpg"
         alt="bg"
         fill
         className="absolute inset-0 w-full h-full object-cover"

@@ -1,5 +1,6 @@
 "use client";
 import * as React from "react";
+import Image from "next/image";
 import {
   Carousel,
   CarouselContent,
@@ -14,37 +15,25 @@ const slides = [
     title: "Sức mạnh vô hạn",
     tags: "#doanh nhân #doanh nghiệp",
     desc: "Chương trình học 6 tháng liên tục cùng những Bậc thầy quốc tế, đặt nền móng vững chãi cho sự bắt đầu của những doanh nhân thực thụ.",
-    bg: '/sucmanhvohan.jpg',
+    bg: '/picture/suc_manh_vo_han.jpg',
   },
   {
     title: "Là chính mình",
     tags: "#phát triển bản thân #là chính mình",
     desc: "Ba ngày học trực tiếp với những Người dẫn đường Quốc tế, nơi nhìn rõ cảm xúc của chính bạn và khai mở những khúc mắc - thứ cản bước bạn sống một cuộc đời đáng sống.",
-    bg: '/lachinhminh.jpg',
-  },
-  {
-    title: "Find your x-factor preview",
-    tags: "#marketing",
-    desc: "Kiến thức thực tế và cơ bản về marketing cho doanh nghiệp. Làm sao để khách hàng nhìn thấy sản phẩm và quyết định mua sản phẩm của bạn một cách tự nhiên.",
-    bg: '/xfactor-preview.jpg',
-  },
-  {
-    title: "FINd your x-factor",
-    tags: "#marketing",
-    desc: "Kiến thức marketing chính thống từ Người dẫn đường Melvin Soh. Cách bước cụ thể để khách hàng tiềm năng nhìn thấy và chọn mua sản phẩm từ bạn.",
-    bg: '/x-factor.jpg',
+    bg: '/picture/la_chinh_minh.jpg',
   },
   {
     title: "Thương hiệu của bạn",
     tags: "#thương hiệu #tài chính",
     desc: "Kiến thức cho doanh nhân, bắt đầu mở doanh nghiệp hay cải tổ doanh nghiệp gia đình",
-    bg: '/THCB.jpg',
+    bg: '/picture/thuong_hieu_cua_ban.png',
   },
   {
     title: "Cuộc sống của bạn",
     tags: "#phát triển bản thân #cảm xúc",
     desc: "Hiểu sâu hơn về cảm xúc, khai phá những góc khuất cảm xúc của chính mình và sự khởi đầu cho con đường phát triển bản thân",
-    bg: '/CSCB.jpg',
+    bg: '/picture/cuoc_song_cua_ban.png',
   },
 ];
 
@@ -90,12 +79,16 @@ const Programs = () => {
         <CarouselContent className="h-full">
           {slides.map((s, i) => (
             <CarouselItem key={i}>
-              <div
-                className="h-screen w-full bg-center bg-cover relative flex flex-col justify-center items-center text-center px-6"
-                style={{ backgroundImage: `url(${s.bg})` }}
-              >
+              <div className="relative h-screen w-full flex flex-col justify-center items-center text-center px-6">
+                <Image
+                  src={s.bg}
+                  alt={s.title}
+                  fill
+                  className="object-cover"
+                  priority={i === 0}
+                />
                 {/* overlay to darken and match theme */}
-                <div className="absolute inset-0 bg-black/60 object-fit" />
+                <div className="absolute inset-0 bg-black/60" />
 
                 <div className="relative z-10 max-w-3xl">
                   <h2 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white uppercase mb-6 tracking-tight">
@@ -114,7 +107,7 @@ const Programs = () => {
                     href="#"
                     className="inline-flex items-center mt-8 bg-amber-400 hover:bg-amber-500 text-white font-semibold px-6 py-3 rounded-full"
                   >
-                    Đăng ký ngay
+                    Tìm hiểu thêm
                     <svg
                       className="ml-3 w-4 h-4"
                       viewBox="0 0 24 24"

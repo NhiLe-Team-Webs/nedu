@@ -24,7 +24,7 @@ export default function LaChinhMinhPage() {
       name: "NhiLe",
       profession: ["Doanh nhân"],
       bio: "Nhi Lê là một doanh nhân, nhà giáo dục và nhà sáng tạo nội dung người Việt Nam. Cô được biết đến là người đầu tiên đưa chủ đề tâm lý học bằng tiếng Việt lên nền tảng YouTube và là người sáng lập nhiều dự án văn hóa - giáo dục có ảnh hưởng tại Việt Nam. Hiện cô đang sinh sống và làm việc tại Singapore.",
-      image: "https://nedu.nhi.sg/images/nhile_1.jpg",
+      image: "/picture/nhile.jpg",
       education:
         'Nhi Lê tốt nghiệp chuyên ngành Tâm lý học (Diploma in Psychology) tại Kaplan Singapore. Ngoài ra, cô còn sở hữu nhiều chứng chỉ chuyên sâu khác như "Lãnh đạo Kiên cường & Kinh doanh Bền vững" (Resilient Leadership & Business Sustainability) và Chứng chỉ Điều hành về Khoa học Hành vi Ứng dụng (Executive Certificate in Applied Behavioural Science) tại Đại học Quản lý Singapore (SMU).',
       career:
@@ -75,14 +75,14 @@ export default function LaChinhMinhPage() {
     ],
     title: "Testimonials",
     subtitle: "Lời chứng thực",
-    buttonText: "Đăng ký ngay",
+    buttonText: "Tìm hiểu thêm",
     buttonLink: "/testimonials",
   };
 
   return (
     <div className="min-h-screen bg-white">
       <CourseHeader
-        imageUrl="https://nedu.nhi.sg/images/1_1.jpg?_wwcv=130"
+        imageUrl="/picture/la_chinh_minh.jpg"
         altText="Là chính mình"
         time="Thời gian: THÁNG 03 NĂM 2026"
         tags={["Phát triển bản thân", "Là chính mình"]}
