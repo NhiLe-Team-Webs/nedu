@@ -1,4 +1,4 @@
-"use client";
+﻿  "use client";
 
 import Image from "next/image";
 import {
@@ -25,79 +25,79 @@ const ThirtyDayPage = () => {
     <>
 
 
-      <style jsx global>{`
-        .btn-primary {
-          background-color: ${CTA_YELLOW};
-          color: #ffffff;
-          font-weight: 700;
-          transition: all 0.25s ease;
-          box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
-        }
-        .btn-primary:hover {
-          background-color: #ffc94a;
-          transform: translateY(-2px);
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
-        }
+  import neduLogo from "@/app/picture/nedu.svg";
+  import nltLogo from "@/app/picture/nlt.png";
+  import challengePoster from "@/app/picture/thuthach30day.png";
+  import tuyetMaiPhoto from "@/app/picture/tuyetmai.jpg";
 
-        .section-title {
-          font-size: 2.8rem;
-          font-weight: 800;
-          letter-spacing: 0.04em;
-          color: ${CTA_YELLOW};
-          text-align: center;
-        }
+  const CTA_YELLOW = "#F8B516";
+  const DARK_GRAY = "#333333";
+  const TEXT_GRAY = "#5A5A5C";
+  const FOOTER_GRAY = "#F8B516";
+  const LIGHT_GRAY_BG = "#F7F8FC";
+  const BORDER_SOFT = "#E5E7EB";
 
-        .card {
-          background-color: #ffffff;
-          border-radius: 1.5rem;
-          padding: 1.75rem 2rem;
-          border: 1px solid ${BORDER_SOFT};
-          box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.12);
-          transition: all 0.25s ease;
-        }
-        .card:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 18px 28px -12px rgba(0, 0, 0, 0.16);
-        }
+  const ThirtyDayPage = () => {
+    return (
+      <>
 
-       
-        }
-        
-        .floating-btn:hover {
-          transform: translateX(-4px);
-          box-shadow: 0 14px 26px rgba(0, 0, 0, 0.22);
-          background-color: #ffc94a;
-        }
 
-        .mentor-bg-text {
-          position: absolute;
-          top: 0;
-          left: 50%;
-          transform: translateX(-50%);
-          font-size: 5.5rem;
-          font-weight: 800;
-          letter-spacing: 0.12em;
-          color: rgba(248, 181, 22, 0.08);
-          pointer-events: none;
-          user-select: none;
-          white-space: nowrap;
-        }
+        <style jsx global>{`
+          .btn-primary {
+            background-color: ${CTA_YELLOW};
+            color: #ffffff;
+            font-weight: 700;
+            padding: 0.85rem 1.6rem;
+            border-radius: 0.75rem;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            cursor: pointer;
+          }
+          .btn-primary:hover {
+            background-color: #ffc94a;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+          }
 
-        .hero-banner-gradient {
-          background: linear-gradient(135deg, #ffd1a4, #ffe8c4);
-        }
+          .section-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            color: ${CTA_YELLOW};
+            text-align: center;
+          }
 
-        @media (max-width: 1024px) {
+          .card {
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            padding: 1.75rem 2rem;
+            border: 1px solid ${BORDER_SOFT};
+            box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.12);
+            transition: all 0.25s ease;
+          }
+          .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 28px -12px rgba(0, 0, 0, 0.16);
+          }
+
+
+
           .mentor-bg-text {
-            font-size: 3.4rem;
-          }
-          .floating-buttons {
-            right: 10px;
-          }
-          .floating-btn {
-            width: 60px;
-            height: 60px;
-            border-radius: 16px 0 0 16px;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 5.5rem;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            color: rgba(248, 181, 22, 0.08);
+            pointer-events: none;
+            user-select: none;
+            white-space: nowrap;
           }
         }
       `}</style>
@@ -110,25 +110,27 @@ const ThirtyDayPage = () => {
         }}
       >
 
-        <div className="floating-buttons">
-          <a href="#hero" className="floating-btn" title="Lên đầu trang">
-            <ChevronsRight className="w-7 h-7" />
-          </a>
-          <a href="tel:0123456789" className="floating-btn" title="Gọi tư vấn">
-            <PhoneCall className="w-7 h-7" />
-          </a>
-          <a
-            href="mailto:info@n-education.vn"
-            className="floating-btn"
-            title="Gửi email"
-          >
-            <Mail className="w-7 h-7" />
-          </a>
-          <a href="#contact" className="floating-btn" title="Nhắn tin">
-            <MessageCircle className="w-7 h-7" />
-          </a>
-        </div>
+          .hero-banner-gradient {
+            background: linear-gradient(135deg, #ffd1a4, #ffe8c4);
+          }
 
+          @media (max-width: 1024px) {
+            .mentor-bg-text {
+              font-size: 3.4rem;
+            }
+          
+            }
+        `}</style>
+
+        <div
+  className="antialiased"
+  style={{
+    color: TEXT_GRAY,
+    backgroundColor: "#ffffff",
+  }}
+>
+
+        
 
       
         <main>
@@ -365,53 +367,34 @@ const ThirtyDayPage = () => {
                   className="font-extrabold text-xl mb-6"
                   style={{ color: CTA_YELLOW }}
                 >
-                  THÔNG TIN KHÓA HỌC
-                </h3>
-                <div className="grid md:grid-cols-3 gap-y-6 gap-x-10 text-[13px] md:text-[14px]">
-                  <div>
-                    <p className="font-semibold mb-1">Chủ đề:</p>
-                    <p>Sáng tạo nội dung</p>
-                  </div>
-                  <div>
-                    <p className="font-semibold mb-1">Thời gian:</p>
-                    <p>28/10/2025 - 28/11/2025</p>
-                  </div>
-                  <div>
-                    <p className="font-semibold mb-1">Người dẫn đường:</p>
-                    <p>Tuyết Mai</p>
-                  </div>
-                  <div>
-                    <p className="font-semibold mb-1">Hình thức:</p>
-                    <p>Mỗi ngày thực hiện thử nghiệm &amp; báo cáo trong nhóm.</p>
-                  </div>
-                  <div>
-                    <p className="font-semibold mb-1">Địa điểm học:</p>
-                    <p>Trò chuyện nhóm trực tuyến.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div id="register" className="text-center mt-10">
-                <a
-                  href="#contact"
-                  className="px-10 py-3 rounded-full btn-primary text-xs md:text-sm inline-flex items-center gap-2"
+                  THỬ THÁCH 30 NGÀY
+                </h1>
+                <p
+                  className="text-base md:text-lg font-semibold"
+                  style={{ color: DARK_GRAY }}
                 >
-                  ĐĂNG KÝ NGAY
-                  <ArrowRight className="w-4 h-4" />
-                </a>
-              </div>
-            </div>
-          </section>
- 
- 
-          <section className="py-14 bg-white">
-            <div className="max-w-6xl mx-auto px-6 text-center">
-              <h2 className="section-title mb-10">
-                ĐƠN VỊ TỔ CHỨC VÀ VẬN HÀNH
-              </h2>
+                  Chủ đề Tháng 11: Sáng tạo nội dung
+                </p>
+                <p className="mt-1 text-sm md:text-base">
+                  Giá hạn mỗi tháng:
+                  <span className="text-green-600 font-extrabold text-xl md:text-2xl">
+                    {" "}
+                    396.000
+                  </span>
+                  <span className="font-semibold"> VND</span>
+                </p>
+                <div className="mt-4 mb-6">
+                  <a
+                    href="#register"
+                    className="inline-flex items-center gap-2 px-8 py-3 rounded-full btn-primary text-xs md:text-sm"
+                  >
+                    ĐĂNG KÝ NGAY
+                    <ArrowRight className="w-4 h-4" />
+                  </a>
+                </div>
 
-              <div className="flex flex-wrap justify-center gap-8 mb-10">
-                <div className="bg-white border rounded-2xl px-10 py-6 shadow-sm flex items-center justify-center w-[260px] h-[140px]">
+
+                <div className="mt-4 flex justify-center">
                   <Image
                     src={neduLogo}
                     alt="N-Education"
@@ -461,4 +444,4 @@ const ThirtyDayPage = () => {
   );
 };
 
-export default ThirtyDayPage;
+  export default ThirtyDayPage;
