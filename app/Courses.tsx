@@ -4,7 +4,6 @@ import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight, Calendar } from "lucide-react";
-import { courses } from "@/data/courses";
 
 const slides = [
   {
@@ -86,6 +85,17 @@ const Courses: React.FC = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  // Auto-play functionality
+  React.useEffect(() => {
+    if (!isClient) return; // Only run on client
+
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % totalCourses);
+    }, 4000); // Change slide every 4 seconds
+
+    return () => clearInterval(interval);
+  }, [isClient, totalCourses]);
 
   const isMobile = isClient && viewportWidth < 640;
   const isTablet = isClient && viewportWidth >= 640 && viewportWidth < 1024;
@@ -255,15 +265,6 @@ const Courses: React.FC = () => {
                     <div className="text-center">
                       <h3 className="text-sm sm:text-lg font-bold text-gray-800 mb-1 line-clamp-2">{slide.title.toUpperCase()}</h3>
                       <p className="text-xs text-gray-600 mb-2 line-clamp-2 sm:line-clamp-3">{slide.content}</p>
-                      <div className="text-sm font-bold text-yellow-600">
-                        {(() => {
-                          const course = courses.find(c => c.id === slide.id);
-                          if (!course) return '';
-                          return course.price.currency === 'VNĐ'
-                            ? `${parseInt(course.price.amount.replace(/[.,]/g, '')).toLocaleString('vi-VN')} ${course.price.currency}`
-                            : `${course.price.currency} ${course.price.amount}`;
-                        })()}
-                      </div>
                     </div>
                   ) : (
                     <div className="text-center">
