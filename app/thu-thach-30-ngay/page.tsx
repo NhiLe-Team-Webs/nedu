@@ -105,7 +105,6 @@ const ThirtyDayPage = () => {
       <div
         className="antialiased"
         style={{
-          fontFamily: "'Be Vietnam Pro', sans-serif",
           color: TEXT_GRAY,
           backgroundColor: "#ffffff",
         }}
@@ -457,72 +456,6 @@ const ThirtyDayPage = () => {
             </div>
           </section>
         </main>
-
-        {/* FOOTER */}
-        <footer
-          id="contact"
-          className="text-white"
-          style={{ backgroundColor: FOOTER_GRAY }}
-        >
-          <div className="max-w-6xl mx-auto px-6 py-10">
-            <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8 text-xs">
-              <div>
-                <div className="flex items-center gap-2">
-                  <div className="w-9 h-9 bg-white font-extrabold flex items-center justify-center rounded">
-                    <span style={{ color: CTA_YELLOW }}>N</span>
-                  </div>
-                  <span className="font-bold text-lg">Education</span>
-                </div>
-                <p className="mt-3 leading-relaxed">
-                  CÔNG TY ĐỊNH CƯ THƯƠNG MẠI DỊCH VỤ NHILE
-                  <br />
-                  Mã số thuế: 0317285736
-                  <br />
-                  25 Lê Bá Trinh, Phường Hòa Cường Bắc, Quận Hải Châu, Đà Nẵng
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-1 font-medium">
-                <a href="#hero" className="hover:underline">
-                  TRANG CHỦ
-                </a>
-                <a href="#about" className="hover:underline">
-                  30 NGÀY CÓ GÌ
-                </a>
-                <a href="#mentor" className="hover:underline">
-                  NGƯỜI DẪN ĐƯỜNG
-                </a>
-                <a href="#course-info" className="hover:underline">
-                  THÔNG TIN THỬ THÁCH
-                </a>
-              </div>
-
-              <div className="flex flex-col items-start gap-3">
-                <div className="flex flex-wrap gap-2">
-                  <span>Facebook</span>
-                  <span>Instagram</span>
-                  <span>Youtube</span>
-                  <span>TikTok</span>
-                </div>
-                <div className="mt-1">
-                  Đối tác thanh toán
-                  <div className="mt-1 bg-white px-3 py-1 rounded inline-block">
-                    <span style={{ color: CTA_YELLOW }}>VNPay</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-6 pt-3 border-t border-[#f9d56b] text-[10px] flex flex-col md:flex-row items-center justify-between gap-2">
-              <span>© 2025 N-Education. Bảo lưu mọi quyền.</span>
-              <div className="flex gap-3">
-                <span>Hướng dẫn thanh toán</span>
-                <span>Chính sách bảo mật</span>
-                <span>Điều khoản sử dụng</span>
-              </div>
-            </div>
-          </div>
-        </footer>
       </div>
     </>
   );

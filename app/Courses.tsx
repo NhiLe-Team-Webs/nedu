@@ -138,7 +138,7 @@ const Courses: React.FC = () => {
                             </h3>
                           </div>
                            
-                          <div className="flex items-center justify-between gap-4">
+                          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mt-4">
                             <div className="flex flex-row items-center justify-between">
                               <Calendar className="w-5 h-5 text-white mr-2" />
                               <span className="text-sm text-white font-semibold">
@@ -153,21 +153,9 @@ const Courses: React.FC = () => {
                                 }}
                                 variant="hero"
                                 size="icon"
-                                className="btn-secondary rounded-b-full rounded-t-full text-[16px] uppercase w-auto flex items-center justify-center py-[12px] px-[20px]"
+                                className="btn-secondary rounded-b-full rounded-t-full text-[12px] uppercase w-auto flex items-center justify-center py-[6px] px-[12px]"
                               >
                                 <ShoppingCart className="h-3 w-3 mr-1" />
-                              </Button>
-                              <Button
-                                onClick={() => {
-                                  const course = courses.find(c => c.slug === s.slug);
-                                  if (course) addToCart(course);
-                                }}
-                                variant="hero"
-                                size="icon"
-                                className="btn-primary rounded-b-full rounded-t-full text-[16px] uppercase w-auto flex items-center justify-center py-[12px] px-[20px]"
-                              >
-                                Thêm giỏ hàng
-                                <ChevronRight className="font-extrabold" />
                               </Button>
                               <Button
                                 onClick={() => {
@@ -178,7 +166,7 @@ const Courses: React.FC = () => {
                                 }}
                                 variant="hero"
                                 size="icon"
-                                className="btn-primary rounded-b-full rounded-t-full text-[14px] uppercase w-auto flex items-center justify-center py-[8px] px-[16px]"
+                                className="btn-primary rounded-b-full rounded-t-full text-[12px] uppercase w-auto flex items-center justify-center py-[6px] px-[12px]"
                               >
                                 Tìm hiểu thêm
                                 <ChevronRight className="font-extrabold" />
