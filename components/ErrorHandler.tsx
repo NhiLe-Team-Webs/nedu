@@ -38,10 +38,13 @@ export default function ErrorHandler() {
       if (typeof window.$ === 'undefined' && typeof window.jQuery === 'undefined') {
         window.$ = window.jQuery = function() {
           return {
-            ready: function(callback: Function) {
+            ready: function(callback: () => void) {
+              console.log('jQuery mock ready() called with callback:', typeof callback);
               if (document.readyState === 'loading') {
+                console.log('Document is loading, adding DOMContentLoaded listener');
                 document.addEventListener('DOMContentLoaded', callback);
               } else {
+                console.log('Document already loaded, executing callback immediately');
                 callback();
               }
             }
