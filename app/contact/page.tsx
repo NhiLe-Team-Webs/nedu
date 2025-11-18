@@ -25,9 +25,9 @@ export default function ContactPage() {
             <div className="overflow-hidden rounded-2xl bg-white shadow-xl md:flex">
             <div className="bg-[#F7B50C] text-white px-8 py-10 md:w-1/3 flex flex-col justify-center items-stretch rounded-l-2xl relative">
               <img
-                src="https://nedu.nhi.sg/images/nedu-contact.png"
+                src="/250317_MsNhi_N-Edu_Logo Nedu.png"
                 alt="N-Edu Contact"
-                className="mx-auto mb-6 w-full max-w-[220px] object-contain"
+                className="mx-auto mb-6 w-full max-w-[220px] sm:max-w-[280px] object-contain"
               />
               <div className="mt-6 mx-auto w-[320px] text-base">
                 <div className="border-t border-white/20 -mx-8"></div>
