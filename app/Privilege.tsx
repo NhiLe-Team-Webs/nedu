@@ -64,16 +64,16 @@ const Privilege = () => {
           {privileges.map((privilege, index) => (
             <div
               key={index}
-              className="bg-white rounded-2xl p-8 shadow-md border border-gray-200 hover:shadow-lg transition-transform transform hover:-translate-y-1 flex items-start gap-5"
+              className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200 hover:shadow-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 flex items-start gap-5 transform"
             >
-              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-500">
+              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-500 transition-all duration-300 hover:scale-110 hover:bg-yellow-200">
                 {privilege.icon}
               </div>
               <div>
-                <h3 className="font-bold text-lg text-[oklch(55.3% 0.013 58.071)]">
+                <h3 className="font-bold text-lg text-[oklch(55.3% 0.013 58.071)] transition-all duration-200 hover:text-yellow-600">
                   {privilege.title}
                 </h3>
-                <p className="text-gray-600">{privilege.description}</p>
+                <p className="text-gray-600 transition-all duration-200 hover:text-gray-800">{privilege.description}</p>
               </div>
             </div>
           ))}

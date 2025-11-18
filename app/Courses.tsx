@@ -158,22 +158,75 @@ const Courses: React.FC = () => {
     setCurrentIndex((prev) => (prev + direction + totalCourses) % totalCourses);
   };
 
-  const handleTouchStart = (e: React.TouchEvent) => {
-    const touchStart = e.changedTouches[0].screenX;
-    return touchStart;
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent, touchStart: number) => {
-    const touchEnd = e.changedTouches[0].screenX;
-    if (touchEnd < touchStart - 50) {
-      navigate(1); // Swipe Left - Next
-    }
-    if (touchEnd > touchStart + 50) {
-      navigate(-1); // Swipe Right - Previous
-    }
-  };
-
   const [touchStart, setTouchStart] = React.useState(0);
+  const [touchEnd, setTouchEnd] = React.useState(0);
+  const [isDragging, setIsDragging] = React.useState(false);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    const touch = e.changedTouches[0];
+    setTouchStart(touch.clientX);
+    setTouchEnd(touch.clientX);
+    setIsDragging(true);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging) return;
+    const touch = e.changedTouches[0];
+    setTouchEnd(touch.clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!isDragging) return;
+    
+    const swipeDistance = touchStart - touchEnd;
+    const minSwipeDistance = 50;
+    
+    if (Math.abs(swipeDistance) > minSwipeDistance) {
+      if (swipeDistance > 0) {
+        navigate(1); // Swipe Left - Next
+      } else {
+        navigate(-1); // Swipe Right - Previous
+      }
+    }
+    
+    setIsDragging(false);
+  };
+
+  // Mouse drag support for desktop
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setTouchStart(e.clientX);
+    setTouchEnd(e.clientX);
+    setIsDragging(true);
+    e.preventDefault();
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    setTouchEnd(e.clientX);
+  };
+
+  const handleMouseUp = () => {
+    if (!isDragging) return;
+    
+    const swipeDistance = touchStart - touchEnd;
+    const minSwipeDistance = 50;
+    
+    if (Math.abs(swipeDistance) > minSwipeDistance) {
+      if (swipeDistance > 0) {
+        navigate(1); // Drag Left - Next
+      } else {
+        navigate(-1); // Drag Right - Previous
+      }
+    }
+    
+    setIsDragging(false);
+  };
+
+  const handleMouseLeave = () => {
+    if (isDragging) {
+      setIsDragging(false);
+    }
+  };
 
   return (
     <section className="relative flex flex-col items-center justify-center overflow-hidden min-h-screen bg-gray-100 pt-16 sm:pt-20 pb-12 sm:pb-16">
@@ -184,10 +237,15 @@ const Courses: React.FC = () => {
 
         {/* Carousel Container */}
         <div
-          className="relative w-full max-w-6xl flex items-center justify-center px-2 sm:px-0"
+          className={`relative w-full max-w-6xl flex items-center justify-center px-2 sm:px-0 select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
           style={{ height: isClient ? trackHeight : 380 }}
-          onTouchStart={(e) => setTouchStart(handleTouchStart(e))}
-          onTouchEnd={(e) => handleTouchEnd(e, touchStart)}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseLeave}
         >
           {slides.map((slide, index) => {
             const isCenter = index === currentIndex;
@@ -196,13 +254,13 @@ const Courses: React.FC = () => {
             return (
               <div
                 key={slide.id}
-                className={`carousel-item ${positionClass} rounded-xl shadow-xl cursor-pointer transition-all duration-500 ease-in-out overflow-hidden`}
+                className={`carousel-item ${positionClass} rounded-2xl shadow-2xl cursor-pointer transition-all duration-500 ease-in-out overflow-hidden bg-white hover:shadow-3xl`}
                 onClick={() => handleItemClick(index)}
                 style={{
                   width: isClient ? `${cardWidth}px` : '300px',
                   height: isClient ? `${cardHeight}px` : '350px',
                   position: 'absolute',
-                  willChange: 'transform, opacity, z-index',
+                  willChange: 'transform, opacity, z-index, box-shadow',
                   ...(positionClass === 'pos-0' && {
                     transform: isClient ? `translateX(-${cardWidth * 1.7}px) scale(0.5)` : 'translateX(-510px) scale(0.5)',
                     opacity: 0,
@@ -226,7 +284,8 @@ const Courses: React.FC = () => {
                     opacity: 1,
                     zIndex: 40,
                     backgroundColor: '#10B981',
-                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+                    border: '2px solid rgba(16, 185, 129, 0.2)'
                   }),
                   ...(positionClass === 'pos-4' && {
                     transform: isClient ? `translateX(${cardWidth * 0.55}px) scale(0.9)` : 'translateX(165px) scale(0.9)',
@@ -249,12 +308,12 @@ const Courses: React.FC = () => {
                 }}
               >
                 {/* Top Part - Full Size Image */}
-                <div className="relative h-3/5 overflow-hidden rounded-t-xl">
+                <div className="relative h-3/5 overflow-hidden rounded-t-2xl">
                   <Image
                     src={slide.image}
                     alt={slide.title}
                     fill
-                    className="object-cover"
+                    className="object-cover transition-all duration-300 hover:scale-110"
                   />
                 </div>
                 
@@ -273,20 +332,20 @@ const Courses: React.FC = () => {
                   )}
                   
                   <div className="flex justify-between items-end relative z-50 mt-2">
-                    <div className="flex items-center bg-white/90 backdrop-blur-sm px-2 py-1.5 sm:px-3 sm:py-2 rounded-full">
-                      <Calendar className="w-3 h-3 sm:w-4 sm:h-4 mr-1.5 sm:mr-2 text-gray-600 flex-shrink-0" />
+                    <div className="flex items-center bg-white/90 backdrop-blur-sm px-2 py-1.5 sm:px-3 sm:py-2 rounded-full transition-all duration-200 hover:bg-white hover:shadow-md">
+                      <Calendar className="w-3 h-3 sm:w-4 sm:h-4 mr-1.5 sm:mr-2 text-gray-600 flex-shrink-0 transition-all duration-200" />
                       <span className="text-xs sm:text-sm text-gray-600 font-medium whitespace-nowrap">{slide.date}</span>
                     </div>
                     <Link href={`/program-${slide.type}/${slide.slug}`}>
                       <button
                         onClick={(e) => e.stopPropagation()}
-                        className="bg-yellow-400 hover:bg-yellow-500 text-white p-2 sm:p-3 rounded-full transition flex items-center justify-center shadow-lg hover:scale-110 transform"
+                        className="bg-yellow-400 hover:bg-yellow-500 text-white p-2 sm:p-3 rounded-full transition-all duration-200 flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-110 active:scale-95 transform"
                         style={{
                           minWidth: '32px sm:40px',
                           minHeight: '32px sm:40px'
                         }}
                       >
-                        <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+                        <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 transition-all duration-200" />
                       </button>
                     </Link>
                   </div>
@@ -301,10 +360,10 @@ const Courses: React.FC = () => {
           {slides.map((_, index) => (
             <button
               key={index}
-              className={`w-3 h-3 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
+              className={`w-3 h-3 sm:w-3 sm:h-3 rounded-full transition-all duration-300 transform hover:scale-125 ${
                 index === currentIndex
-                  ? 'bg-gray-800 scale-125'
-                  : 'bg-gray-400 hover:bg-gray-600'
+                  ? 'bg-gray-800 scale-125 shadow-lg'
+                  : 'bg-gray-400 hover:bg-gray-600 hover:scale-110'
               }`}
               onClick={() => setCurrentIndex(index)}
             />
@@ -315,15 +374,15 @@ const Courses: React.FC = () => {
         <div className="flex gap-3 sm:gap-4 mt-4 sm:mt-6">
           <button
             onClick={() => navigate(-1)}
-            className="p-3 sm:p-4 rounded-full bg-white text-gray-700 hover:bg-gray-100 transition duration-300 shadow-md"
+            className="p-3 sm:p-4 rounded-full bg-white text-gray-700 hover:bg-gray-100 transition-all duration-200 shadow-md hover:shadow-lg hover:scale-110 active:scale-95 transform"
           >
-            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 rotate-180" />
+            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 rotate-180 transition-all duration-200" />
           </button>
           <button
             onClick={() => navigate(1)}
-            className="p-3 sm:p-4 rounded-full bg-white text-gray-700 hover:bg-gray-100 transition duration-300 shadow-md"
+            className="p-3 sm:p-4 rounded-full bg-white text-gray-700 hover:bg-gray-100 transition-all duration-200 shadow-md hover:shadow-lg hover:scale-110 active:scale-95 transform"
           >
-            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 transition-all duration-200" />
           </button>
         </div>
 

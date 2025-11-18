@@ -41,10 +41,10 @@ const Mission = () => {
                   href="https://www.nhi.sg/"
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center mt-4 sm:mt-6 bg-[#f7b50c] hover:bg-amber-500 text-white font-medium px-3 sm:px-5 py-2 sm:py-3 rounded-[40px]"
+                  className="inline-flex items-center mt-4 sm:mt-6 bg-white text-black font-medium px-4 sm:px-6 py-2 sm:py-3 rounded-full border border-black/20 shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200"
                 >
-                  <span className="uppercase text-xs sm:text-sm">xem thêm</span>
-                  <svg className="ml-2 sm:ml-3 w-3 h-3 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <span className="uppercase text-xs sm:text-sm transition-all duration-200">xem thêm</span>
+                  <svg className="ml-2 sm:ml-3 w-3 h-3 sm:w-4 sm:h-4 transition-all duration-200" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </a>
@@ -70,16 +70,16 @@ const Mission = () => {
               </div>
 
               <div className="flex items-center gap-2 sm:gap-3">
-                <a href="https://www.linkedin.com/in/nhisg/" target="_blank" rel="noreferrer" className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-gray-50">
-                  <svg width="12" height="12" className="sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 8a6 6 0 0 1 6 6v6h-4v-6a2 2 0 0 0-2-2 2 2 0 0 0-2 2v6h-4v-12h4v2a4 4 0 0 1 4-2zM6 9H2v12h4V9zm-2-5a2 2 0 1 1 0 4 2 2 0 0 1 0-4z" fill="currentColor"/></svg>
+                <a href="https://www.linkedin.com/in/nhisg/" target="_blank" rel="noreferrer" className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-gray-50 transition-all duration-200 hover:scale-110 hover:shadow-md active:scale-95 transform">
+                  <svg width="12" height="12" className="sm:w-4 sm:h-4 transition-all duration-200" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 8a6 6 0 0 1 6 6v6h-4v-6a2 2 0 0 0-2-2 2 2 0 0 0-2 2v6h-4v-12h4v2a4 4 0 0 1 4-2zM6 9H2v12h4V9zm-2-5a2 2 0 1 1 0 4 2 2 0 0 1 0-4z" fill="currentColor"/></svg>
                 </a>
 
-                <a href="https://www.facebook.com/nhile.sg" target="_blank" rel="noreferrer" className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-gray-50">
-                  <svg width="12" height="12" className="sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 12.07C22 6.51 17.52 2 12 2S2 6.51 2 12.07C2 17.09 5.66 21.26 10.44 22V14.89h-2.8v-2.82h2.8V9.83c0-2.77 1.64-4.29 4.15-4.29 1.2 0 2.46.22 2.46.22v2.7h-1.38c-1.36 0-1.79.85-1.79 1.73v2.06h3.05l-.49 2.82h-2.56V22C18.34 21.26 22 17.09 22 12.07z" fill="currentColor"/></svg>
+                <a href="https://www.facebook.com/nhile.sg" target="_blank" rel="noreferrer" className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-gray-50 transition-all duration-200 hover:scale-110 hover:shadow-md active:scale-95 transform">
+                  <svg width="12" height="12" className="sm:w-4 sm:h-4 transition-all duration-200" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 12.07C22 6.51 17.52 2 12 2S2 6.51 2 12.07C2 17.09 5.66 21.26 10.44 22V14.89h-2.8v-2.82h2.8V9.83c0-2.77 1.64-4.29 4.15-4.29 1.2 0 2.46.22 2.46.22v2.7h-1.38c-1.36 0-1.79.85-1.79 1.73v2.06h3.05l-.49 2.82h-2.56V22C18.34 21.26 22 17.09 22 12.07z" fill="currentColor"/></svg>
                 </a>
 
-                <a href="https://www.instagram.com/nhile.sg/" target="_blank" rel="noreferrer" className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-gray-50">
-                  <svg width="12" height="12" className="sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-2zm5 6.3a4.7 4.7 0 1 0 0 9.4 4.7 4.7 0 0 0 0-9.4zm5.5-3.8a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z" fill="currentColor"/></svg>
+                <a href="https://www.instagram.com/nhile.sg/" target="_blank" rel="noreferrer" className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-gray-50 transition-all duration-200 hover:scale-110 hover:shadow-md active:scale-95 transform">
+                  <svg width="12" height="12" className="sm:w-4 sm:h-4 transition-all duration-200" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-2zm5 6.3a4.7 4.7 0 1 0 0 9.4 4.7 4.7 0 0 0 0-9.4zm5.5-3.8a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z" fill="currentColor"/></svg>
                 </a>
               </div>
             </div>

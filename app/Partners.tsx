@@ -113,7 +113,7 @@ const Partners = () => {
               {partners.slice(0, 6).map((partner, index) => (
                 <div
                   key={index}
-                  className="ww-layout ww-flexbox ww-element ww-flexbox__object"
+                  className="ww-layout ww-flexbox ww-element ww-flexbox__object transition-all duration-300 hover:scale-105 hover:shadow-xl"
                   style={{
                     display: 'flex',
                     flexFlow: 'column',
@@ -130,12 +130,14 @@ const Partners = () => {
                     minHeight: 'unset',
                     background: 'rgba(255, 255, 255, 0.2)',
                     boxShadow: 'rgba(0, 0, 0, 0.05) 0px 4px 4px 0px',
-                    borderRadius: '10px',
-                    backdropFilter: 'blur(4px)'
+                    borderRadius: '12px',
+                    backdropFilter: 'blur(4px)',
+                    cursor: 'pointer',
+                    transform: 'translateZ(0)'
                   }}
                   title={partner.name}
                 >
-                  <div className="ww-image-basic ww-element ww-flexbox__object" style={{
+                  <div className="ww-image-basic ww-element ww-flexbox__object transition-all duration-300" style={{
                     margin: '0px',
                     padding: '10px',
                     zIndex: 'unset',
@@ -155,7 +157,7 @@ const Partners = () => {
                       alt={partner.name}
                       width={120}
                       height={80}
-                      className="w-16 h-12 sm:w-24 sm:h-16 md:w-28 md:h-20 lg:w-32 lg:h-24 object-contain"
+                      className="w-16 h-12 sm:w-24 sm:h-16 md:w-28 md:h-20 lg:w-32 lg:h-24 object-contain transition-all duration-300 hover:scale-110"
                       style={{
                         maxWidth: '100%',
                         maxHeight: '100%',
@@ -202,7 +204,7 @@ const Partners = () => {
               {partners.slice(6).map((partner, index) => (
                 <div
                   key={index + 6}
-                  className="ww-layout ww-flexbox ww-element ww-flexbox__object"
+                  className="ww-layout ww-flexbox ww-element ww-flexbox__object transition-all duration-300 hover:scale-105 hover:shadow-xl"
                   style={{
                     display: 'flex',
                     flexFlow: 'column',
@@ -219,12 +221,14 @@ const Partners = () => {
                     minHeight: 'unset',
                     background: 'rgba(255, 255, 255, 0.2)',
                     boxShadow: 'rgba(0, 0, 0, 0.05) 0px 4px 4px 0px',
-                    borderRadius: '10px',
-                    backdropFilter: 'blur(4px)'
+                    borderRadius: '12px',
+                    backdropFilter: 'blur(4px)',
+                    cursor: 'pointer',
+                    transform: 'translateZ(0)'
                   }}
                   title={partner.name}
                 >
-                  <div className="ww-image-basic ww-element ww-flexbox__object" style={{
+                  <div className="ww-image-basic ww-element ww-flexbox__object transition-all duration-300" style={{
                     margin: '0px',
                     padding: '10px',
                     zIndex: 'unset',
@@ -244,7 +248,7 @@ const Partners = () => {
                       alt={partner.name}
                       width={120}
                       height={80}
-                      className="w-16 h-12 sm:w-24 sm:h-16 md:w-28 md:h-20 lg:w-32 lg:h-24 object-contain"
+                      className="w-16 h-12 sm:w-24 sm:h-16 md:w-28 md:h-20 lg:w-32 lg:h-24 object-contain transition-all duration-300 hover:scale-110"
                       style={{
                         maxWidth: '100%',
                         maxHeight: '100%',
