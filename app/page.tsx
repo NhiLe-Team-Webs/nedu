@@ -10,7 +10,6 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Courses from "./Courses";
 import Mission from "./Mission";
-import Programs from "./Programs";
 import Supports from "./Support";
 import Testimonials from "./Testimonials";
 import Partners from "./Partners";
@@ -51,7 +50,6 @@ export default function Home() {
 
       <Courses />
       <Mission />
-      <Programs />
       <Supports />
       <Testimonials />
       <Privilege />

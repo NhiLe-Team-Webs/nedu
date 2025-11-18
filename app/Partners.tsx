@@ -137,15 +137,16 @@ const Partners = () => {
                 >
                   <div className="ww-image-basic ww-element ww-flexbox__object" style={{
                     margin: '0px',
-                    padding: '0px',
+                    padding: '10px',
                     zIndex: 'unset',
                     alignSelf: 'unset',
-                    display: 'block',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '100%',
+                    height: '100%',
                     maxWidth: 'unset',
                     minWidth: 'unset',
-                    height: 'auto',
-                    maxHeight: 'unset',
-                    minHeight: 'unset',
                     background: 'none'
                   }}>
                     <div className="ww-image-basic-overlay"></div>
@@ -155,8 +156,8 @@ const Partners = () => {
                       width={120}
                       height={80}
                       style={{
-                        maxWidth: '90%',
-                        maxHeight: '80%',
+                        maxWidth: '100%',
+                        maxHeight: '100%',
                         objectFit: 'contain'
                       }}
                       onError={(e) => {
@@ -224,15 +225,16 @@ const Partners = () => {
                 >
                   <div className="ww-image-basic ww-element ww-flexbox__object" style={{
                     margin: '0px',
-                    padding: '0px',
+                    padding: '10px',
                     zIndex: 'unset',
                     alignSelf: 'unset',
-                    display: 'block',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '100%',
+                    height: '100%',
                     maxWidth: 'unset',
                     minWidth: 'unset',
-                    height: 'auto',
-                    maxHeight: '80%',
-                    minHeight: 'unset',
                     background: 'none'
                   }}>
                     <div className="ww-image-basic-overlay"></div>
@@ -242,8 +244,8 @@ const Partners = () => {
                       width={120}
                       height={80}
                       style={{
-                        maxWidth: '90%',
-                        maxHeight: '80%',
+                        maxWidth: '100%',
+                        maxHeight: '100%',
                         objectFit: 'contain'
                       }}
                       onError={(e) => {
