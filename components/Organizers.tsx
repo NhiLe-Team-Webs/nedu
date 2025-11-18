@@ -46,21 +46,6 @@ const Organizers: React.FC = () => {
             <span className="font-semibold text-sm sm:text-[16px] md:text-[20px]">neducation</span>
           </a>
 
-          {/* TikTok Link */}
-          <a
-            href="https://www.tiktok.com/@nedu.sg?fbclid=IwY2xjawOIwlVleHRuA2FlbQIxMABicmlkETFiQ2hiUklGRmxzVXNBYnVIc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHgR-eqTuQEp25Djq8zv4ityYmFBovfAZYoWz6vQ0_-LDXChKpFFwtzRAU3mW_aem_aFo5_CTFMFbsTdaAXituwQ"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 border border-amber-400 rounded-full text-amber-400 font-semibold text-sm sm:text-base"
-          >
-            <img
-              src="/tiktok-footer.svg"
-              alt="TikTok"
-              className="w-5 h-5 sm:w-6 sm:h-6"
-              loading="lazy"
-            />
-            <span className="font-semibold text-sm sm:text-[16px] md:text-[20px]">@nedu.sg</span>
-          </a>
 
           {/* YouTube Link */}
           <a
