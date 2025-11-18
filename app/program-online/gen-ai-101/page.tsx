@@ -8,6 +8,7 @@ import Link from "next/link";
 import YouTube from "react-youtube";
 import Whom from "@/components/Whom";
 import * as Icon from "lucide-react";
+import { useCart } from "@/lib/cart-context";
 
 export default function GenAI101Page() {
   const { addToCart } = useCart();
@@ -30,37 +31,37 @@ export default function GenAI101Page() {
         "- Chứng chỉ Nâng cao về Học tập & Hiệu suất (Advanced Certificate in Learning & Performance) tại Institute of Adult Learning (IAL).",
       ],
       career:
-        "Nhi Lê hoạt động trong nhiều lĩnh vực, từ kinh doanh, giáo dục đến sáng tạo nội dung. Cô là người có tầm ảnh hưởng trong việc chia sẻ kiến thức về tâm lý học và kỹ năng sống cho thế hệ trẻ.",
+        "Linda Hui-Isaac có hơn 20 năm kinh nghiệm trong lĩnh vực xây dựng thương hiệu và AI-Marketing, đã tư vấn cho nhiều công ty niêm yết trên SGX và các MNC thương hiệu xa xỉ Châu Âu.",
       achievements: [
         {
-          title: "Kinh nghiệm toàn cầu",
+          date: "2025",
           description:
             "Hơn 20 năm kinh nghiệm trong lĩnh vực Xây dựng Thương hiệu và AI-Marketing.",
         },
         {
-          title: "Kinh nghiệm doanh nghiệp",
+          date: "2025",
           description:
             "Tích lũy kinh nghiệm từ các công ty niêm yết trên SGX và các MNC thương hiệu xa xỉ Châu Âu.",
         },
         {
-          title: "Đào tạo: Ngân hàng & Tài chính",
-          description: "AIA, DBS, UOB, SAXO.",
+          date: "2025",
+          description: "Đào tạo các công ty lớn: AIA, DBS, UOB, SAXO.",
         },
         {
-          title: "Đào tạo: Truyền thông & Công nghệ",
-          description: "AWS, SONY, NBCUniversal, Ricoh.",
+          date: "2025",
+          description: "Đào tạo công nghệ: AWS, SONY, NBCUniversal, Ricoh.",
         },
         {
-          title: "Đào tạo: Chính phủ & Y tế",
-          description: "GOVTech, ICA Singapore, Ministry of Health (MOH).",
+          date: "2025",
+          description: "Đào tạo chính phủ: GOVTech, ICA Singapore, Ministry of Health (MOH).",
         },
         {
-          title: "Đào tạo: Giáo dục",
-          description: "NUS, NTU, SMU Academy, Kaplan.",
+          date: "2025",
+          description: "Đào tạo giáo dục: NUS, NTU, SMU Academy, Kaplan.",
         },
         {
-          title: "Đào tạo: Dịch vụ Chuyên nghiệp",
-          description: "BCG.",
+          date: "2025",
+          description: "Đào tạo tư vấn: BCG.",
         },
       ],
       projects: [
@@ -99,19 +100,19 @@ export default function GenAI101Page() {
   ];
   const whomItems = [
     {
-      icon: "Sprout",
+      icon: "Sprout" as const,
       heading: "Sinh viên & người mới đi làm",
       description:
         "Trang bị nền tảng thực tế để hiểu rõ AI dùng trong công việc viết – trình bày – giao tiếp, mở ra cơ hội phát triển sớm trong môi trường chuyên nghiệp.",
     },
     {
-      icon: "Recycle",
+      icon: "Recycle" as const,
       heading: "Người muốn chuyển ngành",
       description:
         "Khóa học phù hợp cho những ai muốn khám phá tiềm năng AI để ứng dụng trong công việc mới như marketing, truyền thông, quản lý, nhân sự...",
     },
     {
-      icon: "Split",
+      icon: "Split" as const,
       heading: "Người mới bắt đầu học AI",
       description:
         "Không cần nền tảng kỹ thuật – chỉ cần bạn tò mò, ham học hỏi và muốn dùng AI một cách thực tế để nâng cấp kỹ năng và tăng năng suất cá nhân.",
@@ -121,6 +122,7 @@ export default function GenAI101Page() {
     title: "THÔNG TIN KHÓA HỌC",
     buttonText: "ĐĂNG KÝ NGAY",
     buttonLink: "/payment/57",
+    courseSlug: "gen-ai-101",
     details: [
       {
         icon: "Star",
@@ -153,7 +155,9 @@ export default function GenAI101Page() {
   return (
     <div className="min-h-screen bg-white">
       <CourseHeader
-        imageUrl_bot="https://nedu.nhi.sg/images/photo_2025-05-30_23-21-04.jpg?_wwcv=130"
+        imageUrl="https://nedu.nhi.sg/images/gen_ai.png"
+        imageUrl_bot=""
+        altText="GEN AI 101"
         time="Khóa học Online"
         tags={["AI"]}
         title="GEN AI 101"
