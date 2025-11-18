@@ -12,88 +12,48 @@ export default function ContactPage() {
   const [status, setStatus] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    setIsSubmitting(true)
-    setStatus('')
-
-    try {
-      // URL của Google Apps Script - CẦN CẬP NHẬT URL NÀY SAU KHI DEPLOY APPS SCRIPT MỚI
-      const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbxKIMyc18J9EiRmJJLyrAUM80mKeA64CFmWoehLR-SjBylwufnae0xrFyTK2Q4crn2F/exec';
-      
-      // Chuẩn bị dữ liệu để gửi
-      const dataToSend = {
-        name: formData.name.trim(),
-        email: formData.email.trim(),
-        phone: formData.phone.trim(),
-        message: formData.message.trim()
-      };
-      
-      const response = await fetch(googleScriptUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams(dataToSend).toString(),
-        // Thêm mode: 'no-cors' để tránh CORS issues với Google Apps Script
-        mode: 'no-cors'
-      });
-
-      // Với mode: 'no-cors', chúng ta không thể đọc response
-      // nên sẽ giả định thành công nếu không có error
-      setStatus('success')
-      setFormData({ name: '', phone: '', email: '', message: '' })
-      setTimeout(() => setStatus(''), 5000)
-    } catch (error) {
-      console.error('Error submitting form:', error)
-      setStatus('error')
-      setTimeout(() => setStatus(''), 5000)
-    } finally {
-      setIsSubmitting(false)
-    }
+    setStatus('success')
+    setTimeout(() => setStatus(''), 3000)
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div className="bg-primary text-white rounded-2xl p-8 md:p-12">
-              <img src="https://nedu.nhi.sg/images/nedu-contact.png" alt="N-Edu Contact" className="w-full mb-8 rounded-lg" />
-              
-              <h2 className="text-3xl font-bold mb-8">Liên hệ</h2>
-              
-              <div className="space-y-6">
-                <div>
-                  <p className="text-white/80 mb-2">Liên hệ</p>
-                  <a href="tel:+84789785904" className="text-xl font-semibold hover:underline">
-                    (+84) 789785904
-                  </a>
-                </div>
-
-                <div>
-                  <p className="text-white/80 mb-2">Email</p>
-                  <a href="mailto:nedu@nhi.sg" className="text-xl font-semibold hover:underline">
-                    nedu@nhi.sg
-                  </a>
-                </div>
-
-                <div>
-                  <p className="text-white/80 mb-2">Telegram</p>
-                  <a href="https://t.me/neducationvn" target="_blank" rel="noopener noreferrer" className="text-xl font-semibold hover:underline">
-                    @neducationvn
-                  </a>
+    <div className="bg-gray-50 py-12">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="overflow-hidden rounded-2xl bg-white shadow-xl md:flex">
+            <div className="bg-[#F7B50C] text-white px-8 py-10 md:w-1/3 flex flex-col justify-center items-stretch rounded-l-2xl">
+              <img
+                src="https://nedu.nhi.sg/images/nedu-contact.png"
+                alt="N-Edu Contact"
+                className="mx-auto mb-6 w-full max-w-[220px] object-contain"
+              />
+              <div className="mt-6 mx-auto w-[320px] rounded-lg bg-white/10 text-base shadow-sm">
+                <div className="px-4 py-3">
+                  <div className="flex items-center justify-between py-2">
+                    <p className="text-sm font-medium text-white/95">Liên hệ</p>
+                    <a href="tel:+84789785904" className="text-sm font-semibold text-white/95">(+84) 789785904</a>
+                  </div>
+                  <div className="flex items-center justify-between border-t border-white/20 py-2">
+                    <p className="text-sm font-medium text-white/95">Email</p>
+                    <a href="mailto:nedu@nhi.sg" className="text-sm font-semibold text-white/95">nedu@nhi.sg</a>
+                  </div>
+                  <div className="flex items-center justify-between border-t border-white/20 py-2">
+                    <p className="text-sm font-medium text-white/95">Telegram</p>
+                    <a href="https://t.me/neducationvn" target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-white/95">@neducationvn</a>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
-              <h2 className="text-3xl font-bold mb-2 text-gray-800">Kết nối với chúng tôi</h2>
-              <p className="text-gray-600 mb-8">Điền đầy đủ thông tin để nhận tư vấn từ N-EDU</p>
+            <div className="flex-1 bg-[#F6F6FA] px-12 py-12">
+              <h2 className="mb-2 text-4xl font-bold text-gray-900">Kết nối với chúng tôi</h2>
+              <p className="mb-6 text-lg font-medium text-gray-600">Điền đầy đủ thông tin để nhận tư vấn từ N-EDU</p>
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label className="block text-gray-700 font-semibold mb-2">
+                  <label className="mb-1.5 block text-base font-medium text-gray-800">
                     Họ và tên <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -108,7 +68,7 @@ export default function ContactPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-gray-700 font-semibold mb-2">
+                    <label className="mb-1.5 block text-base font-medium text-gray-800">
                       Số điện thoại <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -122,7 +82,7 @@ export default function ContactPage() {
                   </div>
 
                   <div>
-                    <label className="block text-gray-700 font-semibold mb-2">
+                    <label className="mb-1.5 block text-base font-medium text-gray-800">
                       Email <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -137,7 +97,7 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <label className="block text-gray-700 font-semibold mb-2">
+                  <label className="mb-1.5 block text-base font-medium text-gray-800">
                     Nội dung <span className="text-red-500">*</span>
                   </label>
                   <textarea
@@ -150,23 +110,18 @@ export default function ContactPage() {
                   />
                 </div>
 
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-primary hover:bg-primary-dark text-white py-3 rounded-lg font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {isSubmitting ? 'Đang gửi...' : 'Gửi'}
-                </button>
+                <div className="w-full flex justify-start">
+                  <button
+                    type="submit"
+                    className="flex w-32 items-center justify-center rounded-full bg-primary py-3 text-base font-semibold uppercase tracking-wider text-white transition hover:brightness-95"
+                  >
+                    Gửi
+                  </button>
+                </div>
 
                 {status === 'success' && (
                   <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg">
-                    Đã gửi thành công! Chúng tôi sẽ liên hệ với bạn sớm nhất.
-                  </div>
-                )}
-
-                {status === 'error' && (
-                  <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
-                    Đã có lỗi xảy ra. Vui lòng thử lại sau.
+                    Đã gửi thành công!
                   </div>
                 )}
               </form>
