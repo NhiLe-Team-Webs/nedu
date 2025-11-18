@@ -9,6 +9,11 @@ import CartSuccessPopup from '@/components/CartSuccessPopup'
 export const metadata: Metadata = {
   title: 'N-Edu - Giáo dục chất lượng cho người Việt',
   description: 'Mang kiến thức, giáo dục chất lượng trên toàn thế giới về Việt Nam và hòa hợp với văn hóa người Việt',
+  icons: {
+    icon: '/logo-mobile.svg',
+    shortcut: '/logo-mobile.svg',
+    apple: '/logo-mobile.svg',
+  },
 }
 
 export default function RootLayout({

@@ -107,9 +107,6 @@ export default function ThuongHieuCuaBanPage() {
       <Testimonials />
       <CourseInfo
         title="THÔNG TIN KHÓA HỌC"
-        buttonText="ĐĂNG KÝ NGAY"
-        buttonLink="/payment/53"
-        courseSlug="thuong-hieu-cua-ban"
         details={[
           {
             icon: "Star" as const,

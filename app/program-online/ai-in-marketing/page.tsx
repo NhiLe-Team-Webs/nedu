@@ -121,8 +121,6 @@ export default function AIInMarketingPage() {
   ];
   const courseInfo = {
     title: "THÔNG TIN KHÓA HỌC",
-    buttonText: "ĐĂNG KÝ NGAY",
-    buttonLink: "/payment/57",
     details: [
       {
         icon: "Star" as const,

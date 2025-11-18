@@ -93,8 +93,6 @@ export default function SucManhVoHanPage() {
       <CourseInfo
         title="Thông tin khóa học"
         details={courseDetails as any}
-        buttonText="Tìm hiểu thêm"
-        buttonLink="/payment/58"
         courseSlug="suc-manh-vo-han"
       />
 

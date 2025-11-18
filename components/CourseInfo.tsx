@@ -11,8 +11,8 @@ interface CourseInfoProps {
     value: string;
     icon: keyof typeof Icon; // Ensures compatibility with lucide-react icons
   }[];
-  buttonText: string;
-  buttonLink: string;
+  buttonText?: string;
+  buttonLink?: string;
   courseSlug?: string; // Add optional courseSlug prop
 }
 
@@ -57,7 +57,7 @@ const CourseInfo: React.FC<CourseInfoProps> = ({
             })}
           </div>
         </div>
-        {courseSlug && (
+        {courseSlug && buttonText && buttonLink && (
           <div className="flex gap-4 justify-center">
             <button
               onClick={handleAddToCart}

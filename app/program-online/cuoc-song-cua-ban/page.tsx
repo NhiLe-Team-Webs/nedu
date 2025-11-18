@@ -117,9 +117,6 @@ export default function CuocSongCuaBanPage() {
       <Testimonials />
       <CourseInfo
         title="THÔNG TIN KHÓA HỌC"
-        buttonText="ĐĂNG KÝ NGAY"
-        buttonLink="/payment/53"
-        courseSlug="cuoc-song-cua-ban"
         details={[
           {
             icon: "Star" as const,

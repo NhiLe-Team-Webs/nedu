@@ -120,9 +120,6 @@ export default function GenAI101Page() {
   ];
   const courseInfo = {
     title: "THÔNG TIN KHÓA HỌC",
-    buttonText: "ĐĂNG KÝ NGAY",
-    buttonLink: "/payment/57",
-    courseSlug: "gen-ai-101",
     details: [
       {
         icon: "Star" as keyof typeof Icon,
