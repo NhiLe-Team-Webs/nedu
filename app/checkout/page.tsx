@@ -205,35 +205,35 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background-secondary py-12">
-      <div className="container mx-auto px-4 max-w-6xl">
-        <div className="mb-8">
+    <div className="min-h-screen bg-background-secondary py-8 sm:py-12">
+      <div className="container mx-auto px-3 sm:px-4 max-w-6xl">
+        <div className="mb-6 sm:mb-8">
           <Link
             href="/cart"
-            className="inline-flex items-center gap-2 text-primary hover:text-primary-dark font-semibold transition"
+            className="inline-flex items-center gap-2 text-primary hover:text-primary-dark font-semibold transition text-sm sm:text-base"
           >
-            <ArrowLeft className="w-5 h-5" />
+            <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
             Quay lại giỏ hàng
           </Link>
         </div>
 
-        <h1 className="text-3xl md:text-4xl font-bold mb-4 text-text-primary">Thanh toán</h1>
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-4 text-text-primary">Thanh toán</h1>
         
         
         {/* Step Indicators */}
-        <div className="flex justify-center items-center mb-12">
+        <div className="flex justify-center items-center mb-8 sm:mb-12">
           <div className="flex items-center">
-            <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl ${
+            <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold text-base sm:text-xl ${
               currentStep >= 1
                 ? 'bg-primary text-white'
                 : 'bg-gray-300 text-gray-600'
             }`}>
               1
             </div>
-            <div className={`w-32 h-1 ${
+            <div className={`w-20 sm:w-32 h-1 ${
               currentStep >= 2 ? 'bg-primary' : 'bg-gray-300'
             }`}></div>
-            <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl ${
+            <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold text-base sm:text-xl ${
               currentStep >= 2
                 ? 'bg-primary text-white'
                 : 'bg-gray-300 text-gray-600'
@@ -243,7 +243,7 @@ export default function CheckoutPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
           <div className="lg:col-span-2">
             {currentStep === 1 ? (
               /* Step 1: Information Form */
@@ -284,23 +284,23 @@ export default function CheckoutPage() {
                   <h2 className="text-xl font-bold mb-4 text-text-primary">1. THÔNG TIN THANH TOÁN</h2>
                   
                   <form id="checkout-form" onSubmit={handleNextStep} className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                       <div>
-                        <label className="block text-text-primary font-semibold mb-2">
+                        <label className="block text-text-primary font-semibold mb-1 sm:mb-2 text-sm sm:text-base">
                           Họ và tên <span className="text-red-500">*</span>
                         </label>
                         <input
-                          type="text" 
+                          type="text"
                           required
                           placeholder="Nhập họ và tên của bạn"
                           value={formData.name}
                           onChange={(e) => handleInputChange('name', e.target.value)}
-                          className="input-field"
+                          className="input-field text-sm sm:text-base"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-text-primary font-semibold mb-2">
+                        <label className="block text-text-primary font-semibold mb-1 sm:mb-2 text-sm sm:text-base">
                           Email <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -309,12 +309,12 @@ export default function CheckoutPage() {
                           placeholder="Nhập email của bạn"
                           value={formData.email}
                           onChange={(e) => handleInputChange('email', e.target.value)}
-                          className="input-field"
+                          className="input-field text-sm sm:text-base"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-text-primary font-semibold mb-2">
+                        <label className="block text-text-primary font-semibold mb-1 sm:mb-2 text-sm sm:text-base">
                           Số điện thoại <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -323,12 +323,12 @@ export default function CheckoutPage() {
                           placeholder="Nhập số điện thoại"
                           value={formData.phone}
                           onChange={(e) => handleInputChange('phone', e.target.value)}
-                          className="input-field"
+                          className="input-field text-sm sm:text-base"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-text-primary font-semibold mb-2">
+                        <label className="block text-text-primary font-semibold mb-1 sm:mb-2 text-sm sm:text-base">
                           Username Telegram <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -337,12 +337,12 @@ export default function CheckoutPage() {
                           placeholder="@username"
                           value={formData.telegram}
                           onChange={(e) => handleInputChange('telegram', e.target.value)}
-                          className="input-field"
+                          className="input-field text-sm sm:text-base"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-text-primary font-semibold mb-2">
+                        <label className="block text-text-primary font-semibold mb-1 sm:mb-2 text-sm sm:text-base">
                           Ngày sinh <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -350,19 +350,19 @@ export default function CheckoutPage() {
                           required
                           value={formData.birthdate}
                           onChange={(e) => handleInputChange('birthdate', e.target.value)}
-                          className="input-field"
+                          className="input-field text-sm sm:text-base"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-text-primary font-semibold mb-2">
+                        <label className="block text-text-primary font-semibold mb-1 sm:mb-2 text-sm sm:text-base">
                           Giới tính <span className="text-red-500">*</span>
                         </label>
                         <select
                           required
                           value={formData.gender}
                           onChange={(e) => handleInputChange('gender', e.target.value)}
-                          className="input-field"
+                          className="input-field text-sm sm:text-base"
                         >
                           <option value="">Chọn giới tính</option>
                           <option value="female">Nữ</option>
@@ -373,7 +373,7 @@ export default function CheckoutPage() {
                     </div>
 
                     <div>
-                      <label className="block text-text-primary font-semibold mb-2">
+                      <label className="block text-text-primary font-semibold mb-1 sm:mb-2 text-sm sm:text-base">
                         Địa chỉ
                       </label>
                       <input
@@ -381,12 +381,12 @@ export default function CheckoutPage() {
                         placeholder="Nhập địa chỉ của bạn"
                         value={formData.address}
                         onChange={(e) => handleInputChange('address', e.target.value)}
-                        className="input-field"
+                        className="input-field text-sm sm:text-base"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-text-primary font-semibold mb-2">
+                      <label className="block text-text-primary font-semibold mb-1 sm:mb-2 text-sm sm:text-base">
                         Ghi chú
                       </label>
                       <textarea
@@ -394,7 +394,7 @@ export default function CheckoutPage() {
                         placeholder="Nhập ghi chú (nếu có)"
                         value={formData.note}
                         onChange={(e) => handleInputChange('note', e.target.value)}
-                        className="input-field"
+                        className="input-field text-sm sm:text-base"
                       />
                     </div>
 
@@ -567,15 +567,15 @@ export default function CheckoutPage() {
 
           {/* Order Summary */}
           <div className="lg:col-span-1">
-            <div className="card sticky top-24">
-              <h2 className="text-xl font-bold mb-4 text-text-primary">
+            <div className="card sticky top-20 sm:top-24">
+              <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-text-primary">
                 {currentStep === 1 ? 'Tóm tắt đơn hàng' : 'Tóm tắt thanh toán'}
               </h2>
               
               {/* Discount Code - Only show in Step 1 */}
               {currentStep === 1 && (
-                <div className="mb-6">
-                  <label className="block text-text-primary font-semibold mb-2">
+                <div className="mb-4 sm:mb-6">
+                  <label className="block text-text-primary font-semibold mb-1 sm:mb-2 text-sm sm:text-base">
                     Mã giảm giá
                   </label>
                   <div className="flex gap-2">
@@ -584,37 +584,37 @@ export default function CheckoutPage() {
                         type="text"
                         value={discountCode}
                         onChange={(e) => setDiscountCode(e.target.value)}
-                        className="input-field pl-10"
+                        className="input-field pl-10 text-sm sm:text-base"
                       />
                     </div>
                     <button
                       type="button"
                       onClick={handleApplyDiscount}
-                      className="btn-secondary"
+                      className="btn-secondary text-sm sm:text-base"
                     >
                       Áp dụng
                     </button>
                   </div>
                   {discount > 0 && (
-                    <div className="mt-2 text-success text-sm font-semibold">
+                    <div className="mt-2 text-success text-xs sm:text-sm font-semibold">
                       Đã áp dụng mã giảm giá: {discount}%
                     </div>
                   )}
                 </div>
               )}
               
-              <div className="space-y-3 mb-6">
-                <div className="flex justify-between">
+              <div className="space-y-3 mb-4 sm:mb-6">
+                <div className="flex justify-between text-sm sm:text-base">
                   <span className="text-text-secondary">Tạm tính:</span>
                   <span className="font-semibold">{currencyFormatter.format(subtotal)}</span>
                 </div>
                 {discount > 0 && (
-                  <div className="flex justify-between">
+                  <div className="flex justify-between text-sm sm:text-base">
                     <span className="text-success">Giảm giá:</span>
                     <span className="font-semibold text-success">-{currencyFormatter.format(discountAmount)}</span>
                   </div>
                 )}
-                <div className="flex justify-between text-lg font-bold">
+                <div className="flex justify-between text-base sm:text-lg font-bold">
                   <span>Tổng cộng:</span>
                   <span className="price">{currencyFormatter.format(total)}</span>
                 </div>
@@ -625,10 +625,10 @@ export default function CheckoutPage() {
                 <button
                   form="checkout-form"
                   type="submit"
-                  className="btn-primary w-full text-center block"
+                  className="btn-primary w-full text-center block text-sm sm:text-base"
                 >
                   Tiếp tục đến bước xác nhận
-                  <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </button>
@@ -637,11 +637,11 @@ export default function CheckoutPage() {
                 <button
                   onClick={handleSubmit}
                   disabled={isLoading || !agreed}
-                  className="btn-primary w-full text-center block disabled:bg-gray-400"
+                  className="btn-primary w-full text-center block disabled:bg-gray-400 text-sm sm:text-base"
                 >
                   {isLoading ? (
                     <div className="flex items-center justify-center">
-                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <svg className="animate-spin -ml-1 mr-3 h-4 w-4 sm:h-5 sm:w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                       </svg>
@@ -655,7 +655,7 @@ export default function CheckoutPage() {
               
               <Link
                 href="/cart"
-                className="w-full mt-3 text-center text-primary hover:text-primary-dark font-semibold transition block"
+                className="w-full mt-3 text-center text-primary hover:text-primary-dark font-semibold transition block text-sm sm:text-base"
               >
                 ← Quay lại giỏ hàng
               </Link>

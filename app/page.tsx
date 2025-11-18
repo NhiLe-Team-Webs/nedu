@@ -33,9 +33,9 @@ export default function Home() {
     <div className="min-h-screen">
       {/* Hero Section with YouTube Video */}
       <section className="bg-black">
-        <div className="container mx-auto px-4 sm:px-6">
+        <div className="container mx-auto px-3 sm:px-4 lg:px-6">
           <div className="w-full">
-            <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-lg">
+            <div className="relative pb-[56.25%] sm:pb-[56.25%] h-0 overflow-hidden rounded-lg sm:rounded-lg">
               <div className="absolute top-0 left-0 w-full h-full">
                 <YouTube
                   videoId="HJ1x2IRMoqM"

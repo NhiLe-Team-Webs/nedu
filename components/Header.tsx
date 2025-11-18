@@ -18,32 +18,34 @@ const Header = () => {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 backdrop-blur-sm">
-      <div className="w-full flex justify-between gap-2 sm:gap-4 px-4 sm:px-6 items-center h-16 sm:h-20 bg-white/95 shadow-lg">
+      <div className="w-full flex justify-between gap-2 sm:gap-4 px-3 sm:px-6 items-center h-14 sm:h-16 md:h-20 bg-white/95 shadow-lg">
         {/* Logo */}
         <div className="flex items-center">
-          <Image
-            src="/picture/nedu.svg"
-            alt="N-Edu Logo"
-            width={227}
-            height={57}
-            className="w-24 sm:w-36 h-8 sm:h-10 object-contain"
-          />
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/picture/nedu.svg"
+              alt="N-Edu Logo"
+              width={227}
+              height={57}
+              className="w-20 sm:w-28 md:w-36 h-6 sm:h-8 md:h-10 object-contain cursor-pointer"
+            />
+          </Link>
         </div>
         
         {/* center column: nav centered by grid */}
-        <nav className="hidden md:flex justify-center items-center gap-12 flex-1 font-semibold">
+        <nav className="hidden md:flex justify-center items-center gap-6 lg:gap-12 flex-1 font-semibold">
           <Link
             href="/"
             className={
               isActive("/")
-                ? "text-amber-400 font-semibold uppercase tracking-wide"
-                : "text-gray-600 hover:text-amber-400 uppercase tracking-wide"
+                ? "text-amber-400 font-semibold uppercase tracking-wide text-sm lg:text-base"
+                : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-sm lg:text-base"
             }
           >
             TRANG CHỦ
           </Link>
 
-          <a href="#about" className="text-gray-600 hover:text-amber-400 uppercase tracking-wide">
+          <a href="https://nhi.sg" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-amber-400 uppercase tracking-wide text-sm lg:text-base">
             VỀ CHÚNG TÔI
           </a>
 
@@ -51,8 +53,8 @@ const Header = () => {
             href="/program"
             className={
               isActive("/program")
-                ? "text-amber-400 font-semibold uppercase tracking-wide"
-                : "text-gray-600 hover:text-amber-400 uppercase tracking-wide"
+                ? "text-amber-400 font-semibold uppercase tracking-wide text-sm lg:text-base"
+                : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-sm lg:text-base"
             }
           >
             KHÓA HỌC
@@ -60,23 +62,23 @@ const Header = () => {
 
           <a href="/thu-thach-30-ngay" className={
               isActive("/thu-thach-30-ngay")
-                ? "text-amber-400 font-semibold uppercase tracking-wide"
-                : "text-gray-600 hover:text-amber-400 uppercase tracking-wide"
+                ? "text-amber-400 font-semibold uppercase tracking-wide text-sm lg:text-base"
+                : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-sm lg:text-base"
             }>
             THỬ THÁCH 30N
           </a>
 
           <a href="/contact" className={
               isActive("/contact")
-                ? "text-amber-400 font-semibold uppercase tracking-wide"
-                : "text-gray-600 hover:text-amber-400 uppercase tracking-wide"
+                ? "text-amber-400 font-semibold uppercase tracking-wide text-sm lg:text-base"
+                : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-sm lg:text-base"
             }>
             LIÊN HỆ
           </a>
         </nav>
 
         {/* right column: actions aligned to the end */}
-        <div className="flex items-center justify-end gap-2 sm:gap-4">
+        <div className="flex items-center justify-end gap-1 sm:gap-4">
           <Button
             variant="ghost"
             size="icon"
@@ -96,13 +98,13 @@ const Header = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="h-8 w-8 sm:hidden text-text-secondary hover:text-primary relative"
+            className="h-10 w-10 sm:hidden text-text-secondary hover:text-primary relative"
             onClick={() => router.push('/cart')}
             aria-label="Giỏ hàng"
           >
-            <ShoppingCart className="h-4 w-4" />
+            <ShoppingCart className="h-5 w-5" />
             {totalItems > 0 && (
-              <span className="absolute -top-1 -right-1 bg-warning text-white text-xs rounded-full h-4 w-4 flex items-center justify-center font-bold">
+              <span className="absolute -top-1 -right-1 bg-warning text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
                 {totalItems}
               </span>
             )}
@@ -112,72 +114,56 @@ const Header = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="h-8 w-8 sm:hidden flex items-center justify-center"
+            className="h-10 w-10 sm:hidden flex items-center justify-center"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Menu"
           >
-            <Menu className="h-5 w-5" />
+            <Menu className="h-6 w-6" />
           </Button>
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile menu with improved UX */}
       {isMobileMenuOpen && (
-        <nav className="sm:hidden py-3 px-4 border-t bg-white/95 backdrop-blur-sm">
-          <div className="flex flex-col space-y-3">
+        <nav className="sm:hidden py-4 px-4 border-t bg-white/95 backdrop-blur-sm shadow-lg">
+          <div className="flex flex-col space-y-2">
             <Link
               href="/"
-              className="text-gray-700 hover:text-amber-400 font-medium uppercase text-xs py-2"
+              className="text-gray-700 hover:text-amber-400 font-medium uppercase text-sm py-3 px-2 rounded-lg hover:bg-gray-50 transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               TRANG CHỦ
             </Link>
             <a
-              href="#about"
-              className="text-gray-700 hover:text-amber-400 font-medium uppercase text-xs py-2"
+              href="https://nhi.sg"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-700 hover:text-amber-400 font-medium uppercase text-sm py-3 px-2 rounded-lg hover:bg-gray-50 transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               VỀ CHÚNG TÔI
             </a>
             <Link
               href="/program"
-              className="text-gray-700 hover:text-amber-400 font-medium uppercase text-xs py-2"
+              className="text-gray-700 hover:text-amber-400 font-medium uppercase text-sm py-3 px-2 rounded-lg hover:bg-gray-50 transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               KHÓA HỌC
             </Link>
             <Link
               href="/thu-thach-30-ngay"
-              className="text-gray-700 hover:text-amber-400 font-medium uppercase text-xs py-2"
+              className="text-gray-700 hover:text-amber-400 font-medium uppercase text-sm py-3 px-2 rounded-lg hover:bg-gray-50 transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               THỬ THÁCH 30N
             </Link>
             <Link
               href="/contact"
-              className="text-gray-700 hover:text-amber-400 font-medium uppercase text-xs py-2"
+              className="text-gray-700 hover:text-amber-400 font-medium uppercase text-sm py-3 px-2 rounded-lg hover:bg-gray-50 transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               LIÊN HỆ
             </Link>
-            <div className="flex items-center gap-3 pt-2 border-t">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-text-secondary hover:text-primary relative h-8 w-8"
-                onClick={() => router.push('/cart')}
-              >
-                <ShoppingCart className="h-4 w-4" />
-                {totalItems > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-warning text-white text-xs rounded-full h-4 w-4 flex items-center justify-center font-bold">
-                    {totalItems}
-                  </span>
-                )}
-              </Button>
-              <Button className="btn-primary text-xs px-3 py-1">
-                ĐĂNG KÝ NGAY
-              </Button>
-            </div>
           </div>
         </nav>
       )}

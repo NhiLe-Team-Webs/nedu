@@ -101,42 +101,42 @@ function PaymentSuccessContent() {
   return (
     <>
       <ErrorHandler />
-      <div className="min-h-screen bg-gray-50 py-12">
+      <div className="min-h-screen bg-gray-50 py-8 sm:py-12">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="text-center">
           {status === 'loading' && (
-            <div className="py-16">
-              <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-              <p className="mt-4 text-lg text-gray-600">{message}</p>
+            <div className="py-12 sm:py-16">
+              <div className="inline-block animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-b-2 border-primary"></div>
+              <p className="mt-4 text-base sm:text-lg text-gray-600">{message}</p>
             </div>
           )}
           
           {status === 'success' && (
-            <div className="py-16">
-              <div className="mb-8">
-                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto">
-                  <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="py-12 sm:py-16">
+              <div className="mb-6 sm:mb-8">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto">
+                  <svg className="w-8 h-8 sm:w-10 sm:h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold text-green-600 mb-4">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-green-600 mb-3 sm:mb-4">
                 Thanh toán thành công!
               </h1>
-              <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+              <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
                 {message}
               </p>
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 <Link
                   href="/"
-                  className="inline-block bg-primary hover:bg-primary-dark text-white px-8 py-3 rounded-full font-semibold transition text-lg"
+                  className="inline-block bg-primary hover:bg-primary-dark text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-semibold transition text-sm sm:text-base sm:text-lg"
                 >
                   Về trang chủ
                 </Link>
                 <div className="block">
                   <Link
                     href="/program"
-                    className="text-primary hover:text-primary-dark font-semibold transition"
+                    className="text-primary hover:text-primary-dark font-semibold transition text-sm sm:text-base"
                   >
                     ← Xem các khóa học khác
                   </Link>
@@ -146,31 +146,31 @@ function PaymentSuccessContent() {
           )}
           
           {status === 'failed' && (
-            <div className="py-16">
-              <div className="mb-8">
-                <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto">
-                  <svg className="w-10 h-10 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="py-12 sm:py-16">
+              <div className="mb-6 sm:mb-8">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto">
+                  <svg className="w-8 h-8 sm:w-10 sm:h-10 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </div>
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold text-red-600 mb-4">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-red-600 mb-3 sm:mb-4">
                 Thanh toán thất bại
               </h1>
-              <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+              <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
                 {message}
               </p>
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 <Link
                   href="/cart"
-                  className="inline-block bg-primary hover:bg-primary-dark text-white px-8 py-3 rounded-full font-semibold transition text-lg"
+                  className="inline-block bg-primary hover:bg-primary-dark text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-semibold transition text-sm sm:text-base sm:text-lg"
                 >
                   Thử lại
                 </Link>
                 <div className="block">
                   <Link
                     href="/contact"
-                    className="text-primary hover:text-primary-dark font-semibold transition"
+                    className="text-primary hover:text-primary-dark font-semibold transition text-sm sm:text-base"
                   >
                     ← Liên hệ hỗ trợ
                   </Link>
@@ -190,10 +190,10 @@ export default function PaymentSuccessPage() {
     <>
       <ErrorHandler />
       <Suspense fallback={
-        <div className="min-h-screen bg-gray-50 py-12 flex items-center justify-center">
+        <div className="min-h-screen bg-gray-50 py-8 sm:py-12 flex items-center justify-center">
           <div className="text-center">
-            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-            <p className="mt-4 text-lg text-gray-600">Đang tải...</p>
+            <div className="inline-block animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-b-2 border-primary"></div>
+            <p className="mt-4 text-base sm:text-lg text-gray-600">Đang tải...</p>
           </div>
         </div>
       }>

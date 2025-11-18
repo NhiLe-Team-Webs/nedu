@@ -72,41 +72,47 @@ const slides = [
 const Courses: React.FC = () => {
   const [currentIndex, setCurrentIndex] = React.useState(1); // Start with "Sức Mạnh Vô Hạn" in center
   const totalCourses = slides.length;
-  const [viewportWidth, setViewportWidth] = React.useState(
-    typeof window !== "undefined" ? window.innerWidth : 1440
-  );
+  const [viewportWidth, setViewportWidth] = React.useState(0); // Start with 0 to avoid SSR/client mismatch
+  const [isClient, setIsClient] = React.useState(false); // Track if we're on client
 
   React.useEffect(() => {
-    if (typeof window === "undefined") return;
+    // Set client flag and initial viewport width
+    setIsClient(true);
+    if (typeof window !== "undefined") {
+      setViewportWidth(window.innerWidth);
+    }
 
     const handleResize = () => setViewportWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const isMobile = viewportWidth < 640;
-  const isTablet = viewportWidth >= 640 && viewportWidth < 1024;
+  const isMobile = isClient && viewportWidth < 640;
+  const isTablet = isClient && viewportWidth >= 640 && viewportWidth < 1024;
   const cardWidth = React.useMemo(() => {
+    if (!isClient) return 300; // Default width for SSR
     if (isMobile) {
-      return Math.max(260, Math.min(viewportWidth - 48, 320));
+      return Math.max(240, Math.min(viewportWidth - 40, 300));
     }
     if (isTablet) {
-      return 360;
+      return 320;
     }
     return 400;
-  }, [viewportWidth, isMobile, isTablet]);
+  }, [viewportWidth, isMobile, isTablet, isClient]);
 
   const cardHeight = React.useMemo(() => {
-    if (isMobile) return 400;
-    if (isTablet) return 430;
+    if (!isClient) return 350; // Default height for SSR
+    if (isMobile) return 350;
+    if (isTablet) return 400;
     return 450;
-  }, [isMobile, isTablet]);
+  }, [isMobile, isTablet, isClient]);
 
   const trackHeight = React.useMemo(() => {
-    if (isMobile) return 420;
-    if (isTablet) return 500;
+    if (!isClient) return 380; // Default height for SSR
+    if (isMobile) return 380;
+    if (isTablet) return 450;
     return 550;
-  }, [isMobile, isTablet]);
+  }, [isMobile, isTablet, isClient]);
 
   const getPositionClass = (index: number) => {
     let relativeIndex = index - currentIndex;
@@ -160,16 +166,16 @@ const Courses: React.FC = () => {
   const [touchStart, setTouchStart] = React.useState(0);
 
   return (
-    <section className="relative flex flex-col items-center justify-center overflow-hidden min-h-screen bg-gray-100 pt-20 pb-16">
-      <div className="relative flex flex-col justify-center items-center h-[90%] w-full max-w-7xl px-4">
-        <h2 className="text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[68px] font-black text-[#f7b50c] uppercase mb-12">
+    <section className="relative flex flex-col items-center justify-center overflow-hidden min-h-screen bg-gray-100 pt-16 sm:pt-20 pb-12 sm:pb-16">
+      <div className="relative flex flex-col justify-center items-center h-[90%] w-full max-w-7xl px-3 sm:px-4">
+        <h2 className="text-center text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black text-[#f7b50c] uppercase mb-8 sm:mb-12 px-2">
           Người Việt, làm hàng Việt, cho người Việt
         </h2>
 
         {/* Carousel Container */}
         <div
           className="relative w-full max-w-6xl flex items-center justify-center px-2 sm:px-0"
-          style={{ height: trackHeight }}
+          style={{ height: isClient ? trackHeight : 380 }}
           onTouchStart={(e) => setTouchStart(handleTouchStart(e))}
           onTouchEnd={(e) => handleTouchEnd(e, touchStart)}
         >
@@ -183,49 +189,49 @@ const Courses: React.FC = () => {
                 className={`carousel-item ${positionClass} rounded-xl shadow-xl cursor-pointer transition-all duration-500 ease-in-out overflow-hidden`}
                 onClick={() => handleItemClick(index)}
                 style={{
-                  width: `${cardWidth}px`,
-                  height: `${cardHeight}px`,
+                  width: isClient ? `${cardWidth}px` : '300px',
+                  height: isClient ? `${cardHeight}px` : '350px',
                   position: 'absolute',
                   willChange: 'transform, opacity, z-index',
                   ...(positionClass === 'pos-0' && {
-                    transform: `translateX(-${cardWidth * 1.7}px) scale(0.5)`,
+                    transform: isClient ? `translateX(-${cardWidth * 1.7}px) scale(0.5)` : 'translateX(-510px) scale(0.5)',
                     opacity: 0,
                     zIndex: 10,
                     pointerEvents: 'none'
                   }),
                   ...(positionClass === 'pos-1' && {
-                    transform: `translateX(-${cardWidth * 1.1}px) scale(0.7)`,
+                    transform: isClient ? `translateX(-${cardWidth * 1.1}px) scale(0.7)` : 'translateX(-330px) scale(0.7)',
                     opacity: 0.6,
                     zIndex: 20,
                     filter: 'brightness(0.8)'
                   }),
                   ...(positionClass === 'pos-2' && {
-                    transform: `translateX(-${cardWidth * 0.55}px) scale(0.9)`,
+                    transform: isClient ? `translateX(-${cardWidth * 0.55}px) scale(0.9)` : 'translateX(-165px) scale(0.9)',
                     opacity: 0.9,
                     zIndex: 30,
                     filter: 'brightness(0.95)'
                   }),
                   ...(positionClass === 'pos-3' && {
-                    transform: 'translateX(0) scale(1.05)',
+                    transform: isClient ? 'translateX(0) scale(1.05)' : 'translateX(0px) scale(1.05)',
                     opacity: 1,
                     zIndex: 40,
                     backgroundColor: '#10B981',
                     boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
                   }),
                   ...(positionClass === 'pos-4' && {
-                    transform: `translateX(${cardWidth * 0.55}px) scale(0.9)`,
+                    transform: isClient ? `translateX(${cardWidth * 0.55}px) scale(0.9)` : 'translateX(165px) scale(0.9)',
                     opacity: 0.9,
                     zIndex: 30,
                     filter: 'brightness(0.95)'
                   }),
                   ...(positionClass === 'pos-5' && {
-                    transform: `translateX(${cardWidth * 1.1}px) scale(0.7)`,
+                    transform: isClient ? `translateX(${cardWidth * 1.1}px) scale(0.7)` : 'translateX(330px) scale(0.7)',
                     opacity: 0.6,
                     zIndex: 20,
                     filter: 'brightness(0.8)'
                   }),
                   ...(positionClass === 'pos-6' && {
-                    transform: `translateX(${cardWidth * 1.7}px) scale(0.5)`,
+                    transform: isClient ? `translateX(${cardWidth * 1.7}px) scale(0.5)` : 'translateX(510px) scale(0.5)',
                     opacity: 0,
                     zIndex: 10,
                     pointerEvents: 'none'
@@ -243,12 +249,12 @@ const Courses: React.FC = () => {
                 </div>
                 
                 {/* Bottom Part - Text and Cart */}
-                <div className="flex flex-col justify-between h-2/5 p-4 pb-6 bg-white">
+                <div className="flex flex-col justify-between h-2/5 p-3 sm:p-4 pb-4 sm:pb-6 bg-white">
                   
                   {isCenter ? (
                     <div className="text-center">
-                      <h3 className="text-lg font-bold text-gray-800 mb-1">{slide.title.toUpperCase()}</h3>
-                      <p className="text-xs text-gray-600 mb-2">{slide.content}</p>
+                      <h3 className="text-sm sm:text-lg font-bold text-gray-800 mb-1 line-clamp-2">{slide.title.toUpperCase()}</h3>
+                      <p className="text-xs text-gray-600 mb-2 line-clamp-2 sm:line-clamp-3">{slide.content}</p>
                       <div className="text-sm font-bold text-yellow-600">
                         {(() => {
                           const course = courses.find(c => c.id === slide.id);
@@ -261,25 +267,25 @@ const Courses: React.FC = () => {
                     </div>
                   ) : (
                     <div className="text-center">
-                      <p className="text-xs text-gray-600">{slide.content}</p>
+                      <p className="text-xs text-gray-600 line-clamp-2">{slide.content}</p>
                     </div>
                   )}
                   
-                  <div className="flex justify-between items-end relative z-50">
-                    <div className="flex items-center bg-white/90 backdrop-blur-sm px-3 py-2 rounded-full">
-                      <Calendar className="w-4 h-4 mr-2 text-gray-600" />
-                      <span className="text-sm text-gray-600 font-medium">{slide.date}</span>
+                  <div className="flex justify-between items-end relative z-50 mt-2">
+                    <div className="flex items-center bg-white/90 backdrop-blur-sm px-2 py-1.5 sm:px-3 sm:py-2 rounded-full">
+                      <Calendar className="w-3 h-3 sm:w-4 sm:h-4 mr-1.5 sm:mr-2 text-gray-600 flex-shrink-0" />
+                      <span className="text-xs sm:text-sm text-gray-600 font-medium whitespace-nowrap">{slide.date}</span>
                     </div>
                     <Link href={`/program-${slide.type}/${slide.slug}`}>
                       <button
                         onClick={(e) => e.stopPropagation()}
-                        className="bg-yellow-400 hover:bg-yellow-500 text-white p-3 rounded-full transition flex items-center justify-center shadow-lg hover:scale-110 transform"
+                        className="bg-yellow-400 hover:bg-yellow-500 text-white p-2 sm:p-3 rounded-full transition flex items-center justify-center shadow-lg hover:scale-110 transform"
                         style={{
-                          minWidth: '40px',
-                          minHeight: '40px'
+                          minWidth: '32px sm:40px',
+                          minHeight: '32px sm:40px'
                         }}
                       >
-                        <ChevronRight className="w-5 h-5 flex-shrink-0" />
+                        <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
                       </button>
                     </Link>
                   </div>
@@ -290,13 +296,13 @@ const Courses: React.FC = () => {
         </div>
 
         {/* Dots Indicator */}
-        <div className="flex mt-8 space-x-2">
+        <div className="flex mt-6 sm:mt-8 space-x-2">
           {slides.map((_, index) => (
             <button
               key={index}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                index === currentIndex 
-                  ? 'bg-gray-800 scale-125' 
+              className={`w-3 h-3 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
+                index === currentIndex
+                  ? 'bg-gray-800 scale-125'
                   : 'bg-gray-400 hover:bg-gray-600'
               }`}
               onClick={() => setCurrentIndex(index)}
@@ -305,18 +311,18 @@ const Courses: React.FC = () => {
         </div>
 
         {/* Navigation Buttons */}
-        <div className="flex gap-4 mt-6">
+        <div className="flex gap-3 sm:gap-4 mt-4 sm:mt-6">
           <button
             onClick={() => navigate(-1)}
-            className="p-4 rounded-full bg-white text-gray-700 hover:bg-gray-100 transition duration-300 shadow-md"
+            className="p-3 sm:p-4 rounded-full bg-white text-gray-700 hover:bg-gray-100 transition duration-300 shadow-md"
           >
-            <ChevronRight className="w-6 h-6 rotate-180" />
+            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 rotate-180" />
           </button>
           <button
             onClick={() => navigate(1)}
-            className="p-4 rounded-full bg-white text-gray-700 hover:bg-gray-100 transition duration-300 shadow-md"
+            className="p-3 sm:p-4 rounded-full bg-white text-gray-700 hover:bg-gray-100 transition duration-300 shadow-md"
           >
-            <ChevronRight className="w-6 h-6" />
+            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
         </div>
 

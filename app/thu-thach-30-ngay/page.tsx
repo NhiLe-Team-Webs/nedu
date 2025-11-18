@@ -100,54 +100,54 @@ const ThirtyDayPage = () => {
       >
         <main>
           {/* HERO */}
-          <section id="hero" className="pt-10 md:pt-14 pb-10 text-center">
-            <div className="max-w-5xl mx-auto px-6">
+          <section id="hero" className="pt-8 sm:pt-10 md:pt-14 pb-8 sm:pb-10 text-center">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6">
               <h1
-                className="text-4xl md:text-5xl font-extrabold mb-3"
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-2 sm:mb-3"
                 style={{ color: CTA_YELLOW }}
               >
                 THỬ THÁCH 30 NGÀY
               </h1>
               <p
-                className="text-base md:text-lg font-semibold"
+                className="text-sm sm:text-base md:text-lg font-semibold"
                 style={{ color: DARK_GRAY }}
               >
                 Chủ đề Tháng 11: Sáng tạo nội dung
               </p>
-              <p className="mt-1 text-sm md:text-base">
+              <p className="mt-1 text-sm sm:text-sm md:text-base">
                 Giá hạn mỗi tháng:
-                <span className="text-green-600 font-extrabold text-xl md:text-2xl">
+                <span className="text-green-600 font-extrabold text-lg sm:text-xl md:text-2xl">
                   {" "}
                   396.000
                 </span>
                 <span className="font-semibold"> VND</span>
               </p>
-              <div className="mt-4 mb-6">
+              <div className="mt-3 sm:mt-4 mb-4 sm:mb-6">
                 <a
                   href="#register"
-                  className="inline-flex items-center gap-2 px-8 py-3 rounded-full btn-primary text-xs md:text-sm"
+                  className="inline-flex items-center gap-2 px-6 sm:px-8 py-2 sm:py-3 rounded-full btn-primary text-xs sm:text-sm"
                 >
                   ĐĂNG KÝ NGAY
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
                 </a>
               </div>
-              <div className="mt-4 flex justify-center">
+              <div className="mt-3 sm:mt-4 flex justify-center">
                 <Image
                   src={neduLogo}
                   alt="N-Education"
                   width={800}
                   height={200}
-                  className="w-full max-w-4xl h-auto object-contain"
+                  className="w-full max-w-3xl sm:max-w-4xl h-auto object-contain"
                 />
               </div>
-
-              <div className="mt-10 flex items-center justify-center">
+  
+              <div className="mt-6 sm:mt-10 flex items-center justify-center">
                 <Image
                   src={challengePoster}
                   alt="Thử Thách 30 Ngày"
                   width={800}
                   height={400}
-                  className="w-full max-w-[1100px] h-auto object-cover rounded-[32px]"
+                  className="w-full max-w-[600px] sm:max-w-[800px] md:max-w-[900px] lg:max-w-[1100px] h-auto object-cover rounded-[16px] sm:rounded-[24px] md:rounded-[32px]"
                 />
                 <p
                   className="text-sm md:text-base font-medium"
@@ -156,11 +156,11 @@ const ThirtyDayPage = () => {
               </div>
             </div>
           </section>
-
+  
           {/* ABOUT */}
-          <section id="about" className="pb-14">
+          <section id="about" className="pb-10 sm:pb-14">
             <div
-              className="max-w-4xl mx-auto px-6 text-[13px] md:text-[14px] leading-relaxed"
+              className="max-w-4xl mx-auto px-4 sm:px-6 text-[12px] sm:text-[13px] md:text-[14px] leading-relaxed"
               style={{ color: DARK_GRAY }}
             >
               <p className="mb-3">
@@ -176,11 +176,11 @@ const ThirtyDayPage = () => {
           </section>
 
           {/* 30 NGÀY CÓ GÌ */}
-          <section className="pb-16">
-            <div className="max-w-6xl mx-auto px-6">
-              <h2 className="section-title mb-10">30 NGÀY CÓ GÌ?</h2>
+          <section className="pb-12 sm:pb-16">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6">
+              <h2 className="section-title mb-6 sm:mb-10 text-2xl sm:text-3xl md:text-4xl lg:text-5xl">30 NGÀY CÓ GÌ?</h2>
 
-              <div className="grid md:grid-cols-2 gap-6 text-[13px] md:text-[14px]">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 text-[12px] sm:text-[13px] md:text-[14px]">
                 <div className="card">
                   <h3
                     className="font-bold text-lg mb-2"
@@ -236,35 +236,35 @@ const ThirtyDayPage = () => {
           {/* MENTOR */}
           <section
             id="mentor"
-            className="relative py-20"
+            className="relative py-12 sm:py-16 md:py-20"
             style={{ backgroundColor: LIGHT_GRAY_BG }}
           >
-            <div className="mentor-bg-text">NGƯỜI HƯỚNG DẪN</div>
+            <div className="mentor-bg-text text-3xl sm:text-4xl md:text-5xl">NGƯỜI HƯỚNG DẪN</div>
 
-            <div className="max-w-5xl mx-auto px-6 relative z-10">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
               <h2
-                className="text-3xl md:text-4xl font-extrabold text-center mb-10"
+                className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-center mb-6 sm:mb-10"
                 style={{ color: CTA_YELLOW }}
               >
                 NGƯỜI DẪN ĐƯỜNG
               </h2>
 
               {/* CARD + ẢNH SỬA LẠI TỶ LỆ */}
-              <div className="bg-white rounded-[32px] shadow-[0_18px_45px_rgba(0,0,0,0.08)] px-6 md:px-10 pt-8 pb-10">
+              <div className="bg-white rounded-[16px] sm:rounded-[24px] md:rounded-[32px] shadow-[0_18px_45px_rgba(0,0,0,0.08)] px-4 sm:px-6 md:px-10 pt-6 sm:pt-8 pb-8 sm:pb-10">
                 {/* ẢNH: giống ảnh 1 – có khoảng trắng 2 bên, giữ tỷ lệ gốc */}
-                <div className="flex justify-center mb-8">
+                <div className="flex justify-center mb-6 sm:mb-8">
                   <Image
                     src={tuyetMaiPhoto}
                     alt="Tuyết Mai"
                     width={800}
                     height={420}
-                    className="w-full max-w-3xl h-auto rounded-[32px] object-cover"
+                    className="w-full max-w-2xl sm:max-w-3xl h-auto rounded-[16px] sm:rounded-[24px] md:rounded-[32px] object-cover"
                     priority
                   />
                 </div>
 
                 <div
-                  className="text-[13px] md:text-[14px] leading-relaxed"
+                  className="text-[12px] sm:text-[13px] md:text-[14px] leading-relaxed"
                   style={{ color: DARK_GRAY }}
                 >
                   <p className="mb-3">
@@ -277,7 +277,7 @@ const ThirtyDayPage = () => {
                     Thách 30 Ngày.
                   </p>
 
-                  <ul className="list-disc pl-5 space-y-1 mb-4">
+                  <ul className="list-disc pl-4 sm:pl-5 space-y-1 mb-4">
                     <li>
                       Đồng hành giúp học viên xây kênh cá nhân từ con số 0.
                     </li>
@@ -289,7 +289,7 @@ const ThirtyDayPage = () => {
                   </ul>
 
                   <p className="font-semibold mb-2">Giá trị sau chương trình:</p>
-                  <ul className="list-disc pl-5 space-y-1 mb-6">
+                  <ul className="list-disc pl-4 sm:pl-5 space-y-1 mb-4 sm:mb-6">
                     <li>
                       Có nền tảng nội dung bền vững cho TikTok, Reels, Shorts...
                     </li>
@@ -301,13 +301,13 @@ const ThirtyDayPage = () => {
 
                   <div className="text-center mt-4">
                     <p
-                      className="font-extrabold text-base md:text-lg"
+                      className="font-extrabold text-sm sm:text-base md:text-lg"
                       style={{ color: DARK_GRAY }}
                     >
                       TUYẾT MAI
                     </p>
                     <p
-                      className="text-xs md:text-sm font-semibold"
+                      className="text-xs sm:text-xs md:text-sm font-semibold"
                       style={{ color: CTA_YELLOW }}
                     >
                       Nhà sáng tạo nội dung
@@ -319,12 +319,12 @@ const ThirtyDayPage = () => {
           </section>
 
           {/* COURSE INFO */}
-          <section id="course-info" className="py-18 pb-16 bg-white">
-            <div className="max-w-6xl mx-auto px-6">
-              <h2 className="section-title mb-10">THÔNG TIN KHÓA HỌC</h2>
+          <section id="course-info" className="py-12 sm:py-16 md:py-18 pb-12 sm:pb-16 bg-white">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6">
+              <h2 className="section-title mb-6 sm:mb-10 text-2xl sm:text-3xl md:text-4xl lg:text-5xl">THÔNG TIN KHÓA HỌC</h2>
 
               <div className="max-w-5xl mx-auto card">
-                <div className="grid md:grid-cols-3 gap-y-10 gap-x-10 text-[13px] md:text-[14px]">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-6 sm:gap-y-8 md:gap-y-10 gap-x-6 sm:gap-x-8 md:gap-x-10 text-[12px] sm:text-[13px] md:text-[14px]">
                   {/* CHỦ ĐỀ */}
                   <div className="flex items-start gap-3">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill={CTA_YELLOW}>
@@ -403,13 +403,13 @@ const ThirtyDayPage = () => {
                 </div>
               </div>
 
-              <div id="register" className="text-center mt-10">
+              <div id="register" className="text-center mt-8 sm:mt-10">
                 <a
                   href="#contact"
-                  className="px-10 py-3 rounded-full btn-primary text-xs md:text-sm inline-flex items-center gap-2"
+                  className="px-8 sm:px-10 py-2 sm:py-3 rounded-full btn-primary text-xs sm:text-sm inline-flex items-center gap-2"
                 >
                   ĐĂNG KÝ NGAY
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
                 </a>
               </div>
             </div>

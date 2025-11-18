@@ -233,8 +233,153 @@ p {
   height: auto;
 }
 
+/* Mobile-first responsive improvements */
 @media (max-width: 640px) {
   .aspect-video {
     aspect-ratio: 9/16;
+  }
+  
+  /* Improve touch targets for mobile */
+  button, a, input, textarea, select {
+    min-height: 44px;
+  }
+  
+  /* Better spacing for mobile */
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  /* Improve readability on mobile */
+  body {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  
+  /* Better form inputs on mobile */
+  .input-field {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+  
+  /* Optimize images for mobile */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Better button spacing */
+  .btn-primary, .btn-secondary {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* Tablet improvements */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+/* Large desktop optimizations */
+@media (min-width: 1025px) {
+  .container {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Smooth scrolling for better UX */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Improve focus states for accessibility */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Better loading states */
+.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Improve transitions */
+.transition-all {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Mobile-specific carousel improvements */
+@media (max-width: 640px) {
+  .carousel-container {
+    padding: 0 1rem;
+  }
+  
+  .carousel-item {
+    margin: 0 0.5rem;
+  }
+}
+
+/* Better text rendering */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Prevent horizontal overflow */
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+
+/* Better touch feedback */
+@media (hover: none) and (pointer: coarse) {
+  button:active,
+  a:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Text truncation utilities */
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Fallback for browsers that don't support -webkit-line-clamp */
+@supports not (-webkit-line-clamp: 1) {
+  .line-clamp-1 {
+    max-height: 1.5em;
+  }
+  
+  .line-clamp-2 {
+    max-height: 3em;
+  }
+  
+  .line-clamp-3 {
+    max-height: 4.5em;
   }
 }
