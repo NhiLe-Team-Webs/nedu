@@ -9,9 +9,9 @@ import {
   PhoneCall,
 } from "lucide-react";
 
-import neduLogo from "@/app/picture/nedu.svg";
-import challengePoster from "@/app/picture/thuthach30day.png";
-import tuyetMaiPhoto from "@/app/picture/tuyetmai.jpg";
+const neduLogo = "/picture/nedu.svg";
+const challengePoster = "/picture/thuthach30day.png";
+const tuyetMaiPhoto = "/picture/tuyetmai.jpg";
 
 const CTA_YELLOW = "#F8B516";
 const DARK_GRAY = "#333333";
@@ -171,6 +171,8 @@ const ThirtyDayPage = () => {
                 <Image
                   src={neduLogo}
                   alt="N-Education"
+                  width={800}
+                  height={200}
                   className="w-full max-w-4xl h-auto object-contain"
                 />
               </div>
@@ -181,6 +183,8 @@ const ThirtyDayPage = () => {
                   <Image
                     src={challengePoster}
                     alt="Thử Thách 30 Ngày"
+                    width={288}
+                    height={288}
                     className="w-56 md:w-72 object-contain"
                   />
                   <p
@@ -291,6 +295,8 @@ const ThirtyDayPage = () => {
                   <Image
                     src={tuyetMaiPhoto}
                     alt="Tuyết Mai"
+                    width={800}
+                    height={420}
                     className="w-full h-[340px] md:h-[420px] object-cover"
                   />
                 </div>
@@ -410,6 +416,8 @@ const ThirtyDayPage = () => {
                   <Image
                     src={neduLogo}
                     alt="N-Education"
+                    width={200}
+                    height={64}
                     className="max-h-16 w-auto object-contain"
                   />
                 </div>
@@ -417,6 +425,8 @@ const ThirtyDayPage = () => {
                   <Image
                     src={challengePoster}
                     alt="Thử Thách 30 Ngày"
+                    width={200}
+                    height={64}
                     className="max-h-16 w-auto object-contain"
                   />
                 </div>
