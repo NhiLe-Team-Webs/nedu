@@ -104,15 +104,8 @@ const Courses: React.FC = () => {
   return (
     <section className="relative flex flex-col items-center justify-center overflow-hidden h-screen">
       <div className="relative flex flex-col justify-center items-center h-[90%] w-full max-w-[1200px]">
-        <Image
-          src="/coming-bg.jpg"
-          alt="bg"
-          fill
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-[rgba(0,0,0,0.4)]" />
         <div className="container mx-auto px-4 z-10 w-full">
-          <h2 className="relative md:text-5xl font-extrabold text-white text-center mb-[32px] uppercase">
+          <h2 className="relative md:text-5xl font-extrabold text-yellow-500 text-center mb-[32px] uppercase">
             Người Việt, làm hàng Việt, cho người Việt
           </h2>
 
@@ -137,7 +130,7 @@ const Courses: React.FC = () => {
 
                         <div className="flex flex-col justify-between text-white h-full">
                           <div className="flex flex-col items-start">
-                            <p className="text-[16px] text-white/80">
+                            <p className="text-[16px] text-white">
                               {s.label}
                             </p>
                             <h3 className="text-xl md:text-[24px] font-bold uppercase leading-tight mb-4 text-white">
@@ -147,8 +140,8 @@ const Courses: React.FC = () => {
                            
                           <div className="flex items-center justify-between gap-4">
                             <div className="flex flex-row items-center justify-between">
-                              <Calendar className="w-5 h-5 text-white/90 mr-2" />
-                              <span className="text-sm text-white/90 font-semibold">
+                              <Calendar className="w-5 h-5 text-white mr-2" />
+                              <span className="text-sm text-white font-semibold">
                                 {s.date}
                               </span>
                             </div>
@@ -162,7 +155,7 @@ const Courses: React.FC = () => {
                                 size="icon"
                                 className="btn-secondary rounded-b-full rounded-t-full text-[16px] uppercase w-auto flex items-center justify-center py-[12px] px-[20px]"
                               >
-                                <ShoppingCart className="h-4 w-4 mr-1" />
+                                <ShoppingCart className="h-3 w-3 mr-1" />
                               </Button>
                               <Button
                                 onClick={() => {
@@ -185,7 +178,7 @@ const Courses: React.FC = () => {
                                 }}
                                 variant="hero"
                                 size="icon"
-                                className="btn-primary rounded-b-full rounded-t-full text-[16px] uppercase w-auto flex items-center justify-center py-[12px] px-[20px]"
+                                className="btn-primary rounded-b-full rounded-t-full text-[14px] uppercase w-auto flex items-center justify-center py-[8px] px-[16px]"
                               >
                                 Đăng ký ngay
                                 <ChevronRight className="font-extrabold" />
