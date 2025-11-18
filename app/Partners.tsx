@@ -96,15 +96,15 @@ const Partners = () => {
             {/* First row of partners (6 columns) */}
             <div className="ww-layout ww-flexbox ww-element ww-flexbox__object" style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(6, 1fr)',
+              gridTemplateColumns: 'repeat(auto-fit)',
               columnGap: '32px',
               margin: '0px',
               padding: '40px',
               zIndex: 'unset',
               alignSelf: 'unset',
               width: '100%',
-              maxWidth: 'unset',
-              minWidth: 'unset',
+              maxWidth: '20px, 1fr',
+              minWidth: '20px, 1fr',
               height: 'auto',
               maxHeight: 'unset',
               minHeight: 'unset',
@@ -184,7 +184,7 @@ const Partners = () => {
             {/* Second row of partners (5 columns) */}
             <div className="ww-layout ww-flexbox ww-element ww-flexbox__object" style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(5, 1fr)',
+              gridTemplateColumns: 'repeat(auto-fit)',
               columnGap: '32px',
               margin: '0px',
               padding: '40px 80px',
@@ -194,8 +194,8 @@ const Partners = () => {
               maxWidth: 'unset',
               minWidth: 'unset',
               height: 'auto',
-              maxHeight: 'unset',
-              minHeight: 'unset',
+              maxHeight: '40px, 1fr',
+              minHeight: '40px, 1fr',
               background: 'none'
             }}>
               {partners.slice(6).map((partner, index) => (
