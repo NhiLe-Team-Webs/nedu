@@ -55,28 +55,26 @@ const Testimonials: React.FC<TestimonialsProps> = ({
         </div>
 
         <div className="flex justify-center mt-8">
-          <Button asChild>
-            <a
-              href={buttonLink}
-              className="inline-flex items-center bg-amber-400 hover:bg-amber-500 text-white px-6 py-3 rounded-r-full rounded-l-full font-semibold uppercase"
+          <a
+            href={buttonLink}
+            className="inline-flex items-center bg-amber-400 hover:bg-amber-500 text-white px-6 py-3 rounded-r-full rounded-l-full font-semibold uppercase transition-colors"
+          >
+            {buttonText}
+            <svg
+              className="ml-3 w-4 h-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              {buttonText}
-              <svg
-                className="ml-3 w-4 h-4"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M5 12h14M13 5l7 7-7 7"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </a>
-          </Button>
+              <path
+                d="M5 12h14M13 5l7 7-7 7"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </a>
         </div>
       </div>
     </section>
