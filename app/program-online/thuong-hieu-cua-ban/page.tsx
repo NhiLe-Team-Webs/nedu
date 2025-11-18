@@ -86,7 +86,7 @@ export default function ThuongHieuCuaBanPage() {
     ],
     title: "Testimonials",
     subtitle: "Lời chứng thực",
-    buttonText: "Đăng ký ngay",
+    buttonText: "Thêm vào giỏ hàng",
     buttonLink: "/testimonials",
   };
   return (
@@ -101,10 +101,15 @@ export default function ThuongHieuCuaBanPage() {
         cost="18.960.000"
         paymentLink="/payment/53"
         description="Kiến thức cơ bản nhất cho người muốn bắt đầu mở doanh nghiệp hay cải tổ doanh nghiệp gia đình. Định hình rõ hơn kinh doanh của bạn trong chỉ 4 ngày với khóa học Thương Hiệu Của Bạn - một chương trình được thiết kế đặc biệt cho chủ doanh nghiệp trong kỷ nguyên AI."
+        courseSlug="thuong-hieu-cua-ban"
       />
       <Instructor instructors={instructors} />
       <Whom title="Ai nên tham gia khóa học này?" items={whomItems} />
-      <Testimonials />
+      <Testimonials
+        courseSlug="thuong-hieu-cua-ban"
+        buttonText="Thêm vào giỏ hàng"
+        buttonType="cart"
+      />
       <CourseInfo
         title="THÔNG TIN KHÓA HỌC"
         details={[

@@ -1,6 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useCart } from "@/lib/cart-context";
+import { Course } from "@/data/courses";
 
 interface TestimonialsProps {
   videos: string[];
@@ -8,7 +10,9 @@ interface TestimonialsProps {
   title: string;
   subtitle: string;
   buttonText: string;
-  buttonLink: string;
+  buttonLink?: string;
+  course?: Course;
+  buttonType?: 'link' | 'cart';
 }
 
 const Testimonials: React.FC<TestimonialsProps> = ({
@@ -18,7 +22,18 @@ const Testimonials: React.FC<TestimonialsProps> = ({
   subtitle,
   buttonText,
   buttonLink,
+  course,
+  buttonType = 'link',
 }) => {
+  const { addToCart } = useCart();
+
+  const handleButtonClick = () => {
+    if (buttonType === 'cart' && course) {
+      addToCart(course);
+    } else if (buttonLink) {
+      window.location.href = buttonLink;
+    }
+  };
   return (
     <section
       className="relative flex flex-col items-center py-12 sm:py-16 lg:py-20 bg-white"
@@ -55,26 +70,57 @@ const Testimonials: React.FC<TestimonialsProps> = ({
         </div>
 
         <div className="flex justify-center mt-6 sm:mt-8">
-          <a
-            href={buttonLink}
+          <button
+            onClick={handleButtonClick}
             className="inline-flex items-center bg-amber-400 hover:bg-amber-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-r-full rounded-l-full font-semibold uppercase transition-colors text-sm sm:text-base"
           >
             {buttonText}
-            <svg
-              className="ml-2 sm:ml-3 w-3 h-3 sm:w-4 sm:h-4"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M5 12h14M13 5l7 7-7 7"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </a>
+            {buttonType === 'cart' ? (
+              <svg
+                className="ml-2 sm:ml-3 w-3 h-3 sm:w-4 sm:h-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M9 2L3 9v13a2 2 0 002 2h14a2 2 0 002-2V9l-6-7H9z"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M3 9h18"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M9 22V12h6v10"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            ) : (
+              <svg
+                className="ml-2 sm:ml-3 w-3 h-3 sm:w-4 sm:h-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M5 12h14M13 5l7 7-7 7"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            )}
+          </button>
         </div>
       </div>
     </section>

@@ -7,6 +7,7 @@ import CourseInfo from "@/components/CourseInfo";
 import Instructor from "@/components/Instructor";
 import Organizers from "@/components/Organizers";
 import Whom from "@/components/Whom";
+import Testimonials from "@/app/Testimonials";
 import { useCart } from "@/lib/cart-context";
 
 export default function AIBusinessCommunicationPage() {
@@ -158,9 +159,15 @@ export default function AIBusinessCommunicationPage() {
       description="Khóa học chuyên sâu về ứng dụng AI trong giao tiếp kinh doanh, giúp các chuyên gia và doanh nhân tối ưu hóa kỹ năng truyền thông trong kỷ nguyên số."
       cost="13.069.000"
       paymentLink="/payment/57"
+      courseSlug="ai-for-business-communication"
     />
       <Instructor instructors={instructors} />
       <Whom title="Ai nên tham gia khóa học này?" items={whomItems} />
+      <Testimonials
+        courseSlug="ai-for-business-communication"
+        buttonText="Thêm vào giỏ hàng"
+        buttonType="cart"
+      />
       <CourseInfo {...courseInfo} />
       <Organizers />
     </div>

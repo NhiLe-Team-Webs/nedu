@@ -9,8 +9,11 @@ import YouTube from "react-youtube";
 import Instructor from "@/components/Instructor";
 import Privilege from "@/app/Privilege";
 import Organizers from "@/components/Organizers";
+import { getCourseBySlug } from "@/data/courses";
 
 export default function LaChinhMinhPage() {
+  const course = getCourseBySlug('la-chinh-minh');
+  
   const youtubeOpts = {
     height: "100%",
     width: "100%",
@@ -75,8 +78,9 @@ export default function LaChinhMinhPage() {
     ],
     title: "Testimonials",
     subtitle: "Lời chứng thực",
-    buttonText: "Tìm hiểu thêm",
-    buttonLink: "/testimonials",
+    buttonText: "Thêm vào giỏ hàng",
+    buttonType: "cart" as const,
+    course: course,
   };
 
   return (
@@ -90,6 +94,7 @@ export default function LaChinhMinhPage() {
         title="Là Chính Mình"
         cost="59,696,000"
         paymentLink="/payment/57"
+        courseSlug="la-chinh-minh"
       />
       <CourseInfo
         title="THÔNG TIN KHÓA HỌC"

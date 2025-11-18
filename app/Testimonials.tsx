@@ -1,9 +1,33 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, ShoppingCart } from "lucide-react";
+import { useCart } from "@/lib/cart-context";
+import { getCourseBySlug } from "@/data/courses";
 
-const Testimonials = () => {
+interface TestimonialsProps {
+  courseSlug?: string;
+  buttonText?: string;
+  buttonType?: 'link' | 'cart';
+  buttonLink?: string;
+}
+
+const Testimonials = ({
+  courseSlug,
+  buttonText = "Đăng ký ngay",
+  buttonType = 'link',
+  buttonLink = "/program/"
+}: TestimonialsProps) => {
+  const { addToCart } = useCart();
+  const course = courseSlug ? getCourseBySlug(courseSlug) : undefined;
+
+  const handleButtonClick = () => {
+    if (buttonType === 'cart' && course) {
+      addToCart(course);
+    } else {
+      window.location.href = buttonLink;
+    }
+  };
   const videos = [
     "https://www.youtube.com/embed/Dm6gg-LHGqs?si=ZiBHEK0dZHJdsxUI",
     "https://www.youtube.com/embed/pTg5C528B5s",
@@ -47,11 +71,18 @@ const Testimonials = () => {
         </div>
 
         <div className="flex justify-center mt-6 sm:mt-8">
-          <Button className="bg-amber-400 hover:bg-amber-500 text-white rounded-full px-4 sm:px-6 py-2 sm:py-3">
-            <a href="/program/" className="inline-flex items-center text-white uppercase text-sm sm:text-base">
-              Đăng ký ngay
-              <ChevronRight className="ml-1 sm:ml-2 w-3 h-3 sm:w-4 sm:h-4" />
-            </a>
+          <Button
+            onClick={handleButtonClick}
+            className="bg-amber-400 hover:bg-amber-500 text-white rounded-full px-4 sm:px-6 py-2 sm:py-3"
+          >
+            <span className="inline-flex items-center text-white uppercase text-sm sm:text-base">
+              {buttonText}
+              {buttonType === 'cart' ? (
+                <ShoppingCart className="ml-1 sm:ml-2 w-3 h-3 sm:w-4 sm:h-4" />
+              ) : (
+                <ChevronRight className="ml-1 sm:ml-2 w-3 h-3 sm:w-4 sm:h-4" />
+              )}
+            </span>
           </Button>
         </div>
       </div>

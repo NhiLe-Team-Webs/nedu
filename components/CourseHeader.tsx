@@ -1,6 +1,8 @@
 import React from "react";
 import Link from "next/link";
 import YouTube from "react-youtube";
+import { useCart } from "@/lib/cart-context";
+import { getCourseBySlug } from "@/data/courses";
 
 type CourseHeaderProps = {
   imageUrl: string;
@@ -15,6 +17,7 @@ type CourseHeaderProps = {
   deposit?: string;
   dep_currency?: string;
   description?: string; // Added the missing description property
+  courseSlug?: string; // Added courseSlug for cart functionality
 };
 
 const CourseHeader: React.FC<CourseHeaderProps> = ({
@@ -30,7 +33,18 @@ const CourseHeader: React.FC<CourseHeaderProps> = ({
   currency = "VND",
   deposit,
   dep_currency = "VND",
+  courseSlug,
 }) => {
+  const { addToCart } = useCart();
+
+  const handleAddToCart = () => {
+    if (courseSlug) {
+      const course = getCourseBySlug(courseSlug);
+      if (course) {
+        addToCart(course);
+      }
+    }
+  };
   const isYouTubeLink = (url: string) => {
     return url.includes("youtube.com") || url.includes("youtu.be");
   };
@@ -38,7 +52,7 @@ const CourseHeader: React.FC<CourseHeaderProps> = ({
   return (
     <section className="py-4 sm:py-6 lg:py-8 px-4 sm:px-6 lg:px-10 max-w-[1280px] mx-auto">
       <div
-        className="h-48 sm:h-64 lg:h-80 bg-cover bg-center rounded-lg mb-6 sm:mb-8 lg:mb-10"
+        className="h-64 sm:h-80 lg:h-96 bg-cover bg-center rounded-lg mb-6 sm:mb-8 lg:mb-10"
         style={{ backgroundImage: `url(${imageUrl})` }}
         aria-label={altText}
         hidden={!imageUrl}
@@ -72,13 +86,13 @@ const CourseHeader: React.FC<CourseHeaderProps> = ({
             <p className="text-sm sm:text-base lg:text-lg font-semibold">{dep_currency}</p>
           </div>
         )}
-        <Link
-          href={paymentLink}
+        <button
+          onClick={handleAddToCart}
           className="inline-flex items-center bg-yellow-500 hover:bg-yellow-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-full font-semibold text-sm sm:text-base lg:text-lg transition mt-4 sm:mt-[24px]"
         >
-          Tìm hiểu thêm
-          <i className="fas fa-chevron-right ml-1 sm:ml-2"></i>
-        </Link>
+          Thêm vào giỏ hàng
+          <i className="fas fa-shopping-cart ml-1 sm:ml-2"></i>
+        </button>
       </div>
       {imageUrl_bot && (
         <div className="relative flex flex-col w-full max-w-[900px] h-[300px] sm:h-[400px] lg:h-[500px] bg-none mt-8 sm:mt-12 lg:mt-20 mx-auto">

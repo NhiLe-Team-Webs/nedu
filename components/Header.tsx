@@ -77,9 +77,6 @@ const Header = () => {
 
         {/* right column: actions aligned to the end */}
         <div className="flex items-center justify-end gap-2 sm:gap-4">
-          <Button className="btn-primary hidden sm:inline-flex px-3 sm:px-4 py-1 text-xs sm:text-sm">
-            ĐĂNG KÝ NGAY
-          </Button>
           <Button
             variant="ghost"
             size="icon"

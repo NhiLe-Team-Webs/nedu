@@ -161,9 +161,15 @@ export default function AIInMarketingPage() {
       description="Khóa học chuyên sâu về ứng dụng AI trong marketing, giúp các marketer hiện đại hóa chiến lược và tối ưu hóa hiệu quả chiến dịch."
       cost="13.069.000"
       paymentLink="/payment/57"
+      courseSlug="ai-in-marketing"
     />
       <Instructor instructors={instructors} />
       <Whom title="Ai nên tham gia khóa học này?" items={whomItems} />
+      <Testimonials
+        courseSlug="ai-in-marketing"
+        buttonText="Thêm vào giỏ hàng"
+        buttonType="cart"
+      />
       <CourseInfo {...courseInfo} />
       <Organizers />
     </div>

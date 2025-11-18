@@ -7,6 +7,7 @@ import Organizers from "@/components/Organizers";
 import Link from "next/link";
 import YouTube from "react-youtube";
 import Whom from "@/components/Whom";
+import Testimonials from "@/app/Testimonials";
 import * as Icon from "lucide-react";
 import { useCart } from "@/lib/cart-context";
 
@@ -163,9 +164,15 @@ export default function GenAI101Page() {
             trong công việc, đặc biệt trong lĩnh vực công và giáo dục."
         cost="13.069.000"
         paymentLink="/payment/57"
+        courseSlug="gen-ai-101"
       />
       <Instructor instructors={instructors} />
       <Whom title="Ai nên tham gia khóa học này?" items={whomItems} />
+      <Testimonials
+        courseSlug="gen-ai-101"
+        buttonText="Thêm vào giỏ hàng"
+        buttonType="cart"
+      />
       <CourseInfo {...courseInfo} />
       <Organizers />
     </div>

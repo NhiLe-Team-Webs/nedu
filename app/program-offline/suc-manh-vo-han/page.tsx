@@ -9,8 +9,11 @@ import Instructor from "@/components/Instructor";
 import CourseHeader from "@/components/CourseHeader";
 import Privilege from "@/app/Privilege";
 import Organizers from "@/components/Organizers";
+import { getCourseBySlug } from "@/data/courses";
 
 export default function SucManhVoHanPage() {
+  const course = getCourseBySlug('suc-manh-vo-han');
+  
   const youtubeOpts = {
     height: "100%",
     width: "100%",
@@ -49,8 +52,9 @@ export default function SucManhVoHanPage() {
     ],
     title: "Testimonials",
     subtitle: "Lời chứng thực",
-    buttonText: "Tìm hiểu thêm",
-    buttonLink: "/payment/58",
+    buttonText: "Thêm vào giỏ hàng",
+    buttonType: "cart" as const,
+    course: course,
   };
 
   const instructors = [
@@ -89,6 +93,7 @@ export default function SucManhVoHanPage() {
         paymentLink="/payment/57"
         deposit="180.000.000"
         dep_currency="VND"
+        courseSlug="suc-manh-vo-han"
       />
       <CourseInfo
         title="Thông tin khóa học"

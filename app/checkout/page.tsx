@@ -285,7 +285,7 @@ export default function CheckoutPage() {
                           Họ và tên <span className="text-red-500">*</span>
                         </label>
                         <input
-                          type="text"
+                          type="text" 
                           required
                           placeholder="Nhập họ và tên của bạn"
                           value={formData.name}
@@ -575,10 +575,8 @@ export default function CheckoutPage() {
                   </label>
                   <div className="flex gap-2">
                     <div className="flex-1 relative">
-                      <Tag className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-text-tertiary" />
                       <input
                         type="text"
-                        placeholder="Nhập mã giảm giá"
                         value={discountCode}
                         onChange={(e) => setDiscountCode(e.target.value)}
                         className="input-field pl-10"

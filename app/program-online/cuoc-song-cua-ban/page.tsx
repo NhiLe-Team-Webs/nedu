@@ -95,7 +95,7 @@ export default function CuocSongCuaBanPage() {
     ],
     title: "Testimonials",
     subtitle: "Lời chứng thực",
-    buttonText: "Đăng ký ngay",
+    buttonText: "Thêm vào giỏ hàng",
     buttonLink: "/testimonials",
   };
 
@@ -111,10 +111,15 @@ export default function CuocSongCuaBanPage() {
         cost="18.960.000"
         paymentLink="/payment/53"
         description="Khóa học giúp bạn khám phá và định hình lại cuộc sống theo cách riêng, tìm ra con đường phát triển bản thân và xây dựng lối sống ý nghĩa."
+        courseSlug="cuoc-song-cua-ban"
       />
       <Instructor instructors={instructors} />
       <Whom title="Ai nên tham gia khóa học này?" items={whomItems} />
-      <Testimonials />
+      <Testimonials
+        courseSlug="cuoc-song-cua-ban"
+        buttonText="Thêm vào giỏ hàng"
+        buttonType="cart"
+      />
       <CourseInfo
         title="THÔNG TIN KHÓA HỌC"
         details={[
