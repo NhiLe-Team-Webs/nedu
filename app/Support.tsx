@@ -10,7 +10,7 @@ const Supports = () => {
         aria-label="Support form"
       >
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-          <div className="md:flex-1">
+          <div className="md:flex-5">
             <p className="text-sm font-semibold text-white">Bạn đang cần tư vấn thêm gì?</p>
             <p className="text-2xl md:text-xl font-bold uppercase mt-2 text-white">Hãy để n-edu hỗ trợ cho bạn</p>
           </div>

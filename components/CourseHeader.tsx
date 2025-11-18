@@ -1,8 +1,10 @@
 import React from "react";
 import Link from "next/link";
+import YouTube from "react-youtube";
 
 type CourseHeaderProps = {
   imageUrl: string;
+  imageUrl_bot: string;
   altText: string;
   time: string;
   tags: string[];
@@ -12,10 +14,13 @@ type CourseHeaderProps = {
   currency?: string;
   deposit?: string;
   dep_currency?: string;
+  description?: string; // Added the missing description property
 };
 
 const CourseHeader: React.FC<CourseHeaderProps> = ({
   imageUrl,
+  imageUrl_bot,
+  description,
   altText,
   time,
   tags,
@@ -26,12 +31,17 @@ const CourseHeader: React.FC<CourseHeaderProps> = ({
   deposit,
   dep_currency = "VND",
 }) => {
+  const isYouTubeLink = (url: string) => {
+    return url.includes("youtube.com") || url.includes("youtu.be");
+  };
+
   return (
     <section className="py-8 px-10 max-w-[1280px] mx-auto">
       <div
         className="h-80 bg-cover bg-center rounded-lg mb-10"
         style={{ backgroundImage: `url(${imageUrl})` }}
         aria-label={altText}
+        hidden={!imageUrl}
       ></div>
       <div className="text-center">
         <p className="text-2xl font-bold uppercase text-gray-800 mb-6">
@@ -70,6 +80,31 @@ const CourseHeader: React.FC<CourseHeaderProps> = ({
           <i className="fas fa-chevron-right ml-2"></i>
         </Link>
       </div>
+      {imageUrl_bot && (
+        <div className="relative flex flex-col w-[900px] h-[500px] bg-none mt-20 mx-auto">
+          {isYouTubeLink(imageUrl_bot) ? (
+            <YouTube
+              videoId={new URL(imageUrl_bot).searchParams.get("v") || ""}
+              opts={{
+                height: "100%",
+                width: "100%",
+                playerVars: { autoplay: 0 },
+              }}
+            />
+          ) : (
+            <img
+              src={imageUrl_bot}
+              alt={altText}
+              loading="lazy"
+              className="w-full h-full object-contain"
+            />
+          )}
+          <div className="absolute inset-0"></div>
+          <p className="text-center text-gray-600 font-medium text-base max-w-[90%] mx-auto">
+            {description}
+          </p>
+        </div>
+      )}
     </section>
   );
 };
