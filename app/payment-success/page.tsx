@@ -4,6 +4,7 @@ import { useEffect, useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { useCart } from '@/lib/cart-context'
+import ErrorHandler from '@/components/ErrorHandler'
 
 function PaymentSuccessContent() {
   const router = useRouter()
@@ -11,6 +12,39 @@ function PaymentSuccessContent() {
   const { clearCart } = useCart()
   const [status, setStatus] = useState<'loading' | 'success' | 'failed'>('loading')
   const [message, setMessage] = useState('Đang kiểm tra trạng thái thanh toán...')
+  
+  useEffect(() => {
+    // Define timer globally if it's not already defined
+    if (typeof window !== 'undefined' && typeof window.timer === 'undefined') {
+      window.timer = null;
+    }
+
+    // Define updateTime function globally if it's not already defined
+    if (typeof window !== 'undefined' && typeof window.updateTime === 'undefined') {
+      window.updateTime = function() {
+        console.log('updateTime called - timer is now defined');
+      };
+    }
+
+    // Global error handler to catch and fix undefined variables
+    const handleError = (event: ErrorEvent) => {
+      if (event.message && event.message.includes('timer is not defined')) {
+        // Define timer globally if it's not defined
+        if (typeof window !== 'undefined') {
+          window.timer = window.timer || null;
+          console.log('Fixed undefined timer variable in payment success page');
+          event.preventDefault();
+        }
+      }
+    };
+
+    window.addEventListener('error', handleError);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('error', handleError);
+    };
+  }, []);
 
   useEffect(() => {
     const checkPaymentStatus = async () => {
@@ -19,11 +53,13 @@ function PaymentSuccessContent() {
         const vnp_ResponseCode = searchParams.get('vnp_ResponseCode')
         const vnp_TxnRef = searchParams.get('vnp_TxnRef')
         const vnp_Amount = searchParams.get('vnp_Amount')
+        const programId = searchParams.get('programId')
         
         console.log('VNPAY Response:', {
           vnp_ResponseCode,
           vnp_TxnRef,
-          vnp_Amount
+          vnp_Amount,
+          programId
         })
 
         if (vnp_ResponseCode === '00') {
@@ -63,9 +99,11 @@ function PaymentSuccessContent() {
   }, [searchParams])
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <div className="text-center">
+    <>
+      <ErrorHandler />
+      <div className="min-h-screen bg-gray-50 py-12">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <div className="text-center">
           {status === 'loading' && (
             <div className="py-16">
               <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
@@ -140,23 +178,27 @@ function PaymentSuccessContent() {
               </div>
             </div>
           )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
 export default function PaymentSuccessPage() {
   return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-gray-50 py-12 flex items-center justify-center">
-        <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-          <p className="mt-4 text-lg text-gray-600">Đang tải...</p>
+    <>
+      <ErrorHandler />
+      <Suspense fallback={
+        <div className="min-h-screen bg-gray-50 py-12 flex items-center justify-center">
+          <div className="text-center">
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+            <p className="mt-4 text-lg text-gray-600">Đang tải...</p>
+          </div>
         </div>
-      </div>
-    }>
-      <PaymentSuccessContent />
-    </Suspense>
+      }>
+        <PaymentSuccessContent />
+      </Suspense>
+    </>
   )
 }

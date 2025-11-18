@@ -213,7 +213,16 @@ const Courses: React.FC = () => {
                   {isCenter ? (
                     <div className="text-center">
                       <h3 className="text-lg font-bold text-gray-800 mb-1">{slide.title.toUpperCase()}</h3>
-                      <p className="text-xs text-gray-600">{slide.content}</p>
+                      <p className="text-xs text-gray-600 mb-2">{slide.content}</p>
+                      <div className="text-sm font-bold text-yellow-600">
+                        {(() => {
+                          const course = courses.find(c => c.id === slide.id);
+                          if (!course) return '';
+                          return course.price.currency === 'VNĐ'
+                            ? `${parseInt(course.price.amount.replace(/[.,]/g, '')).toLocaleString('vi-VN')} ${course.price.currency}`
+                            : `${course.price.currency} ${course.price.amount}`;
+                        })()}
+                      </div>
                     </div>
                   ) : (
                     <div className="text-center">

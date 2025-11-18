@@ -1,15 +1,50 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Tag } from 'lucide-react'
 import { useRouter, useParams } from 'next/navigation'
 import { courses } from '@/data/courses'
+import ErrorHandler from '@/components/ErrorHandler'
+import { preparePaymentData, sendPaymentRequest, handlePaymentResponse, currencyFormatter } from '@/lib/payment-utils'
 
 export default function PaymentPage() {
   const router = useRouter()
   const params = useParams()
   const programId = params.programId as string
+  
+  useEffect(() => {
+    // Define timer globally if it's not already defined
+    if (typeof window !== 'undefined' && typeof window.timer === 'undefined') {
+      window.timer = null;
+    }
+
+    // Define updateTime function globally if it's not already defined
+    if (typeof window !== 'undefined' && typeof window.updateTime === 'undefined') {
+      window.updateTime = function() {
+        console.log('updateTime called - timer is now defined');
+      };
+    }
+
+    // Global error handler to catch and fix undefined variables
+    const handleError = (event: ErrorEvent) => {
+      if (event.message && event.message.includes('timer is not defined')) {
+        // Define timer globally if it's not defined
+        if (typeof window !== 'undefined') {
+          window.timer = window.timer || null;
+          console.log('Fixed undefined timer variable in payment page');
+          event.preventDefault();
+        }
+      }
+    };
+
+    window.addEventListener('error', handleError);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('error', handleError);
+    };
+  }, []);
   
   // Find the course based on programId (which is the paymentId)
   const course = courses.find(c => c.paymentId.toString() === programId)
@@ -37,7 +72,7 @@ export default function PaymentPage() {
     minimumFractionDigits: 0,
   })
 
-  const subtotal = course ? parseFloat(course.price.amount.replace(/\./g, '')) : 0
+  const subtotal = course ? parseFloat(course.price.amount.replace(/[.,]/g, '')) : 0
   const discountAmount = subtotal * (discount / 100)
   const total = subtotal - discountAmount
 
@@ -95,73 +130,39 @@ export default function PaymentPage() {
     setIsLoading(true)
 
     try {
-      // Prepare data for API according to payment-api-template.md
-      const apiData = {
-        fullName: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        telegram: formData.telegram,
-        birthday: formData.birthdate ? new Date(formData.birthdate).toISOString() : '',
-        gender: formData.gender,
-        address: formData.address || '',
-        note: formData.note || '',
-        programId: programId
-      }
+      // Prepare data for API using shared utility
+      const apiData = preparePaymentData(formData, programId, true)
 
-      // Note: Do NOT include returnUrl as it causes API error
-      // VNPAY will handle the callback automatically
+      // Send payment request using shared utility
+      const response = await sendPaymentRequest(apiData)
 
-      console.log('Sending payment data:', apiData)
-
-      const response = await fetch('https://api.nedu.nhi.sg/api/order/payment', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json; charset=utf-8',
-          'Accept': 'application/json; charset=utf-8',
+      // Handle payment response using shared utility
+      const success = handlePaymentResponse(response, router,
+        () => {
+          // Success callback - redirect will be handled by the utility
         },
-        body: JSON.stringify(apiData)
-      })
-
-      if (!response.ok) {
-        const errorText = await response.text()
-        console.error('API Error Response:', errorText)
-        
-        // Cải thiện xử lý lỗi với thông báo chi tiết hơn
-        if (response.status === 400) {
-          throw new Error('Dữ liệu không hợp lệ. Vui lòng kiểm tra lại thông tin.')
-        } else if (response.status === 500) {
-          throw new Error('Lỗi server. Vui lòng thử lại sau.')
-        } else {
-          throw new Error(`API Error: ${response.status} - ${errorText}`)
+        (error) => {
+          setErrors([`Lỗi khi gửi thông tin: ${error}`])
         }
-      }
+      )
 
-      const result = await response.json()
-      console.log('API Success Response:', result)
-      
-      // Check if response contains paymentUrl (VNPAY redirect)
-      if (result.paymentUrl) {
-        // Redirect to VNPAY payment page
-        window.location.href = result.paymentUrl
-      } else {
-        // Show success message for non-VNPAY payments
-        alert('Đăng ký thành công!')
-        router.push('/')
+      if (!success) {
+        setIsLoading(false)
       }
       
     } catch (error) {
       console.error('Payment submission error:', error)
       const errorMessage = error instanceof Error ? error.message : 'Đã xảy ra lỗi không xác định'
       setErrors([`Lỗi khi gửi thông tin: ${errorMessage}`])
-      alert(`Lỗi khi gửi thông tin: ${errorMessage}`)
-    } finally {
       setIsLoading(false)
     }
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="container mx-auto px-4 max-w-4xl">
+    <>
+      <ErrorHandler />
+      <div className="min-h-screen bg-gray-50 py-12">
+        <div className="container mx-auto px-4 max-w-4xl">
         <h1 className="text-3xl md:text-4xl font-bold text-center mb-8 text-gray-800">
           TIẾN HÀNH THANH TOÁN
         </h1>
@@ -637,7 +638,8 @@ export default function PaymentPage() {
           </div>
         </div>
       )}
+        </div>
       </div>
-    </div>
+    </>
   )
 }

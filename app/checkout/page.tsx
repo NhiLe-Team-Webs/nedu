@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArrowLeft, Tag } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
 import { useRouter } from 'next/navigation';
+import { preparePaymentData, sendPaymentRequest, handlePaymentResponse, currencyFormatter } from '@/lib/payment-utils';
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -26,11 +27,6 @@ export default function CheckoutPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
 
-  const currencyFormatter = new Intl.NumberFormat('vi-VN', {
-    style: 'currency',
-    currency: 'VND',
-    minimumFractionDigits: 0,
-  });
 
   const subtotal = getTotalPrice();
   const discountAmount = subtotal * (discount / 100);

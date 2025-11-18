@@ -126,7 +126,7 @@ export default function ProgramPage() {
                 </h3>
                 <div className="text-lg font-bold text-primary mb-2">
                   {course.price.currency === 'VNĐ'
-                    ? `${parseInt(course.price.amount.replace(/\./g, '')).toLocaleString('vi-VN')} ${course.price.currency}`
+                    ? `${parseInt(course.price.amount.replace(/[.,]/g, '')).toLocaleString('vi-VN')} ${course.price.currency}`
                     : `${course.price.currency} ${course.price.amount}`
                   }
                 </div>
