@@ -125,28 +125,28 @@ export default function GenAI101Page() {
     courseSlug: "gen-ai-101",
     details: [
       {
-        icon: "Star",
+        icon: "Star" as keyof typeof Icon,
         label: "Chủ đề:",
         value: "AI",
       },
       {
-        icon: "Clock",
+        icon: "Clock" as keyof typeof Icon,
         label: "Thời gian học:",
         value: "28-29 tháng 7 năm 2025",
       },
       {
-        icon: "MapPin",
+        icon: "MapPin" as keyof typeof Icon,
         label: "Người dẫn đường:",
         value: "Linda Hui-Isaac",
       },
-      { icon: "Calendar", label: "Số buổi học:", value: "2 buổi" },
+      { icon: "Calendar" as keyof typeof Icon, label: "Số buổi học:", value: "2 buổi" },
       {
-        icon: "House",
+        icon: "House" as keyof typeof Icon,
         label: "Địa điểm học:",
         value: "Online qua Zoom",
       },
       {
-        icon: "Users",
+        icon: "Users" as keyof typeof Icon,
         label: "Số lượng học viên:",
         value: "40 học viên / lớp",
       },
