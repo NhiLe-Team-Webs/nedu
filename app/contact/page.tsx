@@ -59,7 +59,7 @@ export default function ContactPage() {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div className="bg-primary text-white rounded-2xl p-8 md:p-12">
-              <img src="https://nedu.nhi.sg/images/nedu-contact.png" alt="N-Edu Contact" className="w-full mb-8 rounded-lg" />
+              <img src="/picture/nedu-contact.png" alt="N-Edu Contact" className="w-full mb-8 rounded-lg" />
               
               <h2 className="text-3xl font-bold mb-8">Liên hệ</h2>
               

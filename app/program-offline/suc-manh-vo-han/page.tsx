@@ -49,7 +49,7 @@ export default function SucManhVoHanPage() {
     ],
     title: "Testimonials",
     subtitle: "Lời chứng thực",
-    buttonText: "Đăng ký ngay",
+    buttonText: "Tìm hiểu thêm",
     buttonLink: "/payment/58",
   };
 
@@ -58,7 +58,7 @@ export default function SucManhVoHanPage() {
       name: "NhiLe",
       profession: ["Doanh nhân"],
       bio: "15 năm kinh nghiệm trên thương trường tại Singapore và Việt Nam. Hơn 6 năm truyền cảm hứng và giúp nhiều người làm chủ cuộc đời qua các chương trình đào tạo.",
-      image: "https://nedu.nhi.sg/images/nhile_1.jpg",
+      image: "/picture/nhile.jpg",
       achievements: [],
       projects: [],
       education: "Diploma in Business Administration",
@@ -68,7 +68,7 @@ export default function SucManhVoHanPage() {
       name: "Mel",
       profession: ["Chuyên gia Marketing"],
       bio: "Melvin Soh, chuyên gia marketing hàng đầu châu Á, nổi tiếng với hơn 15 năm kinh nghiệm thực chiến trong xây dựng thương hiệu và thu hút khách hàng. Anh đã giúp hàng trăm doanh nghiệp tạo dựng lòng trung thành và tăng trưởng bền vững.",
-      image: "https://nedu.nhi.sg/images/mel_1.jpg",
+      image: "/picture/mel.jpg",
       achievements: [],
       projects: [],
       education: "MBA in Marketing",
@@ -79,7 +79,7 @@ export default function SucManhVoHanPage() {
   return (
     <div className="min-h-screen bg-white">
       <CourseHeader
-        imageUrl="https://nedu.nhi.sg/images/2_1.jpg?_wwcv=130"
+        imageUrl="/picture/suc_manh_vo_han.jpg"
         altText="Sức Mạnh Vô Hạn"
         time="Khóa học Offline"
         tags={["Doanh nhân", "Doanh nghiệp"]}
@@ -92,7 +92,7 @@ export default function SucManhVoHanPage() {
       <CourseInfo
         title="Thông tin khóa học"
         details={courseDetails as any}
-        buttonText="Đăng ký ngay"
+        buttonText="Tìm hiểu thêm"
         buttonLink="/payment/58"
       />
 

@@ -11,7 +11,7 @@ const coursesData = [
     mode: "offline",
     title: "Là Chính Mình 03",
     category: ["Phát triển bản thân", "Là chính mình"],
-    heroImage: "https://nedu.nhi.sg/images/lachinhminh.png",
+    heroImage: "/picture/la_chinh_minh.jpg",
     info: {
       sessions: "3,5 ngày",
       instructor: "NhiLe x Guest Instructors",
@@ -23,7 +23,7 @@ const coursesData = [
     mode: "offline",
     title: "Sức Mạnh Vô Hạn",
     category: ["Doanh nhân", "Doanh nghiệp"],
-    heroImage: "https://nedu.nhi.sg/images/2_3.jpg",
+    heroImage: "/picture/2_3.jpg",
     info: {
       sessions: "6 tháng online và 4,5 ngày offline",
       instructor: "Mel x NhiLe",
@@ -35,7 +35,7 @@ const coursesData = [
     mode: "online",
     title: "GEN AI 101",
     category: ["AI"],
-    heroImage: "https://nedu.nhi.sg/images/thum_yt_1.png",
+    heroImage: "/picture/thum_yt_1.png",
     info: {
       sessions: "2 buổi",
       instructor: "Linda Hui-Isaac",
@@ -47,7 +47,7 @@ const coursesData = [
     mode: "online",
     title: "Thương Hiệu Của Bạn",
     category: ["Thương hiệu"],
-    heroImage: "https://nedu.nhi.sg/images/thuonghieucuaban.png",
+    heroImage: "/picture/thuong_hieu_cua_ban.png",
     info: {
       sessions: "4 buổi",
       instructor: "NhiLe",
@@ -59,7 +59,7 @@ const coursesData = [
     mode: "online",
     title: "CUỘC SỐNG CỦA BẠN",
     category: ["Phát triển bản thân"],
-    heroImage: "https://nedu.nhi.sg/images/cuocsongcuaban.png",
+    heroImage: "/picture/cuoc_song_cua_ban.png",
     info: {
       sessions: "3 buổi",
       instructor: "NhiLe",
@@ -71,7 +71,7 @@ const coursesData = [
     mode: "online",
     title: "AI FOR BUSINESS COMMUNICATION",
     category: ["Trí tuệ nhân tạo ứng dụng"],
-    heroImage: "https://nedu.nhi.sg/images/thum_yt_2.png",
+    heroImage: "/picture/thum_yt_2.png",
     info: {
       sessions: "3 buổi",
       instructor: "Linda Hui-Isaac",
@@ -83,7 +83,7 @@ const coursesData = [
     mode: "online",
     title: "CERTIFIED GEN AI FOUNDATION IN MARKETING & BUSINESS STRATEGY",
     category: ["Marketing số"],
-    heroImage: "https://nedu.nhi.sg/images/thum_yt_3.png",
+    heroImage: "/picture/thum_yt_3.png",
     info: {
       sessions: "2 buổi",
       instructor: "Linda Hui-Isaac",

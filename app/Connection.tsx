@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 const images = [
   { src: '/picture/p2.jpg', alt: "post-1", cls: "col-span-1 row-span-1" },
   { src: '/picture/nhile.jpg', alt: "post-2", cls: "col-span-1 row-span-1 md:row-span-2" },
@@ -26,14 +27,27 @@ const Connection = () => {
               key={i}
               className={`${img.cls} overflow-hidden rounded-md relative bg-white/30 shadow-sm`}
             >
-              <img src={img.src} alt={img.alt} className="w-full h-full object-cover block" />
+              <Image
+                src={img.src}
+                alt={img.alt}
+                width={400}
+                height={400}
+                className="w-full h-full object-cover"
+                sizes="(max-width: 768px) 50vw, 25vw"
+              />
             </div>
           ))}
         </div>
 
         <div className="flex justify-center gap-4 mt-8">
           <a className="inline-flex items-center gap-3 px-6 py-2 rounded-full border border-amber-400 text-amber-400 hover:bg-amber-400/10 transition" href="#">
-            <img className="w-6 h-6" src='/picture/facebook.svg'></img>
+            <Image
+              src="/picture/facebook.svg"
+              alt="Facebook"
+              width={24}
+              height={24}
+              className="w-6 h-6"
+            />
             <span className="font-semibold text-[20px]">N-Education</span>
           </a>
         </div>

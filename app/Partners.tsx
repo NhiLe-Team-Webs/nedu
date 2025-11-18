@@ -1,5 +1,6 @@
 "use client";
 import React from 'react';
+import Image from 'next/image';
 
 const partners = [
   { name: "NLF", logo: '/picture/nlf.png' },
@@ -148,10 +149,11 @@ const Partners = () => {
                     background: 'none'
                   }}>
                     <div className="ww-image-basic-overlay"></div>
-                    <img
+                    <Image
                       src={partner.logo}
                       alt={partner.name}
-                      loading="lazy"
+                      width={120}
+                      height={80}
                       style={{
                         maxWidth: '90%',
                         maxHeight: '80%',
@@ -234,10 +236,11 @@ const Partners = () => {
                     background: 'none'
                   }}>
                     <div className="ww-image-basic-overlay"></div>
-                    <img
+                    <Image
                       src={partner.logo}
                       alt={partner.name}
-                      loading="lazy"
+                      width={120}
+                      height={80}
                       style={{
                         maxWidth: '90%',
                         maxHeight: '80%',

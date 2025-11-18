@@ -79,7 +79,7 @@ const Header = () => {
             )}
           </Button>
           <Button className="btn-primary hidden md:inline-flex">
-            ĐĂNG KÝ NGAY
+            TÌM HIỂU THÊM
           </Button>
           <Button
             variant="ghost"
@@ -141,7 +141,7 @@ const Header = () => {
                 )}
               </Button>
               <Button className="btn-primary">
-                ĐĂNG KÝ NGAY
+                TÌM HIỂU THÊM
               </Button>
             </div>
           </div>

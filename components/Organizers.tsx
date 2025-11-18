@@ -11,7 +11,7 @@ const Organizers: React.FC = () => {
           {/* Organizer 1 */}
           <div className="flex flex-col justify-center items-center bg-white/20 shadow-md rounded-lg p-4 backdrop-blur-md">
             <img
-              src="https://nedu.nhi.sg/images/nedu.svg?_wwcv=130"
+              src="/picture/nedu.svg"
               alt="Nedu"
               className="w-4/5 object-contain"
               loading="lazy"
@@ -21,7 +21,7 @@ const Organizers: React.FC = () => {
           {/* Organizer 2 */}
           <div className="flex flex-col justify-center items-center bg-white/20 shadow-md rounded-lg p-4 backdrop-blur-md">
             <img
-              src="https://nedu.nhi.sg/images/nlt.png?_wwcv=130"
+              src="/picture/nlt.png"
               alt="NLT"
               className="w-4/5 object-contain"
               loading="lazy"
@@ -32,13 +32,13 @@ const Organizers: React.FC = () => {
         <div className="flex justify-center gap-6 mt-8">
           {/* Facebook Link */}
           <a
-            href="https://nedu.nhi.sg/images/facebook.svg?_wwcv=130"
+            href="https://www.facebook.com/MsNhiSG"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 px-6 py-3 border border-amber-400 rounded-full text-amber-400 font-semibold"
           >
             <img
-              src="https://nedu.nhi.sg/images/facebook.svg?_wwcv=130"
+              src="/picture/facebook.svg"
               alt="Facebook"
               className="w-6 h-6"
               loading="lazy"
@@ -48,13 +48,13 @@ const Organizers: React.FC = () => {
 
           {/* Instagram Link */}
           <a
-            href="https://nedu.nhi.sg/images/instagram_1.svg?_wwcv=130"
+            href="https://www.instagram.com/msnhi_podcast"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 px-6 py-3 border border-amber-400 rounded-full text-amber-400 font-semibold"
           >
             <img
-              src="https://nedu.nhi.sg/images/instagram_1.svg?_wwcv=130"
+              src="/picture/instagram_1.svg"
               alt="Instagram"
               className="w-6 h-6"
               loading="lazy"
