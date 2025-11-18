@@ -59,7 +59,7 @@ export const courses: Course[] = [
     mode: 'offline',
     title: 'Sức Mạnh Vô Hạn',
     category: ['Doanh nhân', 'Doanh nghiệp'],
-    heroImage: 'https://nedu.nhi.sg/images/2_3.jpg',
+    heroImage: '/picture/2_3.jpg',
     price: {
       amount: '23.960',
       currency: 'USD',
@@ -76,12 +76,12 @@ export const courses: Course[] = [
     },
     mission: 'Sức Mạnh Vô Hạn được thiết kế để giúp doanh nhân Việt vươn tầm thế giới. Bằng cách kết nối với các Chuyên gia quốc tế, bạn sẽ học những chiến lược đột phá và xây dựng những nền tảng căn bản nhất cho doanh nghiệp, nâng cấp khả năng kinh doanh và mở rộng thị trường.',
     testimonials: ['Dm6gg-LHGqs', 'qEBZwBE449o', 'RDKjAQLf5w0'],
-    curriculum: 'https://nedu.nhi.sg/images/lachinhminh.png',
+    curriculum: '/picture/la_chinh_minh.jpg',
     instructors: [
       {
         name: 'NhiLe',
         title: 'Doanh nhân',
-        avatar: 'https://nedu.nhi.sg/images/nhile_1.jpg',
+        avatar: '/picture/nhile.jpg',
         bio: [
           '15 năm kinh nghiệm trên thương trường tại Singapore và Việt Nam',
           'Là một Doanh nhân | Nhà Tâm lý học | Người lãnh đạo cộng đồng',
@@ -103,7 +103,7 @@ export const courses: Course[] = [
       {
         name: 'Mel',
         title: 'Chuyên gia Marketing',
-        avatar: 'https://nedu.nhi.sg/images/mel_1.jpg',
+        avatar: '/picture/mel.jpg',
         bio: [
           'Melvin Soh, chuyên gia marketing hàng đầu châu Á, nổi tiếng với hơn 15 năm kinh nghiệm thực chiến trong xây dựng thương hiệu và thu hút khách hàng. Anh đã giúp hàng trăm doanh nghiệp tạo dựng lòng trung thành và tăng trưởng bền vững.'
         ],
@@ -147,7 +147,7 @@ export const courses: Course[] = [
     mode: 'offline',
     title: 'Là Chính Mình 03',
     category: ['Phát triển bản thân', 'Là chính mình'],
-    heroImage: 'https://nedu.nhi.sg/images/1_3.jpg',
+    heroImage: '/picture/b2.jpg',
     price: {
       amount: '59.696.000',
       currency: 'VNĐ'
@@ -163,12 +163,12 @@ export const courses: Course[] = [
     },
     mission: 'Khóa học "Là Chính Mình" mang sứ mệnh giúp bạn khám phá và chữa lành mọi khía cạnh của bản thân, xây dựng lối sống cân bằng và phát triển toàn diện về tinh thần, cảm xúc, và thể chất.',
     testimonials: ['PFWDwSf5EGc', 'RAaXaJxFXpE', '8qq6WDQFFQk'],
-    curriculum: 'https://nedu.nhi.sg/images/lachinhminh.png',
+    curriculum: '/picture/la_chinh_minh.jpg',
     instructors: [
       {
         name: 'NhiLe',
         title: 'Doanh nhân',
-        avatar: 'https://nedu.nhi.sg/images/nhile_1.jpg',
+        avatar: '/picture/nhile.jpg',
         bio: [
           '15 năm kinh nghiệm trên thương trường tại Singapore và Việt Nam',
           'Là một Doanh nhân | Nhà Tâm lý học | Người lãnh đạo cộng đồng',
@@ -222,7 +222,7 @@ export const courses: Course[] = [
     mode: 'online',
     title: 'GEN AI 101',
     category: ['AI'],
-    heroImage: 'https://nedu.nhi.sg/images/thum_yt_1.png',
+    heroImage: '/picture/thum_yt_1.png',
     price: {
       amount: '13.069.000',
       currency: 'VNĐ'
@@ -242,7 +242,7 @@ export const courses: Course[] = [
       {
         name: 'Linda Hui-Isaac',
         title: 'Doanh nhân',
-        avatar: 'https://nedu.nhi.sg/images/hình_cô_linda.jpg',
+        avatar: '/picture/linda.jpg',
         bio: [
           'Với hơn 20 năm kinh nghiệm quốc tế trong chiến lược thương hiệu và tiếp thị số, Linda Hui-Isaac là chuyên gia hàng đầu về AI Marketing và Digital Transformation. Bà từng đảm nhiệm vai trò cố vấn cho các doanh nghiệp lớn, SMEs, tổ chức chính phủ, cũng như tập đoàn đa quốc gia – bao gồm các công ty niêm yết SGX và thương hiệu xa xỉ châu Âu.'
         ],
@@ -300,7 +300,7 @@ export const courses: Course[] = [
     mode: 'online',
     title: 'Thương Hiệu Của Bạn',
     category: ['Thương hiệu'],
-    heroImage: 'https://nedu.nhi.sg/images/thuonghieucuaban.png',
+    heroImage: '/picture/thuong_hieu_cua_ban.png',
     price: {
       amount: '18.960.000',
       currency: 'VNĐ'
@@ -320,7 +320,7 @@ export const courses: Course[] = [
       {
         name: 'NhiLe',
         title: 'Doanh nhân',
-        avatar: 'https://nedu.nhi.sg/images/nhile_1.jpg',
+        avatar: '/picture/nhile.jpg',
         bio: [
           'Tốt nghiệp chuyên ngành Tâm lý học tại Kaplan Professional, Singapore. Nhi Le có nhiều năm kinh nghiệm hỗ trợ khách hàng tại Singapore và Việt Nam, giúp họ vượt qua thách thức cuộc sống và làm chủ cuộc đời họ.'
         ],
@@ -378,7 +378,7 @@ export const courses: Course[] = [
     mode: 'online',
     title: 'CUỘC SỐNG CỦA BẠN',
     category: ['Phát triển bản thân'],
-    heroImage: 'https://nedu.nhi.sg/images/cuocsongcuaban.png',
+    heroImage: '/picture/cuoc_song_cua_ban.png',
     price: {
       amount: '18.960.000',
       currency: 'VNĐ'
@@ -398,7 +398,7 @@ export const courses: Course[] = [
       {
         name: 'NhiLe',
         title: 'Doanh nhân',
-        avatar: 'https://nedu.nhi.sg/images/nhile_1.jpg',
+        avatar: '/picture/nhile.jpg',
         bio: [
           'Tốt nghiệp chuyên ngành Tâm lý học tại Kaplan Professional, Singapore. Nhi Le có nhiều năm kinh nghiệm hỗ trợ khách hàng tại Singapore và Việt Nam, giúp họ vượt qua thách thức cuộc sống và làm chủ cuộc đời họ.'
         ],
@@ -456,7 +456,7 @@ export const courses: Course[] = [
     mode: 'online',
     title: 'AI FOR BUSINESS COMMUNICATION',
     category: ['Trí tuệ nhân tạo ứng dụng'],
-    heroImage: 'https://nedu.nhi.sg/images/thum_yt_2.png',
+    heroImage: '/picture/thum_yt_2.png',
     price: {
       amount: '23.609.000',
       currency: 'VNĐ'
@@ -476,7 +476,7 @@ export const courses: Course[] = [
       {
         name: 'Linda Hui-Isaac',
         title: 'Chuyên gia chiến lược AI & Cố vấn Marketing',
-        avatar: 'https://nedu.nhi.sg/images/hình_cô_linda.jpg',
+        avatar: '/picture/linda.jpg',
         bio: [
           'Với hơn 20 năm kinh nghiệm quốc tế trong chiến lược thương hiệu và tiếp thị số, Linda Hui-Isaac là chuyên gia hàng đầu về AI Marketing và Digital Transformation. Bà từng đảm nhiệm vai trò cố vấn cho các doanh nghiệp lớn, SMEs, tổ chức chính phủ, cũng như tập đoàn đa quốc gia – bao gồm các công ty niêm yết SGX và thương hiệu xa xỉ châu Âu.'
         ],
@@ -534,7 +534,7 @@ export const courses: Course[] = [
     mode: 'online',
     title: 'CERTIFIED GEN AI FOUNDATION IN MARKETING & BUSINESS STRATEGY',
     category: ['Marketing số'],
-    heroImage: 'https://nedu.nhi.sg/images/thum_yt_3.png',
+    heroImage: '/picture/thum_yt_3.png',
     price: {
       amount: '28.985.000',
       currency: 'VNĐ'
@@ -554,7 +554,7 @@ export const courses: Course[] = [
       {
         name: 'Linda Hui-Isaac',
         title: 'Chuyên gia chiến lược AI & Cố vấn Marketing',
-        avatar: 'https://nedu.nhi.sg/images/hình_cô_linda.jpg',
+        avatar: '/picture/linda.jpg',
         bio: [
           'Với hơn 20 năm kinh nghiệm quốc tế trong chiến lược thương hiệu và tiếp thị số, Linda Hui-Isaac là chuyên gia hàng đầu về AI Marketing và Digital Transformation. Bà từng đảm nhiệm vai trò cố vấn cho các doanh nghiệp lớn, SMEs, tổ chức chính phủ, cũng như tập đoàn đa quốc gia – bao gồm các công ty niêm yết SGX và thương hiệu xa xỉ châu Âu.'
         ],
