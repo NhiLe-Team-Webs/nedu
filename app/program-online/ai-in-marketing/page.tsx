@@ -29,7 +29,7 @@ export default function AIInMarketingPage() {
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-primary mb-4">AI In Marketing</h1>
           <p className="text-gray-600 mb-2">Chi phí: <span className="text-3xl font-bold text-gray-800">Liên hệ</span></p>
-          <Link href="/payment/56" className="inline-block bg-primary hover:bg-primary-dark text-white px-8 py-3 rounded-full font-semibold transition text-lg">
+          <Link href="/payment/80" className="inline-block bg-primary hover:bg-primary-dark text-white px-8 py-3 rounded-full font-semibold transition text-lg">
             ĐĂNG KÝ NGAY
           </Link>
         </div>
@@ -172,7 +172,7 @@ export default function AIInMarketingPage() {
           </div>
 
           <div className="text-center">
-            <Link href="/payment/56" className="inline-block bg-primary hover:bg-primary-dark text-white px-12 py-4 rounded-full font-semibold transition text-lg">
+            <Link href="/payment/80" className="inline-block bg-primary hover:bg-primary-dark text-white px-12 py-4 rounded-full font-semibold transition text-lg">
               ĐĂNG KÝ NGAY
             </Link>
           </div>

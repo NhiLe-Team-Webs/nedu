@@ -3,7 +3,9 @@
 import * as React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, Calendar } from "lucide-react";
+import { ChevronRight, Calendar, ShoppingCart } from "lucide-react";
+import { useCart } from "@/lib/cart-context";
+import { courses } from "@/data/courses";
 import {
   Carousel,
   CarouselContent,
@@ -13,24 +15,27 @@ import {
 
 const slides = [
   {
-    id: 1,
+    id: 2,
+    slug: "la-chinh-minh",
     image: "/lachinhminh.jpg",
     date: "14-17 tháng 8 năm 2025",
-    title: "LÀ CHÍNH MÌNH",
+    title: "Là Chính Mình 03",
     label: "Khóa học sắp diễn ra",
   },
   {
-    id: 2,
+    id: 1,
+    slug: "suc-manh-vo-han",
     image: "/THCB.jpg",
     date: "10/10/2024",
-    title: "KỸ NĂNG GIAO TIẾP VÀ THUYẾT TRÌNH",
+    title: "Sức Mạnh Vô Hạn",
     label: "Giới thiệu",
   },
   {
     id: 3,
+    slug: "gen-ai-101",
     image: "/CSCB.jpg",
     date: "15/11/2024",
-    title: "QUẢN LÝ THỜI GIAN VÀ NĂNG SUẤT LÀM VIỆC",
+    title: "GEN AI 101",
     label: "Các khóa học Online",
   },
 ];
@@ -38,6 +43,7 @@ const slides = [
 const Courses: React.FC = () => {
   const [api, setApi] = React.useState<CarouselApi | undefined>(undefined);
   const [active, setActive] = React.useState(0);
+  const { addToCart } = useCart();
 
   React.useEffect(() => {
     if (!api) return;
@@ -122,14 +128,28 @@ const Courses: React.FC = () => {
                                 {s.date}
                               </span>
                             </div>
+                            <div className="flex gap-2">
+                              <Button
+                                onClick={() => {
+                                  const course = courses.find(c => c.slug === s.slug);
+                                  if (course) addToCart(course);
+                                }}
+                                variant="hero"
+                                size="icon"
+                                className="btn-secondary rounded-b-full rounded-t-full text-[16px] uppercase w-auto flex items-center justify-center py-[12px] px-[20px]"
+                              >
+                                <ShoppingCart className="h-4 w-4 mr-1" />
+                                Thêm vào giỏ
+                              </Button>
                               <Button
                                 variant="hero"
                                 size="icon"
-                                className="rounded-b-full rounded-t-full text-[16px] uppercase !bg-[#F7B50C] !text-white w-auto flex items-center justify-center py-[12px] px-[20px]"
+                                className="btn-primary rounded-b-full rounded-t-full text-[16px] uppercase w-auto flex items-center justify-center py-[12px] px-[20px]"
                               >
                                 Đăng ký ngay
                                 <ChevronRight className="font-extrabold" />
                               </Button>
+                            </div>
                           </div>
                         </div>
                       </div>
