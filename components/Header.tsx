@@ -65,21 +65,22 @@ const Header = () => {
 
         {/* right column: actions aligned to the end */}
         <div className="flex items-center justify-end gap-4">
+          <Button className="btn-primary hidden md:inline-flex px-4 py-1 text-sm">
+            ĐĂNG KÝ NGAY
+          </Button>
           <Button
             variant="ghost"
             size="icon"
-            className="hidden md:inline-flex text-text-secondary hover:text-primary relative"
+            className="inline-flex items-center justify-center gap-2 h-10 w-10 hidden md:inline-flex text-text-secondary hover:text-primary relative"
             onClick={() => router.push('/cart')}
+            aria-label="Giỏ hàng"
           >
-            <ShoppingCart className="h-6 w-6" />
+            <ShoppingCart className="h-5 w-5" />
             {totalItems > 0 && (
               <span className="absolute -top-1 -right-1 bg-warning text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
                 {totalItems}
               </span>
             )}
-          </Button>
-          <Button className="btn-primary hidden md:inline-flex">
-            ĐĂNG KÝ NGAY
           </Button>
           <Button
             variant="ghost"
