@@ -116,7 +116,8 @@ export default function PaymentPage() {
       const response = await fetch('https://api.nedu.nhi.sg/api/order/payment', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json; charset=utf-8',
+          'Accept': 'application/json; charset=utf-8',
         },
         body: JSON.stringify(apiData)
       })
@@ -124,7 +125,15 @@ export default function PaymentPage() {
       if (!response.ok) {
         const errorText = await response.text()
         console.error('API Error Response:', errorText)
-        throw new Error(`API Error: ${response.status} - ${errorText}`)
+        
+        // Cải thiện xử lý lỗi với thông báo chi tiết hơn
+        if (response.status === 400) {
+          throw new Error('Dữ liệu không hợp lệ. Vui lòng kiểm tra lại thông tin.')
+        } else if (response.status === 500) {
+          throw new Error('Lỗi server. Vui lòng thử lại sau.')
+        } else {
+          throw new Error(`API Error: ${response.status} - ${errorText}`)
+        }
       }
 
       const result = await response.json()

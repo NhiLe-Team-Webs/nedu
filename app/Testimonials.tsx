@@ -14,7 +14,7 @@ interface TestimonialsProps {
 
 const Testimonials = ({
   courseSlug,
-  buttonText = "Đăng ký ngay",
+  buttonText = "Tìm hiểu thêm",
   buttonType = 'link',
   buttonLink = "/program/"
 }: TestimonialsProps) => {

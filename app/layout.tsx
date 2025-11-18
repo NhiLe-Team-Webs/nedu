@@ -23,6 +23,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="vi">
+      <head>
+        <meta charSet="utf-8" />
+      </head>
       <body>
         <CartProvider>
           <Header />
