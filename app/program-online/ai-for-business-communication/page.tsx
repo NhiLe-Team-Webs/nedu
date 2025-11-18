@@ -1,5 +1,6 @@
 "use client";
 
+<<<<<<< HEAD
 import Link from "next/link";
 import YouTube from "react-youtube";
 import CourseHeader from "@/components/CourseHeader";
@@ -7,8 +8,16 @@ import CourseInfo from "@/components/CourseInfo";
 import Instructor from "@/components/Instructor";
 import Organizers from "@/components/Organizers";
 import Whom from "@/components/Whom";
+=======
+import Link from 'next/link'
+import YouTube from 'react-youtube'
+import { ShoppingCart } from 'lucide-react'
+import { useCart } from '@/lib/cart-context'
+import { courses } from '@/data/courses'
+>>>>>>> origin/clean-main
 
 export default function AIBusinessCommunicationPage() {
+  const { addToCart } = useCart();
   const youtubeOpts = {
     height: "100%",
     width: "100%",

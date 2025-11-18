@@ -94,6 +94,7 @@ export default function SucManhVoHanPage() {
         details={courseDetails as any}
         buttonText="Tìm hiểu thêm"
         buttonLink="/payment/58"
+        courseSlug="suc-manh-vo-han"
       />
 
       <Mission
