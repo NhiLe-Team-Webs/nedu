@@ -163,7 +163,7 @@ export const courses: Course[] = [
     },
     mission: 'Khóa học "Là Chính Mình" mang sứ mệnh giúp bạn khám phá và chữa lành mọi khía cạnh của bản thân, xây dựng lối sống cân bằng và phát triển toàn diện về tinh thần, cảm xúc, và thể chất.',
     testimonials: ['PFWDwSf5EGc', 'RAaXaJxFXpE', '8qq6WDQFFQk'],
-    curriculum: '/picture/la_chinh_minh.jpg',
+    curriculum: '/picture/lachinhminh.jpg',
     instructors: [
       {
         name: 'NhiLe',
