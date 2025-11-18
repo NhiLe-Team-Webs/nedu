@@ -80,6 +80,7 @@ export default function SucManhVoHanPage() {
     <div className="min-h-screen bg-white">
       <CourseHeader
         imageUrl="/picture/suc_manh_vo_han.jpg"
+        imageUrl_bot=""
         altText="Sức Mạnh Vô Hạn"
         time="Khóa học Offline"
         tags={["Doanh nhân", "Doanh nghiệp"]}

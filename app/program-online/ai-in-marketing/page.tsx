@@ -8,6 +8,7 @@ import Whom from "@/components/Whom";
 import Testimonials from "@/app/Testimonials";
 import CourseInfo from "@/components/CourseInfo";
 import Organizers from "@/components/Organizers";
+import { useCart } from "@/lib/cart-context";
 
 export default function AIInMarketingPage() {
   const { addToCart } = useCart();
@@ -31,37 +32,37 @@ export default function AIInMarketingPage() {
         "- Chứng chỉ Nâng cao về Học tập & Hiệu suất (Advanced Certificate in Learning & Performance) tại Institute of Adult Learning (IAL).",
       ],
       career:
-        "Nhi Lê hoạt động trong nhiều lĩnh vực, từ kinh doanh, giáo dục đến sáng tạo nội dung. Cô là người có tầm ảnh hưởng trong việc chia sẻ kiến thức về tâm lý học và kỹ năng sống cho thế hệ trẻ.",
+        "Linda Hui-Isaac có hơn 20 năm kinh nghiệm trong lĩnh vực xây dựng thương hiệu và AI-Marketing, đã tư vấn cho nhiều công ty niêm yết trên SGX và các MNC thương hiệu xa xỉ Châu Âu.",
       achievements: [
         {
-          title: "Kinh nghiệm toàn cầu",
+          date: "2025",
           description:
             "Hơn 20 năm kinh nghiệm trong lĩnh vực Xây dựng Thương hiệu và AI-Marketing.",
         },
         {
-          title: "Kinh nghiệm doanh nghiệp",
+          date: "2025",
           description:
             "Tích lũy kinh nghiệm từ các công ty niêm yết trên SGX và các MNC thương hiệu xa xỉ Châu Âu.",
         },
         {
-          title: "Đào tạo: Ngân hàng & Tài chính",
-          description: "AIA, DBS, UOB, SAXO.",
+          date: "2025",
+          description: "Đào tạo các công ty lớn: AIA, DBS, UOB, SAXO.",
         },
         {
-          title: "Đào tạo: Truyền thông & Công nghệ",
-          description: "AWS, SONY, NBCUniversal, Ricoh.",
+          date: "2025",
+          description: "Đào tạo công nghệ: AWS, SONY, NBCUniversal, Ricoh.",
         },
         {
-          title: "Đào tạo: Chính phủ & Y tế",
-          description: "GOVTech, ICA Singapore, Ministry of Health (MOH).",
+          date: "2025",
+          description: "Đào tạo chính phủ: GOVTech, ICA Singapore, Ministry of Health (MOH).",
         },
         {
-          title: "Đào tạo: Giáo dục",
-          description: "NUS, NTU, SMU Academy, Kaplan.",
+          date: "2025",
+          description: "Đào tạo giáo dục: NUS, NTU, SMU Academy, Kaplan.",
         },
         {
-          title: "Đào tạo: Dịch vụ Chuyên nghiệp",
-          description: "BCG.",
+          date: "2025",
+          description: "Đào tạo tư vấn: BCG.",
         },
       ],
       projects: [
@@ -100,19 +101,19 @@ export default function AIInMarketingPage() {
   ];
   const whomItems = [
     {
-      icon: "Sprout",
+      icon: "Sprout" as const,
       heading: "Sinh viên & người mới đi làm",
       description:
         "Trang bị nền tảng thực tế để hiểu rõ AI dùng trong công việc viết – trình bày – giao tiếp, mở ra cơ hội phát triển sớm trong môi trường chuyên nghiệp.",
     },
     {
-      icon: "Recycle",
+      icon: "Recycle" as const,
       heading: "Người muốn chuyển ngành",
       description:
         "Khóa học phù hợp cho những ai muốn khám phá tiềm năng AI để ứng dụng trong công việc mới như marketing, truyền thông, quản lý, nhân sự...",
     },
     {
-      icon: "Split",
+      icon: "Split" as const,
       heading: "Người mới bắt đầu học AI",
       description:
         "Không cần nền tảng kỹ thuật – chỉ cần bạn tò mò, ham học hỏi và muốn dùng AI một cách thực tế để nâng cấp kỹ năng và tăng năng suất cá nhân.",
@@ -124,28 +125,28 @@ export default function AIInMarketingPage() {
     buttonLink: "/payment/57",
     details: [
       {
-        icon: "Star",
+        icon: "Star" as const,
         label: "Chủ đề:",
-        value: "AI",
+        value: "AI In Marketing",
       },
       {
-        icon: "Clock",
+        icon: "Clock" as const,
         label: "Thời gian học:",
         value: "28-29 tháng 7 năm 2025",
       },
       {
-        icon: "MapPin",
+        icon: "MapPin" as const,
         label: "Người dẫn đường:",
         value: "Linda Hui-Isaac",
       },
-      { icon: "Calendar", label: "Số buổi học:", value: "2 buổi" },
+      { icon: "Calendar" as const, label: "Số buổi học:", value: "2 buổi" },
       {
-        icon: "House",
+        icon: "House" as const,
         label: "Địa điểm học:",
         value: "Online qua Zoom",
       },
       {
-        icon: "Users",
+        icon: "Users" as const,
         label: "Số lượng học viên:",
         value: "40 học viên / lớp",
       },
@@ -154,14 +155,13 @@ export default function AIInMarketingPage() {
   return (
     <div className="min-h-screen bg-white">
       <CourseHeader
-        imageUrl_bot="https://nedu.nhi.sg/images/photo_2025-05-30_23-21-04.jpg?_wwcv=130"
+        imageUrl="https://nedu.nhi.sg/images/ai_in_mkt.png"
+        imageUrl_bot=""
+        altText="AI In Marketing"
         time="Khóa học Online"
-        tags={["AI"]}
-        title="GEN AI 101"
-        description="Giúp người Việt Nam hiểu rõ công nghệ Gen AI và ứng dụng thực tế vào
-            công việc một cách có trách nhiệm và hiệu quả. Đồng thời, tạo nền
-            tảng để tối ưu hoá các thao tác công việc lặp đi lặp lại hàng ngày
-            trong công việc, đặc biệt trong lĩnh vực công và giáo dục."
+        tags={["AI", "Marketing"]}
+        title="AI In Marketing"
+        description="Khóa học chuyên sâu về ứng dụng AI trong marketing, giúp các marketer hiện đại hóa chiến lược và tối ưu hóa hiệu quả chiến dịch."
         cost="13.069.000"
         paymentLink="/payment/57"
       />
