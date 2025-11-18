@@ -1,5 +1,8 @@
 import React from "react";
 import * as Icon from "lucide-react";
+import { ShoppingCart } from "lucide-react";
+import { useCart } from "@/lib/cart-context";
+import { courses } from "@/data/courses";
 
 interface CourseInfoProps {
   title: string;
@@ -10,6 +13,7 @@ interface CourseInfoProps {
   }[];
   buttonText: string;
   buttonLink: string;
+  courseSlug?: string; // Add optional courseSlug prop
 }
 
 const CourseInfo: React.FC<CourseInfoProps> = ({
@@ -17,7 +21,17 @@ const CourseInfo: React.FC<CourseInfoProps> = ({
   details,
   buttonText,
   buttonLink,
+  courseSlug,
 }) => {
+  const { addToCart } = useCart();
+
+  const handleAddToCart = () => {
+    if (courseSlug) {
+      const course = courses.find(c => c.slug === courseSlug);
+      if (course) addToCart(course);
+    }
+  };
+
   return (
     <div className="flex flex-col items-center justify-center w-full max-w-[1280px] mx-auto my-[48px]">
       <div className="flex flex-col items-center justify-center w-full w-full px-[40px]">
@@ -43,12 +57,23 @@ const CourseInfo: React.FC<CourseInfoProps> = ({
             })}
           </div>
         </div>
-        <a
-          href={buttonLink}
-          className="mt-8 px-6 py-3 bg-yellow-500 text-white font-medium uppercase rounded-full hover:bg-yellow-600 transition"
-        >
-          {buttonText}
-        </a>
+        {courseSlug && (
+          <div className="flex gap-4 justify-center">
+            <button
+              onClick={handleAddToCart}
+              className="inline-flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-3 rounded-full font-semibold transition text-lg"
+            >
+              <ShoppingCart className="w-5 h-5" />
+              Thêm vào giỏ hàng
+            </button>
+            <a
+              href={buttonLink}
+              className="inline-block bg-primary hover:bg-primary-dark text-white px-8 py-3 rounded-full font-semibold transition text-lg"
+            >
+              {buttonText}
+            </a>
+          </div>
+        )}
       </div>
     </div>
   );

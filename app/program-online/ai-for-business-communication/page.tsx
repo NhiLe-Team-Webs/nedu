@@ -9,6 +9,7 @@ import Organizers from "@/components/Organizers";
 import Whom from "@/components/Whom";
 
 export default function AIBusinessCommunicationPage() {
+  const { addToCart } = useCart();
   const youtubeOpts = {
     height: "100%",
     width: "100%",

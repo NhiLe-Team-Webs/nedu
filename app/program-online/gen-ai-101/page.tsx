@@ -10,6 +10,7 @@ import Whom from "@/components/Whom";
 import * as Icon from "lucide-react";
 
 export default function GenAI101Page() {
+  const { addToCart } = useCart();
   const youtubeOpts = {
     height: "100%",
     width: "100%",

@@ -10,6 +10,7 @@ import CourseInfo from "@/components/CourseInfo";
 import Organizers from "@/components/Organizers";
 
 export default function CuocSongCuaBanPage() {
+  const { addToCart } = useCart();
   const youtubeOpts = {
     height: "100%",
     width: "100%",
