@@ -9,6 +9,9 @@ type CourseHeaderProps = {
   title: string;
   cost: string;
   paymentLink: string;
+  currency?: string;
+  deposit?: string;
+  dep_currency?: string;
 };
 
 const CourseHeader: React.FC<CourseHeaderProps> = ({

@@ -2,17 +2,17 @@
 import React from 'react';
 
 const partners = [
-  { name: "NLF", logo: '/images/nlf.png' },
-  { name: "Family Cloud", logo: '/images/familycloud.jpg' },
-  { name: "S&W", logo: '/images/S&W_avatar-1.jpg' },
-  { name: "Nhi's House", logo: '/images/photo_6073197126956990329_y.jpg' },
-  { name: "This is home", logo: '/images/thisishome.jpg' },
-  { name: "Factor Method", logo: '/images/XFactor_Method_Logo_-_Blue.png' },
-  { name: "Nhile Team", logo: '/images/nlt.png' },
-  { name: "Soniche", logo: '/images/Soniche.png' },
-  { name: "Hush", logo: '/images/hush.jpg' },
-  { name: "MsNhi", logo: '/images/MsNhi_Logo.png' },
-  { name: "Meta", logo: '/images/meta.jpg' }
+  { name: "NLF", logo: '/picture/nlf.png' },
+  { name: "Family Cloud", logo: '/picture/familycloud.jpg' },
+  { name: "S&W", logo: '/picture/S&W_avatar-1.jpg' },
+  { name: "Nhi's House", logo: '/picture/photo_6073197126956990329_y.jpg' },
+  { name: "This is home", logo: '/picture/thisishome.jpg' },
+  { name: "Factor Method", logo: '/picture/XFactor_Method_Logo_-_Blue.png' },
+  { name: "Nhile Team", logo: '/picture/nlt.png' },
+  { name: "Soniche", logo: '/picture/Soniche.png' },
+  { name: "Hush", logo: '/picture/hush.jpg' },
+  { name: "MsNhi", logo: '/picture/MsNhi_Logo.png' },
+  { name: "Meta", logo: '/picture/meta.jpg' }
 ];
 
 const Partners = () => {
