@@ -3,6 +3,7 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 
 const Mission = () => {
   return (
@@ -21,7 +22,12 @@ const Mission = () => {
             <div className="flex items-start">
               <div className="mr-4" aria-hidden>
                 {/* quote icon approx 90px */}
-                <img src='/picture/quote.svg' alt="Quote icon" />
+                <Image
+                  src="/picture/quote.svg"
+                  alt="Quote icon"
+                  width={90}
+                  height={90}
+                />
               </div>
 
               <div>
@@ -47,7 +53,13 @@ const Mission = () => {
 
           {/* right column */}
           <div className="flex flex-col items-start">
-            <img src='/picture/nhile.png' alt="Nhi Le" className="w-[320px] mb-4" />
+            <Image
+              src="/picture/nhile.png"
+              alt="Nhi Le"
+              width={320}
+              height={320}
+              className="mb-4"
+            />
 
             <div className="flex flex-row justify-between items-end w-full max-w-[320px]">
               <div className="flex flex-col">

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 const Footer = () => {
   return (
@@ -9,7 +10,13 @@ const Footer = () => {
             {/* Left: logo + company info */}
             <div className="flex flex-col items-start" style={{ rowGap: '8px' }}>
               <a href="/" className="block">
-                <img src="/picture/nedu-white.svg" alt="N-EDU" className="h-24 w-auto" />
+                <Image
+                  src="/picture/nedu-white.svg"
+                  alt="N-EDU"
+                  width={96}
+                  height={96}
+                  className="h-24 w-auto"
+                />
               </a>
               <p style={{ fontSize: '16px', fontWeight: '500', color: 'rgb(255, 255, 255)' }}>CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ NHILE</p>
               <p style={{ fontSize: '14px', fontWeight: '300', color: 'rgb(255, 255, 255)' }}>Mã số thuế: 0317268736</p>
@@ -29,19 +36,19 @@ const Footer = () => {
               {/* Social media icons */}
               <div className="flex" style={{ columnGap: '16px' }}>
                 <a href="https://www.facebook.com/MsNhiSG" target="_blank" rel="noreferrer">
-                  <img src="/picture/facebook-footer.svg" alt="Facebook" className="h-6 w-6" />
+                  <Image src="/picture/facebook-footer.svg" alt="Facebook" width={24} height={24} className="h-6 w-6" />
                 </a>
                 <a href="https://www.linkedin.com/company/n-edu/" target="_blank" rel="noreferrer">
-                  <img src="/picture/linkedin-footer.svg" alt="LinkedIn" className="h-6 w-6" />
+                  <Image src="/picture/linkedin-footer.svg" alt="LinkedIn" width={24} height={24} className="h-6 w-6" />
                 </a>
                 <a href="https://www.instagram.com/msnhi_podcast" target="_blank" rel="noreferrer">
-                  <img src="/picture/instagram-footer.svg" alt="Instagram" className="h-6 w-6" />
+                  <Image src="/picture/instagram-footer.svg" alt="Instagram" width={24} height={24} className="h-6 w-6" />
                 </a>
                 <a href="https://www.youtube.com/@Msnhi" target="_blank" rel="noreferrer">
-                  <img src="/picture/youtube-footer.svg" alt="YouTube" className="h-6 w-6" />
+                  <Image src="/picture/youtube-footer.svg" alt="YouTube" width={24} height={24} className="h-6 w-6" />
                 </a>
                 <a href="https://www.tiktok.com/@nedu.sg" target="_blank" rel="noreferrer">
-                  <img src="/picture/tiktok-footer.svg" alt="TikTok" className="h-6 w-6" />
+                  <Image src="/picture/tiktok-footer.svg" alt="TikTok" width={24} height={24} className="h-6 w-6" />
                 </a>
               </div>
             </div>
@@ -62,7 +69,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center">
                 <p style={{ fontSize: '16px', fontWeight: '500', color: 'rgb(255, 255, 255)', marginRight: '8px', marginTop: '4px' }}>Đối tác thanh toán</p>
-                <img src="/picture/vnpay.svg" alt="VNPAY" className="h-8" />
+                <Image src="/picture/vnpay.svg" alt="VNPAY" width={32} height={32} className="h-8" />
               </div>
             </div>
           </div>

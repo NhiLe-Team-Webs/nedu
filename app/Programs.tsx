@@ -1,5 +1,6 @@
 "use client";
 import * as React from "react";
+import Image from "next/image";
 import {
   Carousel,
   CarouselContent,
@@ -78,12 +79,16 @@ const Programs = () => {
         <CarouselContent className="h-full">
           {slides.map((s, i) => (
             <CarouselItem key={i}>
-              <div
-                className="h-screen w-full bg-center bg-cover relative flex flex-col justify-center items-center text-center px-6"
-                style={{ backgroundImage: `url(${s.bg})` }}
-              >
+              <div className="relative h-screen w-full flex flex-col justify-center items-center text-center px-6">
+                <Image
+                  src={s.bg}
+                  alt={s.title}
+                  fill
+                  className="object-cover"
+                  priority={i === 0}
+                />
                 {/* overlay to darken and match theme */}
-                <div className="absolute inset-0 bg-black/60 object-fit" />
+                <div className="absolute inset-0 bg-black/60" />
 
                 <div className="relative z-10 max-w-3xl">
                   <h2 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white uppercase mb-6 tracking-tight">
