@@ -30,8 +30,8 @@ const Testimonials = ({
   };
   const videos = [
     "https://www.youtube.com/embed/Dm6gg-LHGqs?si=ZiBHEK0dZHJdsxUI",
-    "https://www.youtube.com/embed/pTg5C528B5s",
-    "https://www.youtube.com/embed/RDKjAQLf5w0?si=Uecf4",
+    "https://www.facebook.com/plugins/video.php?height=203&href=https%3A%2F%2Fwww.facebook.com%2Fneducation.sg%2Fvideos%2F1346108480515481%2F&show_text=false&width=360",
+    "https://www.facebook.com/plugins/video.php?height=203&href=https%3A%2F%2Fwww.facebook.com%2Fneducation.sg%2Fvideos%2F778445208105529%2F&show_text=false&width=360",
   ];
 
   const captions = [

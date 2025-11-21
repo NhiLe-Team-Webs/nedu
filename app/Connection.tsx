@@ -40,7 +40,7 @@ const Connection = () => {
         </div>
 
         <div className="flex justify-center gap-4 mt-8">
-          <a className="inline-flex items-center gap-3 px-6 py-2 rounded-full border border-amber-400 text-amber-400 hover:bg-amber-400/10 transition" href="#">
+          <a className="inline-flex items-center gap-3 px-6 py-2 rounded-full border border-amber-400 text-amber-400 hover:bg-amber-400/10 transition" href="https://www.facebook.com/neducation.sg?locale=vi_VN" target="_blank">
             <Image
               src="/picture/facebook.svg"
               alt="Facebook"

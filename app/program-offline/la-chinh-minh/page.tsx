@@ -5,7 +5,6 @@ import CourseHeader from "@/components/CourseHeader";
 import CourseInfo from "@/components/CourseInfo";
 import Mission from "@/components/Mission";
 import Testimonials from "@/components/Testimonial";
-import YouTube from "react-youtube";
 import Instructor from "@/components/Instructor";
 import Privilege from "@/app/Privilege";
 import Organizers from "@/components/Organizers";
