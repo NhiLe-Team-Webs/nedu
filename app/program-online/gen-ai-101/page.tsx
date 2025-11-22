@@ -10,6 +10,7 @@ import Whom from "@/components/Whom";
 import Testimonials from "@/app/Testimonials";
 import * as Icon from "lucide-react";
 import { useCart } from "@/lib/cart-context";
+import { getInstructorsByIds } from "@/data/instructors";
 
 export default function GenAI101Page() {
   const { addToCart } = useCart();
@@ -20,84 +21,9 @@ export default function GenAI101Page() {
       autoplay: 0,
     },
   };
-  const instructors = [
-    {
-      name: "Linda Hui-Isaac",
-      profession: ["Doanh nhân"],
-      bio: "Linda Hui-Isaac là một Chiến lược gia Lãnh đạo về Xây dựng Thương hiệu & AI-Marketing (Branding & AI-Marketing Consultant Lead Trainer). Bà có hơn hai thập kỷ kinh nghiệm toàn cầu, chuyên tư vấn và đào tạo về các chiến lược tiếp thị kỹ thuật số hiệu quả.",
-      image: "/picture/linda.jpg",
-      education: [
-        "- Thạc sĩ Quản trị Kinh doanh Toàn cầu (MBA in Global Business) tại Coventry University (Anh).",
-        "- Chứng chỉ Nâng cao về Học tập & Hiệu suất (Advanced Certificate in Learning & Performance) tại Institute of Adult Learning (IAL).",
-      ],
-      career:
-        "Linda Hui-Isaac có hơn 20 năm kinh nghiệm trong lĩnh vực xây dựng thương hiệu và AI-Marketing, đã tư vấn cho nhiều công ty niêm yết trên SGX và các MNC thương hiệu xa xỉ Châu Âu.",
-      achievements: [
-        {
-          date: "2025",
-          description:
-            "Hơn 20 năm kinh nghiệm trong lĩnh vực Xây dựng Thương hiệu và AI-Marketing.",
-        },
-        {
-          date: "2025",
-          description:
-            "Tích lũy kinh nghiệm từ các công ty niêm yết trên SGX và các MNC thương hiệu xa xỉ Châu Âu.",
-        },
-        {
-          date: "2025",
-          description: "Đào tạo các công ty lớn: AIA, DBS, UOB, SAXO.",
-        },
-        {
-          date: "2025",
-          description: "Đào tạo công nghệ: AWS, SONY, NBCUniversal, Ricoh.",
-        },
-        {
-          date: "2025",
-          description: "Đào tạo chính phủ: GOVTech, ICA Singapore, Ministry of Health (MOH).",
-        },
-        {
-          date: "2025",
-          description: "Đào tạo giáo dục: NUS, NTU, SMU Academy, Kaplan.",
-        },
-        {
-          date: "2025",
-          description: "Đào tạo tư vấn: BCG.",
-        },
-      ],
-      projects: [
-        {
-          title: "Founder tại Crown Mercado Alliance Pte Ltd",
-          description:
-            "Bà đã tư vấn thành công cho nhiều Doanh nghiệp vừa và nhỏ (SME), Công ty đa quốc gia (MNC), và Cơ quan Chính phủ trong việc triển khai chiến lược tiếp thị kỹ thuật số.",
-        },
-        {
-          title: "Huấn luyện viên Trưởng (Lead Trainer)",
-          description:
-            "Đã đào tạo hơn 5.000 học viên thuộc hơn 10 ngành nghề khác nhau. Các buổi đào tạo tập trung vào học tập thực hành và các chiến lược đổi mới.",
-        },
-        {
-          title:
-            "Chuyên môn: Chiến lược Kinh doanh & Tiếp thị Tăng cường bởi AI",
-          description:
-            "Tập trung vào ứng dụng AI trong chiến lược kinh doanh và marketing.",
-        },
-        {
-          title: "Chuyên môn: Inbound Omni-Channel",
-          description:
-            "Xây dựng chiến lược tiếp thị đa kênh theo hướng inbound.",
-        },
-        {
-          title: "Chuyên môn: Nội dung, SEO, SEM & Social Media",
-          description:
-            "Bao gồm xây dựng nội dung, tối ưu hóa tìm kiếm, quảng cáo và mạng xã hội.",
-        },
-        {
-          title: "Chủ đề đào tạo",
-          description: "AI trong Marketing, Quảng cáo TikTok.",
-        },
-      ],
-    },
-  ];
+  const instructors = getInstructorsByIds([
+    "linda-hui-isaac"
+  ]);
   const whomItems = [
     {
       icon: "Sprout" as const,
