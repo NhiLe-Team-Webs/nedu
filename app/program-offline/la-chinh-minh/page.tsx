@@ -85,8 +85,7 @@ export default function LaChinhMinhPage() {
   return (
     <div className="min-h-screen bg-white">
       <CourseHeader
-        imageUrl="/picture/la_chinh_minh.jpg"
-        imageUrl_bot=""
+        bannerUrl="/lachinhminh.jpg"
         altText="Là chính mình"
         time="Thời gian: THÁNG 03 NĂM 2026"
         tags={["Phát triển bản thân", "Là chính mình"]}

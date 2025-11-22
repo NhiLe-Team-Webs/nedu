@@ -93,7 +93,6 @@ export default function ThuongHieuCuaBanPage() {
     <div className="min-h-screen bg-white">
       <CourseHeader
         imageUrl="/picture/thuong_hieu_cua_ban.png"
-        imageUrl_bot=""
         altText="Thương hiệu của bạn"
         time="KHÓA HỌC ONLINE"
         tags={["Thương hiệu"]}

@@ -24,7 +24,7 @@ const Partners = () => {
         <div className="ww-layout section-base ww-section-element" style={{ display: 'flex', flexFlow: 'column', alignItems: 'flex-start', width: '100%', maxWidth: '1280px', minWidth: 'unset', minHeight: 'unset', maxHeight: 'unset' }}>
           
           {/* Background "Partners" text */}
-          <p className="ww-text-content ww-text ww-element" style={{
+          <p className="ww-text-content ww-text ww-element text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[110px]" style={{
             margin: '0px',
             padding: '0px',
             zIndex: '10',
@@ -40,7 +40,6 @@ const Partners = () => {
             maxHeight: 'unset',
             minHeight: 'unset',
             background: 'none',
-            fontSize: '110px',
             fontFamily: 'var(--ww-default-font-family)',
             fontWeight: '700',
             textAlign: 'center',
@@ -52,11 +51,11 @@ const Partners = () => {
             Partners
           </p>
 
-          <div className="ww-layout ww-flexbox ww-element" style={{
+          <div className="ww-layout ww-flexbox ww-element py-10 sm:py-12 md:py-16 lg:py-20" style={{
             display: 'flex',
             flexFlow: 'column',
             margin: '0px',
-            padding: '80px 0px',
+            padding: '0px',
             zIndex: 'unset',
             alignSelf: 'unset',
             width: '100%',
@@ -69,8 +68,8 @@ const Partners = () => {
           }}>
             
             {/* Main heading */}
-            <p className="ww-text-content ww-text ww-element ww-flexbox__object" style={{
-              margin: '0px 0px 40px',
+            <p className="ww-text-content ww-text ww-element ww-flexbox__object mb-6 sm:mb-8 md:mb-10 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[68px]" style={{
+              margin: '0px',
               padding: '0px',
               zIndex: '10',
               alignSelf: 'unset',
@@ -81,7 +80,6 @@ const Partners = () => {
               maxHeight: 'unset',
               minHeight: 'unset',
               background: 'none',
-              fontSize: '68px',
               fontFamily: 'var(--ww-default-font-family)',
               fontWeight: '900',
               textAlign: 'center',
@@ -94,12 +92,8 @@ const Partners = () => {
             </p>
 
             {/* First row of partners (6 columns) */}
-            <div className="ww-layout ww-flexbox ww-element ww-flexbox__object" style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(6, 1fr)',
-              columnGap: '32px',
+            <div className="ww-layout ww-flexbox ww-element ww-flexbox__object grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-6 md:gap-8 p-4 sm:p-6 md:p-8 lg:p-10" style={{
               margin: '0px',
-              padding: '40px',
               zIndex: 'unset',
               alignSelf: 'unset',
               width: '100%',
@@ -185,12 +179,8 @@ const Partners = () => {
             </div>
 
             {/* Second row of partners (5 columns) */}
-            <div className="ww-layout ww-flexbox ww-element ww-flexbox__object" style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(5, 1fr)',
-              columnGap: '32px',
+            <div className="ww-layout ww-flexbox ww-element ww-flexbox__object grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6 md:gap-8 p-4 sm:p-6 md:p-8 lg:px-20 lg:py-10" style={{
               margin: '0px',
-              padding: '40px 80px',
               zIndex: 'unset',
               alignSelf: 'unset',
               width: '100%',

@@ -24,9 +24,9 @@ export default function Home() {
                   src="/videos/IMG_6784.MP4"
                   className="w-full h-full object-cover"
                   autoPlay
-                  muted
                   loop
-                  playsInline
+                  // playsInline
+                  controls
                 />
               </div>
             </div>

@@ -5,8 +5,8 @@ import { useCart } from "@/lib/cart-context";
 import { getCourseBySlug } from "@/data/courses";
 
 type CourseHeaderProps = {
-  imageUrl: string;
-  imageUrl_bot: string;
+  bannerUrl?: string;
+  imageUrl?: string;
   altText: string;
   time: string;
   tags: string[];
@@ -21,8 +21,8 @@ type CourseHeaderProps = {
 };
 
 const CourseHeader: React.FC<CourseHeaderProps> = ({
+  bannerUrl,
   imageUrl,
-  imageUrl_bot,
   description,
   altText,
   time,
@@ -53,9 +53,9 @@ const CourseHeader: React.FC<CourseHeaderProps> = ({
     <section className="py-4 sm:py-6 lg:py-8 px-4 sm:px-6 lg:px-10 max-w-[1280px] mx-auto">
       <div
         className="h-64 sm:h-80 lg:h-96 bg-cover bg-center rounded-lg mb-6 sm:mb-8 lg:mb-10"
-        style={{ backgroundImage: `url(${imageUrl})` }}
+        style={{ backgroundImage: `url(${bannerUrl})` }}
         aria-label={altText}
-        hidden={!imageUrl}
+        hidden={!bannerUrl}
       ></div>
       <div className="text-center px-2 sm:px-0">
         <p className="text-lg sm:text-xl lg:text-2xl font-bold uppercase text-gray-800 mb-4 sm:mb-6">
@@ -74,7 +74,7 @@ const CourseHeader: React.FC<CourseHeaderProps> = ({
         <h1 className="text-2xl sm:text-3xl lg:text-5xl font-extrabold text-yellow-500 capitalize mb-4 sm:mb-6">
           {title}
         </h1>
-        <div className="flex justify-center items-center gap-1 sm:gap-2 mb-4 sm:mb-6">
+        <div className="flex justify-center items-center gap-1 sm:gap-2 mb-1 sm:mb-2">
           <p className="text-sm sm:text-base lg:text-lg font-semibold">Chi phí:</p>
           <p className="text-2xl sm:text-3xl lg:text-4xl font-bold text-green-600">{cost}</p>
           <p className="text-sm sm:text-base lg:text-lg font-semibold">{currency}</p>
@@ -94,11 +94,11 @@ const CourseHeader: React.FC<CourseHeaderProps> = ({
           <i className="fas fa-shopping-cart ml-1 sm:ml-2"></i>
         </button>
       </div>
-      {imageUrl_bot && (
-        <div className="relative flex flex-col w-full max-w-[900px] h-[300px] sm:h-[400px] lg:h-[500px] bg-none mt-8 sm:mt-12 lg:mt-20 mx-auto">
-          {isYouTubeLink(imageUrl_bot) ? (
+      {imageUrl && (
+        <div className="relative flex flex-col w-full max-w-[900px] bg-none mt-8 sm:mt-12 lg:mt-20 mx-auto">
+          {isYouTubeLink(imageUrl) ? (
             <YouTube
-              videoId={new URL(imageUrl_bot).searchParams.get("v") || ""}
+              videoId={new URL(imageUrl).searchParams.get("v") || ""}
               opts={{
                 height: "100%",
                 width: "100%",
@@ -107,10 +107,10 @@ const CourseHeader: React.FC<CourseHeaderProps> = ({
             />
           ) : (
             <img
-              src={imageUrl_bot}
+              src={imageUrl}
               alt={altText}
               loading="lazy"
-              className="w-full h-full object-contain"
+              className="w-auto h-full rounded-xl"
             />
           )}
           <div className="absolute inset-0"></div>

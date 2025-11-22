@@ -12,13 +12,6 @@ import { useCart } from "@/lib/cart-context";
 
 export default function AIBusinessCommunicationPage() {
   const { addToCart } = useCart();
-  const youtubeOpts = {
-    height: "100%",
-    width: "100%",
-    playerVars: {
-      autoplay: 0,
-    },
-  };
   const instructors = [
     {
       name: "Linda Hui-Isaac",
@@ -151,7 +144,6 @@ export default function AIBusinessCommunicationPage() {
     <div className="min-h-screen bg-white">
     <CourseHeader
       imageUrl="/picture/ai_for_business.png"
-      imageUrl_bot=""
       altText="AI For Business Communication"
       time="Khóa học Online"
       tags={["AI", "Business Communication"]}

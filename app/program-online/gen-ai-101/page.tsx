@@ -153,7 +153,6 @@ export default function GenAI101Page() {
     <div className="min-h-screen bg-white">
       <CourseHeader
         imageUrl="/picture/gen_ai.png"
-        imageUrl_bot=""
         altText="GEN AI 101"
         time="Khóa học Online"
         tags={["AI"]}

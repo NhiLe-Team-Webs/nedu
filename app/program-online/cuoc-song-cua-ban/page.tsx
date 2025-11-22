@@ -103,7 +103,6 @@ export default function CuocSongCuaBanPage() {
     <div className="min-h-screen bg-white">
       <CourseHeader
         imageUrl="/picture/cuoc_song_cua_ban.png"
-        imageUrl_bot=""
         altText="Cuộc sống của bạn"
         time="KHÓA HỌC ONLINE"
         tags={["Phát triển bản thân"]}

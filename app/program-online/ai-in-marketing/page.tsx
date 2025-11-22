@@ -12,13 +12,6 @@ import { useCart } from "@/lib/cart-context";
 
 export default function AIInMarketingPage() {
   const { addToCart } = useCart();
-  const youtubeOpts = {
-    height: "100%",
-    width: "100%",
-    playerVars: {
-      autoplay: 0,
-    },
-  };
 
     const instructors = [
     {
@@ -153,7 +146,6 @@ export default function AIInMarketingPage() {
     <div className="min-h-screen bg-white">
     <CourseHeader
       imageUrl="/picture/ai_in_mkt.png"
-      imageUrl_bot=""
       altText="AI In Marketing"
       time="Khóa học Online"
       tags={["AI", "Marketing"]}
