@@ -1,8 +1,8 @@
 import React from "react";
-import Link from "next/link";
 import YouTube from "react-youtube";
 import { useCart } from "@/lib/cart-context";
 import { getCourseBySlug } from "@/data/courses";
+import * as Icons from "lucide-react";
 
 type CourseHeaderProps = {
   bannerUrl?: string;
@@ -88,10 +88,10 @@ const CourseHeader: React.FC<CourseHeaderProps> = ({
         )}
         <button
           onClick={handleAddToCart}
-          className="inline-flex items-center bg-yellow-500 hover:bg-yellow-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-full font-semibold text-sm sm:text-base lg:text-lg transition mt-4 sm:mt-[24px]"
+          className="inline-flex items-center bg-primary hover:bg-yellow-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-full font-semibold text-sm sm:text-base lg:text-lg transition mt-4 sm:mt-[24px]"
         >
           Thêm vào giỏ hàng
-          <i className="fas fa-shopping-cart ml-1 sm:ml-2"></i>
+          <Icons.ShoppingBagIcon className="ml-1 sm:ml-2" />
         </button>
       </div>
       {imageUrl && (

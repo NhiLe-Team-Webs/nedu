@@ -31,16 +31,15 @@ const Header = () => {
             />
           </Link>
         </div>
-        
+
         {/* center column: nav centered by grid */}
         <nav className="hidden md:flex justify-center items-center gap-6 lg:gap-12 flex-1 font-semibold">
           <Link
             href="/"
-            className={`relative transition-all duration-200 transform hover:scale-105 active:scale-95 ${
-              isActive("/")
-                ? "text-amber-400 font-semibold uppercase tracking-wide text-sm lg:text-base"
-                : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-sm lg:text-base"
-            }`}
+            className={`relative transition-all duration-200 transform hover:scale-105 active:scale-95 ${isActive("/")
+              ? "text-amber-400 font-semibold uppercase tracking-wide text-sm lg:text-base"
+              : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-sm lg:text-base"
+              }`}
           >
             TRANG CHỦ
             {isActive("/") && (
@@ -60,11 +59,10 @@ const Header = () => {
 
           <Link
             href="/program"
-            className={`relative transition-all duration-200 transform hover:scale-105 active:scale-95 ${
-              isActive("/program")
-                ? "text-amber-400 font-semibold uppercase tracking-wide text-sm lg:text-base"
-                : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-sm lg:text-base"
-            }`}
+            className={`relative transition-all duration-200 transform hover:scale-105 active:scale-95 ${isActive("/program")
+              ? "text-amber-400 font-semibold uppercase tracking-wide text-sm lg:text-base"
+              : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-sm lg:text-base"
+              }`}
           >
             KHÓA HỌC
             {isActive("/program") && (
@@ -74,11 +72,10 @@ const Header = () => {
 
           <a
             href="/thu-thach-30-ngay"
-            className={`relative transition-all duration-200 transform hover:scale-105 active:scale-95 ${
-              isActive("/thu-thach-30-ngay")
-                ? "text-amber-400 font-semibold uppercase tracking-wide text-sm lg:text-base"
-                : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-sm lg:text-base"
-            }`}
+            className={`relative transition-all duration-200 transform hover:scale-105 active:scale-95 ${isActive("/thu-thach-30-ngay")
+              ? "text-amber-400 font-semibold uppercase tracking-wide text-sm lg:text-base"
+              : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-sm lg:text-base"
+              }`}
           >
             THỬ THÁCH 30N
             {isActive("/thu-thach-30-ngay") && (
@@ -89,11 +86,10 @@ const Header = () => {
 
           <a
             href="/contact"
-            className={`relative transition-all duration-200 transform hover:scale-105 active:scale-95 ${
-              isActive("/contact")
-                ? "text-amber-400 font-semibold uppercase tracking-wide text-sm lg:text-base"
-                : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-sm lg:text-base"
-            }`}
+            className={`relative transition-all duration-200 transform hover:scale-105 active:scale-95 ${isActive("/contact")
+              ? "text-amber-400 font-semibold uppercase tracking-wide text-sm lg:text-base"
+              : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-sm lg:text-base"
+              }`}
           >
             LIÊN HỆ
             {isActive("/contact") && (
@@ -108,7 +104,7 @@ const Header = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="inline-flex items-center justify-center gap-2 h-8 w-8 sm:h-10 sm:w-10 hidden sm:inline-flex text-text-secondary hover:text-primary relative transition-all duration-200 transform hover:scale-110 active:scale-95"
+            className="inline-flex items-center justify-center gap-2 h-8 w-8 sm:h-10 sm:w-10 hidden sm:inline-flex text-text-secondary hover:text-primary relative transition-all duration-200 transform hover:scale-110 active:scale-95 overflow-visible"
             onClick={() => router.push('/cart')}
             aria-label="Giỏ hàng"
           >
@@ -119,12 +115,12 @@ const Header = () => {
               </span>
             )}
           </Button>
-          
+
           {/* Mobile: Cart icon */}
           <Button
             variant="ghost"
             size="icon"
-            className="h-10 w-10 sm:hidden text-text-secondary hover:text-primary relative transition-all duration-200 transform hover:scale-110 active:scale-95"
+            className="h-10 w-10 sm:hidden text-text-secondary hover:text-primary relative transition-all duration-200 transform hover:scale-110 active:scale-95 overflow-visible"
             onClick={() => router.push('/cart')}
             aria-label="Giỏ hàng"
           >
@@ -135,7 +131,7 @@ const Header = () => {
               </span>
             )}
           </Button>
-          
+
           {/* Mobile: Hamburger menu */}
           <Button
             variant="ghost"
