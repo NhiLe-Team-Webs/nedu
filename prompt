@@ -1,0 +1,14 @@
+Chức năng tiếp theo tôi muốn làm: 
+
+THAY ĐỔI PHƯƠNG THỨC TỪ VNPAY QUA SEPAY. 
+
+Tích hợp thanh toán cho nhiều khóa học trong giỏ hàng, bỏ phương thức VN pay cũ. 
+
+Flow thanh toán: 
+Người dùng add 1 hoặc nhiều khóa học vào giỏ hàng, mỗi khóa học có thể có nhiều số lượng khác nhau, khi thanh toán thì tính tiền tổng của các khóa cùng với số lượng mà nhân lên. 
+
+Khóa Sức Mạnh Vô Hạn cần chuyển từ tiền đô qua tiền việt cho dễ tính. 
+
+Hiện tại tôi chưa config các thông số từ SEPAY, nhưng cần standby trước, để khi có config thì chỉ cần gắn thông số vào là được. 
+
+Tôi cần một file để hướng dẫn config khi có thông số luôn. 
