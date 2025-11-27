@@ -5,13 +5,14 @@ interface MissionProps {
   title: string;
   subtitle: string;
   description: string;
+  imgUrl?: string;
 }
 
-const Mission: React.FC<MissionProps> = ({ title, subtitle, description }) => {
+const Mission: React.FC<MissionProps> = ({ title, subtitle, description, imgUrl }) => {
   return (
     <div className="relative flex flex-col items-center justify-center w-full min-h-screen relative overflow-hidden">
       <Image
-        src="/picture/suc_manh_vo_han.jpg"
+        src={imgUrl || "/picture/suc_manh_vo_han.jpg"}
         alt="bg"
         fill
         className="absolute inset-0 w-full h-full object-cover"

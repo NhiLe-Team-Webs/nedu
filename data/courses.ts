@@ -61,7 +61,7 @@ export const courses: Course[] = [
     category: ['Doanh nhân', 'Doanh nghiệp'],
     heroImage: '/picture/suc_manh_vo_han.jpg',
     price: {
-      amount: '631,873,000',
+      amount: '180.000.000',
       currency: 'VNĐ',
       deposit: '180.000.000'
     },

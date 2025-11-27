@@ -1,7 +1,4 @@
 "use client";
-
-import Link from "next/link";
-import YouTube from "react-youtube";
 import CourseInfo from "@/components/CourseInfo";
 import Mission from "@/components/Mission";
 import Testimonials from "@/components/Testimonial";
@@ -10,17 +7,10 @@ import CourseHeader from "@/components/CourseHeader";
 import Privilege from "@/app/Privilege";
 import Organizers from "@/components/Organizers";
 import { getCourseBySlug } from "@/data/courses";
+import { getInstructorsByIds } from "@/data/instructors";
 
 export default function SucManhVoHanPage() {
   const course = getCourseBySlug('suc-manh-vo-han');
-  
-  const youtubeOpts = {
-    height: "100%",
-    width: "100%",
-    playerVars: {
-      autoplay: 0,
-    },
-  };
 
   const courseDetails = [
     { label: "Chủ đề", value: "Vận hành doanh nghiệp", icon: "Briefcase" },
@@ -57,34 +47,11 @@ export default function SucManhVoHanPage() {
     course: course,
   };
 
-  const instructors = [
-    {
-      name: "NhiLe",
-      profession: ["Doanh nhân"],
-      bio: "15 năm kinh nghiệm trên thương trường tại Singapore và Việt Nam. Hơn 6 năm truyền cảm hứng và giúp nhiều người làm chủ cuộc đời qua các chương trình đào tạo.",
-      image: "/picture/nhile.jpg",
-      achievements: [],
-      projects: [],
-      education: "Diploma in Business Administration",
-      career: "Founder of NhiLe Team and NhiLe Foundation",
-    },
-    {
-      name: "Mel",
-      profession: ["Chuyên gia Marketing"],
-      bio: "Melvin Soh, chuyên gia marketing hàng đầu châu Á, nổi tiếng với hơn 15 năm kinh nghiệm thực chiến trong xây dựng thương hiệu và thu hút khách hàng. Anh đã giúp hàng trăm doanh nghiệp tạo dựng lòng trung thành và tăng trưởng bền vững.",
-      image: "/picture/mel.jpg",
-      achievements: [],
-      projects: [],
-      education: "MBA in Marketing",
-      career: "CEO of Marketing Solutions Asia",
-    },
-  ];
-
+  const instructors = getInstructorsByIds(["nhi-le", "mel"]);
   return (
     <div className="min-h-screen bg-white">
       <CourseHeader
-        imageUrl="/picture/suc_manh_vo_han.jpg"
-        imageUrl_bot=""
+        bannerUrl="/sucmanhvohan.jpg"
         altText="Sức Mạnh Vô Hạn"
         time="Khóa học Offline"
         tags={["Doanh nhân", "Doanh nghiệp"]}

@@ -41,26 +41,26 @@ const Footer = () => {
                  className="flex-shrink-0"
                  style={{
                    width: '180px',
-                   height: '180px',
-                   minWidth: '180px',
-                   minHeight: '180px'
+                   height: 'auto',
+                   minWidth: '180px'
                  }}
                >
      <Image
-       src="/picture/logo-footer.png"
+       src="/nedu-white.svg"
        alt="N Education"
        width={500}
-       height={500}
+       height={100}
        sizes="180px"
        className="w-full h-full object-contain"
        priority
        style={{
          width: '180px !important',
-         height: '180px !important',
-         maxWidth: '200px !important',
-         maxHeight: '200px !important',
+         height: '50px !important',
+        //  maxWidth: '200px !important',
+        //  maxHeight: '200px !important',
          display: 'block',
-         flexShrink: 0
+         flexShrink: 0,
+         objectFit: 'scale-down'
        }}
      />
    </div>

@@ -7,17 +7,8 @@ import {
   CarouselNext,
   type CarouselApi,
 } from "@/components/ui/carousel";
+import { InstructorProps } from "@/data/instructors";
 
-interface InstructorProps {
-  name: string;
-  profession: string[];
-  bio: string;
-  education: string | string[];
-  career: string;
-  achievements: { date: string; description: string }[];
-  projects: { title: string; description: string }[];
-  image: string;
-}
 
 const Instructor: React.FC<{ instructors: InstructorProps[] }> = ({
   instructors,

@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/lib/cart-context";
 import { Course } from "@/data/courses";
+import { ChevronRight, ShoppingBag } from "lucide-react";
 
 interface TestimonialsProps {
   videos: string[];
@@ -72,53 +73,13 @@ const Testimonials: React.FC<TestimonialsProps> = ({
         <div className="flex justify-center mt-6 sm:mt-8">
           <button
             onClick={handleButtonClick}
-            className="inline-flex items-center bg-amber-400 hover:bg-amber-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-r-full rounded-l-full font-semibold uppercase transition-colors text-sm sm:text-base"
+            className="inline-flex items-center bg-primary hover:bg-yellow-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-r-full rounded-l-full font-semibold uppercase transition-colors text-sm sm:text-base"
           >
             {buttonText}
             {buttonType === 'cart' ? (
-              <svg
-                className="ml-2 sm:ml-3 w-3 h-3 sm:w-4 sm:h-4"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M9 2L3 9v13a2 2 0 002 2h14a2 2 0 002-2V9l-6-7H9z"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M3 9h18"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M9 22V12h6v10"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <ShoppingBag className="ml-2 sm:ml-3 w-3 h-3 sm:w-4 sm:h-4" />
             ) : (
-              <svg
-                className="ml-2 sm:ml-3 w-3 h-3 sm:w-4 sm:h-4"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M5 12h14M13 5l7 7-7 7"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <ChevronRight className="ml-2 sm:ml-3 w-3 h-3 sm:w-4 sm:h-4" />
             )}
           </button>
         </div>

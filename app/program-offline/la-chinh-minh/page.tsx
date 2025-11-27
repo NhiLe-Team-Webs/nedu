@@ -5,15 +5,15 @@ import CourseHeader from "@/components/CourseHeader";
 import CourseInfo from "@/components/CourseInfo";
 import Mission from "@/components/Mission";
 import Testimonials from "@/components/Testimonial";
-import YouTube from "react-youtube";
 import Instructor from "@/components/Instructor";
 import Privilege from "@/app/Privilege";
 import Organizers from "@/components/Organizers";
 import { getCourseBySlug } from "@/data/courses";
+import { getInstructorsByIds } from "@/data/instructors";
 
 export default function LaChinhMinhPage() {
   const course = getCourseBySlug('la-chinh-minh');
-  
+
   const youtubeOpts = {
     height: "100%",
     width: "100%",
@@ -22,48 +22,9 @@ export default function LaChinhMinhPage() {
     },
   };
 
-  const instructors = [
-    {
-      name: "NhiLe",
-      profession: ["Doanh nhân"],
-      bio: "Nhi Lê là một doanh nhân, nhà giáo dục và nhà sáng tạo nội dung người Việt Nam. Cô được biết đến là người đầu tiên đưa chủ đề tâm lý học bằng tiếng Việt lên nền tảng YouTube và là người sáng lập nhiều dự án văn hóa - giáo dục có ảnh hưởng tại Việt Nam. Hiện cô đang sinh sống và làm việc tại Singapore.",
-      image: "/picture/nhile.jpg",
-      education:
-        'Nhi Lê tốt nghiệp chuyên ngành Tâm lý học (Diploma in Psychology) tại Kaplan Singapore. Ngoài ra, cô còn sở hữu nhiều chứng chỉ chuyên sâu khác như "Lãnh đạo Kiên cường & Kinh doanh Bền vững" (Resilient Leadership & Business Sustainability) và Chứng chỉ Điều hành về Khoa học Hành vi Ứng dụng (Executive Certificate in Applied Behavioural Science) tại Đại học Quản lý Singapore (SMU).',
-      career:
-        "Nhi Lê hoạt động trong nhiều lĩnh vực, từ kinh doanh, giáo dục đến sáng tạo nội dung. Cô là người có tầm ảnh hưởng trong việc chia sẻ kiến thức về tâm lý học và kỹ năng sống cho thế hệ trẻ.",
-      achievements: [
-        {
-          date: "2025-04",
-          description: "Vinh danh với giải thưởng HER Courage Awards 2025.",
-        },
-        {
-          date: "2025-08",
-          description:
-            "Người phụ nữ Việt Nam đầu tiên xuất hiện trên blog chính thức của YouTube toàn cầu.",
-        },
-      ],
-      projects: [
-        {
-          title: "Kênh YouTube Nhi Le",
-          description:
-            "Kênh tiên phong chia sẻ kiến thức tâm lý học bằng tiếng Việt.",
-        },
-        {
-          title: "Cộng đồng NhiLe Team",
-          description: "Đào tạo nghề và kỹ năng cần thiết cho giới trẻ.",
-        },
-        {
-          title: "Quỹ NhiLe Foundation",
-          description: "Tổ chức phi lợi nhuận hỗ trợ trẻ em Việt Nam.",
-        },
-        {
-          title: "Podcast Ms Nhi và This is Home",
-          description: "Kết nối thế hệ trẻ với doanh nhân, nghệ nhân Việt Nam.",
-        },
-      ],
-    },
-  ];
+  // Get instructors from global data
+  const instructors = getInstructorsByIds(["nhi-le"]);
+
 
   const testimonials = {
     videos: [
@@ -86,13 +47,12 @@ export default function LaChinhMinhPage() {
   return (
     <div className="min-h-screen bg-white">
       <CourseHeader
-        imageUrl="/picture/la_chinh_minh.jpg"
-        imageUrl_bot=""
+        bannerUrl="/lachinhminh.jpg"
         altText="Là chính mình"
         time="Thời gian: THÁNG 03 NĂM 2026"
         tags={["Phát triển bản thân", "Là chính mình"]}
         title="Là Chính Mình"
-        cost="59,696,000"
+        cost="59.696.000"
         paymentLink="/payment/57"
         courseSlug="la-chinh-minh"
       />
@@ -123,6 +83,7 @@ export default function LaChinhMinhPage() {
         title="Mission"
         subtitle="Sứ mệnh"
         description="Khóa học “Là Chính Mình” mang sứ mệnh giúp bạn khám phá và chữa lành mọi khía cạnh của bản thân, xây dựng lối sống cân bằng và phát triển toàn diện về tinh thần, cảm xúc, và thể chất."
+        imgUrl="/lachinhminh.jpg"
       />
       <Testimonials {...testimonials} />
       <Instructor instructors={instructors} />

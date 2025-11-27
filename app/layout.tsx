@@ -27,18 +27,18 @@ export default function RootLayout({
     <html lang="vi" suppressHydrationWarning>
       <head>
         <meta charSet="utf-8" />
-        {/* Google tag (gtag.js) */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-SQ1T3SDX4Z"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-SQ1T3SDX4Z');
-            `
-          }}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-BK6LMDZEH4"
+          strategy="afterInteractive"
         />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-BK6LMDZEH4');
+          `}
+        </Script>
       </head>
       <body>
         <CartProvider>
