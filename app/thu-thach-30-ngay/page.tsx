@@ -12,7 +12,7 @@ import {
 const neduLogo = "/picture/nedu.svg";
 const nltLogo = "/picture/nlt.png";
 const challengePoster = "/picture/thuthach30day.png";
-const tuyetMaiPhoto = "/picture/tuyetmai.jpg";
+const tuyetMaiPhoto = "/picture/denise.jpg";
 
 const CTA_YELLOW = "#F8B516";
 const DARK_GRAY = "#333333";
@@ -140,7 +140,7 @@ const ThirtyDayPage = () => {
                   className="w-full max-w-3xl sm:max-w-4xl h-auto object-contain"
                 />
               </div>
-  
+
               <div className="mt-6 sm:mt-10 flex items-center justify-center">
                 <Image
                   src={challengePoster}
@@ -156,7 +156,7 @@ const ThirtyDayPage = () => {
               </div>
             </div>
           </section>
-  
+
           {/* ABOUT */}
           <section id="about" className="pb-10 sm:pb-14">
             <div
@@ -255,7 +255,7 @@ const ThirtyDayPage = () => {
                 <div className="flex justify-center mb-6 sm:mb-8">
                   <Image
                     src={tuyetMaiPhoto}
-                    alt="Tuyết Mai"
+                    alt="Denise"
                     width={800}
                     height={420}
                     className="w-full max-w-2xl sm:max-w-3xl h-auto rounded-[16px] sm:rounded-[24px] md:rounded-[32px] object-cover"
@@ -268,35 +268,23 @@ const ThirtyDayPage = () => {
                   style={{ color: DARK_GRAY }}
                 >
                   <p className="mb-3">
-                    Hơn 3 năm kinh nghiệm trong lĩnh vực Sáng tạo nội dung và
-                    xây dựng kênh cá nhân.
+                    Host & Content Creator, tập trung vào Phát triển cá nhân cho những người không nghiêm túc.
                   </p>
 
                   <p className="mb-2">
-                    Là Content Creator & người đồng hành chính trong Thử
-                    Thách 30 Ngày.
+                    Truyền cảm hứng cho hơn 23.000 người trên toàn thế giới qua podcast, YouTube và những cuộc trò chuyện chân thật, gần gũi về tự nhận thức và phát triển cá nhân.
                   </p>
 
-                  <ul className="list-disc pl-4 sm:pl-5 space-y-1 mb-4">
-                    <li>
-                      Đồng hành giúp học viên xây kênh cá nhân từ con số 0.
-                    </li>
-                    <li>
-                      Truyền cảm hứng để học viên tự tin xuất hiện trước ống
-                      kính.
-                    </li>
-                    <li>Phong cách dẫn dắt: gần gũi, vui vẻ, thực tế.</li>
-                  </ul>
+                  <p className="mb-3 font-semibold">Đam mê với việc thay đổi nhận thức:</p>
+                  <p className="mb-3">
+                    Tôi giúp những người cảm thấy mình "quá vui vẻ" hoặc "không nghiêm túc" để thành công nhận ra rằng họ không cần thay đổi tính cách để đạt được những điều tuyệt vời — họ có thể phát triển bằng cách là chính mình một cách trọn vẹn.
+                  </p>
 
-                  <p className="font-semibold mb-2">Giá trị sau chương trình:</p>
-                  <ul className="list-disc pl-4 sm:pl-5 space-y-1 mb-4 sm:mb-6">
-                    <li>
-                      Có nền tảng nội dung bền vững cho TikTok, Reels, Shorts...
-                    </li>
-                    <li>
-                      Hình thành thói quen & quy trình tự vận hành kênh sau
-                      30 ngày.
-                    </li>
+                  <p className="mb-2 font-semibold">Kinh nghiệm thực tế:</p>
+                  <ul className="list-disc pl-4 sm:pl-5 space-y-1 mb-4">
+                    <li>Host của Sip and Share | Spice & Nice</li>
+                    <li>Người tạo ra Growth is a Bit of a Bitch</li>
+                    <li>Nổi tiếng với việc biến những thử nghiệm bản thân lộn xộn của mình thành những bài học táo bạo, thực tế.</li>
                   </ul>
 
                   <div className="text-center mt-4">
@@ -304,14 +292,37 @@ const ThirtyDayPage = () => {
                       className="font-extrabold text-sm sm:text-base md:text-lg"
                       style={{ color: DARK_GRAY }}
                     >
-                      TUYẾT MAI
+                      DENISE
                     </p>
                     <p
                       className="text-xs sm:text-xs md:text-sm font-semibold"
                       style={{ color: CTA_YELLOW }}
                     >
-                      Nhà sáng tạo nội dung
+                      Host & Content Creator
                     </p>
+                    <div className="flex items-center justify-center gap-2 mt-3">
+                      <a
+                        href="https://www.linkedin.com/in/denisewym"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 px-4 py-2 rounded-full border font-medium text-xs"
+                        style={{
+                          borderColor: CTA_YELLOW,
+                          color: CTA_YELLOW,
+                        }}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="#0077B5"
+                        >
+                          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                        LinkedIn
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -342,13 +353,13 @@ const ThirtyDayPage = () => {
                   {/* THỜI GIAN */}
                   <div className="flex items-start gap-3">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill={CTA_YELLOW}>
-                      <path d="M12 1a11 11 0 110 22 11 11 0 010-22zm1 11h5v2h-7V6h2v6z"/>
+                      <path d="M12 1a11 11 0 110 22 11 11 0 010-22zm1 11h5v2h-7V6h2v6z" />
                     </svg>
 
                     <div>
                       <p className="font-semibold mb-1">Thời gian:</p>
                       <p className="font-extrabold text-[14px]" style={{ color: DARK_GRAY }}>
-                        28/10/2025 – 28/11/2025
+                        28/11/2025 – 28/12/2025
                       </p>
                     </div>
                   </div>
@@ -365,7 +376,7 @@ const ThirtyDayPage = () => {
                     <div>
                       <p className="font-semibold mb-1">Người dẫn đường:</p>
                       <p className="font-extrabold text-[14px]" style={{ color: DARK_GRAY }}>
-                        Tuyết Mai
+                        Denise
                       </p>
                     </div>
                   </div>
@@ -390,7 +401,7 @@ const ThirtyDayPage = () => {
                   {/* ĐỊA ĐIỂM */}
                   <div className="flex items-start gap-3">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill={CTA_YELLOW}>
-                      <path d="M12 3l10 9h-3v9H5v-9H2l10-9z"/>
+                      <path d="M12 3l10 9h-3v9H5v-9H2l10-9z" />
                     </svg>
 
                     <div>
