@@ -416,7 +416,7 @@ const ThirtyDayPage = () => {
 
               <div id="register" className="text-center mt-8 sm:mt-10">
                 <a
-                  href="#contact"
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSdFUBpOdZTswjw0mraKvyBW0bU5AGK9hrZYatNC2K3gnpQJdQ/viewform"
                   className="px-8 sm:px-10 py-2 sm:py-3 rounded-full btn-primary text-xs sm:text-sm inline-flex items-center gap-2"
                 >
                   ĐĂNG KÝ NGAY
