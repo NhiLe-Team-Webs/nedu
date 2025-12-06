@@ -112,7 +112,7 @@ const ThirtyDayPage = () => {
                 className="text-sm sm:text-base md:text-lg font-semibold"
                 style={{ color: DARK_GRAY }}
               >
-                Chủ đề Tháng 11: Sáng tạo nội dung
+                Chủ đề Tháng 12: Tỏa sáng cùng Denise
               </p>
               <p className="mt-1 text-sm sm:text-sm md:text-base">
                 Giá hạn mỗi tháng:
