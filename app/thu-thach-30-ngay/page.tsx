@@ -122,10 +122,10 @@ const ThirtyDayPage = () => {
                 </span>
                 <span className="font-semibold"> VND</span>
               </p>
-              <div className="mt-3 sm:mt-4 mb-4 sm:mb-6">
+              <div id="register" className="text-center mt-8 sm:mt-10">
                 <a
-                  href="#register"
-                  className="inline-flex items-center gap-2 px-6 sm:px-8 py-2 sm:py-3 rounded-full btn-primary text-xs sm:text-sm"
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSdFUBpOdZTswjw0mraKvyBW0bU5AGK9hrZYatNC2K3gnpQJdQ/viewform"
+                  className="px-8 sm:px-10 py-2 sm:py-3 rounded-full btn-primary text-xs sm:text-sm inline-flex items-center gap-2"
                 >
                   ĐĂNG KÝ NGAY
                   <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
