@@ -136,7 +136,7 @@ export default function RootLayout({
             }}
           />
           <Header />
-          <div className="h-14 sm:h-16 md:h-20" />
+          <div className="h-24 sm:h-28 md:h-32" />
           <main>{children}</main>
           <Sidebar />
           <Footer />
