@@ -37,7 +37,7 @@ const TopBanner = () => {
                     </button>
                     <span>giảm còn</span>
                     <span className="font-bold text-white">49.960.000đ</span>
-                    <span className="opacity-90 text-xs flex items-center">(08/12 – 08/01)</span>
+                    <span className="opacity-90 text-xs flex items-center">(08/12/2025 – 08/01/2026)</span>
                 </div>
 
                 <Link
