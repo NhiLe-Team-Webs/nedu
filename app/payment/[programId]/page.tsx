@@ -6,7 +6,9 @@ import { Tag } from 'lucide-react'
 import { useRouter, useParams } from 'next/navigation'
 import { courses } from '@/data/courses'
 import ErrorHandler from '@/components/ErrorHandler'
-import { preparePaymentData, sendPaymentRequest, handlePaymentResponse, currencyFormatter } from '@/lib/payment-utils'
+import { preparePaymentData, sendPaymentRequest, handlePaymentResponse, currencyFormatter, sendSePayPaymentRequest, prepareSePayPaymentData } from '@/lib/payment-utils'
+import SePayPaymentQR from '@/components/SePayPaymentQR'
+import { SePayPaymentResponse } from '@/types/sepay'
 
 export default function PaymentPage() {
   const router = useRouter()
@@ -65,6 +67,8 @@ export default function PaymentPage() {
   const [discount, setDiscount] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
   const [errors, setErrors] = useState<string[]>([])
+  const [sepayPaymentData, setSepayPaymentData] = useState<SePayPaymentResponse | null>(null)
+  const [showPaymentQR, setShowPaymentQR] = useState(false)
 
   const currencyFormatter = new Intl.NumberFormat('vi-VN', {
     style: 'currency',
@@ -128,26 +132,46 @@ export default function PaymentPage() {
     }
 
     setIsLoading(true)
+    setShowPaymentQR(false)
+    setSepayPaymentData(null)
 
     try {
-      // Prepare data for API using shared utility
-      const apiData = preparePaymentData(formData, programId, true)
+      if (!course) {
+        throw new Error('Không tìm thấy khóa học')
+      }
 
-      // Send payment request using shared utility
-      const response = await sendPaymentRequest(apiData)
+      // Calculate final amount (after discount)
+      const subtotal = parseFloat(course.price.amount.replace(/[.,]/g, ''))
+      const discountAmount = subtotal * (discount / 100)
+      const finalAmount = subtotal - discountAmount
 
-      // Handle payment response using shared utility
-      const success = handlePaymentResponse(response, router,
-        () => {
-          // Success callback - redirect will be handled by the utility
-        },
-        (error) => {
-          setErrors([`Lỗi khi gửi thông tin: ${error}`])
-        }
+      // Prepare SePay payment data
+      const sepayData = prepareSePayPaymentData(
+        formData,
+        finalAmount,
+        programId,
+        undefined // Single course, no programIds
       )
 
-      if (!success) {
-        setIsLoading(false)
+      console.log('Sending SePay payment request:', sepayData)
+
+      // Send SePay payment request
+      const paymentResponse = await sendSePayPaymentRequest(sepayData)
+
+      if (paymentResponse.error || !paymentResponse.success) {
+        throw new Error(paymentResponse.error || 'Không thể tạo thanh toán')
+      }
+
+      if (paymentResponse.qrCodeUrl) {
+        // Show QR code payment UI
+        setSepayPaymentData(paymentResponse)
+        setShowPaymentQR(true)
+        // Scroll to QR code
+        setTimeout(() => {
+          window.scrollTo({ top: 0, behavior: 'smooth' })
+        }, 100)
+      } else {
+        throw new Error('Không nhận được QR code từ hệ thống thanh toán')
       }
       
     } catch (error) {
@@ -158,6 +182,15 @@ export default function PaymentPage() {
     }
   }
 
+  const handlePaymentComplete = () => {
+    // Redirect to success page
+    router.push(`/payment-success?status=success&paymentMethod=sepay&programId=${programId}`)
+  }
+
+  const handlePaymentFailed = () => {
+    setErrors(['Thanh toán thất bại. Vui lòng thử lại.'])
+  }
+
   return (
     <>
       <ErrorHandler />
@@ -166,6 +199,17 @@ export default function PaymentPage() {
         <h1 className="text-3xl md:text-4xl font-bold text-center mb-8 text-gray-800">
           TIẾN HÀNH THANH TOÁN
         </h1>
+
+        {/* SePay QR Code Payment */}
+        {showPaymentQR && sepayPaymentData && (
+          <div className="mb-8">
+            <SePayPaymentQR
+              paymentData={sepayPaymentData}
+              onPaymentComplete={handlePaymentComplete}
+              onPaymentFailed={handlePaymentFailed}
+            />
+          </div>
+        )}
 
         {/* Step Indicators */}
         <div className="flex justify-center items-center mb-12">

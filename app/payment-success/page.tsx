@@ -49,44 +49,94 @@ function PaymentSuccessContent() {
   useEffect(() => {
     const checkPaymentStatus = async () => {
       try {
-        // Get payment parameters from URL
-        const vnp_ResponseCode = searchParams.get('vnp_ResponseCode')
-        const vnp_TxnRef = searchParams.get('vnp_TxnRef')
-        const vnp_Amount = searchParams.get('vnp_Amount')
+        // Get payment method (SePay or VNPay)
+        const paymentMethod = searchParams.get('paymentMethod')
         const programId = searchParams.get('programId')
-        
-        console.log('VNPAY Response:', {
-          vnp_ResponseCode,
-          vnp_TxnRef,
-          vnp_Amount,
-          programId
-        })
 
-        if (vnp_ResponseCode === '00') {
-          // Payment successful
-          setStatus('success')
-          setMessage('Thanh toán thành công! Cảm ơn bạn đã đăng ký khóa học.')
-          
-          // Clear the cart after successful payment
-          clearCart()
-          
-          // Optionally check order status with API
-          if (vnp_TxnRef) {
-            try {
-              const response = await fetch(`https://api.nedu.nhi.sg/api/order/payment-status/${vnp_TxnRef}`)
-              if (response.ok) {
-                const result = await response.json()
-                console.log('Order status:', result)
+        // Handle SePay payment callback
+        if (paymentMethod === 'sepay') {
+          const orderCode = searchParams.get('orderCode')
+          const status = searchParams.get('status')
+          const transactionId = searchParams.get('transactionId')
+          const amount = searchParams.get('amount')
+
+          console.log('SePay Response:', {
+            orderCode,
+            status,
+            transactionId,
+            amount,
+            programId
+          })
+
+          // Check payment status from SePay
+          if (status === 'success' || status === 'completed' || status === '00' || status === 'SUCCESS') {
+            setStatus('success')
+            setMessage('Thanh toán thành công! Cảm ơn bạn đã đăng ký khóa học.')
+            
+            // Clear the cart after successful payment
+            clearCart()
+            
+            // Optionally verify order status with API
+            if (orderCode) {
+              try {
+                const response = await fetch(`/api/sepay/payment?orderCode=${orderCode}`)
+                if (response.ok) {
+                  const result = await response.json()
+                  console.log('SePay Order status:', result)
+                  if (result.order && result.order.status === 'success') {
+                    setStatus('success')
+                  }
+                }
+              } catch (error) {
+                console.error('Error checking SePay order status:', error)
               }
-            } catch (error) {
-              console.error('Error checking order status:', error)
             }
+          } else {
+            // Payment failed or pending
+            setStatus('failed')
+            setMessage('Thanh toán thất bại hoặc chưa hoàn tất. Vui lòng thử lại hoặc liên hệ hỗ trợ.')
+            console.error('SePay Payment failed or pending with status:', status)
           }
-        } else {
-          // Payment failed
-          setStatus('failed')
-          setMessage('Thanh toán thất bại. Vui lòng thử lại hoặc liên hệ hỗ trợ.')
-          console.error('Payment failed with code:', vnp_ResponseCode)
+        } 
+        // Handle VNPay payment callback (legacy support)
+        else {
+          const vnp_ResponseCode = searchParams.get('vnp_ResponseCode')
+          const vnp_TxnRef = searchParams.get('vnp_TxnRef')
+          const vnp_Amount = searchParams.get('vnp_Amount')
+          
+          console.log('VNPAY Response:', {
+            vnp_ResponseCode,
+            vnp_TxnRef,
+            vnp_Amount,
+            programId
+          })
+
+          if (vnp_ResponseCode === '00') {
+            // Payment successful
+            setStatus('success')
+            setMessage('Thanh toán thành công! Cảm ơn bạn đã đăng ký khóa học.')
+            
+            // Clear the cart after successful payment
+            clearCart()
+            
+            // Optionally check order status with API
+            if (vnp_TxnRef) {
+              try {
+                const response = await fetch(`https://api.nedu.nhi.sg/api/order/payment-status/${vnp_TxnRef}`)
+                if (response.ok) {
+                  const result = await response.json()
+                  console.log('Order status:', result)
+                }
+              } catch (error) {
+                console.error('Error checking order status:', error)
+              }
+            }
+          } else {
+            // Payment failed
+            setStatus('failed')
+            setMessage('Thanh toán thất bại. Vui lòng thử lại hoặc liên hệ hỗ trợ.')
+            console.error('Payment failed with code:', vnp_ResponseCode)
+          }
         }
       } catch (error) {
         console.error('Error processing payment callback:', error)
@@ -96,7 +146,7 @@ function PaymentSuccessContent() {
     }
 
     checkPaymentStatus()
-  }, [searchParams])
+  }, [searchParams, clearCart])
 
   return (
     <>
