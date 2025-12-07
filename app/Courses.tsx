@@ -11,7 +11,7 @@ const slides = [
     slug: "la-chinh-minh",
     image: "/picture/la_chinh_minh.jpg",
     date: "18/03/2026",
-    title: "Là Chính Mình 03",
+    title: "Là Chính Mình 04",
     label: "Khóa học sắp diễn ra",
     content: "Người Việt, làm hàng Việt, cho người Việt.",
     type: "offline"
@@ -126,7 +126,7 @@ const Courses: React.FC = () => {
 
   const getPositionClass = (index: number) => {
     let relativeIndex = index - currentIndex;
-    
+
     // Adjust for circular carousel
     if (relativeIndex > 3) {
       relativeIndex -= totalCourses;
@@ -177,10 +177,10 @@ const Courses: React.FC = () => {
 
   const handleTouchEnd = () => {
     if (!isDragging) return;
-    
+
     const swipeDistance = touchStart - touchEnd;
     const minSwipeDistance = 50;
-    
+
     if (Math.abs(swipeDistance) > minSwipeDistance) {
       if (swipeDistance > 0) {
         navigate(1); // Swipe Left - Next
@@ -188,7 +188,7 @@ const Courses: React.FC = () => {
         navigate(-1); // Swipe Right - Previous
       }
     }
-    
+
     setIsDragging(false);
   };
 
@@ -207,10 +207,10 @@ const Courses: React.FC = () => {
 
   const handleMouseUp = () => {
     if (!isDragging) return;
-    
+
     const swipeDistance = touchStart - touchEnd;
     const minSwipeDistance = 50;
-    
+
     if (Math.abs(swipeDistance) > minSwipeDistance) {
       if (swipeDistance > 0) {
         navigate(1); // Drag Left - Next
@@ -218,7 +218,7 @@ const Courses: React.FC = () => {
         navigate(-1); // Drag Right - Previous
       }
     }
-    
+
     setIsDragging(false);
   };
 
@@ -250,7 +250,7 @@ const Courses: React.FC = () => {
           {slides.map((slide, index) => {
             const isCenter = index === currentIndex;
             const positionClass = getPositionClass(index);
-            
+
             return (
               <div
                 key={slide.id}
@@ -316,10 +316,10 @@ const Courses: React.FC = () => {
                     className="object-cover transition-all duration-300 hover:scale-110"
                   />
                 </div>
-                
+
                 {/* Bottom Part - Text and Cart */}
                 <div className="flex flex-col justify-between h-2/5 p-3 sm:p-4 pb-4 sm:pb-6 bg-white">
-                  
+
                   {isCenter ? (
                     <div className="text-center">
                       <h3 className="text-sm sm:text-lg font-bold text-gray-800 mb-1 line-clamp-2">{slide.title.toUpperCase()}</h3>
@@ -330,7 +330,7 @@ const Courses: React.FC = () => {
                       <p className="text-xs text-gray-600 line-clamp-2">{slide.content}</p>
                     </div>
                   )}
-                  
+
                   <div className="flex justify-between items-end relative z-50 mt-2">
                     <div className="flex items-center bg-white/90 backdrop-blur-sm px-2 py-1.5 sm:px-3 sm:py-2 rounded-full transition-all duration-200 hover:bg-white hover:shadow-md">
                       <Calendar className="w-3 h-3 sm:w-4 sm:h-4 mr-1.5 sm:mr-2 text-gray-600 flex-shrink-0 transition-all duration-200" />
@@ -360,11 +360,10 @@ const Courses: React.FC = () => {
           {slides.map((_, index) => (
             <button
               key={index}
-              className={`w-3 h-3 sm:w-3 sm:h-3 rounded-full transition-all duration-300 transform hover:scale-125 ${
-                index === currentIndex
+              className={`w-3 h-3 sm:w-3 sm:h-3 rounded-full transition-all duration-300 transform hover:scale-125 ${index === currentIndex
                   ? 'bg-gray-800 scale-125 shadow-lg'
                   : 'bg-gray-400 hover:bg-gray-600 hover:scale-110'
-              }`}
+                }`}
               onClick={() => setCurrentIndex(index)}
             />
           ))}

@@ -145,7 +145,7 @@ export const courses: Course[] = [
     id: 2,
     slug: 'la-chinh-minh',
     mode: 'offline',
-    title: 'Là Chính Mình 03',
+    title: 'Là Chính Mình 04',
     category: ['Phát triển bản thân', 'Là chính mình'],
     heroImage: '/picture/la_chinh_minh.jpg',
     price: {
