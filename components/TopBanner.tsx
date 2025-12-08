@@ -18,11 +18,11 @@ const TopBanner = () => {
             <div className="container mx-auto flex flex-col md:flex-row items-center justify-center gap-2 text-[13px] sm:text-sm font-medium leading-tight">
                 <div className="flex items-center gap-2">
                     <Sparkles className="w-4 h-4 text-white animate-pulse" />
-                    <span className="uppercase font-bold tracking-wide">Deal Là Chính Mình #04:</span>
+                    <span className="uppercase font-bold tracking-wide">ƯU ĐÃI 20 SLOTS SỚM NHẤT:</span>
                 </div>
 
                 <div className="flex flex-wrap justify-center gap-x-1 items-center">
-                    <span>Nhập mã</span>
+                    <span>NHẬP MÃ</span>
                     <button
                         onClick={handleCopy}
                         className="bg-white text-[#F8B516] px-2 py-0.5 rounded font-extrabold border border-white/50 shadow-sm flex items-center gap-1.5 hover:bg-gray-50 transition-all cursor-pointer active:scale-95 group"
@@ -35,9 +35,9 @@ const TopBanner = () => {
                             <Copy className="w-3.5 h-3.5 opacity-50 group-hover:opacity-100 transition-opacity" />
                         )}
                     </button>
-                    <span>giảm còn</span>
-                    <span className="font-bold text-white">49.960.000đ</span>
-                    <span className="opacity-90 text-xs flex items-center">(08/12/2025 – 08/01/2026)</span>
+                    <span>- GIẢM NGAY</span>
+                    <span className="font-bold text-white">10.000.000Đ</span>
+                    <span>LỚP LÀ CHÍNH MÌNH</span>
                 </div>
 
                 <Link
