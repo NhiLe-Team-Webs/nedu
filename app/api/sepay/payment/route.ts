@@ -6,10 +6,10 @@ import {
   getSePayConfig,
   logSePayDebug,
 } from '@/lib/sepay-utils';
+import { OrderStore } from '@/lib/order-store';
 
-// In-memory order storage (for development)
-// In production, use a database
-const orderStore = new Map<string, any>();
+// Uses persisted order store
+const orderStore = OrderStore;
 
 export async function POST(request: NextRequest) {
   try {
@@ -105,9 +105,55 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    const simulateSuccess = searchParams.get('simulateSuccess');
+    if (simulateSuccess === 'true') {
+      order.status = 'success';
+      order.updatedAt = new Date();
+      orderStore.set(orderCode, order);
+      console.log('Order status manually simulated to success:', orderCode);
+    }
+
     return NextResponse.json({ success: true, order });
   } catch (error) {
     console.error('Error getting order status:', error);
+    return NextResponse.json(
+      { success: false, error: 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}
+
+// PATCH endpoint to manually update order status (for testing)
+export async function PATCH(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const { orderCode, status } = body;
+
+    if (!orderCode || !status) {
+      return NextResponse.json(
+        { success: false, error: 'Missing orderCode or status' },
+        { status: 400 }
+      );
+    }
+
+    const order = orderStore.get(orderCode);
+    if (!order) {
+      return NextResponse.json(
+        { success: false, error: 'Order not found' },
+        { status: 404 }
+      );
+    }
+
+    // Update order status
+    order.status = status;
+    order.updatedAt = new Date();
+    orderStore.set(orderCode, order);
+
+    console.log('Order status manually updated:', { orderCode, status });
+
+    return NextResponse.json({ success: true, order });
+  } catch (error) {
+    console.error('Error updating order status:', error);
     return NextResponse.json(
       { success: false, error: 'Internal server error' },
       { status: 500 }

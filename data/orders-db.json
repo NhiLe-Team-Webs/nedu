@@ -1,0 +1,17 @@
+{
+  "DHMIWNCOIWWZMH": {
+    "orderCode": "DHMIWNCOIWWZMH",
+    "amount": 49696000,
+    "status": "pending",
+    "createdAt": "2025-12-08T04:23:52.616Z",
+    "customerInfo": {
+      "fullName": "a",
+      "email": "a@gmail.com",
+      "phone": "a",
+      "telegram": "@a"
+    },
+    "programIds": [
+      "57"
+    ]
+  }
+}

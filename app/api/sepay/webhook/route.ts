@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { SePayWebhookPayload } from '@/types/sepay';
 import { verifySePayWebhook, getSePayConfig, logSePayDebug } from '@/lib/sepay-utils';
-import { orderStore } from '../payment/route';
+import { OrderStore } from '@/lib/order-store';
+
+const orderStore = OrderStore;
 
 export async function POST(request: NextRequest) {
   try {
@@ -33,9 +35,20 @@ export async function POST(request: NextRequest) {
     }
 
     // Extract order information from webhook payload
-    const orderCode = body.orderCode || body.description;
+    // SePay sends orderCode in different fields depending on the bank
+    let orderCode = body.orderCode || body.description;
+
+    // If not found, try to extract from content field
+    if (!orderCode && body.content) {
+      // Try to find order code pattern (e.g., DHMIWM7HBQCQ1F) in content
+      const match = body.content.match(/DHM[A-Z0-9]+/);
+      if (match) {
+        orderCode = match[0];
+      }
+    }
+
     if (!orderCode) {
-      console.error('Missing orderCode in webhook payload');
+      console.error('Missing orderCode in webhook payload', body);
       return NextResponse.json(
         { success: false, error: 'Missing order code' },
         { status: 400 }
@@ -53,21 +66,36 @@ export async function POST(request: NextRequest) {
     }
 
     // Determine payment status
-    const status = body.status || 'pending';
-    const paymentStatus =
-      status === 'success' || status === 'completed' || body.status === '00'
-        ? 'success'
-        : status === 'failed' || status === 'canceled'
-        ? 'failed'
-        : 'pending';
+    // SePay webhook indicates success when transferAmount > 0 and transferType = "in"
+    let paymentStatus = 'pending';
+
+    if (body.transferAmount && body.transferAmount > 0 && body.transferType === 'in') {
+      paymentStatus = 'success';
+    } else if (body.status) {
+      const status = body.status;
+      paymentStatus =
+        status === 'success' || status === 'completed' || status === '00'
+          ? 'success'
+          : status === 'failed' || status === 'canceled'
+            ? 'failed'
+            : 'pending';
+    }
 
     // Update order status
     order.status = paymentStatus;
     order.updatedAt = new Date();
-    order.transactionId = body.transactionId;
+    order.transactionId = body.transactionId || body.referenceCode || body.id?.toString();
+    order.transferAmount = body.transferAmount;
+    order.transactionDate = body.transactionDate;
+    order.gateway = body.gateway;
     orderStore.set(orderCode, order);
 
-    logSePayDebug('Order status updated', { orderCode, status: paymentStatus });
+    logSePayDebug('Order status updated', {
+      orderCode,
+      status: paymentStatus,
+      transferAmount: body.transferAmount,
+      gateway: body.gateway
+    });
 
     // TODO: If you have a backend API, sync the order status here
     // Example:

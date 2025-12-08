@@ -512,11 +512,11 @@ export default function CheckoutPage() {
                     />
                     <label htmlFor="terms" className="text-sm text-text-primary">
                       Bằng cách tích vào ô này, bạn xác nhận đã đọc, hiểu và đồng ý với{' '}
-                      <Link href="/policy" className="text-primary font-semibold hover:underline">
+                      <Link href="/policy" target="_blank" rel="noopener noreferrer" className="text-primary font-semibold hover:underline">
                         Chính sách bảo mật
                       </Link>{' '}
                       và{' '}
-                      <Link href="/terms" className="text-primary font-semibold hover:underline">
+                      <Link href="/terms" target="_blank" rel="noopener noreferrer" className="text-primary font-semibold hover:underline">
                         Điều khoản sử dụng
                       </Link>{' '}
                       của chúng tôi.

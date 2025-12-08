@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { SePayPaymentResponse } from '@/types/sepay';
 import { currencyFormatter } from '@/lib/payment-utils';
 
@@ -19,6 +19,15 @@ export default function SePayPaymentQR({
   const [timeElapsed, setTimeElapsed] = useState(0);
   const [isChecking, setIsChecking] = useState(false);
 
+  // Use refs for callbacks to avoid dependency cycles affecting the effect
+  const onPaymentCompleteRef = useRef(onPaymentComplete);
+  const onPaymentFailedRef = useRef(onPaymentFailed);
+
+  useEffect(() => {
+    onPaymentCompleteRef.current = onPaymentComplete;
+    onPaymentFailedRef.current = onPaymentFailed;
+  }, [onPaymentComplete, onPaymentFailed]);
+
   // Polling to check payment status
   useEffect(() => {
     if (!paymentData.orderCode || paymentStatus !== 'pending') {
@@ -29,7 +38,7 @@ export default function SePayPaymentQR({
       try {
         setIsChecking(true);
         const response = await fetch(
-          `/api/sepay/payment?orderCode=${paymentData.orderCode}`
+          `/api/sepay/payment?orderCode=${paymentData.orderCode}&t=${Date.now()}`
         );
         const data = await response.json();
 
@@ -37,13 +46,13 @@ export default function SePayPaymentQR({
           const status = data.order.status;
           if (status === 'success') {
             setPaymentStatus('success');
-            if (onPaymentComplete) {
-              onPaymentComplete();
+            if (onPaymentCompleteRef.current) {
+              onPaymentCompleteRef.current();
             }
           } else if (status === 'failed') {
             setPaymentStatus('failed');
-            if (onPaymentFailed) {
-              onPaymentFailed();
+            if (onPaymentFailedRef.current) {
+              onPaymentFailedRef.current();
             }
           }
         }
@@ -59,9 +68,9 @@ export default function SePayPaymentQR({
 
     // Poll every 5 seconds
     const interval = setInterval(() => {
-      if (paymentStatus === 'pending') {
-        checkPaymentStatus();
-      }
+      // Check current status ref or rely on effect cleanup? 
+      // We rely on effect cleanup when paymentStatus changes.
+      checkPaymentStatus();
     }, 5000);
 
     // Timer to track elapsed time
@@ -73,7 +82,7 @@ export default function SePayPaymentQR({
       clearInterval(interval);
       clearInterval(timer);
     };
-  }, [paymentData.orderCode, paymentStatus, onPaymentComplete, onPaymentFailed]);
+  }, [paymentData.orderCode, paymentStatus]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -82,10 +91,21 @@ export default function SePayPaymentQR({
   };
 
   if (paymentStatus === 'success') {
+    // Auto redirect after 3 seconds
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        if (onPaymentComplete) {
+          onPaymentComplete();
+        }
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }, []);
+
     return (
       <div className="card text-center">
         <div className="mb-6">
-          <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
             <svg
               className="w-10 h-10 text-green-600"
               fill="none"
@@ -103,9 +123,26 @@ export default function SePayPaymentQR({
           <h3 className="text-2xl font-bold text-green-600 mb-2">
             Thanh toán thành công!
           </h3>
-          <p className="text-gray-600">
+          <p className="text-gray-600 mb-6">
             Đơn hàng của bạn đã được xác nhận thanh toán thành công.
           </p>
+
+          <div className="space-y-3">
+            <button
+              onClick={() => {
+                if (onPaymentComplete) {
+                  onPaymentComplete();
+                }
+              }}
+              className="w-full bg-primary hover:bg-primary-dark text-white font-bold py-3 px-6 rounded-lg transition"
+            >
+              Tiếp tục ngay
+            </button>
+
+            <p className="text-sm text-gray-500">
+              Tự động chuyển trang sau 3 giây...
+            </p>
+          </div>
         </div>
       </div>
     );

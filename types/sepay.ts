@@ -36,6 +36,18 @@ export interface SePayWebhookPayload {
   description?: string;
   timestamp?: string;
   signature?: string;
+  // Additional fields from SePay bank notification
+  gateway?: string;
+  transactionDate?: string;
+  accountNumber?: string;
+  subAccount?: string;
+  code?: string | null;
+  content?: string;
+  transferType?: string; // "in" or "out"
+  transferAmount?: number;
+  referenceCode?: string;
+  accumulated?: number;
+  id?: number;
   [key: string]: any; // Allow additional fields from SePay
 }
 
