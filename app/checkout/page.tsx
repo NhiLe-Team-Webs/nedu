@@ -25,6 +25,7 @@ export default function CheckoutPage() {
   });
   const [discountCode, setDiscountCode] = useState('');
   const [discount, setDiscount] = useState(0);
+  const [discountType, setDiscountType] = useState<'percentage' | 'fixed'>('percentage');
   const [agreed, setAgreed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
@@ -33,17 +34,40 @@ export default function CheckoutPage() {
 
 
   const subtotal = getTotalPrice();
-  const discountAmount = subtotal * (discount / 100);
+  const discountAmount = discountType === 'percentage' 
+    ? subtotal * (discount / 100)
+    : discount;
   const total = subtotal - discountAmount;
 
   const handleApplyDiscount = () => {
-    // Simple discount logic for demo
-    if (discountCode === 'SAVE10') {
+    const code = discountCode.trim().toUpperCase();
+    
+    // Check if cart contains "Là Chính Mình 04" course
+    const hasLaChinhMinh4 = items.some(item => 
+      item.id === 2 || item.title.includes('Là Chính Mình 04')
+    );
+    
+    if (code === 'EARLY BIRD' || code === 'EARLYBIRD') {
+      if (hasLaChinhMinh4) {
+        setDiscount(10000000); // 10 triệu VNĐ
+        setDiscountType('fixed');
+        alert('Đã áp dụng mã giảm giá EARLY BIRD: -10.000.000 VNĐ');
+      } else {
+        setDiscount(0);
+        setDiscountType('percentage');
+        alert('Mã giảm giá EARLY BIRD chỉ áp dụng cho khóa "Là Chính Mình 04"');
+      }
+    } else if (code === 'SAVE10') {
       setDiscount(10);
-    } else if (discountCode === 'SAVE20') {
+      setDiscountType('percentage');
+      alert('Đã áp dụng mã giảm giá: 10%');
+    } else if (code === 'SAVE20') {
       setDiscount(20);
+      setDiscountType('percentage');
+      alert('Đã áp dụng mã giảm giá: 20%');
     } else {
       setDiscount(0);
+      setDiscountType('percentage');
       alert('Mã giảm giá không hợp lệ');
     }
   };
@@ -94,7 +118,9 @@ export default function CheckoutPage() {
     try {
       // Calculate total amount for all items in cart (after discount)
       const totalAmount = getTotalPrice();
-      const discountAmount = totalAmount * (discount / 100);
+      const discountAmount = discountType === 'percentage' 
+        ? totalAmount * (discount / 100)
+        : discount;
       const finalAmount = totalAmount - discountAmount;
 
       // Get all program IDs from cart items
@@ -575,7 +601,7 @@ export default function CheckoutPage() {
                   </div>
                   {discount > 0 && (
                     <div className="mt-2 text-success text-xs sm:text-sm font-semibold">
-                      Đã áp dụng mã giảm giá: {discount}%
+                      Đã áp dụng mã giảm giá: {discountType === 'percentage' ? `${discount}%` : `-${currencyFormatter.format(discount)}`}
                     </div>
                   )}
                 </div>

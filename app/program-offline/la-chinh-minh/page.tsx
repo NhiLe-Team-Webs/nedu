@@ -52,7 +52,7 @@ export default function LaChinhMinhPage() {
         time="Thời gian: THÁNG 03 NĂM 2026"
         tags={["Phát triển bản thân", "Là chính mình"]}
         title="Là Chính Mình 04"
-        cost="59.696.000"
+        cost={course?.price.amount || "59.696.000"}
         paymentLink="/payment/57"
         courseSlug="la-chinh-minh"
       />
