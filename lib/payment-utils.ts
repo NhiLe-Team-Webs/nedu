@@ -31,6 +31,8 @@ export interface SePayPaymentFormData {
   programId?: string;
   programIds?: string[];
   amount: number;
+  courseName?: string;
+  couponCode?: string;
 }
 
 export const currencyFormatter = new Intl.NumberFormat('vi-VN', {
@@ -60,7 +62,7 @@ export async function sendPaymentRequest(data: PaymentFormData): Promise<Payment
     if (!response.ok) {
       const errorText = await response.text();
       console.error('API Error Response:', errorText);
-      
+
       // Cải thiện xử lý lỗi với thông báo chi tiết hơn
       if (response.status === 400) {
         throw new Error('Dữ liệu không hợp lệ. Vui lòng kiểm tra lại thông tin.');
@@ -73,7 +75,7 @@ export async function sendPaymentRequest(data: PaymentFormData): Promise<Payment
 
     const result = await response.json();
     console.log('API Success Response:', result);
-    
+
     return {
       paymentUrl: result.paymentUrl,
     };
@@ -211,7 +213,9 @@ export function prepareSePayPaymentData(
   formData: any,
   amount: number,
   programId?: string,
-  programIds?: string[]
+  programIds?: string[],
+  courseName?: string,
+  couponCode?: string
 ): SePayPaymentFormData {
   const paymentData: SePayPaymentFormData = {
     fullName: formData.name,
@@ -223,6 +227,8 @@ export function prepareSePayPaymentData(
     address: formData.address || undefined,
     note: formData.note || undefined,
     amount: amount,
+    courseName: courseName,
+    couponCode: couponCode
   };
 
   if (programIds && programIds.length > 0) {

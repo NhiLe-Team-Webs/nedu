@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { SePayWebhookPayload } from '@/types/sepay';
 import { verifySePayWebhook, getSePayConfig, logSePayDebug } from '@/lib/sepay-utils';
 import { OrderStore } from '@/lib/order-store';
+import { updateSheetStatus } from '@/lib/google-sheets';
 
 const orderStore = OrderStore;
 
@@ -36,12 +37,14 @@ export async function POST(request: NextRequest) {
 
     // Extract order information from webhook payload
     // SePay sends orderCode in different fields depending on the bank
-    let orderCode = body.orderCode || body.description;
+    let orderCode = body.orderCode || body.code;
 
-    // If not found, try to extract from content field
-    if (!orderCode && body.content) {
-      // Try to find order code pattern (e.g., DHMIWM7HBQCQ1F) in content
-      const match = body.content.match(/DH[A-Z0-9]+/);
+    // If no explicit code, start hunting in the content/description
+    if (!orderCode) {
+      const textToSearch = body.content || body.description || '';
+      // Regex to find "DH" followed by alphanumeric characters (the format we generate)
+      // Also match TT30N for Challenge 30 Days
+      const match = textToSearch.match(/(DH|TT30N)[A-Z0-9]+/);
       if (match) {
         orderCode = match[0];
       }
@@ -52,16 +55,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { success: false, error: 'Missing order code' },
         { status: 400 }
-      );
-    }
-
-    // Find order in store
-    const order = orderStore.get(orderCode);
-    if (!order) {
-      console.error('Order not found:', orderCode);
-      return NextResponse.json(
-        { success: false, error: 'Order not found' },
-        { status: 404 }
       );
     }
 
@@ -81,6 +74,46 @@ export async function POST(request: NextRequest) {
             : 'pending';
     }
 
+    // Special handling for Challenge 30 Days (TT30N) or Regular Orders (DH...)
+    if (orderCode.startsWith('TT30N') || orderCode.startsWith('DH')) {
+      if (paymentStatus === 'success') {
+        // Update Google Sheet
+        await updateSheetStatus(orderCode, 'Đã thanh toán', body.transferAmount);
+      } else if (paymentStatus === 'failed') {
+        await updateSheetStatus(orderCode, 'Thanh toán thất bại');
+      }
+
+      // Ensure order exists in OrderStore (in case of server restart) so valid order check passes
+      // This allows the polling from the frontend to succeed even if the order was lost from memory
+      if (!orderStore.get(orderCode) && orderCode.startsWith('TT30N')) {
+        // Only recreate TT30N orders because we don't have full info for DH orders here to recreate them perfectly
+        // But actually, for status checking, we just need the status.
+        orderStore.set(orderCode, {
+          orderCode,
+          amount: body.transferAmount || 0,
+          status: paymentStatus,
+          createdAt: new Date(),
+          customerInfo: {
+            fullName: 'Unknown (Webhook)',
+            email: '',
+            phone: '',
+            telegram: ''
+          },
+          programId: 'unknown'
+        });
+      }
+    }
+
+    // Find order in store
+    const order = orderStore.get(orderCode);
+    if (!order) {
+      console.error('Order not found:', orderCode);
+      return NextResponse.json(
+        { success: false, error: 'Order not found' },
+        { status: 404 }
+      );
+    }
+
     // Update order status
     order.status = paymentStatus;
     order.updatedAt = new Date();
@@ -97,14 +130,6 @@ export async function POST(request: NextRequest) {
       gateway: body.gateway
     });
 
-    // TODO: If you have a backend API, sync the order status here
-    // Example:
-    // await fetch('https://api.nedu.nhi.sg/api/order/update-status', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ orderCode, status: paymentStatus })
-    // });
-
     // Return success response to SePay
     return NextResponse.json({ success: true, message: 'Webhook processed' });
   } catch (error) {
@@ -120,4 +145,3 @@ export async function POST(request: NextRequest) {
 export async function GET(request: NextRequest) {
   return NextResponse.json({ message: 'SePay webhook endpoint' });
 }
-

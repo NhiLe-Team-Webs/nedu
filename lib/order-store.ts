@@ -1,9 +1,7 @@
-
-import fs from 'fs';
-import path from 'path';
-
-// Path to the JSON file
-const DB_PATH = path.join(process.cwd(), 'data', 'orders-db.json');
+// In-memory cache
+// NOTE: This data is ephemeral and will be lost on server restart.
+// For production, use a real database (e.g., Supabase, PostgreSQL, MongoDB).
+const orderCache = new Map<string, Order>();
 
 export interface Order {
     orderCode: string;
@@ -25,55 +23,16 @@ export interface Order {
     gateway?: string;
 }
 
-// In-memory cache
-let orderCache: Map<string, Order> | null = null;
-
-// Initialize cache from file
-function initCache() {
-    // Always reload to ensure newest data (dev mode fix)
-    // if (orderCache) return; 
-
-    try {
-        if (fs.existsSync(DB_PATH)) {
-            const data = fs.readFileSync(DB_PATH, 'utf-8');
-            const orders = JSON.parse(data);
-            // Convert object to Map
-            orderCache = new Map(Object.entries(orders));
-        } else {
-            orderCache = new Map();
-        }
-    } catch (error) {
-        console.error('Error reading order DB:', error);
-        orderCache = new Map();
-    }
-}
-
-// Save cache to file
-function saveCache() {
-    if (!orderCache) return;
-
-    try {
-        const orders = Object.fromEntries(orderCache);
-        fs.writeFileSync(DB_PATH, JSON.stringify(orders, null, 2), 'utf-8');
-    } catch (error) {
-        console.error('Error writing order DB:', error);
-    }
-}
-
 export const OrderStore = {
     get: (orderCode: string): Order | undefined => {
-        initCache();
-        return orderCache?.get(orderCode);
+        return orderCache.get(orderCode);
     },
 
     set: (orderCode: string, order: Order): void => {
-        initCache();
-        orderCache?.set(orderCode, order);
-        saveCache();
+        orderCache.set(orderCode, order);
     },
 
     getAll: (): Order[] => {
-        initCache();
-        return Array.from(orderCache?.values() || []);
+        return Array.from(orderCache.values());
     }
 };

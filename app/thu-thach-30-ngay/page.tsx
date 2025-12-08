@@ -8,6 +8,7 @@ import {
   MessageCircle,
   PhoneCall,
 } from "lucide-react";
+import ChallengeRegistrationForm from "@/components/ChallengeRegistrationForm";
 
 const neduLogo = "/picture/nedu.svg";
 const nltLogo = "/picture/nlt.png";
@@ -122,9 +123,9 @@ const ThirtyDayPage = () => {
                 </span>
                 <span className="font-semibold"> VND</span>
               </p>
-              <div id="register" className="text-center mt-8 sm:mt-10">
+              <div id="register-hero" className="text-center mt-8 sm:mt-10">
                 <a
-                  href="https://docs.google.com/forms/d/e/1FAIpQLSdFUBpOdZTswjw0mraKvyBW0bU5AGK9hrZYatNC2K3gnpQJdQ/viewform"
+                  href="#register-form"
                   className="px-8 sm:px-10 py-2 sm:py-3 rounded-full btn-primary text-xs sm:text-sm inline-flex items-center gap-2"
                 >
                   ĐĂNG KÝ NGAY
@@ -164,7 +165,7 @@ const ThirtyDayPage = () => {
               style={{ color: DARK_GRAY }}
             >
               <p className="mb-3">
-                Nhi đây, có ai học thức thức của Nhi xong bỏ vô góc trì hoãn
+                Nhi đây, có ai học kiến thức của Nhi xong bỏ vô góc trì hoãn
                 không làm không? Thử Thách 30 Ngày ra đời để kéo bạn vào hành
                 trình hành động cùng nhau, từng bước xoá thói quen xấu.
               </p>
@@ -414,14 +415,8 @@ const ThirtyDayPage = () => {
                 </div>
               </div>
 
-              <div id="register" className="text-center mt-8 sm:mt-10">
-                <a
-                  href="https://docs.google.com/forms/d/e/1FAIpQLSdFUBpOdZTswjw0mraKvyBW0bU5AGK9hrZYatNC2K3gnpQJdQ/viewform"
-                  className="px-8 sm:px-10 py-2 sm:py-3 rounded-full btn-primary text-xs sm:text-sm inline-flex items-center gap-2"
-                >
-                  ĐĂNG KÝ NGAY
-                  <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
-                </a>
+              <div id="register-form" className="mt-8 sm:mt-12 scroll-mt-20">
+                <ChallengeRegistrationForm />
               </div>
             </div>
           </section>

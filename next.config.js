@@ -12,7 +12,10 @@ const nextConfig = {
       },
     ],
   },
-  allowedDevOrigins: ['*'],
+  allowedDevOrigins: [
+    'localhost:5000',
+    'achenial-kali-unargumentatively.ngrok-free.dev'
+  ],
 }
 
 module.exports = nextConfig

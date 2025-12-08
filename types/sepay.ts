@@ -15,6 +15,8 @@ export interface SePayPaymentRequest {
   programIds?: string[]; // For multiple courses
   amount: number; // Amount in VND
   returnUrl?: string;
+  courseName?: string; // Optional: specific course name if known
+  couponCode?: string; // Optional: discount code used
 }
 
 export interface SePayPaymentResponse {

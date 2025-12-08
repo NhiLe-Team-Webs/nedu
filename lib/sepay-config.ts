@@ -5,21 +5,24 @@
 
 export const SEPAY_CONFIG = {
   // SePay API Key
-  API_KEY: 'BATCWZ5XCUG3M0WNSKGQVGXXHONJLSIAJOWIIDR1VXYUKZN9Q0KIQTOALCMSW8F7',
+  API_KEY: process.env.SEPAY_API_KEY || '',
 
   // SePay Account Number
-  ACCOUNT_NUMBER: 'VQRQAFTUG5434',
+  ACCOUNT_NUMBER: process.env.SEPAY_ACCOUNT_NUMBER || '',
 
   // Bank Code (MB = MB Bank)
-  BANK_CODE: 'MB',
+  BANK_CODE: process.env.SEPAY_BANK_CODE || 'MB',
 
   // Webhook Secret (update this with your actual webhook secret from SePay dashboard)
-  WEBHOOK_SECRET: 'your_webhook_secret_here',
+  WEBHOOK_SECRET: process.env.SEPAY_WEBHOOK_SECRET || '',
 
   // Application URL (for webhooks and callbacks)
-  APP_URL: 'http://localhost:5000',
+  APP_URL: process.env.NEXT_PUBLIC_APP_URL || process.env.APP_URL || 'http://localhost:3000',
+
+  // SePay API Host
+  API_HOST: 'https://my.sepay.vn/userapi',
 
   // Debug mode
-  DEBUG: true,
+  DEBUG: process.env.SEPAY_DEBUG === 'true',
 } as const;
 

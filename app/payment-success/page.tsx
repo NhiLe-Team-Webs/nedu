@@ -72,7 +72,45 @@ function PaymentSuccessContent() {
             programId
           })
 
-          // Check payment status from SePay
+          // Verify transaction with backend API if transactionId is available
+          if (transactionId) {
+            try {
+              const response = await fetch(`/api/sepay/verify-transaction?transactionId=${transactionId}`)
+              const result = await response.json()
+
+              console.log('Transaction Verification Result:', result)
+
+              if (result.success && result.data && result.data.transaction) {
+                // Check payment details from the official Sepay API response
+                const transaction = result.data.transaction;
+                const amountIn = parseFloat(transaction.amount_in || '0');
+
+                // If we received money (amount_in > 0), consider it a success
+                // We can also verify if amountIn matches the expected amount if needed
+                if (amountIn > 0) {
+                  processedRef.current = true
+                  setStatus('success')
+                  setMessage('Thanh toán thành công! Cảm ơn bạn đã đăng ký khóa học.')
+                  // Optional: Verify amount matches if 'amount' param is present
+                  if (amount) {
+                    const expectedAmount = parseFloat(amount.toString());
+                    if (Math.abs(amountIn - expectedAmount) > 1000) {
+                      console.warn('Warning: Transaction amount mismatch.', { expected: expectedAmount, received: amountIn });
+                      // We still treat it as success but log warning, or handle partial payment logic here
+                    }
+                  }
+
+                  clearCart() // Clear cart
+                  return // Exit function
+                }
+              }
+            } catch (error) {
+              console.error('Error verifying transaction:', error)
+            }
+          }
+
+          // Fallback to URL params check if API check fails or returns pending
+          // Check payment status from SePay URL params
           if (status === 'success' || status === 'completed' || status === '00' || status === 'SUCCESS') {
             processedRef.current = true
             setStatus('success')

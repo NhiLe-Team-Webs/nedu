@@ -7,6 +7,7 @@ import {
   logSePayDebug,
 } from '@/lib/sepay-utils';
 import { OrderStore } from '@/lib/order-store';
+import { appendToSheet } from '@/lib/google-sheets';
 
 // Uses persisted order store
 const orderStore = OrderStore;
@@ -71,6 +72,28 @@ export async function POST(request: NextRequest) {
       programIds: body.programIds,
     };
     orderStore.set(orderCode, orderInfo);
+
+    // Save to Google Sheet (for all orders, including courses)
+    try {
+      await appendToSheet({
+        name: body.fullName,
+        email: body.email,
+        phone: body.phone,
+        telegram: body.telegram,
+        dob: body.birthday || '', // Map birthday to DOB
+        gender: body.gender,
+        address: body.address,
+        note: body.note,
+        courseName: body.courseName,
+        couponCode: body.couponCode,
+        amount: body.amount,
+        orderCode,
+        status: 'Chờ thanh toán',
+      });
+    } catch (sheetError) {
+      console.error("Failed to save order to sheet", sheetError);
+      // Continue flow, don't fail payment creation just because sheet failed
+    }
 
     logSePayDebug('Payment created', { orderCode, qrCodeUrl: paymentResponse.qrCodeUrl });
 
