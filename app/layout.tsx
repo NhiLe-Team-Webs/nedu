@@ -3,6 +3,7 @@ import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Sidebar from '@/components/Sidebar'
+import Banner from '@/components/Banner'
 import { CartProvider } from '@/lib/cart-context'
 import CartSuccessPopup from '@/components/CartSuccessPopup'
 import ErrorHandler from '@/components/ErrorHandler'
@@ -136,10 +137,11 @@ export default function RootLayout({
             }}
           />
           <Header />
-          <div className="h-14 sm:h-16 md:h-20" />
-          <main>{children}</main>
+          <div className="h-24 sm:h-28 md:h-32" />
+          <main className="pb-32">{children}</main>
           <Sidebar />
           <Footer />
+          <Banner />
           <CartSuccessPopup />
         </CartProvider>
       </body>

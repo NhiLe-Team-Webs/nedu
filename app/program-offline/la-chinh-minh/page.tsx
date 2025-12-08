@@ -51,11 +51,13 @@ export default function LaChinhMinhPage() {
         altText="Là chính mình"
         time="Thời gian: THÁNG 03 NĂM 2026"
         tags={["Phát triển bản thân", "Là chính mình"]}
-        title="Là Chính Mình"
-        cost="59.696.000"
+        title="Là Chính Mình 04"
+        cost={course?.price.amount || "59.696.000"}
         paymentLink="/payment/57"
         courseSlug="la-chinh-minh"
       />
+
+
       <CourseInfo
         title="THÔNG TIN KHÓA HỌC"
         details={[
@@ -64,7 +66,9 @@ export default function LaChinhMinhPage() {
             label: "Chủ đề:",
             value: "Phát triển bản thân và khám phá nội tâm",
           },
-          { icon: "Clock", label: "Thời gian học:", value: "05-08/03/2026" },
+
+          { icon: "Clock", label: "Thời gian học:", value: "05–08/03/2026" },
+
           {
             icon: "MapPin",
             label: "Người dẫn đường:",

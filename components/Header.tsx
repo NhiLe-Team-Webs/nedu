@@ -7,6 +7,7 @@ import { Menu, ShoppingCart } from "lucide-react";
 import { useState } from "react";
 import { useCart } from "@/lib/cart-context";
 import Image from "next/image";
+import TopBanner from "./TopBanner";
 
 const Header = () => {
   const pathname = usePathname() || "/";
@@ -144,6 +145,7 @@ const Header = () => {
           </Button>
         </div>
       </div>
+      <TopBanner />
 
       {/* Mobile menu with improved UX */}
       {isMobileMenuOpen && (

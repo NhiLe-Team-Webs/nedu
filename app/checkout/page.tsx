@@ -5,7 +5,9 @@ import Link from 'next/link';
 import { ArrowLeft, Tag } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
 import { useRouter } from 'next/navigation';
-import { preparePaymentData, sendPaymentRequest, handlePaymentResponse, currencyFormatter } from '@/lib/payment-utils';
+import { preparePaymentData, sendPaymentRequest, handlePaymentResponse, currencyFormatter, sendSePayPaymentRequest, prepareSePayPaymentData } from '@/lib/payment-utils';
+import SePayPaymentQR from '@/components/SePayPaymentQR';
+import { SePayPaymentResponse } from '@/types/sepay';
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -23,23 +25,49 @@ export default function CheckoutPage() {
   });
   const [discountCode, setDiscountCode] = useState('');
   const [discount, setDiscount] = useState(0);
+  const [discountType, setDiscountType] = useState<'percentage' | 'fixed'>('percentage');
   const [agreed, setAgreed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
+  const [sepayPaymentData, setSepayPaymentData] = useState<SePayPaymentResponse | null>(null);
+  const [showPaymentQR, setShowPaymentQR] = useState(false);
 
 
   const subtotal = getTotalPrice();
-  const discountAmount = subtotal * (discount / 100);
+  const discountAmount = discountType === 'percentage' 
+    ? subtotal * (discount / 100)
+    : discount;
   const total = subtotal - discountAmount;
 
   const handleApplyDiscount = () => {
-    // Simple discount logic for demo
-    if (discountCode === 'SAVE10') {
+    const code = discountCode.trim().toUpperCase();
+    
+    // Check if cart contains "Là Chính Mình 04" course
+    const hasLaChinhMinh4 = items.some(item => 
+      item.id === 2 || item.title.includes('Là Chính Mình 04')
+    );
+    
+    if (code === 'EARLY BIRD' || code === 'EARLYBIRD') {
+      if (hasLaChinhMinh4) {
+        setDiscount(10000000); // 10 triệu VNĐ
+        setDiscountType('fixed');
+        alert('Đã áp dụng mã giảm giá EARLY BIRD: -10.000.000 VNĐ');
+      } else {
+        setDiscount(0);
+        setDiscountType('percentage');
+        alert('Mã giảm giá EARLY BIRD chỉ áp dụng cho khóa "Là Chính Mình 04"');
+      }
+    } else if (code === 'SAVE10') {
       setDiscount(10);
-    } else if (discountCode === 'SAVE20') {
+      setDiscountType('percentage');
+      alert('Đã áp dụng mã giảm giá: 10%');
+    } else if (code === 'SAVE20') {
       setDiscount(20);
+      setDiscountType('percentage');
+      alert('Đã áp dụng mã giảm giá: 20%');
     } else {
       setDiscount(0);
+      setDiscountType('percentage');
       alert('Mã giảm giá không hợp lệ');
     }
   };
@@ -84,91 +112,47 @@ export default function CheckoutPage() {
     }
 
     setIsLoading(true);
+    setShowPaymentQR(false);
+    setSepayPaymentData(null);
 
     try {
-      // Calculate total amount for all items in cart
+      // Calculate total amount for all items in cart (after discount)
       const totalAmount = getTotalPrice();
-      
-      // Call API for each course simultaneously
-      const apiPromises = items.map(async (item) => {
-        const programId = item.paymentId || item.id;
-        
-        // Prepare data for API according to API requirements
-        const apiData = {
-          fullName: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          telegram: formData.telegram,
-          birthday: formData.birthdate ? new Date(formData.birthdate).toISOString() : '',
-          gender: formData.gender,
-          address: formData.address || '',
-          note: formData.note || '',
-          programId: programId // Send only single programId as required by API
-        };
+      const discountAmount = discountType === 'percentage' 
+        ? totalAmount * (discount / 100)
+        : discount;
+      const finalAmount = totalAmount - discountAmount;
 
-        console.log(`Sending payment data for course "${item.title}":`, apiData);
+      // Get all program IDs from cart items
+      const programIds = items.map(item => (item.paymentId || item.id).toString());
 
-        const response = await fetch('https://api.nedu.nhi.sg/api/order/payment', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json; charset=utf-8',
-            'Accept': 'application/json; charset=utf-8',
-          },
-          body: JSON.stringify(apiData)
-        });
+      // Prepare SePay payment data
+      const sepayData = prepareSePayPaymentData(
+        formData,
+        finalAmount,
+        undefined, // No single programId for checkout
+        programIds // Use programIds for multiple courses
+      );
 
-        if (!response.ok) {
-          const errorText = await response.text();
-          console.error(`API Error Response for "${item.title}":`, errorText);
-          
-          // Cải thiện xử lý lỗi với thông báo chi tiết hơn
-          if (response.status === 400) {
-            throw new Error('Dữ liệu không hợp lệ. Vui lòng kiểm tra lại thông tin.');
-          } else if (response.status === 500) {
-            throw new Error('Lỗi server. Vui lòng thử lại sau.');
-          } else {
-            throw new Error(`API Error: ${response.status} - ${errorText}`);
-          }
-        }
+      console.log('Sending SePay payment request:', sepayData);
 
-        const result = await response.json();
-        console.log(`API Success Response for "${item.title}":`, result);
-        
-        return {
-          item,
-          result
-        };
-      });
+      // Send SePay payment request
+      const paymentResponse = await sendSePayPaymentRequest(sepayData);
 
-      // Wait for all API calls to complete
-      const results = await Promise.all(apiPromises);
-      
-      // Use the first successful result to redirect to VNPAY
-      // The total amount will be calculated on the frontend
-      if (results.length > 0 && results[0].result.paymentUrl) {
-        // Get the payment URL from the first result
-        let paymentUrl = results[0].result.paymentUrl;
-        
-        // Try to modify the payment URL to include the total amount
-        // This is a workaround since the API only accepts one course at a time
-        try {
-          const url = new URL(paymentUrl);
-          // Update the amount to reflect the total for all courses
-          url.searchParams.set('vnp_Amount', Math.round(totalAmount).toString());
-          paymentUrl = url.toString();
-          console.log('Updated payment URL with total amount:', paymentUrl);
-        } catch (error) {
-          console.error('Error updating payment URL:', error);
-          // If we can't modify the URL, use the original one
-        }
-        
-        // Redirect to VNPAY payment page
-        window.location.href = paymentUrl;
+      if (paymentResponse.error || !paymentResponse.success) {
+        throw new Error(paymentResponse.error || 'Không thể tạo thanh toán');
+      }
+
+      if (paymentResponse.qrCodeUrl) {
+        // Show QR code payment UI
+        setSepayPaymentData(paymentResponse);
+        setShowPaymentQR(true);
+        // Scroll to QR code
+        setTimeout(() => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 100);
       } else {
-        // Show success message for non-VNPAY payments
-        alert('Đặt hàng thành công!');
-        clearCart();
-        router.push('/');
+        throw new Error('Không nhận được QR code từ hệ thống thanh toán');
       }
       
     } catch (error) {
@@ -179,6 +163,16 @@ export default function CheckoutPage() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handlePaymentComplete = () => {
+    // Clear cart and redirect to success page
+    clearCart();
+    router.push('/payment-success?status=success&paymentMethod=sepay');
+  };
+
+  const handlePaymentFailed = () => {
+    setErrors(['Thanh toán thất bại. Vui lòng thử lại.']);
   };
 
   const handleInputChange = (field: string, value: string) => {
@@ -219,9 +213,19 @@ export default function CheckoutPage() {
 
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-4 text-text-primary">Thanh toán</h1>
         
-        
-        {/* Step Indicators */}
-        <div className="flex justify-center items-center mb-8 sm:mb-12">
+        {/* SePay QR Code Payment - Show full screen when QR is ready */}
+        {showPaymentQR && sepayPaymentData ? (
+          <div className="mb-8 max-w-2xl mx-auto">
+            <SePayPaymentQR
+              paymentData={sepayPaymentData}
+              onPaymentComplete={handlePaymentComplete}
+              onPaymentFailed={handlePaymentFailed}
+            />
+          </div>
+        ) : (
+          <>
+            {/* Step Indicators */}
+            <div className="flex justify-center items-center mb-8 sm:mb-12">
           <div className="flex items-center">
             <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold text-base sm:text-xl ${
               currentStep >= 1
@@ -508,11 +512,11 @@ export default function CheckoutPage() {
                     />
                     <label htmlFor="terms" className="text-sm text-text-primary">
                       Bằng cách tích vào ô này, bạn xác nhận đã đọc, hiểu và đồng ý với{' '}
-                      <Link href="/policy" className="text-primary font-semibold hover:underline">
+                      <Link href="/policy" target="_blank" rel="noopener noreferrer" className="text-primary font-semibold hover:underline">
                         Chính sách bảo mật
                       </Link>{' '}
                       và{' '}
-                      <Link href="/terms" className="text-primary font-semibold hover:underline">
+                      <Link href="/terms" target="_blank" rel="noopener noreferrer" className="text-primary font-semibold hover:underline">
                         Điều khoản sử dụng
                       </Link>{' '}
                       của chúng tôi.
@@ -597,7 +601,7 @@ export default function CheckoutPage() {
                   </div>
                   {discount > 0 && (
                     <div className="mt-2 text-success text-xs sm:text-sm font-semibold">
-                      Đã áp dụng mã giảm giá: {discount}%
+                      Đã áp dụng mã giảm giá: {discountType === 'percentage' ? `${discount}%` : `-${currencyFormatter.format(discount)}`}
                     </div>
                   )}
                 </div>
@@ -662,6 +666,8 @@ export default function CheckoutPage() {
             </div>
           </div>
         </div>
+          </>
+        )}
       </div>
     </div>
   );

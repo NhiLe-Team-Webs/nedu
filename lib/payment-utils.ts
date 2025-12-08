@@ -1,3 +1,5 @@
+import { SePayPaymentRequest, SePayPaymentResponse } from '@/types/sepay';
+
 export interface PaymentFormData {
   fullName: string;
   email: string;
@@ -14,6 +16,21 @@ export interface PaymentFormData {
 export interface PaymentResponse {
   paymentUrl?: string;
   error?: string;
+}
+
+// SePay interfaces
+export interface SePayPaymentFormData {
+  fullName: string;
+  email: string;
+  phone: string;
+  telegram: string;
+  birthday?: string;
+  gender: string;
+  address?: string;
+  note?: string;
+  programId?: string;
+  programIds?: string[];
+  amount: number;
 }
 
 export const currencyFormatter = new Intl.NumberFormat('vi-VN', {
@@ -133,4 +150,86 @@ export function handlePaymentResponse(
     }
     return true;
   }
+}
+
+/**
+ * Gửi yêu cầu thanh toán SePay
+ * @param data Thông tin thanh toán SePay
+ * @returns Promise<SePayPaymentResponse> Kết quả từ SePay API
+ */
+export async function sendSePayPaymentRequest(
+  data: SePayPaymentFormData
+): Promise<SePayPaymentResponse> {
+  try {
+    console.log('Sending SePay payment data:', data);
+
+    const response = await fetch('/api/sepay/payment', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        'Accept': 'application/json; charset=utf-8',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('SePay API Error Response:', errorText);
+
+      if (response.status === 400) {
+        throw new Error('Dữ liệu không hợp lệ. Vui lòng kiểm tra lại thông tin.');
+      } else if (response.status === 500) {
+        throw new Error('Lỗi server. Vui lòng thử lại sau.');
+      } else {
+        throw new Error(`API Error: ${response.status} - ${errorText}`);
+      }
+    }
+
+    const result = await response.json();
+    console.log('SePay API Success Response:', result);
+
+    return result;
+  } catch (error) {
+    console.error('SePay payment submission error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Đã xảy ra lỗi không xác định';
+    return {
+      success: false,
+      error: errorMessage,
+    };
+  }
+}
+
+/**
+ * Chuẩn bị dữ liệu thanh toán SePay từ form
+ * @param formData Dữ liệu từ form
+ * @param programId ID chương trình (optional, nếu có nhiều khóa học thì dùng programIds)
+ * @param programIds Danh sách ID chương trình (cho checkout nhiều khóa học)
+ * @param amount Tổng số tiền
+ * @returns SePayPaymentFormData Dữ liệu đã chuẩn bị
+ */
+export function prepareSePayPaymentData(
+  formData: any,
+  amount: number,
+  programId?: string,
+  programIds?: string[]
+): SePayPaymentFormData {
+  const paymentData: SePayPaymentFormData = {
+    fullName: formData.name,
+    email: formData.email,
+    phone: formData.phone,
+    telegram: formData.telegram,
+    birthday: formData.birthdate ? new Date(formData.birthdate).toISOString() : undefined,
+    gender: formData.gender,
+    address: formData.address || undefined,
+    note: formData.note || undefined,
+    amount: amount,
+  };
+
+  if (programIds && programIds.length > 0) {
+    paymentData.programIds = programIds;
+  } else if (programId) {
+    paymentData.programId = programId;
+  }
+
+  return paymentData;
 }
