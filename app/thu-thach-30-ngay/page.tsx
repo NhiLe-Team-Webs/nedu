@@ -345,7 +345,7 @@ const ThirtyDayPage = () => {
                     <div>
                       <p className="font-semibold mb-1">Chủ đề:</p>
                       <p className="font-extrabold text-[14px]" style={{ color: DARK_GRAY }}>
-                        Sáng tạo nội dung
+                        Tỏa sáng cùng Denise 
                       </p>
                     </div>
                   </div>
