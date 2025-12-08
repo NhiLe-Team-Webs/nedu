@@ -8,7 +8,7 @@ import {
   MessageCircle,
   PhoneCall,
 } from "lucide-react";
-import ChallengeRegistrationForm from "@/components/ChallengeRegistrationForm";
+// import ChallengeRegistrationForm from "@/components/ChallengeRegistrationForm";
 
 const neduLogo = "/picture/nedu.svg";
 const nltLogo = "/picture/nlt.png";
@@ -125,7 +125,9 @@ const ThirtyDayPage = () => {
               </p>
               <div id="register-hero" className="text-center mt-8 sm:mt-10">
                 <a
-                  href="#register-form"
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSdFUBpOdZTswjw0mraKvyBW0bU5AGK9hrZYatNC2K3gnpQJdQ/viewform"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="px-8 sm:px-10 py-2 sm:py-3 rounded-full btn-primary text-xs sm:text-sm inline-flex items-center gap-2"
                 >
                   ĐĂNG KÝ NGAY
@@ -346,7 +348,7 @@ const ThirtyDayPage = () => {
                     <div>
                       <p className="font-semibold mb-1">Chủ đề:</p>
                       <p className="font-extrabold text-[14px]" style={{ color: DARK_GRAY }}>
-                        Tỏa sáng cùng Denise 
+                        Tỏa sáng cùng Denise
                       </p>
                     </div>
                   </div>
@@ -415,8 +417,16 @@ const ThirtyDayPage = () => {
                 </div>
               </div>
 
-              <div id="register-form" className="mt-8 sm:mt-12 scroll-mt-20">
-                <ChallengeRegistrationForm />
+              <div id="register-form" className="mt-8 sm:mt-12 scroll-mt-20 flex justify-center">
+                <a
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSdFUBpOdZTswjw0mraKvyBW0bU5AGK9hrZYatNC2K3gnpQJdQ/viewform"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-10 py-3 rounded-full btn-primary text-base font-bold inline-flex items-center gap-2"
+                >
+                  ĐĂNG KÝ THAM GIA NGAY
+                  <ArrowRight className="w-5 h-5" />
+                </a>
               </div>
             </div>
           </section>
