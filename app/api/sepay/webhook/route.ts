@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
     // If not found, try to extract from content field
     if (!orderCode && body.content) {
       // Try to find order code pattern (e.g., DHMIWM7HBQCQ1F) in content
-      const match = body.content.match(/DHM[A-Z0-9]+/);
+      const match = body.content.match(/DH[A-Z0-9]+/);
       if (match) {
         orderCode = match[0];
       }

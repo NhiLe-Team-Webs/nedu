@@ -155,7 +155,7 @@ export const courses: Course[] = [
     paymentId: 57,
     info: {
       topic: 'Phát triển bản thân',
-      schedule: '18 - 21/03/ 2026',
+      schedule: '05 - 08/03/2026',
       instructor: 'NhiLe x Guest Instructors',
       sessions: '3,5 ngày',
       location: 'Khách sạn Mikazuki Đà Nẵng',
