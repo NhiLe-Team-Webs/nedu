@@ -164,7 +164,7 @@ const ThirtyDayPage = () => {
               style={{ color: DARK_GRAY }}
             >
               <p className="mb-3">
-                Nhi đây, có ai học thức thức của Nhi xong bỏ vô góc trì hoãn
+                Nhi đây, có ai học kiến thức của Nhi xong bỏ vô góc trì hoãn
                 không làm không? Thử Thách 30 Ngày ra đời để kéo bạn vào hành
                 trình hành động cùng nhau, từng bước xoá thói quen xấu.
               </p>
