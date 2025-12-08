@@ -66,7 +66,7 @@ export default function LaChinhMinhPage() {
             label: "Chủ đề:",
             value: "Phát triển bản thân và khám phá nội tâm",
           },
-          { icon: "Clock", label: "Thời gian học:", value: "10-13/09/2025" },
+          { icon: "Clock", label: "Thời gian học:", value: "05–08/03/2026" },
           {
             icon: "MapPin",
             label: "Người dẫn đường:",
