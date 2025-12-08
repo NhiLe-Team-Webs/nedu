@@ -66,7 +66,9 @@ export default function LaChinhMinhPage() {
             label: "Chủ đề:",
             value: "Phát triển bản thân và khám phá nội tâm",
           },
+
           { icon: "Clock", label: "Thời gian học:", value: "05–08/03/2026" },
+
           {
             icon: "MapPin",
             label: "Người dẫn đường:",
@@ -76,9 +78,9 @@ export default function LaChinhMinhPage() {
           {
             icon: "House",
             label: "Địa điểm học:",
-            value: "Offline tại địa điểm sẽ thông báo",
+            value: "Đà Nẵng",
           },
-          { icon: "Users", label: "Số lượng học viên:", value: "Giới hạn" },
+          { icon: "Users", label: "Số lượng học viên:", value: "64 học viên" },
         ]}
       />
       <Mission
