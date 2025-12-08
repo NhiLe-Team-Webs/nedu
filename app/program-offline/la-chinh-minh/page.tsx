@@ -78,9 +78,9 @@ export default function LaChinhMinhPage() {
           {
             icon: "House",
             label: "Địa điểm học:",
-            value: "Offline tại địa điểm sẽ thông báo",
+            value: "Đà Nẵng",
           },
-          { icon: "Users", label: "Số lượng học viên:", value: "Giới hạn" },
+          { icon: "Users", label: "Số lượng học viên:", value: "64 học viên" },
         ]}
       />
       <Mission
