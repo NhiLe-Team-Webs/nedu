@@ -1,5 +1,6 @@
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { JWT } from 'google-auth-library';
+import { Order } from '@/lib/order-store';
 
 // Initialize the sheet - ensure these env vars are set
 const GOOGLE_SERVICE_ACCOUNT_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
@@ -126,5 +127,50 @@ export const updateSheetStatus = async (orderCode: string, newStatus: string, am
     } catch (error) {
         console.error('Error updating Google Sheet:', error);
         return false;
+    }
+};
+
+export const findOrderInSheet = async (orderCode: string): Promise<Order | null> => {
+    if (!GOOGLE_SERVICE_ACCOUNT_EMAIL || !GOOGLE_PRIVATE_KEY) {
+        console.error('Google Sheets credentials missing');
+        return null;
+    }
+
+    try {
+        const serviceAccountAuth = new JWT({
+            email: GOOGLE_SERVICE_ACCOUNT_EMAIL,
+            key: GOOGLE_PRIVATE_KEY,
+            scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+        });
+
+        const doc = new GoogleSpreadsheet(GOOGLE_SHEET_ID, serviceAccountAuth);
+        await doc.loadInfo();
+        const sheet = doc.sheetsByIndex[0];
+
+        const rows = await sheet.getRows();
+        const row = rows.find(r => r.get('Order Code') === orderCode);
+
+        if (row) {
+            // Map sheet row to Order object
+            return {
+                orderCode: row.get('Order Code'),
+                amount: parseFloat(row.get('Amount') || '0'),
+                status: row.get('Status'),
+                createdAt: row.get('Timestamp'),
+                customerInfo: {
+                    fullName: row.get('Name'),
+                    email: row.get('Email'),
+                    phone: row.get('Phone'),
+                    telegram: row.get('Telegram'),
+                },
+                // These fields might be missing or need to be inferred if needed
+                programId: undefined,
+                programIds: undefined,
+            };
+        }
+        return null;
+    } catch (error) {
+        console.error('Error finding order in Google Sheet:', error);
+        return null;
     }
 };

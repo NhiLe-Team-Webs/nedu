@@ -7,7 +7,7 @@ import {
   logSePayDebug,
 } from '@/lib/sepay-utils';
 import { OrderStore } from '@/lib/order-store';
-import { appendToSheet } from '@/lib/google-sheets';
+import { appendToSheet, findOrderInSheet } from '@/lib/google-sheets';
 
 // Uses persisted order store
 const orderStore = OrderStore;
@@ -120,7 +120,24 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const order = orderStore.get(orderCode);
+    let order = orderStore.get(orderCode);
+
+    // Fallback to Google Sheets if order not found in memory
+    if (!order) {
+      console.log(`Order ${orderCode} not found in memory cache, checking Google Sheets...`);
+      try {
+        const sheetOrder = await findOrderInSheet(orderCode);
+        if (sheetOrder) {
+          order = sheetOrder;
+          // Hydrate cache
+          orderStore.set(orderCode, order);
+          console.log(`Order ${orderCode} retrieved from Google Sheets`);
+        }
+      } catch (err) {
+        console.error('Error fetching order from Google Sheets:', err);
+      }
+    }
+
     if (!order) {
       return NextResponse.json(
         { success: false, error: 'Order not found' },
