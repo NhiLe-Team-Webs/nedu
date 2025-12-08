@@ -1,4 +1,5 @@
-Bối cảnh: 
-
-
-Yêu cầu:
+Chức năng tôi muốn làm: 
+- Thêm một route /testing trên sản phẩm. Mục tiêu: tôi muốn test một vài tính năng trên production. 
+- thêm một thư mục cho việc testing. 
+- trang testing giao diện sẽ giống hoàn toàn trang /program, ở đó tôi sẽ bỏ 4-5 kháo học mock để testing, giá từ 2-5k một khóa. 
+- Logic thanh toán cho cac khóa này giống hệt các khóa thật bên route progam, đều có thể thêm vào giỏ, đều thanh toán đc một hoặc nhiều khóa. 
