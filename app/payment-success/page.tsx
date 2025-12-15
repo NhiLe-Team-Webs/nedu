@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { useCart } from '@/lib/cart-context'
 import ErrorHandler from '@/components/ErrorHandler'
-import Receipt from '@/components/Receipt'
+// import Receipt from '@/components/Receipt'
 
 interface ReceiptData {
   receiptNumber: string
@@ -38,8 +38,9 @@ function PaymentSuccessContent() {
   const { clearCart } = useCart()
   const [status, setStatus] = useState<'loading' | 'success' | 'failed'>('loading')
   const [message, setMessage] = useState('Đang kiểm tra trạng thái thanh toán...')
-  const [receiptData, setReceiptData] = useState<ReceiptData | null>(null)
-  const [showReceipt, setShowReceipt] = useState(false)
+  // Receipt feature temporarily disabled
+  // const [receiptData, setReceiptData] = useState<ReceiptData | null>(null)
+  // const [showReceipt, setShowReceipt] = useState(false)
 
   useEffect(() => {
     // Define timer globally if it's not already defined
@@ -128,20 +129,20 @@ function PaymentSuccessContent() {
                     }
                   }
 
-                  // Fetch receipt data
-                  if (orderCode) {
-                    try {
-                      const receiptRes = await fetch(`/api/receipts/${orderCode}`)
-                      if (receiptRes.ok) {
-                        const receiptResult = await receiptRes.json()
-                        if (receiptResult.success && receiptResult.receipt) {
-                          setReceiptData(receiptResult.receipt)
-                        }
-                      }
-                    } catch (err) {
-                      console.error('Error fetching receipt:', err)
-                    }
-                  }
+                  // Receipt feature temporarily disabled
+                  // if (orderCode) {
+                  //   try {
+                  //     const receiptRes = await fetch(`/api/receipts/${orderCode}`)
+                  //     if (receiptRes.ok) {
+                  //       const receiptResult = await receiptRes.json()
+                  //       if (receiptResult.success && receiptResult.receipt) {
+                  //         setReceiptData(receiptResult.receipt)
+                  //       }
+                  //     }
+                  //   } catch (err) {
+                  //     console.error('Error fetching receipt:', err)
+                  //   }
+                  // }
 
                   clearCart() // Clear cart
                   return // Exit function
@@ -174,14 +175,14 @@ function PaymentSuccessContent() {
                   }
                 }
 
-                // Fetch receipt
-                const receiptRes = await fetch(`/api/receipts/${orderCode}`)
-                if (receiptRes.ok) {
-                  const receiptResult = await receiptRes.json()
-                  if (receiptResult.success && receiptResult.receipt) {
-                    setReceiptData(receiptResult.receipt)
-                  }
-                }
+                // Receipt feature temporarily disabled
+                // const receiptRes = await fetch(`/api/receipts/${orderCode}`)
+                // if (receiptRes.ok) {
+                //   const receiptResult = await receiptRes.json()
+                //   if (receiptResult.success && receiptResult.receipt) {
+                //     setReceiptData(receiptResult.receipt)
+                //   }
+                // }
               } catch (error) {
                 console.error('Error checking SePay order status:', error)
               }
@@ -261,25 +262,20 @@ function PaymentSuccessContent() {
 
             {status === 'success' && (
               <div className="py-8 sm:py-12">
-                {receiptData ? (
-                  <Receipt data={receiptData} />
-                ) : (
-                  <>
-                    <div className="mb-6 sm:mb-8">
-                      <div className="w-16 h-16 sm:w-20 sm:h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto">
-                        <svg className="w-8 h-8 sm:w-10 sm:h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                    </div>
-                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-green-600 mb-3 sm:mb-4">
-                      Thanh toán thành công!
-                    </h1>
-                    <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
-                      {message}
-                    </p>
-                  </>
-                )}
+                {/* Receipt feature temporarily disabled */}
+                <div className="mb-6 sm:mb-8">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto">
+                    <svg className="w-8 h-8 sm:w-10 sm:h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                </div>
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-green-600 mb-3 sm:mb-4">
+                  Thanh toán thành công!
+                </h1>
+                <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
+                  {message}
+                </p>
                 <div className="mt-8 space-y-3 sm:space-y-4">
                   <Link
                     href="/"
