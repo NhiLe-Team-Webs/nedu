@@ -19,6 +19,7 @@ import {
   WebhookLogRepository
 } from '@/lib/repositories';
 import { OrderStatus, TransactionStatus } from '@/lib/db-types';
+import { notifyPaymentSuccess, notifyPaymentError } from '@/lib/telegram';
 
 const orderStore = OrderStore;
 
@@ -255,10 +256,45 @@ export async function POST(request: NextRequest) {
       gateway: body.gateway
     });
 
+    // Send Telegram notification for successful payment
+    if (paymentStatus === 'success') {
+      try {
+        const order = orderStore.get(orderCode);
+        await notifyPaymentSuccess({
+          orderCode,
+          customerName: order?.customerInfo?.fullName || 'Unknown',
+          email: order?.customerInfo?.email || '',
+          phone: order?.customerInfo?.phone || '',
+          telegram: order?.customerInfo?.telegram,
+          amount: body.transferAmount || order?.amount || 0,
+          courseName: order?.customerInfo?.fullName ? 'N/A' : 'N/A',
+          transactionId: body.referenceCode || body.transactionId?.toString(),
+          paymentDate: body.transactionDate,
+          gateway: body.gateway,
+        });
+      } catch (telegramError) {
+        console.error('Failed to send Telegram notification:', telegramError);
+        // Continue - notification is not critical
+      }
+    }
+
     // Return success response to SePay
     return NextResponse.json({ success: true, message: 'Webhook processed' });
   } catch (error) {
     console.error('Error processing webhook:', error);
+
+    // Send Telegram notification for payment error
+    try {
+      await notifyPaymentError({
+        orderCode: orderCode || undefined,
+        error: error instanceof Error ? error.message : 'Unknown error',
+        context: 'Webhook processing failed',
+        timestamp: new Date().toLocaleString('vi-VN'),
+      });
+    } catch (telegramError) {
+      console.error('Failed to send error notification:', telegramError);
+    }
+
     await updateWebhookLog(
       webhookLogId,
       false,
