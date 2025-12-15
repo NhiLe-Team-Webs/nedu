@@ -1,3 +1,11 @@
+/**
+ * SePay Payment API
+ * Create payment with QR code and store in database
+ * 
+ * This endpoint now uses Supabase database for persistence
+ * with fallback to in-memory store for backward compatibility
+ */
+
 import { NextRequest, NextResponse } from 'next/server';
 import { SePayPaymentRequest, SePayPaymentResponse } from '@/types/sepay';
 import {
@@ -8,8 +16,11 @@ import {
 } from '@/lib/sepay-utils';
 import { OrderStore } from '@/lib/order-store';
 import { appendToSheet, findOrderInSheet } from '@/lib/google-sheets';
+import { isSupabaseConfigured } from '@/lib/db';
+import { OrderRepository, TransactionRepository } from '@/lib/repositories';
+import { OrderStatus, TransactionStatus } from '@/lib/db-types';
 
-// Uses persisted order store
+// Fallback to in-memory store if database not configured
 const orderStore = OrderStore;
 
 export async function POST(request: NextRequest) {
@@ -56,7 +67,62 @@ export async function POST(request: NextRequest) {
       config.bankCode
     );
 
-    // Store order information (in production, save to database)
+    // Variables to track database records
+    let dbOrderId: number | null = null;
+    let dbTransactionId: number | null = null;
+
+    // Try to save to database first
+    if (isSupabaseConfigured()) {
+      try {
+        // Create order in database
+        const order = await OrderRepository.create({
+          fullName: body.fullName,
+          email: body.email,
+          phone: body.phone,
+          telegram: body.telegram,
+          birthday: body.birthday,
+          gender: body.gender,
+          address: body.address,
+          note: body.note,
+          program: body.courseName || 'Unknown',
+          programId: body.programId ? parseInt(body.programId) : undefined,
+          price: body.amount,
+          courseName: body.courseName,
+          couponCode: body.couponCode,
+          programData: {
+            programIds: body.programIds,
+            orderCode: orderCode,
+          },
+        });
+
+        dbOrderId = order.id;
+
+        // Create transaction record
+        const transaction = await TransactionRepository.create({
+          orderId: order.id,
+          orderCode: orderCode,
+          amount: body.amount,
+          gateway: 'sepay',
+          qrCodeUrl: paymentResponse.qrCodeUrl,
+        });
+
+        dbTransactionId = transaction.id;
+
+        // Link transaction to order
+        await OrderRepository.setTransactionId(order.id, transaction.id);
+
+        logSePayDebug('Order saved to database', {
+          orderId: order.id,
+          transactionId: transaction.id,
+          orderCode
+        });
+      } catch (dbError) {
+        console.error('Database error, falling back to memory store:', dbError);
+        // Continue with in-memory store as fallback
+      }
+    }
+
+    // Always save to in-memory store for backward compatibility
     const orderInfo = {
       orderCode,
       amount: body.amount,
@@ -70,17 +136,20 @@ export async function POST(request: NextRequest) {
       },
       programId: body.programId,
       programIds: body.programIds,
+      // Store database IDs for reference
+      dbOrderId,
+      dbTransactionId,
     };
     orderStore.set(orderCode, orderInfo);
 
-    // Save to Google Sheet (for all orders, including courses)
+    // Save to Google Sheet as backup
     try {
       await appendToSheet({
         name: body.fullName,
         email: body.email,
         phone: body.phone,
         telegram: body.telegram,
-        dob: body.birthday || '', // Map birthday to DOB
+        dob: body.birthday || '',
         gender: body.gender,
         address: body.address,
         note: body.note,
@@ -97,7 +166,11 @@ export async function POST(request: NextRequest) {
 
     logSePayDebug('Payment created', { orderCode, qrCodeUrl: paymentResponse.qrCodeUrl });
 
-    return NextResponse.json(paymentResponse);
+    return NextResponse.json({
+      ...paymentResponse,
+      orderId: dbOrderId,
+      transactionId: dbTransactionId,
+    });
   } catch (error) {
     console.error('Error creating SePay payment:', error);
     return NextResponse.json(
@@ -121,6 +194,53 @@ export async function GET(request: NextRequest) {
     }
 
     let order = orderStore.get(orderCode);
+
+    // Try database first if configured
+    if (isSupabaseConfigured()) {
+      try {
+        const transaction = await TransactionRepository.getByOrderCode(orderCode);
+        if (transaction) {
+          const dbOrder = await OrderRepository.getById(transaction.order_id);
+          if (dbOrder) {
+            // Map database order to expected format
+            const statusMap: Record<number, string> = {
+              [OrderStatus.PENDING]: 'pending',
+              [OrderStatus.PROCESSING]: 'processing',
+              [OrderStatus.COMPLETED]: 'success',
+              [OrderStatus.FAILED]: 'failed',
+              [OrderStatus.CANCELLED]: 'cancelled',
+              [OrderStatus.REFUNDED]: 'refunded',
+            };
+
+            order = {
+              orderCode: transaction.order_code,
+              amount: transaction.amount,
+              status: statusMap[dbOrder.status ?? 0] || 'pending',
+              createdAt: dbOrder.created_at,
+              updatedAt: dbOrder.update_at ?? undefined,
+              customerInfo: {
+                fullName: dbOrder.full_name || '',
+                email: dbOrder.email || '',
+                phone: dbOrder.phone || '',
+                telegram: dbOrder.telegram,
+              },
+              programId: dbOrder.program_id?.toString(),
+              transactionId: transaction.gateway_transaction_id ?? undefined,
+              transferAmount: transaction.amount,
+              transactionDate: transaction.payment_date ?? undefined,
+              gateway: transaction.gateway ?? undefined,
+            };
+
+            // Update in-memory store
+            if (order) {
+              orderStore.set(orderCode, order);
+            }
+          }
+        }
+      } catch (dbError) {
+        console.error('Database error, using memory/sheet fallback:', dbError);
+      }
+    }
 
     // Fallback to Google Sheets if order not found in memory
     if (!order) {
@@ -150,6 +270,20 @@ export async function GET(request: NextRequest) {
       order.status = 'success';
       order.updatedAt = new Date();
       orderStore.set(orderCode, order);
+
+      // Also update database if configured
+      if (isSupabaseConfigured()) {
+        try {
+          await TransactionRepository.updateByOrderCode(orderCode, TransactionStatus.SUCCESS);
+          const transaction = await TransactionRepository.getByOrderCode(orderCode);
+          if (transaction) {
+            await OrderRepository.updateStatus(transaction.order_id, OrderStatus.COMPLETED);
+          }
+        } catch (dbError) {
+          console.error('Database update error:', dbError);
+        }
+      }
+
       console.log('Order status manually simulated to success:', orderCode);
     }
 
@@ -176,6 +310,37 @@ export async function PATCH(request: NextRequest) {
       );
     }
 
+    // Update in database if configured
+    if (isSupabaseConfigured()) {
+      try {
+        const statusMap: Record<string, TransactionStatus> = {
+          'pending': TransactionStatus.PENDING,
+          'processing': TransactionStatus.PROCESSING,
+          'success': TransactionStatus.SUCCESS,
+          'failed': TransactionStatus.FAILED,
+          'cancelled': TransactionStatus.CANCELLED,
+        };
+
+        const orderStatusMap: Record<string, OrderStatus> = {
+          'pending': OrderStatus.PENDING,
+          'processing': OrderStatus.PROCESSING,
+          'success': OrderStatus.COMPLETED,
+          'failed': OrderStatus.FAILED,
+          'cancelled': OrderStatus.CANCELLED,
+        };
+
+        await TransactionRepository.updateByOrderCode(orderCode, statusMap[status] || TransactionStatus.PENDING);
+
+        const transaction = await TransactionRepository.getByOrderCode(orderCode);
+        if (transaction) {
+          await OrderRepository.updateStatus(transaction.order_id, orderStatusMap[status] || OrderStatus.PENDING);
+        }
+      } catch (dbError) {
+        console.error('Database update error:', dbError);
+      }
+    }
+
+    // Update in-memory store
     const order = orderStore.get(orderCode);
     if (!order) {
       return NextResponse.json(
@@ -184,7 +349,6 @@ export async function PATCH(request: NextRequest) {
       );
     }
 
-    // Update order status
     order.status = status;
     order.updatedAt = new Date();
     orderStore.set(orderCode, order);
@@ -203,4 +367,3 @@ export async function PATCH(request: NextRequest) {
 
 // Export orderStore for webhook use
 export { orderStore };
-
