@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ShoppingCart, Wrench, X } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/lib/cart-context";
 import { courses as coursesData } from "@/data/courses";
@@ -19,7 +19,6 @@ const clamp = (value: number, min: number, max: number) => Math.min(Math.max(val
 
 export default function ProgramPage() {
   const [filter, setFilter] = useState("all");
-  const [showMaintenanceToast, setShowMaintenanceToast] = useState(false);
   const router = useRouter();
   const { addToCart } = useCart();
 
@@ -56,13 +55,8 @@ export default function ProgramPage() {
     // Ngăn chặn sự kiện click lan truyền đến card cha
     event.stopPropagation();
 
-    // Hiển thị thông báo bảo trì thay vì thêm vào giỏ hàng
-    setShowMaintenanceToast(true);
-
-    // Tự động ẩn sau 5 giây
-    setTimeout(() => {
-      setShowMaintenanceToast(false);
-    }, 5000);
+    // Thêm khóa học vào giỏ hàng
+    addToCart(course);
   };
 
   const filteredCourses = useMemo(() => {
@@ -74,29 +68,6 @@ export default function ProgramPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 sm:py-12">
-      {/* Maintenance Toast Notification */}
-      {showMaintenanceToast && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 pointer-events-none">
-          <div className="bg-white border-2 border-primary text-gray-800 px-6 py-5 rounded-2xl shadow-xl flex items-start gap-4 max-w-lg pointer-events-auto animate-in fade-in slide-in-from-top-4 duration-300">
-            <div className="bg-primary/10 p-3 rounded-full flex-shrink-0">
-              <Wrench className="w-6 h-6 text-primary" />
-            </div>
-            <div className="flex-1">
-              <p className="font-bold text-base text-gray-900">Đang nâng cấp hệ thống</p>
-              <p className="text-sm mt-1.5 text-gray-600 leading-relaxed">
-                Đội ngũ NEDU đang cập nhật tính năng thanh toán để mang đến trải nghiệm tốt hơn. Vui lòng quay lại trong ít phút nữa!
-              </p>
-            </div>
-            <button
-              onClick={() => setShowMaintenanceToast(false)}
-              className="p-1.5 hover:bg-gray-100 rounded-full transition flex-shrink-0"
-            >
-              <X className="w-5 h-5 text-gray-400" />
-            </button>
-          </div>
-        </div>
-      )}
-
       <div className="container mx-auto px-3 sm:px-4">
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-3 sm:mb-4 text-primary uppercase px-2">
           Các khóa học chất lượng
