@@ -259,15 +259,24 @@ export async function POST(request: NextRequest) {
     // Send Telegram notification for successful payment
     if (paymentStatus === 'success') {
       try {
-        const order = orderStore.get(orderCode);
+        const memoryOrder = orderStore.get(orderCode);
+
+        // Try to get course name from database order if available
+        let courseName = 'Chưa xác định';
+        if (dbOrderId && isSupabaseConfigured()) {
+          const dbOrder = await OrderRepository.getById(dbOrderId);
+          if (dbOrder) {
+            courseName = dbOrder.course_name || dbOrder.program || 'Chưa xác định';
+          }
+        }
+
         await notifyPaymentSuccess({
           orderCode,
-          customerName: order?.customerInfo?.fullName || 'Unknown',
-          email: order?.customerInfo?.email || '',
-          phone: order?.customerInfo?.phone || '',
-          telegram: order?.customerInfo?.telegram,
-          amount: body.transferAmount || order?.amount || 0,
-          courseName: order?.customerInfo?.fullName ? 'N/A' : 'N/A',
+          customerName: memoryOrder?.customerInfo?.fullName || 'Unknown',
+          email: memoryOrder?.customerInfo?.email || '',
+          phone: memoryOrder?.customerInfo?.phone || '',
+          amount: body.transferAmount || memoryOrder?.amount || 0,
+          courseName,
           transactionId: body.referenceCode || body.transactionId?.toString(),
           paymentDate: body.transactionDate,
           gateway: body.gateway,

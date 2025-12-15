@@ -12,15 +12,25 @@ interface OrderNotificationData {
     email: string;
     phone: string;
     telegram?: string;
+    birthday?: string;
+    gender?: string;
+    address?: string;
+    note?: string;
     amount: number;
     courseName?: string;
     couponCode?: string;
 }
 
-interface PaymentSuccessData extends OrderNotificationData {
+interface PaymentSuccessData {
+    orderCode: string;
+    customerName: string;
+    email: string;
+    phone: string;
+    amount: number;
+    courseName?: string;
     transactionId?: string;
-    paymentDate?: string;
     gateway?: string;
+    paymentDate?: string;
 }
 
 interface PaymentErrorData {
@@ -87,21 +97,46 @@ function formatCurrency(amount: number): string {
 }
 
 /**
+ * Format course names - display as list if multiple
+ */
+function formatCourseNames(courseName: string | undefined): string {
+    if (!courseName) return 'Chưa xác định';
+
+    const courses = courseName.split(',').map(c => c.trim()).filter(c => c);
+
+    if (courses.length === 0) return 'Chưa xác định';
+    if (courses.length === 1) return escapeHtml(courses[0]);
+
+    // Multiple courses - format as list
+    return courses.map(c => `  • ${escapeHtml(c)}`).join('\n');
+}
+
+/**
  * Send notification when new order is created
  */
 export async function notifyNewOrder(data: OrderNotificationData): Promise<boolean> {
+    const courseDisplay = formatCourseNames(data.courseName);
+    const isMultipleCourses = data.courseName?.includes(',');
+
     const message = `
 🆕 <b>ĐƠN HÀNG MỚI</b>
 
 📋 <b>Mã đơn:</b> <code>${data.orderCode}</code>
-👤 <b>Khách hàng:</b> ${escapeHtml(data.customerName)}
-📧 <b>Email:</b> ${escapeHtml(data.email)}
-📱 <b>SĐT:</b> ${escapeHtml(data.phone)}
-${data.telegram ? `💬 <b>Telegram:</b> ${escapeHtml(data.telegram)}` : ''}
 
-📚 <b>Khóa học:</b> ${escapeHtml(data.courseName || 'N/A')}
-💰 <b>Số tiền:</b> ${formatCurrency(data.amount)}
-${data.couponCode ? `🎟️ <b>Mã giảm giá:</b> ${escapeHtml(data.couponCode)}` : ''}
+<b>👤 THÔNG TIN KHÁCH HÀNG</b>
+• Họ tên: ${escapeHtml(data.customerName)}
+• Email: ${escapeHtml(data.email)}
+• SĐT: ${escapeHtml(data.phone)}
+${data.telegram ? `• Telegram: ${escapeHtml(data.telegram)}` : ''}
+${data.birthday ? `• Ngày sinh: ${escapeHtml(data.birthday)}` : ''}
+${data.gender ? `• Giới tính: ${escapeHtml(data.gender)}` : ''}
+${data.address ? `• Địa chỉ: ${escapeHtml(data.address)}` : ''}
+${data.note ? `• Ghi chú: ${escapeHtml(data.note)}` : ''}
+
+<b>📚 CHI TIẾT ĐƠN HÀNG</b>
+${isMultipleCourses ? `• Khóa học:\n${courseDisplay}` : `• Khóa học: ${courseDisplay}`}
+• Số tiền: ${formatCurrency(data.amount)}
+${data.couponCode ? `• Mã giảm giá: ${escapeHtml(data.couponCode)}` : ''}
 
 ⏳ <i>Đang chờ thanh toán...</i>
 `.trim();
@@ -113,21 +148,25 @@ ${data.couponCode ? `🎟️ <b>Mã giảm giá:</b> ${escapeHtml(data.couponCod
  * Send notification when payment is successful
  */
 export async function notifyPaymentSuccess(data: PaymentSuccessData): Promise<boolean> {
+    const courseDisplay = formatCourseNames(data.courseName);
+    const isMultipleCourses = data.courseName?.includes(',');
+
     const message = `
 ✅ <b>THANH TOÁN THÀNH CÔNG</b>
 
 📋 <b>Mã đơn:</b> <code>${data.orderCode}</code>
-👤 <b>Khách hàng:</b> ${escapeHtml(data.customerName)}
-📧 <b>Email:</b> ${escapeHtml(data.email)}
-📱 <b>SĐT:</b> ${escapeHtml(data.phone)}
-
-📚 <b>Khóa học:</b> ${escapeHtml(data.courseName || 'N/A')}
-💰 <b>Số tiền:</b> ${formatCurrency(data.amount)}
 ${data.transactionId ? `🔗 <b>Mã GD:</b> <code>${escapeHtml(data.transactionId)}</code>` : ''}
-${data.gateway ? `🏦 <b>Ngân hàng:</b> ${escapeHtml(data.gateway)}` : ''}
-📅 <b>Thời gian:</b> ${data.paymentDate || new Date().toLocaleString('vi-VN')}
 
-🎉 <i>Cảm ơn khách hàng!</i>
+<b>👤 KHÁCH HÀNG</b>
+• Họ tên: ${escapeHtml(data.customerName)}
+• Email: ${escapeHtml(data.email)}
+• SĐT: ${escapeHtml(data.phone)}
+
+<b>� THANH TOÁN</b>
+${isMultipleCourses ? `• Khóa học:\n${courseDisplay}` : `• Khóa học: ${courseDisplay}`}
+• Số tiền: ${formatCurrency(data.amount)}
+${data.gateway ? `• Ngân hàng: ${escapeHtml(data.gateway)}` : ''}
+• Thời gian: ${data.paymentDate || new Date().toLocaleString('vi-VN')}
 `.trim();
 
     return sendTelegramMessage(message);

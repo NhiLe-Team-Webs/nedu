@@ -236,16 +236,16 @@ export default function CheckoutPage() {
             <div className="flex justify-center items-center mb-8 sm:mb-12">
               <div className="flex items-center">
                 <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold text-base sm:text-xl ${currentStep >= 1
-                    ? 'bg-primary text-white'
-                    : 'bg-gray-300 text-gray-600'
+                  ? 'bg-primary text-white'
+                  : 'bg-gray-300 text-gray-600'
                   }`}>
                   1
                 </div>
                 <div className={`w-20 sm:w-32 h-1 ${currentStep >= 2 ? 'bg-primary' : 'bg-gray-300'
                   }`}></div>
                 <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold text-base sm:text-xl ${currentStep >= 2
-                    ? 'bg-primary text-white'
-                    : 'bg-gray-300 text-gray-600'
+                  ? 'bg-primary text-white'
+                  : 'bg-gray-300 text-gray-600'
                   }`}>
                   2
                 </div>
