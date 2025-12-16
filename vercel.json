@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/course-enroll-report",
+      "schedule": "0 19 * * *" 
+    }
+  ]
+}
