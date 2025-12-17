@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
-const TELEGRAM_API_URL = `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`;
+const TELEGRAM_API_URL = new URL(`https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`).toString();
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
 const getTodayOrders = async () => {
