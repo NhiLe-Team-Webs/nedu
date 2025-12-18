@@ -209,7 +209,7 @@ export default function PaymentPage() {
   return (
     <>
       <ErrorHandler />
-      <div className="min-h-screen bg-gray-50 py-12">
+      <div className="min-h-screen bg-[#F2F2F7] py-8 sm:py-12 ios-safe-padding-bottom">
         <div className="container mx-auto px-4 max-w-4xl">
           <h1 className="text-3xl md:text-4xl font-bold text-center mb-8 text-gray-800">
             TIẾN HÀNH THANH TOÁN
@@ -248,7 +248,7 @@ export default function PaymentPage() {
 
           {currentStep === 1 ? (
             /* Step 1: Information Form */
-            <div className="card mb-8">
+            <div className="bg-white rounded-ios-xl shadow-ios-card p-6 sm:p-8 mb-8 border border-white/40">
               <h2 className="text-2xl font-bold mb-2 text-text-primary">1. ĐIỀN THÔNG TIN</h2>
               <p className="text-text-secondary mb-8">Điền đầy đủ thông tin người mua khóa học</p>
 
@@ -287,13 +287,13 @@ export default function PaymentPage() {
                       placeholder="Nhập mã giảm giá"
                       value={discountCode}
                       onChange={(e) => setDiscountCode(e.target.value)}
-                      className="input-field pl-10"
+                      className="w-full px-4 py-3 pl-10 rounded-ios-md border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition ios-haptic-active"
                     />
                   </div>
                   <button
                     type="button"
                     onClick={handleApplyDiscount}
-                    className="btn-secondary"
+                    className="px-6 py-3 bg-gray-100 text-gray-700 font-semibold rounded-ios-md hover:bg-gray-200 transition-all active:scale-95 ios-haptic-active"
                   >
                     Áp dụng
                   </button>
@@ -306,7 +306,7 @@ export default function PaymentPage() {
               </div>
 
               <form onSubmit={handleNextStep} className="space-y-6">
-                <div className="bg-gray-50 rounded-xl p-6">
+                <div className="bg-gray-50 rounded-ios-lg p-6">
                   <h3 className="font-bold text-lg mb-6 text-gray-800">Thông tin người mua</h3>
 
                   <div className="grid grid-cols-1 gap-6">
@@ -320,7 +320,7 @@ export default function PaymentPage() {
                         placeholder="Nhập họ và tên của bạn"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition"
+                        className="w-full px-4 py-3 rounded-ios-md border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition ios-haptic-active"
                       />
                     </div>
 
@@ -335,7 +335,7 @@ export default function PaymentPage() {
                           placeholder="Nhập số điện thoại"
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition"
+                          className="w-full px-4 py-3 rounded-ios-md border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition ios-haptic-active"
                         />
                       </div>
 
@@ -349,7 +349,7 @@ export default function PaymentPage() {
                           placeholder="Nhập email của bạn"
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition"
+                          className="w-full px-4 py-3 rounded-ios-md border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition ios-haptic-active"
                         />
                       </div>
                     </div>
@@ -365,7 +365,7 @@ export default function PaymentPage() {
                           placeholder="@username"
                           value={formData.telegram}
                           onChange={(e) => setFormData({ ...formData, telegram: e.target.value })}
-                          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition"
+                          className="w-full px-4 py-3 rounded-ios-md border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition ios-haptic-active"
                         />
                       </div>
 
@@ -378,7 +378,7 @@ export default function PaymentPage() {
                           required
                           value={formData.birthdate}
                           onChange={(e) => setFormData({ ...formData, birthdate: e.target.value })}
-                          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition"
+                          className="w-full px-4 py-3 rounded-ios-md border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition ios-haptic-active"
                         />
                       </div>
                     </div>
@@ -436,7 +436,7 @@ export default function PaymentPage() {
                         placeholder="Nhập địa chỉ của bạn"
                         value={formData.address}
                         onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition"
+                        className="w-full px-4 py-3 rounded-ios-md border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition ios-haptic-active"
                       />
                     </div>
 
@@ -449,7 +449,7 @@ export default function PaymentPage() {
                         placeholder="Nhập ghi chú (nếu có)"
                         value={formData.note}
                         onChange={(e) => setFormData({ ...formData, note: e.target.value })}
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition"
+                        className="w-full px-4 py-3 rounded-ios-md border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition ios-haptic-active"
                       />
                     </div>
 
@@ -498,7 +498,7 @@ export default function PaymentPage() {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="bg-primary hover:bg-primary-dark disabled:bg-gray-400 text-white px-12 py-3 rounded-full font-semibold transition text-lg inline-flex items-center"
+                    className="bg-primary hover:bg-primary-dark disabled:bg-gray-400 text-white px-12 py-3.5 rounded-full font-bold transition-all duration-300 text-lg inline-flex items-center shadow-ios-md hover:shadow-ios-lg active:scale-95 ios-haptic-active"
                   >
                     {isLoading ? (
                       <>
@@ -522,7 +522,7 @@ export default function PaymentPage() {
             </div>
           ) : (
             /* Step 2: Confirmation */
-            <div className="card">
+            <div className="bg-white rounded-ios-xl shadow-ios-card p-6 sm:p-8 border border-white/40">
               <h2 className="text-2xl font-bold mb-6 text-text-primary">2. XÁC NHẬN THÔNG TIN</h2>
 
               <div className="space-y-6">
@@ -666,7 +666,7 @@ export default function PaymentPage() {
                   <button
                     type="button"
                     onClick={handleBackStep}
-                    className="btn-secondary"
+                    className="px-6 py-3.5 bg-gray-100 text-gray-700 font-semibold rounded-full hover:bg-gray-200 transition-all active:scale-95 flex items-center ios-haptic-active"
                   >
                     <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -676,7 +676,7 @@ export default function PaymentPage() {
                   <button
                     onClick={handleSubmit}
                     disabled={isLoading || !agreed}
-                    className="btn-primary disabled:bg-gray-400"
+                    className="w-full sm:w-auto px-8 py-3.5 bg-primary text-white font-bold rounded-full shadow-ios-md hover:shadow-ios-lg hover:brightness-105 active:scale-95 transition-all duration-300 disabled:bg-gray-400 disabled:shadow-none ios-haptic-active"
                   >
                     {isLoading ? (
                       <div className="flex items-center">

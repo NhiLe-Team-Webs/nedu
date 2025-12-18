@@ -25,7 +25,7 @@ const Connection = () => {
           {images.map((img, i) => (
             <div
               key={i}
-              className={`${img.cls} overflow-hidden rounded-md relative bg-white/30 shadow-sm`}
+              className={`${img.cls} overflow-hidden rounded-ios-lg relative bg-white/30 shadow-ios-sm transition-all duration-300 hover:shadow-ios-md`}
             >
               <Image
                 src={img.src}

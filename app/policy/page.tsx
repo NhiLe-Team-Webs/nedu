@@ -4,11 +4,11 @@ import Link from 'next/link'
 
 export default function PolicyPage() {
   return (
-    <div className="min-h-screen bg-gray-50 py-8 sm:py-12">
+    <div className="min-h-screen bg-[#F2F2F7] py-8 sm:py-12">
       <div className="container mx-auto px-4 max-w-4xl">
-        <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8">
+        <div className="bg-white rounded-ios-xl shadow-ios-card p-6 sm:p-8">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6 sm:mb-8 text-primary">Chính sách bảo mật</h1>
-          
+
           <div className="space-y-6 sm:space-y-8">
             <section>
               <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-primary">Giới thiệu</h2>
@@ -93,7 +93,7 @@ export default function PolicyPage() {
 
             <section>
               <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-primary">Bảo mật thông tin</h2>
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 sm:p-6">
+              <div className="bg-blue-50 border border-blue-200 rounded-ios-lg p-4 sm:p-6">
                 <h3 className="font-semibold mb-3 text-blue-800 text-sm sm:text-base">Các biện pháp bảo mật chúng tôi áp dụng:</h3>
                 <ul className="list-disc list-inside text-gray-700 space-y-1 sm:space-y-2 text-sm sm:text-base">
                   <li>Mã hóa dữ liệu SSL/TLS cho tất cả kết nối</li>
@@ -123,28 +123,28 @@ export default function PolicyPage() {
             <section>
               <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-primary">Quyền của bạn</h2>
               <div className="space-y-3 sm:space-y-4">
-                <div className="border rounded-lg p-3 sm:p-4">
+                <div className="border border-gray-200 rounded-ios-lg p-3 sm:p-4">
                   <h3 className="font-semibold mb-2 text-sm sm:text-base">Quyền truy cập</h3>
                   <p className="text-gray-600 text-sm sm:text-base">
                     Bạn có quyền yêu cầu xem thông tin cá nhân mà chúng tôi lưu trữ về bạn.
                   </p>
                 </div>
 
-                <div className="border rounded-lg p-3 sm:p-4">
+                <div className="border border-gray-200 rounded-ios-lg p-3 sm:p-4">
                   <h3 className="font-semibold mb-2 text-sm sm:text-base">Quyền chỉnh sửa</h3>
                   <p className="text-gray-600 text-sm sm:text-base">
                     Bạn có quyền yêu cầu cập nhật hoặc sửa đổi thông tin cá nhân không chính xác.
                   </p>
                 </div>
 
-                <div className="border rounded-lg p-3 sm:p-4">
+                <div className="border border-gray-200 rounded-ios-lg p-3 sm:p-4">
                   <h3 className="font-semibold mb-2 text-sm sm:text-base">Quyền xóa</h3>
                   <p className="text-gray-600 text-sm sm:text-base">
                     Bạn có quyền yêu cầu xóa thông tin cá nhân trong các trường hợp được pháp luật cho phép.
                   </p>
                 </div>
 
-                <div className="border rounded-lg p-3 sm:p-4">
+                <div className="border border-gray-200 rounded-ios-lg p-3 sm:p-4">
                   <h3 className="font-semibold mb-2 text-sm sm:text-base">Quyền phản đối</h3>
                   <p className="text-gray-600 text-sm sm:text-base">
                     Bạn có quyền phản đối việc xử lý thông tin cá nhân của mình.
@@ -194,7 +194,7 @@ export default function PolicyPage() {
 
             <section>
               <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-primary">Liên hệ</h2>
-              <div className="bg-gray-50 rounded-lg p-4 sm:p-6">
+              <div className="bg-gray-50 rounded-ios-lg p-4 sm:p-6">
                 <p className="text-gray-700 mb-3 sm:mb-4 text-sm sm:text-base">
                   Nếu bạn có câu hỏi về chính sách bảo mật hoặc muốn thực hiện quyền của mình, vui lòng liên hệ:
                 </p>
@@ -228,7 +228,7 @@ export default function PolicyPage() {
           </div>
 
           <div className="mt-6 sm:mt-8 text-center">
-            <Link href="/" className="inline-block bg-primary hover:bg-primary-dark text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-semibold transition text-sm sm:text-base">
+            <Link href="/" className="inline-block bg-primary hover:bg-primary-dark text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-semibold transition-all transform hover:scale-105 active:scale-95 shadow-ios-sm ios-haptic-active text-sm sm:text-base">
               Quay lại trang chủ
             </Link>
           </div>

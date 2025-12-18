@@ -36,8 +36,8 @@
   --radius-xl: 1rem;
   --radius-2xl: 1.5rem;
   --radius-3xl: 2rem;
-  
-  /* Apple-inspired interaction variables */
+
+  /* Apple-inspired interaction variables (Desktop/Shared) */
   --transition-fast: 0.15s cubic-bezier(0.4, 0.0, 0.2, 1);
   --transition-normal: 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
   --transition-slow: 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
@@ -45,7 +45,93 @@
   --scale-active: 0.98;
   --opacity-hover: 0.8;
   --opacity-active: 0.6;
+
+  /* --- iOS 26.1 Mobile Design System (Mobile Only) --- */
+  /* Safe Areas */
+  --safe-area-top: env(safe-area-inset-top, 20px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 20px);
+  --safe-area-left: env(safe-area-inset-left, 0px);
+  --safe-area-right: env(safe-area-inset-right, 0px);
+
+  /* iOS Typography Scale (SF Pro-like) - Mobile context */
+  --font-ios-large-title: 2.125rem;
+  /* 34px */
+  --font-ios-title-1: 1.75rem;
+  /* 28px */
+  --font-ios-title-2: 1.375rem;
+  /* 22px */
+  --font-ios-title-3: 1.25rem;
+  /* 20px */
+  --font-ios-headline: 1.0625rem;
+  /* 17px semibold */
+  --font-ios-body: 1.0625rem;
+  /* 17px */
+  --font-ios-callout: 1rem;
+  /* 16px */
+  --font-ios-subhead: 0.9375rem;
+  /* 15px */
+  --font-ios-footnote: 0.8125rem;
+  /* 13px */
+  --font-ios-caption-1: 0.75rem;
+  /* 12px */
+  --font-ios-caption-2: 0.6875rem;
+  /* 11px */
+
+  /* iOS Corner Radii */
+  --radius-ios-sm: 8px;
+  --radius-ios-md: 12px;
+  --radius-ios-lg: 16px;
+  --radius-ios-xl: 20px;
+  --radius-ios-2xl: 24px;
+  --radius-ios-card: 20px;
+  --radius-ios-button: 9999px;
+  /* Slightly larger for touch */
+  --radius-ios-input: 14px;
+
+  /* iOS Blur/Glass Effects */
+  --blur-ios-thin: blur(10px);
+  --blur-ios-regular: blur(20px);
+  --blur-ios-thick: blur(30px);
+
+  /* iOS Touch Targets */
+  --touch-target-min: 44px;
+
+  /* iOS Shadows (subtle depth) */
+  --shadow-ios-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-ios-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-ios-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-ios-card: 0 2px 10px rgba(0, 0, 0, 0.04);
+  --shadow-ios-float: 0 8px 32px rgba(0, 0, 0, 0.12);
+
+  /* iOS Transitions (Spring-like) */
+  --transition-ios-fast: 0.25s cubic-bezier(0.33, 1, 0.68, 1);
+  --transition-ios-normal: 0.4s cubic-bezier(0.33, 1, 0.68, 1);
+  --transition-ios-spring: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
+
+/* iOS Utility Classes (Mobile Only Scope) */
+@media (max-width: 768px) {
+  .ios-glass {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: var(--blur-ios-regular);
+    -webkit-backdrop-filter: var(--blur-ios-regular);
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .ios-haptic-active:active {
+    transform: scale(0.96);
+    transition: transform 0.1s ease-out;
+  }
+
+  .ios-safe-padding-bottom {
+    padding-bottom: calc(20px + var(--safe-area-bottom));
+  }
+
+  .ios-safe-margin-bottom {
+    margin-bottom: calc(20px + var(--safe-area-bottom));
+  }
+}
+
 
 * {
   box-sizing: border-box;
@@ -80,7 +166,12 @@ a:hover {
   color: var(--color-primary-dark);
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 700;
   line-height: 1.3;
   color: var(--text-primary);
@@ -287,37 +378,43 @@ p {
   .aspect-video {
     aspect-ratio: 9/16;
   }
-  
+
   /* Improve touch targets for mobile */
-  button, a, input, textarea, select {
+  button,
+  a,
+  input,
+  textarea,
+  select {
     min-height: 44px;
   }
-  
+
   /* Better spacing for mobile */
   .container {
     padding-left: 1rem;
     padding-right: 1rem;
   }
-  
+
   /* Improve readability on mobile */
   body {
     font-size: 16px;
     line-height: 1.6;
   }
-  
+
   /* Better form inputs on mobile */
   .input-field {
-    font-size: 16px; /* Prevents zoom on iOS */
+    font-size: 16px;
+    /* Prevents zoom on iOS */
   }
-  
+
   /* Optimize images for mobile */
   img {
     max-width: 100%;
     height: auto;
   }
-  
+
   /* Better button spacing */
-  .btn-primary, .btn-secondary {
+  .btn-primary,
+  .btn-secondary {
     padding: 0.875rem 1.5rem;
     font-size: 0.875rem;
   }
@@ -370,7 +467,7 @@ textarea:focus-visible {
   .carousel-container {
     padding: 0 1rem;
   }
-  
+
   .carousel-item {
     margin: 0 0.5rem;
   }
@@ -390,6 +487,7 @@ body {
 
 /* Better touch feedback */
 @media (hover: none) and (pointer: coarse) {
+
   button:active,
   a:active {
     transform: scale(var(--scale-active));
@@ -434,9 +532,12 @@ textarea:focus-visible {
 
 /* Apple-style loading animation */
 @keyframes apple-pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.5;
   }
@@ -485,6 +586,7 @@ textarea:focus-visible {
     transform: scale(0);
     opacity: 1;
   }
+
   100% {
     transform: scale(4);
     opacity: 0;
@@ -506,13 +608,19 @@ textarea:focus-visible {
 
 /* Enhanced mobile touch targets */
 @media (max-width: 640px) {
-  button, a, input, textarea, select {
+
+  button,
+  a,
+  input,
+  textarea,
+  select {
     min-height: 44px;
     min-width: 44px;
     transition: all var(--transition-normal);
   }
-  
-  button:active, a:active {
+
+  button:active,
+  a:active {
     transform: scale(var(--scale-active));
     opacity: var(--opacity-active);
   }
@@ -521,7 +629,8 @@ textarea:focus-visible {
 /* Smooth scroll behaviors and parallax effects */
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 80px; /* Account for fixed header */
+  scroll-padding-top: 80px;
+  /* Account for fixed header */
 }
 
 /* Parallax scrolling for sections */
@@ -691,6 +800,7 @@ html {
   0% {
     background-position: 200% 0;
   }
+
   100% {
     background-position: -200% 0;
   }
@@ -701,6 +811,7 @@ html {
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
   }
@@ -711,6 +822,7 @@ html {
     opacity: 0;
     transform: translateY(20px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -718,9 +830,12 @@ html {
 }
 
 @keyframes digit-tick {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.1);
   }
@@ -788,11 +903,11 @@ html {
   .line-clamp-1 {
     max-height: 1.5em;
   }
-  
+
   .line-clamp-2 {
     max-height: 3em;
   }
-  
+
   .line-clamp-3 {
     max-height: 4.5em;
   }

@@ -3,6 +3,7 @@ import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Sidebar from '@/components/Sidebar'
+import BottomTabBar from '@/components/BottomTabBar'
 import Banner from '@/components/Banner'
 import { CartProvider } from '@/lib/cart-context'
 import CartSuccessPopup from '@/components/CartSuccessPopup'
@@ -29,17 +30,18 @@ export default function RootLayout({
       <head>
         <meta charSet="utf-8" />
         {/* Google tag (gtag.js) */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-SQ1T3SDX4Z"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-SQ1T3SDX4Z');
-            `
-          }}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-SQ1T3SDX4Z"
+          strategy="afterInteractive"
         />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-SQ1T3SDX4Z');
+          `}
+        </Script>
       </head>
       <body>
         <CartProvider>
@@ -141,6 +143,7 @@ export default function RootLayout({
           <main className="pb-32">{children}</main>
           <Sidebar />
           <Footer />
+          <BottomTabBar />
           <Banner />
           <CartSuccessPopup />
         </CartProvider>

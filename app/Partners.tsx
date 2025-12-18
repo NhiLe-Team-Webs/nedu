@@ -22,7 +22,7 @@ const Partners = () => {
       <div className="ww-section ww-section-d339226d-c645-44c1-b466-0081e70467c7" style={{ height: 'auto', zIndex: 'unset', minHeight: 'unset', maxHeight: 'unset', display: 'flex', background: 'none' }}>
         <div className="hash-anchor" id="partner"></div>
         <div className="ww-layout section-base ww-section-element" style={{ display: 'flex', flexFlow: 'column', alignItems: 'flex-start', width: '100%', maxWidth: '1280px', minWidth: 'unset', minHeight: 'unset', maxHeight: 'unset' }}>
-          
+
           {/* Background "Partners" text */}
           <p className="ww-text-content ww-text ww-element text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[110px]" style={{
             margin: '0px',
@@ -66,7 +66,7 @@ const Partners = () => {
             minHeight: 'unset',
             background: 'none'
           }}>
-            
+
             {/* Main heading */}
             <p className="ww-text-content ww-text ww-element ww-flexbox__object mb-6 sm:mb-8 md:mb-10 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[68px]" style={{
               margin: '0px',
@@ -122,10 +122,10 @@ const Partners = () => {
                     height: 'auto',
                     maxHeight: '100px',
                     minHeight: 'unset',
-                    background: 'rgba(255, 255, 255, 0.2)',
-                    boxShadow: 'rgba(0, 0, 0, 0.05) 0px 4px 4px 0px',
-                    borderRadius: '12px',
-                    backdropFilter: 'blur(4px)',
+                    background: 'rgba(255, 255, 255, 0.4)', // Slightly more opaque for better contrast on mobile
+                    boxShadow: 'var(--shadow-ios-sm)',
+                    borderRadius: 'var(--radius-ios-md)',
+                    backdropFilter: 'blur(10px)',
                     cursor: 'pointer',
                     transform: 'translateZ(0)'
                   }}
@@ -209,10 +209,10 @@ const Partners = () => {
                     height: 'auto',
                     maxHeight: '100px',
                     minHeight: 'unset',
-                    background: 'rgba(255, 255, 255, 0.2)',
-                    boxShadow: 'rgba(0, 0, 0, 0.05) 0px 4px 4px 0px',
-                    borderRadius: '12px',
-                    backdropFilter: 'blur(4px)',
+                    background: 'rgba(255, 255, 255, 0.4)',
+                    boxShadow: 'var(--shadow-ios-sm)',
+                    borderRadius: 'var(--radius-ios-md)',
+                    backdropFilter: 'blur(10px)',
                     cursor: 'pointer',
                     transform: 'translateZ(0)'
                   }}

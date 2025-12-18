@@ -28,7 +28,7 @@ const Testimonials = ({
       window.location.href = buttonLink;
     }
   };
-  
+
   const videos = [
     "https://www.youtube.com/embed/Dm6gg-LHGqs?si=ZiBHEK0dZHJdsxUI",
     "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fneducation.sg%2Fvideos%2F1346108480515481%2F&show_text=false",
@@ -55,7 +55,7 @@ const Testimonials = ({
           {videos.map((src, i) => {
             return (
               <div key={i} className="w-full max-w-[420px] transition-all duration-300">
-                <div className="rounded-2xl max-w-[240px] overflow-hidden shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-105 m-auto">
+                <div className="rounded-ios-lg max-w-[240px] overflow-hidden shadow-ios-card transition-all duration-300 hover:shadow-ios-float hover:scale-105 m-auto">
                   <div className="w-full aspect-[9/16] relative bg-black">
                     <iframe
                       className="absolute inset-0 w-full h-full transition-all duration-300"

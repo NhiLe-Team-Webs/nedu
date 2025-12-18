@@ -22,7 +22,7 @@ const Whom: React.FC<WhomProps> = ({ title, items }) => {
           return (
             <div
               key={index}
-              className="flex flex-col items-center p-4 sm:p-6 bg-white shadow-md rounded-lg"
+              className="flex flex-col items-center p-4 sm:p-6 bg-white shadow-ios-card rounded-ios-lg border border-gray-100 transition-all duration-300 hover:shadow-ios-float hover:scale-[1.02]"
             >
               <div className="flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-yellow-100 rounded-full mb-3 sm:mb-4">
                 {IconComponent && (

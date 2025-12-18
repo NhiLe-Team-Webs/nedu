@@ -60,7 +60,7 @@ export default function CuocSongCuaBanPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#F2F2F7] pb-20 override-header-spacing">
       <CourseHeader
         imageUrl="/picture/cuoc_song_cua_ban.png"
         altText="Cuộc sống của bạn"
@@ -72,37 +72,41 @@ export default function CuocSongCuaBanPage() {
         description="Khóa học giúp bạn khám phá và định hình lại cuộc sống theo cách riêng, tìm ra con đường phát triển bản thân và xây dựng lối sống ý nghĩa."
         courseSlug="cuoc-song-cua-ban"
       />
-      <Instructor instructors={instructors} />
-      <Whom title="Ai nên tham gia khóa học này?" items={whomItems} />
-      <Testimonials
-        courseSlug="cuoc-song-cua-ban"
-        buttonText="Thêm vào giỏ hàng"
-        buttonType="cart"
-      />
-      <CourseInfo
-        title="THÔNG TIN KHÓA HỌC"
-        details={[
-          {
-            icon: "Star" as const,
-            label: "Chủ đề:",
-            value: "Phát triển bản thân",
-          },
-          { icon: "Clock" as const, label: "Thời gian học:", value: "10-13/09/2025" },
-          {
-            icon: "MapPin" as const,
-            label: "Người dẫn đường:",
-            value: "NhiLe",
-          },
-          { icon: "Calendar" as const, label: "Số buổi học:", value: "3,5 ngày" },
-          {
-            icon: "House" as const,
-            label: "Địa điểm học:",
-            value: "Online qua Zoom",
-          },
-          { icon: "Users" as const, label: "Số lượng học viên:", value: "Giới hạn" },
-        ]}
-      />
-      <Organizers />
+      <div className="ios-safe-padding-bottom">
+        <Instructor instructors={instructors} />
+        <div className="py-4">
+          <Whom title="Ai nên tham gia khóa học này?" items={whomItems} />
+        </div>
+        <Testimonials
+          courseSlug="cuoc-song-cua-ban"
+          buttonText="Thêm vào giỏ hàng"
+          buttonType="cart"
+        />
+        <CourseInfo
+          title="THÔNG TIN KHÓA HỌC"
+          details={[
+            {
+              icon: "Star" as const,
+              label: "Chủ đề:",
+              value: "Phát triển bản thân",
+            },
+            { icon: "Clock" as const, label: "Thời gian học:", value: "10-13/09/2025" },
+            {
+              icon: "MapPin" as const,
+              label: "Người dẫn đường:",
+              value: "NhiLe",
+            },
+            { icon: "Calendar" as const, label: "Số buổi học:", value: "3,5 ngày" },
+            {
+              icon: "House" as const,
+              label: "Địa điểm học:",
+              value: "Online qua Zoom",
+            },
+            { icon: "Users" as const, label: "Số lượng học viên:", value: "Giới hạn" },
+          ]}
+        />
+        <Organizers />
+      </div>
     </div>
   );
 }

@@ -13,6 +13,9 @@ const buttonVariants = {
     hero: "bg-primary text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-200 font-semibold transform hover:scale-105 active:scale-95 rounded-full border border-black/20",
     apple: "bg-white text-black border border-black/20 shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-105 active:scale-95 relative overflow-hidden rounded-full",
     "apple-primary": "bg-black text-white border border-black/30 shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-105 active:scale-95 rounded-full",
+    "ios-primary": "bg-primary text-black font-semibold shadow-ios-sm active:scale-95 transition-all duration-200 rounded-ios-btn ios-haptic-active min-h-[44px]",
+    "ios-secondary": "bg-gray-100 text-black font-medium active:scale-95 transition-all duration-200 rounded-ios-btn ios-haptic-active min-h-[44px]",
+    "ios-ghost": "bg-transparent text-primary font-medium active:scale-95 transition-all duration-200 rounded-ios-btn ios-haptic-active min-h-[44px]",
   },
   sizes: {
     default: "h-10 px-6 py-2",
