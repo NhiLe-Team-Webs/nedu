@@ -114,15 +114,15 @@ export default function Banner() {
       </div>
 
       {/* Main Banner */}
-      <div className="bg-[#4A4A4A]/90 backdrop-blur-md text-white px-2 py-2 md:px-4 md:py-3 ios-safe-padding-bottom">
-        <div className="max-w-7xl mx-auto flex flex-row items-center justify-center gap-2 md:gap-4 relative">
+      <div className="bg-[#4A4A4A]/90 backdrop-blur-md text-white px-4 py-2 md:px-4 md:py-3 ios-safe-padding-bottom">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-x-4 gap-y-2 relative">
           {/* Left Side: Icon + Text + Date */}
           <div className="flex items-center gap-1.5 md:gap-2 shrink-0">
             <div className="w-7 h-7 md:w-9 md:h-9 rounded-full bg-[#FFA500] flex items-center justify-center shrink-0">
               <CircleAlert className="w-3.5 h-3.5 md:w-4 md:h-4 text-white" />
             </div>
             <div className="flex flex-col">
-              <div className="font-bold text-[11px] md:text-sm text-white leading-tight whitespace-nowrap">
+              <div className="font-bold text-[11px] md:text-sm text-white leading-tight">
                 Ưu đãi sắp hết hạn sau:
               </div>
               <div className="text-[9px] md:text-[10px] text-gray-300 leading-tight mt-0.5 whitespace-nowrap">

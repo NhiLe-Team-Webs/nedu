@@ -107,7 +107,7 @@ const Header = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden inline-flex items-center justify-center h-10 w-10 text-text-secondary hover:text-primary relative transition-all duration-200 transform hover:scale-110 active:scale-95"
+            className="md:hidden inline-flex items-center justify-center h-10 w-10 text-text-secondary hover:text-primary relative transition-all duration-200 transform hover:scale-110 active:scale-95 overflow-visible"
             onClick={() => setShowNotification(true)}
             aria-label="Thông báo"
           >
