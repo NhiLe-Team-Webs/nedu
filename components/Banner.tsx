@@ -114,54 +114,54 @@ export default function Banner() {
       </div>
 
       {/* Main Banner */}
-      <div className="bg-[#4A4A4A]/90 backdrop-blur-md text-white px-3 py-3 md:px-2 md:py-2 ios-safe-padding-bottom">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center md:justify-center gap-3 md:gap-8 relative">
-          {/* Title with Icon */}
-          <div className="flex flex-col md:flex-row items-center shrink-0 md:gap-4">
-            <div className="flex items-center gap-2 mb-1 md:mb-0">
-              <div className="w-8 h-8 md:w-8 md:h-8 rounded-full bg-[#FFA500] flex items-center justify-center">
-                <CircleAlert className="w-4 h-4 md:w-4 md:h-4 text-white" />
-              </div>
-              <div className="font-bold text-lg md:text-lg text-white">
-                Ưu đãi sắp hết hạn:
-              </div>
+      <div className="bg-[#4A4A4A]/90 backdrop-blur-md text-white px-2 py-2 md:px-4 md:py-3 ios-safe-padding-bottom">
+        <div className="max-w-7xl mx-auto flex flex-row items-center justify-center gap-2 md:gap-4 relative">
+          {/* Left Side: Icon + Text + Date */}
+          <div className="flex items-center gap-1.5 md:gap-2 shrink-0">
+            <div className="w-7 h-7 md:w-9 md:h-9 rounded-full bg-[#FFA500] flex items-center justify-center shrink-0">
+              <CircleAlert className="w-3.5 h-3.5 md:w-4 md:h-4 text-white" />
             </div>
-            <div className="text-xs md:text-sm text-gray-300">
-              08/12/2025 - 08/01/2026
+            <div className="flex flex-col">
+              <div className="font-bold text-[11px] md:text-sm text-white leading-tight whitespace-nowrap">
+                Ưu đãi sắp hết hạn sau:
+              </div>
+              <div className="text-[9px] md:text-[10px] text-gray-300 leading-tight mt-0.5 whitespace-nowrap">
+                08/12/2025 - 08/01/2026
+              </div>
             </div>
           </div>
 
-          {/* Countdown Timer */}
-          <div className="flex gap-2 md:gap-3 justify-center">
-            <div className="flex flex-col items-center justify-center w-14 h-14 md:w-12 md:h-12 rounded-ios-xl bg-white text-gray-900 shadow-ios-card">
-              <span className="font-bold text-xl md:text-lg leading-none animate-digit-tick inline-block">
+          {/* Right Side: Countdown Timer */}
+          <div className="flex gap-1.5 md:gap-2 shrink-0">
+            <div className="flex flex-col items-center justify-center w-11 h-11 md:w-12 md:h-12 rounded-lg md:rounded-ios-xl bg-white text-gray-900 shadow-ios-card">
+              <span className="font-bold text-base md:text-lg leading-none animate-digit-tick inline-block">
                 {timeLeft.days}
               </span>
-              <span className="text-[9px] md:text-[8px] uppercase mt-0.5 font-medium text-gray-500">
+              <span className="text-[8px] md:text-[8px] uppercase mt-0.5 font-medium text-gray-500">
                 Ngày
               </span>
             </div>
-            <div className="flex flex-col items-center justify-center w-14 h-14 md:w-12 md:h-12 rounded-ios-xl bg-white text-gray-900 shadow-ios-card">
-              <span className="font-bold text-xl md:text-lg leading-none animate-digit-tick inline-block">
+            <div className="flex flex-col items-center justify-center w-11 h-11 md:w-12 md:h-12 rounded-lg md:rounded-ios-xl bg-white text-gray-900 shadow-ios-card">
+              <span className="font-bold text-base md:text-lg leading-none animate-digit-tick inline-block">
                 {timeLeft.hours}
               </span>
-              <span className="text-[9px] md:text-[8px] uppercase mt-0.5 font-medium text-gray-500">
+              <span className="text-[8px] md:text-[8px] uppercase mt-0.5 font-medium text-gray-500">
                 Giờ
               </span>
             </div>
-            <div className="flex flex-col items-center justify-center w-14 h-14 md:w-12 md:h-12 rounded-ios-xl bg-white text-gray-900 shadow-ios-card">
-              <span className="font-bold text-xl md:text-lg leading-none animate-digit-tick inline-block">
+            <div className="flex flex-col items-center justify-center w-11 h-11 md:w-12 md:h-12 rounded-lg md:rounded-ios-xl bg-white text-gray-900 shadow-ios-card">
+              <span className="font-bold text-base md:text-lg leading-none animate-digit-tick inline-block">
                 {timeLeft.minutes}
               </span>
-              <span className="text-[9px] md:text-[8px] uppercase mt-0.5 font-medium text-gray-500">
+              <span className="text-[8px] md:text-[8px] uppercase mt-0.5 font-medium text-gray-500">
                 Phút
               </span>
             </div>
-            <div className="flex flex-col items-center justify-center w-14 h-14 md:w-12 md:h-12 rounded-ios-xl bg-white text-gray-900 shadow-ios-card">
-              <span className="font-bold text-xl md:text-lg leading-none animate-digit-tick inline-block">
+            <div className="flex flex-col items-center justify-center w-11 h-11 md:w-12 md:h-12 rounded-lg md:rounded-ios-xl bg-white text-gray-900 shadow-ios-card">
+              <span className="font-bold text-base md:text-lg leading-none animate-digit-tick inline-block">
                 {timeLeft.seconds}
               </span>
-              <span className="text-[9px] md:text-[8px] uppercase mt-0.5 font-medium text-gray-500">
+              <span className="text-[8px] md:text-[8px] uppercase mt-0.5 font-medium text-gray-500">
                 Giây
               </span>
             </div>
