@@ -1,30 +1,29 @@
 import React from "react";
-import Image from "next/image";
 
 interface MissionProps {
   title: string;
   subtitle: string;
   description: string;
+  imgUrl?: string;
 }
 
-const Mission: React.FC<MissionProps> = ({ title, subtitle, description }) => {
+const Mission: React.FC<MissionProps> = ({ title, subtitle, description, imgUrl }) => {
+  const background = imgUrl || "/picture/suc_manh_vo_han.jpg";
+
   return (
-    <div className="relative flex flex-col items-center justify-center w-full h-screen relative">
-      <Image
-        src="/picture/suc_manh_vo_han.jpg"
-        alt="bg"
-        fill
-        className="absolute inset-0 w-full h-full object-cover"
-      />
+    <div
+      className="relative flex flex-col items-center justify-center w-full min-h-screen overflow-hidden bg-cover bg-center"
+      style={{ backgroundImage: `url(${background})` }}
+    >
       <div className="absolute inset-0 bg-black bg-opacity-30"></div>
-      <div className="relative flex flex-col items-start gap-8 max-w-3xl">
-        <p className="absolute top-[-68px] left-0 right-0 text-[110px] font-bold text-center text-white/20 uppercase">
+      <div className="relative flex flex-col items-center gap-4 sm:gap-6 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-8 sm:py-12">
+        <h1 className="hidden sm:block text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold text-center text-white/90 uppercase leading-tight break-words">
           {title}
-        </p>
-        <p className="z-10 text-[68px] mx-auto font-extrabold text-center text-white uppercase">
+        </h1>
+        <h2 className="z-10 text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl mx-auto font-extrabold text-center text-white uppercase leading-tight break-words pb-4 sm:pb-6">
           {subtitle}
-        </p>
-        <p className="text-[24px] font-bold text-center text-white">
+        </h2>
+        <p className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-normal text-center text-white leading-relaxed max-w-full sm:max-w-3xl px-4 sm:px-0">
           {description}
         </p>
       </div>

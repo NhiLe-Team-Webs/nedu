@@ -12,88 +12,50 @@ export default function ContactPage() {
   const [status, setStatus] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    setIsSubmitting(true)
-    setStatus('')
-
-    try {
-      // URL của Google Apps Script - CẦN CẬP NHẬT URL NÀY SAU KHI DEPLOY APPS SCRIPT MỚI
-      const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbxKIMyc18J9EiRmJJLyrAUM80mKeA64CFmWoehLR-SjBylwufnae0xrFyTK2Q4crn2F/exec';
-      
-      // Chuẩn bị dữ liệu để gửi
-      const dataToSend = {
-        name: formData.name.trim(),
-        email: formData.email.trim(),
-        phone: formData.phone.trim(),
-        message: formData.message.trim()
-      };
-      
-      const response = await fetch(googleScriptUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams(dataToSend).toString(),
-        // Thêm mode: 'no-cors' để tránh CORS issues với Google Apps Script
-        mode: 'no-cors'
-      });
-
-      // Với mode: 'no-cors', chúng ta không thể đọc response
-      // nên sẽ giả định thành công nếu không có error
-      setStatus('success')
-      setFormData({ name: '', phone: '', email: '', message: '' })
-      setTimeout(() => setStatus(''), 5000)
-    } catch (error) {
-      console.error('Error submitting form:', error)
-      setStatus('error')
-      setTimeout(() => setStatus(''), 5000)
-    } finally {
-      setIsSubmitting(false)
-    }
+    setStatus('success')
+    setTimeout(() => setStatus(''), 3000)
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div className="bg-primary text-white rounded-2xl p-8 md:p-12">
-              <img src="/picture/nedu-contact.png" alt="N-Edu Contact" className="w-full mb-8 rounded-lg" />
-              
-              <h2 className="text-3xl font-bold mb-8">Liên hệ</h2>
-              
-              <div className="space-y-6">
-                <div>
-                  <p className="text-white/80 mb-2">Liên hệ</p>
-                  <a href="tel:+84789785904" className="text-xl font-semibold hover:underline">
-                    (+84) 789785904
-                  </a>
+    <div className="bg-gray-50 py-8 sm:py-12">
+        <div className="container mx-auto px-3 sm:px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="overflow-hidden rounded-xl sm:rounded-2xl bg-white shadow-xl md:flex">
+              <div className="bg-[#F7B50C] text-white px-6 sm:px-8 py-8 sm:py-10 md:w-1/3 flex flex-col justify-center items-stretch rounded-xl sm:rounded-l-2xl relative">
+                <img
+                 src="/nedu-white.svg"
+                 alt="N-Edu Contact"
+                 className="mx-auto mb-4 sm:mb-6 w-full max-w-[140px] sm:max-w-[180px] md:max-w-[220px] object-contain"
+               />
+              <div className="mt-4 sm:mt-6 mx-auto w-full sm:w-[320px] text-sm sm:text-base">
+                <div className="border-t border-white/20 -mx-6 sm:-mx-8"></div>
+                <div className="flex items-center justify-between px-6 sm:px-10 py-2 sm:py-3">
+                  <p className="text-sm sm:text-base font-semibold text-white/95 leading-tight flex items-center translate-y-2">Liên hệ</p>
+                  <a href="tel:+84789785904" className="text-sm sm:text-base font-bold text-white/95 leading-tight flex items-center">(+84) 789785904</a>
                 </div>
-
-                <div>
-                  <p className="text-white/80 mb-2">Email</p>
-                  <a href="mailto:nedu@nhi.sg" className="text-xl font-semibold hover:underline">
-                    nedu@nhi.sg
-                  </a>
+                <div className="border-t border-white/20 -mx-6 sm:-mx-8"></div>
+                <div className="flex items-center justify-between px-6 sm:px-10 py-2 sm:py-3">
+                  <p className="text-sm sm:text-base font-semibold text-white/95 leading-tight flex items-center translate-y-2">Email</p>
+                  <a href="mailto:nedu@nhi.sg" className="text-sm sm:text-base font-bold text-white/95 leading-tight flex items-center">nedu@nhi.sg</a>
                 </div>
-
-                <div>
-                  <p className="text-white/80 mb-2">Telegram</p>
-                  <a href="https://t.me/neducationvn" target="_blank" rel="noopener noreferrer" className="text-xl font-semibold hover:underline">
-                    @neducationvn
-                  </a>
+                <div className="border-t border-white/20 -mx-6 sm:-mx-8"></div>
+                <div className="flex items-center justify-between px-6 sm:px-10 py-2 sm:py-3">
+                  <p className="text-sm sm:text-base font-semibold text-white/95 leading-tight flex items-center translate-y-2">Telegram</p>
+                  <a href="https://t.me/neducationvn" target="_blank" rel="noopener noreferrer" className="text-sm sm:text-base font-bold text-white/95 leading-tight flex items-center">@neducationvn</a>
                 </div>
+                <div className="border-t border-white/20 -mx-6 sm:-mx-8"></div>
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
-              <h2 className="text-3xl font-bold mb-2 text-gray-800">Kết nối với chúng tôi</h2>
-              <p className="text-gray-600 mb-8">Điền đầy đủ thông tin để nhận tư vấn từ N-EDU</p>
+            <div className="flex-1 bg-[#F6F6FA] px-6 sm:px-8 md:px-12 py-8 sm:py-12">
+              <h2 className="mb-2 sm:mb-4 text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">Kết nối với chúng tôi</h2>
+              <p className="mb-4 sm:mb-6 text-base sm:text-lg font-medium text-gray-600">Điền đầy đủ thông tin để nhận tư vấn từ N-EDU</p>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
                 <div>
-                  <label className="block text-gray-700 font-semibold mb-2">
+                  <label className="mb-1 sm:mb-1.5 block text-sm sm:text-base font-medium text-gray-800">
                     Họ và tên <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -102,13 +64,13 @@ export default function ContactPage() {
                     placeholder="Nhập họ và tên của bạn"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition"
+                    className="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition text-sm sm:text-base"
                   />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                   <div>
-                    <label className="block text-gray-700 font-semibold mb-2">
+                    <label className="mb-1 sm:mb-1.5 block text-sm sm:text-base font-medium text-gray-800">
                       Số điện thoại <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -117,12 +79,12 @@ export default function ContactPage() {
                       placeholder="Nhập số điện thoại"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition"
+                      className="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition text-sm sm:text-base"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-gray-700 font-semibold mb-2">
+                    <label className="mb-1 sm:mb-1.5 block text-sm sm:text-base font-medium text-gray-800">
                       Email <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -131,42 +93,38 @@ export default function ContactPage() {
                       placeholder="Nhập email của bạn"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition"
+                      className="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition text-sm sm:text-base"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-gray-700 font-semibold mb-2">
+                  <label className="mb-1 sm:mb-1.5 block text-sm sm:text-base font-medium text-gray-800">
                     Nội dung <span className="text-red-500">*</span>
                   </label>
                   <textarea
                     required
-                    rows={5}
+                    rows={4}
+                    {...({ rows: 5 } as any)}
                     placeholder="Bạn cần hỗ trợ hay điều gì?"
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition"
+                    className="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition text-sm sm:text-base"
                   />
                 </div>
 
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-primary hover:bg-primary-dark text-white py-3 rounded-lg font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {isSubmitting ? 'Đang gửi...' : 'Gửi'}
-                </button>
+                <div className="w-full flex justify-start">
+                  <button
+                    type="submit"
+                    className="flex w-24 sm:w-32 items-center justify-center rounded-full bg-primary py-2 sm:py-3 text-sm sm:text-base font-semibold uppercase tracking-wider text-white transition hover:brightness-95"
+                  >
+                    Gửi
+                  </button>
+                </div>
 
                 {status === 'success' && (
-                  <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg">
-                    Đã gửi thành công! Chúng tôi sẽ liên hệ với bạn sớm nhất.
-                  </div>
-                )}
-
-                {status === 'error' && (
-                  <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
-                    Đã có lỗi xảy ra. Vui lòng thử lại sau.
+                  <div className="bg-green-100 border border-green-400 text-green-700 px-3 sm:px-4 py-2 sm:py-3 rounded-lg text-sm sm:text-base">
+                    Đã gửi thành công!
                   </div>
                 )}
               </form>

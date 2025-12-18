@@ -36,6 +36,15 @@
   --radius-xl: 1rem;
   --radius-2xl: 1.5rem;
   --radius-3xl: 2rem;
+  
+  /* Apple-inspired interaction variables */
+  --transition-fast: 0.15s cubic-bezier(0.4, 0.0, 0.2, 1);
+  --transition-normal: 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+  --transition-slow: 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  --scale-hover: 1.02;
+  --scale-active: 0.98;
+  --opacity-hover: 0.8;
+  --opacity-active: 0.6;
 }
 
 * {
@@ -116,18 +125,28 @@ p {
   font-size: 1rem;
   border: none;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  transition: all var(--transition-normal);
   box-shadow: var(--shadow-md);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(0);
+  will-change: transform, box-shadow;
 }
 
 .btn-primary:hover {
   background-color: var(--color-primary-dark);
-  transform: translateY(-1px);
+  transform: scale(var(--scale-hover)) translateY(-1px);
   box-shadow: var(--shadow-lg);
+}
+
+.btn-primary:active {
+  transform: scale(var(--scale-active)) translateY(0);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-fast);
 }
 
 .btn-secondary {
@@ -139,18 +158,28 @@ p {
   font-size: 1rem;
   border: 2px solid var(--border-color);
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  transition: all var(--transition-normal);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(0);
+  will-change: transform, border-color, box-shadow;
 }
 
 .btn-secondary:hover {
   border-color: var(--color-primary);
   color: var(--color-primary);
-  transform: translateY(-1px);
+  transform: scale(var(--scale-hover)) translateY(-1px);
   box-shadow: var(--shadow-md);
+}
+
+.btn-secondary:active {
+  transform: scale(var(--scale-active)) translateY(0);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast);
 }
 
 .card {
@@ -159,12 +188,19 @@ p {
   box-shadow: var(--shadow-md);
   border: 1px solid var(--border-color);
   padding: 1.5rem;
-  transition: all 0.2s ease-in-out;
+  transition: all var(--transition-normal);
+  transform: translateZ(0);
+  will-change: transform, box-shadow;
 }
 
 .card:hover {
   box-shadow: var(--shadow-lg);
-  transform: translateY(-2px);
+  transform: translateY(-4px) scale(var(--scale-hover));
+}
+
+.card:active {
+  transform: translateY(-2px) scale(var(--scale-active));
+  transition: all var(--transition-fast);
 }
 
 .input-field {
@@ -175,13 +211,26 @@ p {
   background-color: var(--background-primary);
   color: var(--text-primary);
   font-size: 1rem;
-  transition: all 0.2s ease-in-out;
+  transition: all var(--transition-normal);
+  transform: translateZ(0);
+  will-change: border-color, box-shadow, transform;
+}
+
+.input-field:hover {
+  border-color: var(--color-secondary);
+  transform: scale(var(--scale-hover));
 }
 
 .input-field:focus {
   outline: none;
   border-color: var(--color-primary);
   box-shadow: 0 0 0 3px rgba(253, 185, 19, 0.1);
+  transform: scale(1.02);
+}
+
+.input-field:active {
+  transform: scale(var(--scale-active));
+  transition: all var(--transition-fast);
 }
 
 .success-message {
@@ -225,4 +274,526 @@ p {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+.aspect-video {
+  aspect-ratio: 16/9;
+  width: 100%;
+  height: auto;
+}
+
+/* Mobile-first responsive improvements */
+@media (max-width: 640px) {
+  .aspect-video {
+    aspect-ratio: 9/16;
+  }
+  
+  /* Improve touch targets for mobile */
+  button, a, input, textarea, select {
+    min-height: 44px;
+  }
+  
+  /* Better spacing for mobile */
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  /* Improve readability on mobile */
+  body {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  
+  /* Better form inputs on mobile */
+  .input-field {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+  
+  /* Optimize images for mobile */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Better button spacing */
+  .btn-primary, .btn-secondary {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* Tablet improvements */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+/* Large desktop optimizations */
+@media (min-width: 1025px) {
+  .container {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Smooth scrolling for better UX */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Improve focus states for accessibility */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Better loading states */
+.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Improve transitions */
+.transition-all {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Mobile-specific carousel improvements */
+@media (max-width: 640px) {
+  .carousel-container {
+    padding: 0 1rem;
+  }
+  
+  .carousel-item {
+    margin: 0 0.5rem;
+  }
+}
+
+/* Better text rendering */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Prevent horizontal overflow */
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+
+/* Better touch feedback */
+@media (hover: none) and (pointer: coarse) {
+  button:active,
+  a:active {
+    transform: scale(var(--scale-active));
+  }
+}
+
+/* Apple-inspired hover effects for links */
+a {
+  position: relative;
+  transition: all var(--transition-normal);
+}
+
+a:hover {
+  transform: translateY(-1px);
+}
+
+/* Enhanced hover effects for images */
+img {
+  transition: all var(--transition-normal);
+  transform: translateZ(0);
+}
+
+img:hover {
+  transform: scale(var(--scale-hover));
+  filter: brightness(1.05);
+}
+
+/* Smooth scroll behavior for all sections */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Enhanced focus states for better accessibility */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  transform: scale(1.02);
+}
+
+/* Apple-style loading animation */
+@keyframes apple-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.loading {
+  animation: apple-pulse 1.5s ease-in-out infinite;
+}
+
+/* Smooth transitions for all interactive elements */
+.interactive-element {
+  transition: all var(--transition-normal);
+  transform: translateZ(0);
+  will-change: transform, opacity;
+}
+
+.interactive-element:hover {
+  transform: scale(var(--scale-hover));
+}
+
+.interactive-element:active {
+  transform: scale(var(--scale-active));
+  transition: all var(--transition-fast);
+}
+
+/* Enhanced card hover effects */
+.card-enhanced {
+  transition: all var(--transition-normal);
+  transform: translateZ(0);
+  will-change: transform, box-shadow;
+}
+
+.card-enhanced:hover {
+  transform: translateY(-8px) scale(var(--scale-hover));
+  box-shadow: var(--shadow-xl);
+}
+
+.card-enhanced:active {
+  transform: translateY(-4px) scale(var(--scale-active));
+  transition: all var(--transition-fast);
+}
+
+/* Apple-style button ripple effect */
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(0);
+  animation: ripple 0.6s ease-out;
+  pointer-events: none;
+}
+
+.animate-ripple {
+  animation: ripple 0.6s ease-out;
+}
+
+/* Enhanced mobile touch targets */
+@media (max-width: 640px) {
+  button, a, input, textarea, select {
+    min-height: 44px;
+    min-width: 44px;
+    transition: all var(--transition-normal);
+  }
+  
+  button:active, a:active {
+    transform: scale(var(--scale-active));
+    opacity: var(--opacity-active);
+  }
+}
+
+/* Smooth scroll behaviors and parallax effects */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* Account for fixed header */
+}
+
+/* Parallax scrolling for sections */
+.parallax-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.parallax-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 120%;
+  background-size: cover;
+  background-position: center;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Smooth reveal animations */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all var(--transition-slow);
+}
+
+.reveal-on-scroll.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Enhanced smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+/* Smooth scroll for mobile */
+@media (max-width: 640px) {
+  html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Parallax hero sections */
+.hero-parallax {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.hero-parallax-content {
+  position: relative;
+  z-index: 10;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-parallax-bg {
+  position: absolute;
+  top: -20%;
+  left: 0;
+  width: 100%;
+  height: 120%;
+  background-size: cover;
+  background-position: center;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Smooth fade-in animations */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all var(--transition-slow);
+}
+
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-in-left {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all var(--transition-slow);
+}
+
+.fade-in-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.fade-in-right {
+  opacity: 0;
+  transform: translateX(20px);
+  transition: all var(--transition-slow);
+}
+
+.fade-in-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Smooth scale animations */
+.scale-in {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all var(--transition-slow);
+}
+
+.scale-in.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Enhanced scroll indicators */
+.scroll-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform var(--transition-normal);
+  z-index: 1000;
+}
+
+/* Smooth hover effects for large areas */
+.hover-lift {
+  transition: all var(--transition-normal);
+  transform: translateZ(0);
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px) scale(var(--scale-hover));
+  box-shadow: var(--shadow-xl);
+}
+
+/* Smooth background transitions */
+.bg-transition {
+  transition: background-color var(--transition-normal);
+}
+
+/* Enhanced focus states with smooth transitions */
+.focus-enhanced:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(253, 185, 19, 0.3);
+  transform: scale(1.02);
+  transition: all var(--transition-normal);
+}
+
+/* Smooth loading states */
+.loading-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading-skeleton 1.5s infinite;
+}
+
+@keyframes loading-skeleton {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Banner animations */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes digit-tick {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.5s ease-out;
+}
+
+.animate-digit-tick {
+  animation: digit-tick 1s ease-in-out infinite;
+}
+
+/* Smooth page transitions */
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all var(--transition-slow);
+}
+
+.page-transition-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all var(--transition-slow);
+}
+
+/* Text truncation utilities */
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Fallback for browsers that don't support -webkit-line-clamp */
+@supports not (-webkit-line-clamp: 1) {
+  .line-clamp-1 {
+    max-height: 1.5em;
+  }
+  
+  .line-clamp-2 {
+    max-height: 3em;
+  }
+  
+  .line-clamp-3 {
+    max-height: 4.5em;
+  }
 }

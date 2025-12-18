@@ -8,6 +8,8 @@ import Whom from "@/components/Whom";
 import Testimonials from "@/app/Testimonials";
 import CourseInfo from "@/components/CourseInfo";
 import Organizers from "@/components/Organizers";
+import { useCart } from "@/lib/cart-context";
+import { getInstructorsByIds } from "@/data/instructors";
 
 export default function CuocSongCuaBanPage() {
   const { addToCart } = useCart();
@@ -19,63 +21,22 @@ export default function CuocSongCuaBanPage() {
     },
   };
 
-  const instructors = [
-    {
-      name: "NhiLe",
-      profession: ["Doanh nhân"],
-      bio: "Nhi Lê là một doanh nhân, nhà giáo dục và nhà sáng tạo nội dung người Việt Nam. Cô được biết đến là người đầu tiên đưa chủ đề tâm lý học bằng tiếng Việt lên nền tảng YouTube và là người sáng lập nhiều dự án văn hóa - giáo dục có ảnh hưởng tại Việt Nam. Hiện cô đang sinh sống và làm việc tại Singapore.",
-      image: "https://nedu.nhi.sg/images/nhile_1.jpg",
-      education:
-        'Nhi Lê tốt nghiệp chuyên ngành Tâm lý học (Diploma in Psychology) tại Kaplan Singapore. Ngoài ra, cô còn sở hữu nhiều chứng chỉ chuyên sâu khác như "Lãnh đạo Kiên cường & Kinh doanh Bền vững" (Resilient Leadership & Business Sustainability) và Chứng chỉ Điều hành về Khoa học Hành vi Ứng dụng (Executive Certificate in Applied Behavioural Science) tại Đại học Quản lý Singapore (SMU).',
-      career:
-        "Nhi Lê hoạt động trong nhiều lĩnh vực, từ kinh doanh, giáo dục đến sáng tạo nội dung. Cô là người có tầm ảnh hưởng trong việc chia sẻ kiến thức về tâm lý học và kỹ năng sống cho thế hệ trẻ.",
-      achievements: [
-        {
-          date: "2025-04",
-          description: "Vinh danh với giải thưởng HER Courage Awards 2025.",
-        },
-        {
-          date: "2025-08",
-          description:
-            "Người phụ nữ Việt Nam đầu tiên xuất hiện trên blog chính thức của YouTube toàn cầu.",
-        },
-      ],
-      projects: [
-        {
-          title: "Kênh YouTube Nhi Le",
-          description:
-            "Kênh tiên phong chia sẻ kiến thức tâm lý học bằng tiếng Việt.",
-        },
-        {
-          title: "Cộng đồng NhiLe Team",
-          description: "Đào tạo nghề và kỹ năng cần thiết cho giới trẻ.",
-        },
-        {
-          title: "Quỹ NhiLe Foundation",
-          description: "Tổ chức phi lợi nhuận hỗ trợ trẻ em Việt Nam.",
-        },
-        {
-          title: "Podcast Ms Nhi và This is Home",
-          description: "Kết nối thế hệ trẻ với doanh nhân, nghệ nhân Việt Nam.",
-        },
-      ],
-    },
-  ];
+  const instructors = getInstructorsByIds(["nhi-le"]);
   const whomItems = [
     {
-      icon: "Sprout",
+      icon: "Sprout" as const,
       heading: "Sinh viên & người mới đi làm",
       description:
         "Trang bị nền tảng thực tế để hiểu rõ AI dùng trong công việc viết – trình bày – giao tiếp, mở ra cơ hội phát triển sớm trong môi trường chuyên nghiệp.",
     },
     {
-      icon: "Recycle",
+      icon: "Recycle" as const,
       heading: "Người muốn chuyển ngành",
       description:
         "Khóa học phù hợp cho những ai muốn khám phá tiềm năng AI để ứng dụng trong công việc mới như marketing, truyền thông, quản lý, nhân sự...",
     },
     {
-      icon: "Split",
+      icon: "Split" as const,
       heading: "Người mới bắt đầu học AI",
       description:
         "Không cần nền tảng kỹ thuật – chỉ cần bạn tò mò, ham học hỏi và muốn dùng AI một cách thực tế để nâng cấp kỹ năng và tăng năng suất cá nhân.",
@@ -94,48 +55,51 @@ export default function CuocSongCuaBanPage() {
     ],
     title: "Testimonials",
     subtitle: "Lời chứng thực",
-    buttonText: "Đăng ký ngay",
+    buttonText: "Thêm vào giỏ hàng",
     buttonLink: "/testimonials",
   };
 
   return (
     <div className="min-h-screen bg-white">
       <CourseHeader
-        imageUrl_bot="https://nedu.nhi.sg/images/thuonghieucuaban-bot.png"
-        altText="Thương hiệu của bạn"
+        imageUrl="/picture/cuoc_song_cua_ban.png"
+        altText="Cuộc sống của bạn"
         time="KHÓA HỌC ONLINE"
-        tags={["Thương hiệu"]}
-        title="Thương hiệu của bạn"
+        tags={["Phát triển bản thân"]}
+        title="Cuộc Sống Của Bạn"
         cost="18.960.000"
         paymentLink="/payment/53"
-        description="Kiến thức cơ bản nhất cho người muốn bắt đầu mở doanh nghiệp hay cải tổ doanh nghiệp gia đình. Định hình rõ hơn kinh doanh của bạn trong chỉ 4 ngày với khóa học Thương Hiệu Của Bạn - một chương trình được thiết kế đặc biệt cho chủ doanh nghiệp trong kỷ nguyên AI."
+        description="Khóa học giúp bạn khám phá và định hình lại cuộc sống theo cách riêng, tìm ra con đường phát triển bản thân và xây dựng lối sống ý nghĩa."
+        courseSlug="cuoc-song-cua-ban"
       />
       <Instructor instructors={instructors} />
       <Whom title="Ai nên tham gia khóa học này?" items={whomItems} />
-      <Testimonials testimonials={testimonials} />
+      <Testimonials
+        courseSlug="cuoc-song-cua-ban"
+        buttonText="Thêm vào giỏ hàng"
+        buttonType="cart"
+      />
       <CourseInfo
         title="THÔNG TIN KHÓA HỌC"
-        buttonText="ĐĂNG KÝ NGAY"
-        buttonLink="/payment/57"
         details={[
           {
-            icon: "Star",
+            icon: "Star" as const,
             label: "Chủ đề:",
-            value: "Phát triển bản thân và khám phá nội tâm",
+            value: "Phát triển bản thân",
           },
-          { icon: "Clock", label: "Thời gian học:", value: "10-13/09/2025" },
+          { icon: "Clock" as const, label: "Thời gian học:", value: "10-13/09/2025" },
           {
-            icon: "MapPin",
+            icon: "MapPin" as const,
             label: "Người dẫn đường:",
-            value: "NhiLe x Guest Instructors",
+            value: "NhiLe",
           },
-          { icon: "Calendar", label: "Số buổi học:", value: "3,5 ngày" },
+          { icon: "Calendar" as const, label: "Số buổi học:", value: "3,5 ngày" },
           {
-            icon: "House",
+            icon: "House" as const,
             label: "Địa điểm học:",
-            value: "Offline tại địa điểm sẽ thông báo",
+            value: "Online qua Zoom",
           },
-          { icon: "Users", label: "Số lượng học viên:", value: "Giới hạn" },
+          { icon: "Users" as const, label: "Số lượng học viên:", value: "Giới hạn" },
         ]}
       />
       <Organizers />

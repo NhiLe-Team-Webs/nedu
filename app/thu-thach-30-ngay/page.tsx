@@ -8,11 +8,12 @@ import {
   MessageCircle,
   PhoneCall,
 } from "lucide-react";
+// import ChallengeRegistrationForm from "@/components/ChallengeRegistrationForm";
 
 const neduLogo = "/picture/nedu.svg";
 const nltLogo = "/picture/nlt.png";
 const challengePoster = "/picture/thuthach30day.png";
-const tuyetMaiPhoto = "/picture/tuyetmai.jpg";
+const tuyetMaiPhoto = "/picture/denise.jpg";
 
 const CTA_YELLOW = "#F8B516";
 const DARK_GRAY = "#333333";
@@ -100,54 +101,56 @@ const ThirtyDayPage = () => {
       >
         <main>
           {/* HERO */}
-          <section id="hero" className="pt-10 md:pt-14 pb-10 text-center">
-            <div className="max-w-5xl mx-auto px-6">
+          <section id="hero" className="pt-8 sm:pt-10 md:pt-14 pb-8 sm:pb-10 text-center">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6">
               <h1
-                className="text-4xl md:text-5xl font-extrabold mb-3"
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-2 sm:mb-3"
                 style={{ color: CTA_YELLOW }}
               >
                 THỬ THÁCH 30 NGÀY
               </h1>
               <p
-                className="text-base md:text-lg font-semibold"
+                className="text-sm sm:text-base md:text-lg font-semibold"
                 style={{ color: DARK_GRAY }}
               >
-                Chủ đề Tháng 11: Sáng tạo nội dung
+                Chủ đề Tháng 12: Tỏa sáng cùng Denise
               </p>
-              <p className="mt-1 text-sm md:text-base">
+              <p className="mt-1 text-sm sm:text-sm md:text-base">
                 Giá hạn mỗi tháng:
-                <span className="text-green-600 font-extrabold text-xl md:text-2xl">
+                <span className="text-green-600 font-extrabold text-lg sm:text-xl md:text-2xl">
                   {" "}
                   396.000
                 </span>
                 <span className="font-semibold"> VND</span>
               </p>
-              <div className="mt-4 mb-6">
+              <div id="register-hero" className="text-center mt-8 sm:mt-10">
                 <a
-                  href="#register"
-                  className="inline-flex items-center gap-2 px-8 py-3 rounded-full btn-primary text-xs md:text-sm"
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSdFUBpOdZTswjw0mraKvyBW0bU5AGK9hrZYatNC2K3gnpQJdQ/viewform"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-8 sm:px-10 py-2 sm:py-3 rounded-full btn-primary text-xs sm:text-sm inline-flex items-center gap-2"
                 >
                   ĐĂNG KÝ NGAY
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
                 </a>
               </div>
-              <div className="mt-4 flex justify-center">
+              <div className="mt-3 sm:mt-4 flex justify-center">
                 <Image
                   src={neduLogo}
                   alt="N-Education"
                   width={800}
                   height={200}
-                  className="w-full max-w-4xl h-auto object-contain"
+                  className="w-full max-w-3xl sm:max-w-4xl h-auto object-contain"
                 />
               </div>
 
-              <div className="mt-10 flex items-center justify-center">
+              <div className="mt-6 sm:mt-10 flex items-center justify-center">
                 <Image
                   src={challengePoster}
                   alt="Thử Thách 30 Ngày"
                   width={800}
                   height={400}
-                  className="w-full max-w-[1100px] h-auto object-cover rounded-[32px]"
+                  className="w-full max-w-[600px] sm:max-w-[800px] md:max-w-[900px] lg:max-w-[1100px] h-auto object-cover rounded-[16px] sm:rounded-[24px] md:rounded-[32px]"
                 />
                 <p
                   className="text-sm md:text-base font-medium"
@@ -158,13 +161,13 @@ const ThirtyDayPage = () => {
           </section>
 
           {/* ABOUT */}
-          <section id="about" className="pb-14">
+          <section id="about" className="pb-10 sm:pb-14">
             <div
-              className="max-w-4xl mx-auto px-6 text-[13px] md:text-[14px] leading-relaxed"
+              className="max-w-4xl mx-auto px-4 sm:px-6 text-[12px] sm:text-[13px] md:text-[14px] leading-relaxed"
               style={{ color: DARK_GRAY }}
             >
               <p className="mb-3">
-                Nhi đây, có ai học thức thức của Nhi xong bỏ vô góc trì hoãn
+                Nhi đây, có ai học kiến thức của Nhi xong bỏ vô góc trì hoãn
                 không làm không? Thử Thách 30 Ngày ra đời để kéo bạn vào hành
                 trình hành động cùng nhau, từng bước xoá thói quen xấu.
               </p>
@@ -176,11 +179,11 @@ const ThirtyDayPage = () => {
           </section>
 
           {/* 30 NGÀY CÓ GÌ */}
-          <section className="pb-16">
-            <div className="max-w-6xl mx-auto px-6">
-              <h2 className="section-title mb-10">30 NGÀY CÓ GÌ?</h2>
+          <section className="pb-12 sm:pb-16">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6">
+              <h2 className="section-title mb-6 sm:mb-10 text-2xl sm:text-3xl md:text-4xl lg:text-5xl">30 NGÀY CÓ GÌ?</h2>
 
-              <div className="grid md:grid-cols-2 gap-6 text-[13px] md:text-[14px]">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 text-[12px] sm:text-[13px] md:text-[14px]">
                 <div className="card">
                   <h3
                     className="font-bold text-lg mb-2"
@@ -236,82 +239,93 @@ const ThirtyDayPage = () => {
           {/* MENTOR */}
           <section
             id="mentor"
-            className="relative py-20"
+            className="relative py-12 sm:py-16 md:py-20"
             style={{ backgroundColor: LIGHT_GRAY_BG }}
           >
-            <div className="mentor-bg-text">NGƯỜI HƯỚNG DẪN</div>
+            <div className="mentor-bg-text text-3xl sm:text-4xl md:text-5xl">NGƯỜI HƯỚNG DẪN</div>
 
-            <div className="max-w-5xl mx-auto px-6 relative z-10">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
               <h2
-                className="text-3xl md:text-4xl font-extrabold text-center mb-10"
+                className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-center mb-6 sm:mb-10"
                 style={{ color: CTA_YELLOW }}
               >
                 NGƯỜI DẪN ĐƯỜNG
               </h2>
 
               {/* CARD + ẢNH SỬA LẠI TỶ LỆ */}
-              <div className="bg-white rounded-[32px] shadow-[0_18px_45px_rgba(0,0,0,0.08)] px-6 md:px-10 pt-8 pb-10">
+              <div className="bg-white rounded-[16px] sm:rounded-[24px] md:rounded-[32px] shadow-[0_18px_45px_rgba(0,0,0,0.08)] px-4 sm:px-6 md:px-10 pt-6 sm:pt-8 pb-8 sm:pb-10">
                 {/* ẢNH: giống ảnh 1 – có khoảng trắng 2 bên, giữ tỷ lệ gốc */}
-                <div className="flex justify-center mb-8">
+                <div className="flex justify-center mb-6 sm:mb-8">
                   <Image
                     src={tuyetMaiPhoto}
-                    alt="Tuyết Mai"
+                    alt="Denise"
                     width={800}
                     height={420}
-                    className="w-full max-w-3xl h-auto rounded-[32px] object-cover"
+                    className="w-full max-w-2xl sm:max-w-3xl h-auto rounded-[16px] sm:rounded-[24px] md:rounded-[32px] object-cover"
                     priority
                   />
                 </div>
 
                 <div
-                  className="text-[13px] md:text-[14px] leading-relaxed"
+                  className="text-[12px] sm:text-[13px] md:text-[14px] leading-relaxed"
                   style={{ color: DARK_GRAY }}
                 >
                   <p className="mb-3">
-                    Hơn 3 năm kinh nghiệm trong lĩnh vực Sáng tạo nội dung và
-                    xây dựng kênh cá nhân.
+                    Host & Content Creator, tập trung vào Phát triển cá nhân cho những người không nghiêm túc.
                   </p>
 
                   <p className="mb-2">
-                    Là Content Creator & người đồng hành chính trong Thử
-                    Thách 30 Ngày.
+                    Truyền cảm hứng cho hơn 23.000 người trên toàn thế giới qua podcast, YouTube và những cuộc trò chuyện chân thật, gần gũi về tự nhận thức và phát triển cá nhân.
                   </p>
 
-                  <ul className="list-disc pl-5 space-y-1 mb-4">
-                    <li>
-                      Đồng hành giúp học viên xây kênh cá nhân từ con số 0.
-                    </li>
-                    <li>
-                      Truyền cảm hứng để học viên tự tin xuất hiện trước ống
-                      kính.
-                    </li>
-                    <li>Phong cách dẫn dắt: gần gũi, vui vẻ, thực tế.</li>
-                  </ul>
+                  <p className="mb-3 font-semibold">Đam mê với việc thay đổi nhận thức:</p>
+                  <p className="mb-3">
+                    Tôi giúp những người cảm thấy mình "quá vui vẻ" hoặc "không nghiêm túc" để thành công nhận ra rằng họ không cần thay đổi tính cách để đạt được những điều tuyệt vời — họ có thể phát triển bằng cách là chính mình một cách trọn vẹn.
+                  </p>
 
-                  <p className="font-semibold mb-2">Giá trị sau chương trình:</p>
-                  <ul className="list-disc pl-5 space-y-1 mb-6">
-                    <li>
-                      Có nền tảng nội dung bền vững cho TikTok, Reels, Shorts...
-                    </li>
-                    <li>
-                      Hình thành thói quen & quy trình tự vận hành kênh sau
-                      30 ngày.
-                    </li>
+                  <p className="mb-2 font-semibold">Kinh nghiệm thực tế:</p>
+                  <ul className="list-disc pl-4 sm:pl-5 space-y-1 mb-4">
+                    <li>Host của Sip and Share | Spice & Nice</li>
+                    <li>Người tạo ra Growth is a Bit of a Bitch</li>
+                    <li>Nổi tiếng với việc biến những thử nghiệm bản thân lộn xộn của mình thành những bài học táo bạo, thực tế.</li>
                   </ul>
 
                   <div className="text-center mt-4">
                     <p
-                      className="font-extrabold text-base md:text-lg"
+                      className="font-extrabold text-sm sm:text-base md:text-lg"
                       style={{ color: DARK_GRAY }}
                     >
-                      TUYẾT MAI
+                      DENISE
                     </p>
                     <p
-                      className="text-xs md:text-sm font-semibold"
+                      className="text-xs sm:text-xs md:text-sm font-semibold"
                       style={{ color: CTA_YELLOW }}
                     >
-                      Nhà sáng tạo nội dung
+                      Host & Content Creator
                     </p>
+                    <div className="flex items-center justify-center gap-2 mt-3">
+                      <a
+                        href="https://www.linkedin.com/in/denisewym"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 px-4 py-2 rounded-full border font-medium text-xs"
+                        style={{
+                          borderColor: CTA_YELLOW,
+                          color: CTA_YELLOW,
+                        }}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="#0077B5"
+                        >
+                          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                        LinkedIn
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -319,12 +333,12 @@ const ThirtyDayPage = () => {
           </section>
 
           {/* COURSE INFO */}
-          <section id="course-info" className="py-18 pb-16 bg-white">
-            <div className="max-w-6xl mx-auto px-6">
-              <h2 className="section-title mb-10">THÔNG TIN KHÓA HỌC</h2>
+          <section id="course-info" className="py-12 sm:py-16 md:py-18 pb-12 sm:pb-16 bg-white">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6">
+              <h2 className="section-title mb-6 sm:mb-10 text-2xl sm:text-3xl md:text-4xl lg:text-5xl">THÔNG TIN KHÓA HỌC</h2>
 
               <div className="max-w-5xl mx-auto card">
-                <div className="grid md:grid-cols-3 gap-y-10 gap-x-10 text-[13px] md:text-[14px]">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-6 sm:gap-y-8 md:gap-y-10 gap-x-6 sm:gap-x-8 md:gap-x-10 text-[12px] sm:text-[13px] md:text-[14px]">
                   {/* CHỦ ĐỀ */}
                   <div className="flex items-start gap-3">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill={CTA_YELLOW}>
@@ -334,7 +348,7 @@ const ThirtyDayPage = () => {
                     <div>
                       <p className="font-semibold mb-1">Chủ đề:</p>
                       <p className="font-extrabold text-[14px]" style={{ color: DARK_GRAY }}>
-                        Sáng tạo nội dung
+                        Tỏa sáng cùng Denise
                       </p>
                     </div>
                   </div>
@@ -342,13 +356,13 @@ const ThirtyDayPage = () => {
                   {/* THỜI GIAN */}
                   <div className="flex items-start gap-3">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill={CTA_YELLOW}>
-                      <path d="M12 1a11 11 0 110 22 11 11 0 010-22zm1 11h5v2h-7V6h2v6z"/>
+                      <path d="M12 1a11 11 0 110 22 11 11 0 010-22zm1 11h5v2h-7V6h2v6z" />
                     </svg>
 
                     <div>
                       <p className="font-semibold mb-1">Thời gian:</p>
                       <p className="font-extrabold text-[14px]" style={{ color: DARK_GRAY }}>
-                        28/10/2025 – 28/11/2025
+                        28/12/2025 – 28/01/2026
                       </p>
                     </div>
                   </div>
@@ -365,7 +379,7 @@ const ThirtyDayPage = () => {
                     <div>
                       <p className="font-semibold mb-1">Người dẫn đường:</p>
                       <p className="font-extrabold text-[14px]" style={{ color: DARK_GRAY }}>
-                        Tuyết Mai
+                        Denise
                       </p>
                     </div>
                   </div>
@@ -390,7 +404,7 @@ const ThirtyDayPage = () => {
                   {/* ĐỊA ĐIỂM */}
                   <div className="flex items-start gap-3">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill={CTA_YELLOW}>
-                      <path d="M12 3l10 9h-3v9H5v-9H2l10-9z"/>
+                      <path d="M12 3l10 9h-3v9H5v-9H2l10-9z" />
                     </svg>
 
                     <div>
@@ -403,13 +417,15 @@ const ThirtyDayPage = () => {
                 </div>
               </div>
 
-              <div id="register" className="text-center mt-10">
+              <div id="register-form" className="mt-8 sm:mt-12 scroll-mt-20 flex justify-center">
                 <a
-                  href="#contact"
-                  className="px-10 py-3 rounded-full btn-primary text-xs md:text-sm inline-flex items-center gap-2"
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSdFUBpOdZTswjw0mraKvyBW0bU5AGK9hrZYatNC2K3gnpQJdQ/viewform"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-10 py-3 rounded-full btn-primary text-base font-bold inline-flex items-center gap-2"
                 >
-                  ĐĂNG KÝ NGAY
-                  <ArrowRight className="w-4 h-4" />
+                  ĐĂNG KÝ THAM GIA NGAY
+                  <ArrowRight className="w-5 h-5" />
                 </a>
               </div>
             </div>
