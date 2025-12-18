@@ -254,7 +254,7 @@ const Courses: React.FC = () => {
             return (
               <div
                 key={slide.id}
-                className={`carousel-item ${positionClass} rounded-2xl shadow-2xl cursor-pointer transition-all duration-500 ease-in-out overflow-hidden bg-white hover:shadow-3xl`}
+                className={`carousel-item ${positionClass} rounded-ios-lg shadow-ios-card cursor-pointer transition-all duration-500 ease-in-out overflow-hidden bg-white hover:shadow-ios-float`}
                 onClick={() => handleItemClick(index)}
                 style={{
                   width: isClient ? `${cardWidth}px` : '300px',
@@ -308,7 +308,7 @@ const Courses: React.FC = () => {
                 }}
               >
                 {/* Top Part - Full Size Image */}
-                <div className="relative h-3/5 overflow-hidden rounded-t-2xl">
+                <div className="relative h-3/5 overflow-hidden rounded-t-ios-lg">
                   <Image
                     src={slide.image}
                     alt={slide.title}
@@ -339,11 +339,7 @@ const Courses: React.FC = () => {
                     <Link href={`/program-${slide.type}/${slide.slug}`}>
                       <button
                         onClick={(e) => e.stopPropagation()}
-                        className="bg-yellow-400 hover:bg-yellow-500 text-white p-2 sm:p-3 rounded-full transition-all duration-200 flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-110 active:scale-95 transform"
-                        style={{
-                          minWidth: '32px sm:40px',
-                          minHeight: '32px sm:40px'
-                        }}
+                        className="bg-yellow-400 hover:bg-yellow-500 text-white p-2 sm:p-3 w-8 h-8 sm:w-10 sm:h-10 rounded-full transition-all duration-200 flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-110 active:scale-95 transform"
                       >
                         <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 transition-all duration-200" />
                       </button>
@@ -355,19 +351,7 @@ const Courses: React.FC = () => {
           })}
         </div>
 
-        {/* Dots Indicator */}
-        <div className="flex mt-6 sm:mt-8 space-x-2">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              className={`w-3 h-3 sm:w-3 sm:h-3 rounded-full transition-all duration-300 transform hover:scale-125 ${index === currentIndex
-                  ? 'bg-gray-800 scale-125 shadow-lg'
-                  : 'bg-gray-400 hover:bg-gray-600 hover:scale-110'
-                }`}
-              onClick={() => setCurrentIndex(index)}
-            />
-          ))}
-        </div>
+
 
         {/* Navigation Buttons */}
         <div className="flex gap-3 sm:gap-4 mt-4 sm:mt-6">

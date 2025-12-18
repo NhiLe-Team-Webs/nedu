@@ -9,21 +9,21 @@ const Organizers: React.FC = () => {
         </h2>
         <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:gap-8 max-w-md sm:max-w-lg mx-auto mb-8 sm:mb-10">
           {/* Organizer 1 */}
-          <div className="flex flex-col justify-center items-center bg-white/20 shadow-lg rounded-2xl p-3 sm:p-4 backdrop-blur-md transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-white/30">
+          <div className="flex flex-col justify-center items-center bg-white/40 shadow-ios-card rounded-ios-lg p-3 sm:p-4 backdrop-blur-md transition-all duration-300 hover:scale-[1.02] hover:shadow-ios-float hover:bg-white/60 border border-white/20">
             <img
               src="/picture/nedu.svg"
               alt="Nedu"
-              className="w-4/5 sm:w-3/4 object-contain transition-all duration-300 hover:scale-110"
+              className="w-4/5 sm:w-3/4 object-contain transition-all duration-300 hover:scale-105"
               loading="lazy"
             />
           </div>
 
           {/* Organizer 2 */}
-          <div className="flex flex-col justify-center items-center bg-white/20 shadow-lg rounded-2xl p-3 sm:p-4 backdrop-blur-md transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-white/30">
+          <div className="flex flex-col justify-center items-center bg-white/40 shadow-ios-card rounded-ios-lg p-3 sm:p-4 backdrop-blur-md transition-all duration-300 hover:scale-[1.02] hover:shadow-ios-float hover:bg-white/60 border border-white/20">
             <img
               src="/picture/nlt.png"
               alt="NLT"
-              className="w-4/5 sm:w-3/4 object-contain transition-all duration-300 hover:scale-110"
+              className="w-4/5 sm:w-3/4 object-contain transition-all duration-300 hover:scale-105"
               loading="lazy"
             />
           </div>
@@ -35,7 +35,7 @@ const Organizers: React.FC = () => {
             href="https://www.facebook.com/neducation.sg"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 border border-black/20 rounded-full text-black font-semibold text-sm sm:text-base bg-white shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200"
+            className="flex items-center gap-2 px-6 py-3 border border-gray-200 rounded-ios-btn text-black font-semibold text-sm sm:text-base bg-white shadow-ios-sm hover:shadow-ios-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 ios-haptic-active min-h-[44px]"
           >
             <img
               src="/picture/facebook.svg"
@@ -52,13 +52,13 @@ const Organizers: React.FC = () => {
             href="https://www.youtube.com/@neducationsg"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 border border-black/20 rounded-full text-black font-semibold text-sm sm:text-base bg-white shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200"
+            className="flex items-center gap-2 px-6 py-3 border border-gray-200 rounded-ios-btn text-black font-semibold text-sm sm:text-base bg-white shadow-ios-sm hover:shadow-ios-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 ios-haptic-active min-h-[44px]"
           >
             <img
               src="/youtube.png"
               alt="Youtube"
               className="w-5 h-5 sm:w-6 sm:h-6 transition-all duration-200"
-              loading="lazy"  
+              loading="lazy"
             />
             <span className="font-semibold text-sm sm:text-[16px] md:text-[20px] transition-all duration-200">@neducationsg</span>
           </a>

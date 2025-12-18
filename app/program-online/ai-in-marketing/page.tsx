@@ -67,7 +67,7 @@ export default function AIInMarketingPage() {
     ],
   };
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#F2F2F7] pb-20 override-header-spacing">
       <CourseHeader
         imageUrl="/picture/ai_in_mkt.png"
         altText="AI In Marketing"
@@ -79,15 +79,19 @@ export default function AIInMarketingPage() {
         paymentLink="/payment/57"
         courseSlug="ai-in-marketing"
       />
-      <Instructor instructors={instructors} />
-      <Whom title="Ai nên tham gia khóa học này?" items={whomItems} />
-      <Testimonials
-        courseSlug="ai-in-marketing"
-        buttonText="Thêm vào giỏ hàng"
-        buttonType="cart"
-      />
-      <CourseInfo {...courseInfo} />
-      <Organizers />
+      <div className="ios-safe-padding-bottom">
+        <Instructor instructors={instructors} />
+        <div className="py-4">
+          <Whom title="Ai nên tham gia khóa học này?" items={whomItems} />
+        </div>
+        <Testimonials
+          courseSlug="ai-in-marketing"
+          buttonText="Thêm vào giỏ hàng"
+          buttonType="cart"
+        />
+        <CourseInfo {...courseInfo} />
+        <Organizers />
+      </div>
     </div>
   );
 }

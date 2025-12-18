@@ -56,7 +56,7 @@ const Instructor: React.FC<{ instructors: InstructorProps[] }> = ({
           <CarouselContent>
             {instructors.map((instructor, index) => (
               <CarouselItem key={index}>
-                <div className="bg-white border border-gray-200 rounded-3xl p-6 sm:p-8 lg:p-10 shadow-xl">
+                <div className="bg-white border border-gray-200 rounded-ios-xl p-6 sm:p-8 lg:p-10 shadow-ios-card">
                   <div className="grid gap-8 lg:gap-12 lg:grid-cols-[minmax(0,2.3fr)_minmax(0,1fr)] items-start">
                     <div>
                       <p className="text-base sm:text-lg lg:text-xl text-gray-600 leading-relaxed mb-6 sm:mb-8">
@@ -119,17 +119,17 @@ const Instructor: React.FC<{ instructors: InstructorProps[] }> = ({
                       </div>
                     </div>
 
-                    <aside className="bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 shadow-lg">
+                    <aside className="bg-white border border-gray-200 rounded-ios-lg p-6 sm:p-8 shadow-ios-card">
                       <div className="text-center">
                         <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">
                           {instructor.name}
                         </h3>
-                        <div className="bg-amber-400 rounded-xl aspect-square max-w-[220px] mx-auto flex items-center justify-center mb-6">
+                        <div className="bg-amber-400 rounded-ios-lg aspect-square max-w-[220px] mx-auto flex items-center justify-center mb-6">
                           <img
                             src={instructor.image}
                             alt={`${instructor.name} avatar`}
                             loading="lazy"
-                            className="object-cover w-full h-full rounded-xl"
+                            className="object-cover w-full h-full rounded-ios-lg shadow-sm"
                           />
                         </div>
                       </div>

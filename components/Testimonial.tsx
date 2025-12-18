@@ -53,7 +53,7 @@ const Testimonials: React.FC<TestimonialsProps> = ({
         <div className="mt-6 sm:mt-8 grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 place-items-center">
           {videos.map((src, i) => (
             <div key={i} className="max-w-[280px] sm:max-w-[360px] w-full">
-              <div className="rounded-xl overflow-hidden shadow-lg">
+              <div className="rounded-ios-lg overflow-hidden shadow-ios-card transition-all duration-300 hover:shadow-ios-float">
                 <div className="w-full aspect-video" style={{ height: 'auto' }}>
                   <iframe
                     className="w-full h-full"
@@ -73,13 +73,13 @@ const Testimonials: React.FC<TestimonialsProps> = ({
         <div className="flex justify-center mt-6 sm:mt-8">
           <button
             onClick={handleButtonClick}
-            className="inline-flex items-center bg-primary hover:bg-yellow-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-r-full rounded-l-full font-semibold uppercase transition-colors text-sm sm:text-base"
+            className="inline-flex items-center bg-primary hover:bg-yellow-600 text-white px-6 py-3 rounded-ios-btn font-semibold uppercase transition-all duration-200 text-sm sm:text-base shadow-ios-sm hover:shadow-ios-md ios-haptic-active min-h-[44px]"
           >
             {buttonText}
             {buttonType === 'cart' ? (
-              <ShoppingBag className="ml-2 sm:ml-3 w-3 h-3 sm:w-4 sm:h-4" />
+              <ShoppingBag className="ml-2 sm:ml-3 w-4 h-4 sm:w-5 sm:h-5" />
             ) : (
-              <ChevronRight className="ml-2 sm:ml-3 w-3 h-3 sm:w-4 sm:h-4" />
+              <ChevronRight className="ml-2 sm:ml-3 w-4 h-4 sm:w-5 sm:h-5" />
             )}
           </button>
         </div>
