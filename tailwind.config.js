@@ -44,6 +44,36 @@ module.exports = {
         'xl': '1rem',
         '2xl': '1.5rem',
         '3xl': '2rem',
+        'ios-sm': '8px',
+        'ios-md': '12px',
+        'ios-lg': '16px',
+        'ios-xl': '20px',
+        'ios-2xl': '24px',
+        'ios-card': '20px',
+        'ios-btn': '9999px',
+        'ios-input': '14px',
+      },
+      screens: {
+        'xs': '375px',
+      },
+      animation: {
+        'ios-slide-up': 'iosSlideUp 0.5s cubic-bezier(0.33, 1, 0.68, 1) forwards',
+        'ios-fade-in': 'iosFadeIn 0.4s ease-out forwards',
+        'ios-scale-in': 'iosScaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
+      },
+      keyframes: {
+        iosSlideUp: {
+          '0%': { transform: 'translateY(20px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        iosFadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        iosScaleIn: {
+          '0%': { transform: 'scale(0.95)', opacity: '0' },
+          '100%': { transform: 'scale(1)', opacity: '1' },
+        },
       },
     },
   },

@@ -50,7 +50,7 @@ export default function ThuongHieuCuaBanPage() {
     buttonLink: "/testimonials",
   };
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#F2F2F7] pb-20 override-header-spacing">
       <CourseHeader
         imageUrl="/picture/thuong_hieu_cua_ban.png"
         altText="Thương hiệu của bạn"
@@ -62,37 +62,41 @@ export default function ThuongHieuCuaBanPage() {
         description="Kiến thức cơ bản nhất cho người muốn bắt đầu mở doanh nghiệp hay cải tổ doanh nghiệp gia đình. Định hình rõ hơn kinh doanh của bạn trong chỉ 4 ngày với khóa học Thương Hiệu Của Bạn - một chương trình được thiết kế đặc biệt cho chủ doanh nghiệp trong kỷ nguyên AI."
         courseSlug="thuong-hieu-cua-ban"
       />
-      <Instructor instructors={instructors} />
-      <Whom title="Ai nên tham gia khóa học này?" items={whomItems} />
-      <Testimonials
-        courseSlug="thuong-hieu-cua-ban"
-        buttonText="Thêm vào giỏ hàng"
-        buttonType="cart"
-      />
-      <CourseInfo
-        title="THÔNG TIN KHÓA HỌC"
-        details={[
-          {
-            icon: "Star" as const,
-            label: "Chủ đề:",
-            value: "Thương hiệu",
-          },
-          { icon: "Clock" as const, label: "Thời gian học:", value: "10-13/09/2025" },
-          {
-            icon: "MapPin" as const,
-            label: "Người dẫn đường:",
-            value: "NhiLe",
-          },
-          { icon: "Calendar" as const, label: "Số buổi học:", value: "3,5 ngày" },
-          {
-            icon: "House" as const,
-            label: "Địa điểm học:",
-            value: "Online qua Zoom",
-          },
-          { icon: "Users" as const, label: "Số lượng học viên:", value: "Giới hạn" },
-        ]}
-      />
-      <Organizers />
+      <div className="ios-safe-padding-bottom">
+        <Instructor instructors={instructors} />
+        <div className="py-4">
+          <Whom title="Ai nên tham gia khóa học này?" items={whomItems} />
+        </div>
+        <Testimonials
+          courseSlug="thuong-hieu-cua-ban"
+          buttonText="Thêm vào giỏ hàng"
+          buttonType="cart"
+        />
+        <CourseInfo
+          title="THÔNG TIN KHÓA HỌC"
+          details={[
+            {
+              icon: "Star" as const,
+              label: "Chủ đề:",
+              value: "Thương hiệu",
+            },
+            { icon: "Clock" as const, label: "Thời gian học:", value: "10-13/09/2025" },
+            {
+              icon: "MapPin" as const,
+              label: "Người dẫn đường:",
+              value: "NhiLe",
+            },
+            { icon: "Calendar" as const, label: "Số buổi học:", value: "3,5 ngày" },
+            {
+              icon: "House" as const,
+              label: "Địa điểm học:",
+              value: "Online qua Zoom",
+            },
+            { icon: "Users" as const, label: "Số lượng học viên:", value: "Giới hạn" },
+          ]}
+        />
+        <Organizers />
+      </div>
     </div>
   );
 }

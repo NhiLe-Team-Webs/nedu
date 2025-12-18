@@ -49,7 +49,7 @@ export default function SucManhVoHanPage() {
 
   const instructors = getInstructorsByIds(["nhi-le", "mel"]);
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#F2F2F7] pb-20 override-header-spacing">
       <CourseHeader
         bannerUrl="/sucmanhvohan.jpg"
         altText="Sức Mạnh Vô Hạn"
@@ -62,22 +62,24 @@ export default function SucManhVoHanPage() {
         dep_currency="VND"
         courseSlug="suc-manh-vo-han"
       />
-      <CourseInfo
-        title="Thông tin khóa học"
-        details={courseDetails as any}
-        courseSlug="suc-manh-vo-han"
-      />
+      <div className="ios-safe-padding-bottom">
+        <CourseInfo
+          title="Thông tin khóa học"
+          details={courseDetails as any}
+          courseSlug="suc-manh-vo-han"
+        />
 
-      <Mission
-        title="Sứ mệnh"
-        subtitle="Sứ mệnh"
-        description="Sức Mạnh Vô Hạn được thiết kế để giúp doanh nhân Việt vươn tầm thế giới. Bằng cách kết nối với các Chuyên gia quốc tế, bạn sẽ học những chiến lược đột phá và xây dựng những nền tảng căn bản nhất cho doanh nghiệp, nâng cấp khả năng kinh doanh và mở rộng thị trường."
-      />
+        <Mission
+          title="Sứ mệnh"
+          subtitle="Sứ mệnh"
+          description="Sức Mạnh Vô Hạn được thiết kế để giúp doanh nhân Việt vươn tầm thế giới. Bằng cách kết nối với các Chuyên gia quốc tế, bạn sẽ học những chiến lược đột phá và xây dựng những nền tảng căn bản nhất cho doanh nghiệp, nâng cấp khả năng kinh doanh và mở rộng thị trường."
+        />
 
-      <Testimonials {...testimonials} />
-      <Instructor instructors={instructors} />
-      <Privilege />
-      <Organizers />
-    </div>
+        <Testimonials {...testimonials} />
+        <Instructor instructors={instructors} />
+        <Privilege />
+        <Organizers />
+      </div>
+    </div >
   );
 }

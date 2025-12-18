@@ -37,8 +37,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       }
       return [...prevItems, { ...course, quantity: 1 }];
     });
-    setShowSuccessPopup(true);
-    window.setTimeout(() => setShowSuccessPopup(false), 3000);
+    // Popup removed - using button state change instead
   };
 
   const removeFromCart = (courseId: number) => {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import YouTube from "react-youtube";
 import { useCart } from "@/lib/cart-context";
 import { getCourseBySlug } from "@/data/courses";
@@ -35,13 +35,23 @@ const CourseHeader: React.FC<CourseHeaderProps> = ({
   dep_currency = "VND",
   courseSlug,
 }) => {
-  const { addToCart } = useCart();
+  const { addToCart, items } = useCart();
+  const [justAdded, setJustAdded] = useState(false);
+
+  // Check if this course is already in cart
+  const isInCart = courseSlug && items.some(item => String(item.id) === courseSlug);
 
   const handleAddToCart = () => {
     if (courseSlug) {
       const course = getCourseBySlug(courseSlug);
       if (course) {
         addToCart(course);
+        setJustAdded(true);
+
+        // Reset after 3 seconds
+        setTimeout(() => {
+          setJustAdded(false);
+        }, 3000);
       }
     }
   };
@@ -52,7 +62,7 @@ const CourseHeader: React.FC<CourseHeaderProps> = ({
   return (
     <section className="py-4 sm:py-6 lg:py-8 px-4 sm:px-6 lg:px-10 max-w-[1280px] mx-auto">
       <div
-        className="h-64 sm:h-80 lg:h-96 bg-cover bg-center rounded-lg mb-6 sm:mb-8 lg:mb-10"
+        className="h-64 sm:h-80 lg:h-96 bg-cover bg-center rounded-ios-xl mb-6 sm:mb-8 lg:mb-10 shadow-ios-card"
         style={{ backgroundImage: `url(${bannerUrl})` }}
         aria-label={altText}
         hidden={!bannerUrl}
@@ -88,10 +98,23 @@ const CourseHeader: React.FC<CourseHeaderProps> = ({
         )}
         <button
           onClick={handleAddToCart}
-          className="inline-flex items-center bg-primary hover:bg-yellow-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-full font-semibold text-sm sm:text-base lg:text-lg transition mt-4 sm:mt-[24px]"
+          disabled={justAdded}
+          className={`inline-flex items-center justify-center px-6 py-3 rounded-ios-btn font-semibold text-sm sm:text-base lg:text-lg mt-4 sm:mt-[24px] min-h-[44px] transition-all duration-300 ease-out ${justAdded
+            ? 'bg-transparent border-2 border-green-500 text-green-500 cursor-default'
+            : 'bg-primary hover:bg-yellow-600 text-white shadow-ios-sm hover:shadow-ios-md ios-haptic-active'
+            }`}
         >
-          Thêm vào giỏ hàng
-          <Icons.ShoppingBagIcon className="ml-1 sm:ml-2" />
+          {justAdded ? (
+            <>
+              <Icons.CheckCircle className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.5} />
+              <span className="ml-2">Đã thêm vào giỏ hàng</span>
+            </>
+          ) : (
+            <>
+              Thêm vào giỏ hàng
+              <Icons.ShoppingBagIcon className="ml-1 sm:ml-2 w-5 h-5" />
+            </>
+          )}
         </button>
       </div>
       {imageUrl && (
@@ -110,7 +133,7 @@ const CourseHeader: React.FC<CourseHeaderProps> = ({
               src={imageUrl}
               alt={altText}
               loading="lazy"
-              className="w-auto h-full rounded-xl"
+              className="w-auto h-full rounded-ios-lg shadow-ios-md"
             />
           )}
           <div className="absolute inset-0"></div>
