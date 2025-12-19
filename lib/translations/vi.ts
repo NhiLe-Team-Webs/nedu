@@ -24,7 +24,7 @@ export const vi = {
         contact: "Liên hệ",
         company_name: "CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ NHILE",
         tax_code: "Mã số thuế",
-        address: "25 Lê Bá Trinh, Phường Hoà Cường Bắc, Quận Hải Châu, Đà Nẵng",
+        address: "Lô 3, khu B2-7, Khu đô thị phức hợp Halla Jade Residence, Phường Hải Châu, TP Đà Nẵng, Việt Nam",
         payment_guide: "Hướng dẫn thanh toán",
         privacy_policy: "Chính sách bảo mật",
         terms_of_use: "Điều khoản sử dụng",
@@ -710,7 +710,7 @@ export const vi = {
                 items: [
                     { label: "Công ty:", value: "CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ NHILE" },
                     { label: "Mã số thuế:", value: "0317268736" },
-                    { label: "Địa chỉ:", value: "25 Lê Bá Trinh, Phường Hoà Cường Bắc, Quận Hải Châu, Đà Nẵng" },
+                    { label: "Địa chỉ:", value: "Lô 3, khu B2-7, Khu đô thị phức hợp Halla Jade Residence, Phường Hải Châu, TP Đà Nẵng, Việt Nam" },
                     { label: "Email:", value: "nedu@nhi.sg" },
                     { label: "Điện thoại:", value: "(+84) 789785904" },
                     { label: "Website:", value: "https://nedu.nhi.sg" }
@@ -781,7 +781,7 @@ export const vi = {
                 items: [
                     { label: "Email:", value: "nedu@nhi.sg" },
                     { label: "Điện thoại:", value: "(+84) 789785904" },
-                    { label: "Địa chỉ:", value: "25 Lê Bá Trinh, Phường Hoà Cường Bắc, Quận Hải Châu, Đà Nẵng" },
+                    { label: "Địa chỉ:", value: "Lô 3, khu B2-7, Khu đô thị phức hợp Halla Jade Residence, Phường Hải Châu, TP Đà Nẵng, Việt Nam" },
                     { label: "Mã số thuế:", value: "0317268736" }
                 ]
             },

@@ -24,7 +24,7 @@ export const en = {
         contact: "Contact",
         company_name: "NHILE TRADING SERVICE CO., LTD",
         tax_code: "Tax Code",
-        address: "25 Le Ba Trinh, Hoa Cuong Bac Ward, Hai Chau District, Da Nang",
+        address: "Lot 3, Block B2-7, Halla Jade Residence Complex, Hai Chau Ward, Da Nang City, Vietnam",
         payment_guide: "Payment Guide",
         privacy_policy: "Privacy Policy",
         terms_of_use: "Terms of Use",
@@ -710,7 +710,7 @@ export const en = {
                 items: [
                     { label: "Company:", value: "NHILE TRADING SERVICE CO., LTD" },
                     { label: "Tax Code:", value: "0317268736" },
-                    { label: "Address:", value: "25 Le Ba Trinh, Hoa Cuong Bac Ward, Hai Chau District, Da Nang" },
+                    { label: "Address:", value: "Lot 3, Block B2-7, Halla Jade Residence Complex, Hai Chau Ward, Da Nang City, Vietnam" },
                     { label: "Email:", value: "nedu@nhi.sg" },
                     { label: "Phone:", value: "(+84) 789785904" },
                     { label: "Website:", value: "https://nedu.nhi.sg" }
@@ -781,7 +781,7 @@ export const en = {
                 items: [
                     { label: "Email:", value: "nedu@nhi.sg" },
                     { label: "Phone:", value: "(+84) 789785904" },
-                    { label: "Address:", value: "25 Le Ba Trinh, Hoa Cuong Bac Ward, Hai Chau District, Da Nang" },
+                    { label: "Address:", value: "Lot 3, Block B2-7, Halla Jade Residence Complex, Hai Chau Ward, Da Nang City, Vietnam" },
                     { label: "Tax Code:", value: "0317268736" }
                 ]
             },
