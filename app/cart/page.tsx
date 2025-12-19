@@ -3,8 +3,10 @@
 import Link from 'next/link';
 import { Minus, Plus, Trash2, ArrowLeft } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
+import { useLanguage } from "@/lib/LanguageContext";
 
 export default function CartPage() {
+  const { t } = useLanguage();
   const { items, updateQuantity, removeFromCart, getTotalPrice, getTotalItems } = useCart();
 
   const currencyFormatter = new Intl.NumberFormat('vi-VN', {
@@ -18,14 +20,14 @@ export default function CartPage() {
       <div className="min-h-screen bg-background-secondary py-8 sm:py-12">
         <div className="container mx-auto px-3 sm:px-4 max-w-4xl">
           <div className="text-center py-12 sm:py-16">
-            <h1 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4 text-text-primary">Giỏ hàng của bạn đang trống</h1>
-            <p className="text-text-secondary mb-6 sm:mb-8 text-sm sm:text-base">Hãy thêm các khóa học bạn quan tâm vào giỏ hàng</p>
+            <h1 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4 text-text-primary">{t("cart.empty_title")}</h1>
+            <p className="text-text-secondary mb-6 sm:mb-8 text-sm sm:text-base">{t("cart.empty_desc")}</p>
             <Link
               href="/program"
               className="btn-primary text-sm sm:text-base"
             >
               <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
-              Tiếp tục xem khóa học
+              {t("cart.continue_browsing")}
             </Link>
           </div>
         </div>
@@ -36,7 +38,7 @@ export default function CartPage() {
   return (
     <div className="min-h-screen bg-[#F2F2F7] py-8 sm:py-12 ios-safe-padding-bottom">
       <div className="container mx-auto px-3 sm:px-4 max-w-6xl">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-text-primary pl-2">Giỏ hàng của bạn</h1>
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-text-primary pl-2">{t("cart.title")}</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
           {/* Cart Items */}
@@ -45,14 +47,14 @@ export default function CartPage() {
               <div key={item.id} className="bg-white rounded-ios-xl shadow-ios-card p-4 sm:p-6 flex flex-col sm:flex-row gap-3 sm:gap-4 transition-all duration-300 hover:shadow-ios-float border border-white/40">
                 <img
                   src={item.heroImage}
-                  alt={item.title}
+                  alt={t(item.title)}
                   className="w-full sm:w-28 md:w-32 h-28 sm:h-32 object-cover rounded-ios-lg shadow-sm"
                 />
 
                 <div className="flex-1 flex flex-col justify-between">
                   <div>
-                    <h3 className="text-lg sm:text-xl font-bold mb-2 text-text-primary line-clamp-2">{item.title}</h3>
-                    <p className="text-text-secondary mb-2 text-sm sm:text-base bg-gray-100 inline-block px-2 py-1 rounded-md">{item.category.join(', ')}</p>
+                    <h3 className="text-lg sm:text-xl font-bold mb-2 text-text-primary line-clamp-2">{t(item.title)}</h3>
+                    <p className="text-text-secondary mb-2 text-sm sm:text-base bg-gray-100 inline-block px-2 py-1 rounded-md">{item.category.map(c => t(c)).join(', ')}</p>
                     <div className="price text-base sm:text-lg text-primary font-bold">
                       {item.price.currency === 'VNĐ'
                         ? currencyFormatter.format(parseInt(item.price.amount.replace(/\./g, '')))
@@ -93,15 +95,15 @@ export default function CartPage() {
           {/* Order Summary */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-ios-xl shadow-ios-card p-6 sm:p-8 sticky top-24 sm:top-28 border border-white/40">
-              <h2 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6 text-text-primary border-b pb-4">Tóm tắt đơn hàng</h2>
+              <h2 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6 text-text-primary border-b pb-4">{t("cart.summary_title")}</h2>
 
               <div className="space-y-3 mb-6 sm:mb-8">
                 <div className="flex justify-between text-sm sm:text-base">
-                  <span className="text-text-secondary">Tổng số khóa học:</span>
+                  <span className="text-text-secondary">{t("cart.total_items")}</span>
                   <span className="font-semibold">{getTotalItems()}</span>
                 </div>
                 <div className="flex justify-between text-base sm:text-lg items-center pt-2">
-                  <span className="text-text-primary font-bold">Tổng tiền:</span>
+                  <span className="text-text-primary font-bold">{t("cart.total_price")}</span>
                   <span className="font-bold text-xl sm:text-2xl text-primary price">
                     {currencyFormatter.format(getTotalPrice())}
                   </span>
@@ -112,14 +114,14 @@ export default function CartPage() {
                 href="/checkout"
                 className="w-full flex items-center justify-center bg-primary text-white font-bold py-3.5 rounded-full shadow-ios-md hover:shadow-ios-lg active:scale-[0.98] transition-all duration-300 min-h-[48px] text-base ios-haptic-active"
               >
-                Tiến hành thanh toán
+                {t("cart.checkout_btn")}
               </Link>
 
               <Link
                 href="/program"
                 className="w-full mt-4 text-center text-gray-500 hover:text-primary font-semibold transition py-2 block text-sm sm:text-base rounded-lg hover:bg-gray-50"
               >
-                Tiếp tục mua sắm
+                {t("cart.continue_shopping")}
               </Link>
             </div>
           </div>
@@ -127,13 +129,13 @@ export default function CartPage() {
 
         {/* Other Courses Section */}
         <div className="mt-12 sm:mt-16">
-          <h2 className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8 text-text-primary text-center">Các khóa học khác</h2>
+          <h2 className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8 text-text-primary text-center">{t("cart.other_courses")}</h2>
           <div className="text-center">
             <Link
               href="/program"
               className="inline-flex items-center gap-2 px-8 py-3 bg-white border border-gray-200 rounded-full text-text-primary hover:bg-gray-50 hover:shadow-ios-md transition-all duration-300 text-sm sm:text-base min-h-[44px] font-semibold ios-haptic-active"
             >
-              Xem tất cả khóa học
+              {t("cart.view_all")}
               <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 rotate-180" />
             </Link>
           </div>

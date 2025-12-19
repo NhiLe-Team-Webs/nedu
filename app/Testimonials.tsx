@@ -1,9 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ChevronRight, ShoppingCart } from "lucide-react";
+import { ChevronRight, ShoppingCart, CheckCircle } from "lucide-react";
+import { useState } from "react";
 import { useCart } from "@/lib/cart-context";
 import { getCourseBySlug } from "@/data/courses";
+import { useLanguage } from "@/lib/LanguageContext";
 
 interface TestimonialsProps {
   courseSlug?: string;
@@ -14,16 +16,23 @@ interface TestimonialsProps {
 
 const Testimonials = ({
   courseSlug,
-  buttonText = "Tìm hiểu thêm",
+  buttonText,
   buttonType = 'link',
   buttonLink = "/program/"
 }: TestimonialsProps) => {
   const { addToCart } = useCart();
+  const { t } = useLanguage();
+  const [justAdded, setJustAdded] = useState(false);
   const course = courseSlug ? getCourseBySlug(courseSlug) : undefined;
+
+  // Use translations if buttonText is not provided
+  const displayText = buttonText || t("testimonials.see_more");
 
   const handleButtonClick = () => {
     if (buttonType === 'cart' && course) {
       addToCart(course);
+      setJustAdded(true);
+      setTimeout(() => setJustAdded(false), 3000);
     } else {
       window.location.href = buttonLink;
     }
@@ -36,9 +45,9 @@ const Testimonials = ({
   ];
 
   const captions = [
-    "Lần đầu Trang tham gia một chương trình của người Việt mà ấn tượng đến vậy. Cường độ học tập áp lực như môi trường doanh nhân thật sự.",
-    "Sau 6 tháng tham gia chương trình, mình đã học cách nhận diện và quản lý sự trì hoãn và tạo nên sự thay đổi rõ rệt.",
-    "Cần ít nhất 3 năm đi vô đi ra lại cái lớp như vậy để các bạn có thể bắt đầu hiểu vấn đề và bạn thay đổi học phát triển bản thân",
+    t("testimonials.captions.0"),
+    t("testimonials.captions.1"),
+    t("testimonials.captions.2"),
   ];
 
   return (
@@ -49,7 +58,7 @@ const Testimonials = ({
       </p>
 
       <div className="max-w-[1280px] w-full px-4 sm:px-6 lg:px-8">
-        <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[68px] font-black text-center text-amber-400 uppercase relative z-10 mb-8 sm:mb-10 md:mb-12">Cảm nhận từ học viên</h3>
+        <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[68px] font-black text-center text-amber-400 uppercase relative z-10 mb-8 sm:mb-10 md:mb-12">{t("testimonials.heading")}</h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 place-items-center">
           {videos.map((src, i) => {
@@ -78,14 +87,27 @@ const Testimonials = ({
           <Button
             onClick={handleButtonClick}
             variant="apple-primary"
-            className="px-4 sm:px-6 py-2 sm:py-3"
+            disabled={justAdded}
+            className={`px-4 sm:px-6 py-2 sm:py-3 transition-all duration-300 ${justAdded
+              ? "!bg-transparent !border-2 !border-green-500 !text-green-500 !shadow-none !opacity-100 cursor-default"
+              : ""
+              }`}
           >
-            <span className="inline-flex items-center text-white uppercase text-sm sm:text-base">
-              {buttonText}
-              {buttonType === 'cart' ? (
-                <ShoppingCart className="ml-1 sm:ml-2 w-3 h-3 sm:w-4 sm:h-4 transition-all duration-200" />
+            <span className={`inline-flex items-center uppercase text-sm sm:text-base ${justAdded ? "text-green-500" : "text-white"}`}>
+              {justAdded ? (
+                <>
+                  {t("cart_popup.added")}
+                  <CheckCircle className="ml-1 sm:ml-2 w-3 h-3 sm:w-4 sm:h-4 transition-all duration-200" />
+                </>
               ) : (
-                <ChevronRight className="ml-1 sm:ml-2 w-3 h-3 sm:w-4 sm:h-4 transition-all duration-200" />
+                <>
+                  {displayText}
+                  {buttonType === 'cart' ? (
+                    <ShoppingCart className="ml-1 sm:ml-2 w-3 h-3 sm:w-4 sm:h-4 transition-all duration-200" />
+                  ) : (
+                    <ChevronRight className="ml-1 sm:ml-2 w-3 h-3 sm:w-4 sm:h-4 transition-all duration-200" />
+                  )}
+                </>
               )}
             </span>
           </Button>

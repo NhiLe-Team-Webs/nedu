@@ -5,19 +5,24 @@
 import * as React from "react";
 import Image from "next/image";
 
+import Link from "next/link";
+import { useLanguage } from "@/lib/LanguageContext";
+
 const Mission = () => {
+  const { t } = useLanguage();
+
   return (
     <section id="mission" className="relative bg-white min-h-screen flex items-center pt-16 sm:pt-20 overflow-hidden">
       {/* big faded background text - reduced size on mobile to prevent layout shift */}
       <p className="absolute inset-x-0 top-8 sm:top-12 text-center text-[50px] sm:text-[120px] md:text-[160px] lg:text-[200px] xl:text-[290px] font-extrabold text-gray-100 leading-[0.9] select-none pointer-events-none whitespace-nowrap" aria-hidden>
-        Mission
+        {t("mission.heading")}
       </p>
 
       <div className="container mx-auto max-w-[1280px] px-4 sm:px-6 relative z-10">
         <div className="flex flex-col lg:flex-row justify-between items-center w-full max-w-[1200px] mx-auto gap-8 lg:gap-0">
           {/* left column */}
           <div className="flex flex-col items-start lg:mr-8 w-full lg:w-auto mb-6 lg:mb-0">
-            <p className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[68px] font-black text-[#f7b50c] uppercase mb-4">Sứ mệnh</p>
+            <p className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[68px] font-black text-[#f7b50c] uppercase mb-4">{t("mission.heading")}</p>
 
             <div className="flex flex-col sm:flex-row items-start gap-4">
               <div className="flex-shrink-0" aria-hidden>
@@ -33,8 +38,7 @@ const Mission = () => {
 
               <div className="w-full">
                 <p className="text-lg sm:text-lg md:text-xl lg:text-2xl xl:text-[28px] font-bold text-[#484848] text-justify max-w-full lg:max-w-[640px] leading-relaxed">
-                  Mang kiến thức, giáo dục chất lượng trên toàn thế giới về Việt Nam
-                  và hòa hợp với văn hóa người Việt
+                  {t("mission.quote")}
                 </p>
 
                 <a
@@ -43,7 +47,7 @@ const Mission = () => {
                   rel="noreferrer"
                   className="inline-flex items-center justify-center mt-6 sm:mt-6 bg-white text-black font-medium px-6 py-3 rounded-ios-btn border border-black/10 shadow-ios-sm hover:shadow-ios-md hover:scale-105 active:scale-95 transition-all duration-300 min-h-[44px]"
                 >
-                  <span className="uppercase text-xs sm:text-sm tracking-wide">xem thêm</span>
+                  <span className="uppercase text-xs sm:text-sm tracking-wide">{t("mission.learn_more")}</span>
                   <svg className="ml-2 w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
@@ -66,7 +70,7 @@ const Mission = () => {
             <div className="flex flex-row justify-between items-end w-full max-w-[280px] sm:max-w-[320px]">
               <div className="flex flex-col">
                 <p className="text-xl sm:text-xl lg:text-[24px] font-bold text-[#484848]">Nhi Le</p>
-                <p className="text-sm sm:text-sm lg:text-[16px] font-semibold text-[#f7b50c]">Doanh nhân</p>
+                <p className="text-sm sm:text-sm lg:text-[16px] font-semibold text-[#f7b50c]">{t("mission.role")}</p>
               </div>
 
               <div className="flex items-center gap-3">

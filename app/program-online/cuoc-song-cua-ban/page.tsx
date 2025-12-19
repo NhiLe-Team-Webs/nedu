@@ -1,18 +1,22 @@
-"use client";
+'use client';
 
 import Link from "next/link";
 import YouTube from "react-youtube";
 import CourseHeader from "@/components/CourseHeader";
 import Instructor from "@/components/Instructor";
 import Whom from "@/components/Whom";
-import Testimonials from "@/app/Testimonials";
+import Testimonials from "@/components/Testimonial";
 import CourseInfo from "@/components/CourseInfo";
 import Organizers from "@/components/Organizers";
 import { useCart } from "@/lib/cart-context";
 import { getInstructorsByIds } from "@/data/instructors";
+import { useLanguage } from "@/lib/LanguageContext";
+import { getCourseBySlug } from "@/data/courses";
 
 export default function CuocSongCuaBanPage() {
   const { addToCart } = useCart();
+  const { t } = useLanguage();
+  const course = getCourseBySlug('cuoc-song-cua-ban');
   const youtubeOpts = {
     height: "100%",
     width: "100%",
@@ -25,21 +29,18 @@ export default function CuocSongCuaBanPage() {
   const whomItems = [
     {
       icon: "Sprout" as const,
-      heading: "Sinh viên & người mới đi làm",
-      description:
-        "Trang bị nền tảng thực tế để hiểu rõ AI dùng trong công việc viết – trình bày – giao tiếp, mở ra cơ hội phát triển sớm trong môi trường chuyên nghiệp.",
+      heading: t("program_detail.whom.student_newbie.heading"),
+      description: t("program_detail.whom.student_newbie.description"),
     },
     {
       icon: "Recycle" as const,
-      heading: "Người muốn chuyển ngành",
-      description:
-        "Khóa học phù hợp cho những ai muốn khám phá tiềm năng AI để ứng dụng trong công việc mới như marketing, truyền thông, quản lý, nhân sự...",
+      heading: t("program_detail.whom.career_switcher.heading"),
+      description: t("program_detail.whom.career_switcher.description"),
     },
     {
       icon: "Split" as const,
-      heading: "Người mới bắt đầu học AI",
-      description:
-        "Không cần nền tảng kỹ thuật – chỉ cần bạn tò mò, ham học hỏi và muốn dùng AI một cách thực tế để nâng cấp kỹ năng và tăng năng suất cá nhân.",
+      heading: t("program_detail.whom.ai_beginner.heading"),
+      description: t("program_detail.whom.ai_beginner.description"),
     },
   ];
   const testimonials = {
@@ -49,60 +50,57 @@ export default function CuocSongCuaBanPage() {
       "https://www.youtube.com/embed/8qq6WDQFFQk",
     ],
     captions: [
-      "Tâm cơ cực kỳ hào hứng để có thể chia sẻ với tất cả các bạn những cái trải nghiệm vừa rồi về 5 bài test thông dụng để xác định một người nào đó có những cái đặc tính nào nổi trội",
-      "Nhưng mà trước khi mà các bạn muốn yêu một ai đó một cách đúng ấy thì các bạn phải yêu bản thân mình một cách đúng trước đã",
-      "Một cái khá là hay trong cái khóa học lần này là Nhi Lê cho các bạn những cái bài test những cái câu hỏi những cái công cụ để các bạn có thể xác định được cái chỉ số của mình",
+      t("program_detail.courses.cuoc_song_cua_ban.testimonials.0"),
+      t("program_detail.courses.cuoc_song_cua_ban.testimonials.1"),
+      t("program_detail.courses.cuoc_song_cua_ban.testimonials.2"),
     ],
-    title: "Testimonials",
-    subtitle: "Lời chứng thực",
-    buttonText: "Thêm vào giỏ hàng",
-    buttonLink: "/testimonials",
+    title: t("program_detail.common.testimonials_title"),
+    subtitle: t("program_detail.common.testimonials_subtitle"),
+    buttonText: t("program_detail.common.add_to_cart"),
+    buttonType: "cart" as const,
+    course: course,
   };
 
   return (
     <div className="min-h-screen bg-[#F2F2F7] pb-20 override-header-spacing">
       <CourseHeader
         imageUrl="/picture/cuoc_song_cua_ban.png"
-        altText="Cuộc sống của bạn"
-        time="KHÓA HỌC ONLINE"
-        tags={["Phát triển bản thân"]}
-        title="Cuộc Sống Của Bạn"
+        altText={t("program_detail.courses.cuoc_song_cua_ban.title")}
+        time={t("program_detail.common.online_course")}
+        tags={[t("categories.personal_development")]}
+        title={t("program_detail.courses.cuoc_song_cua_ban.title")}
         cost="18.960.000"
         paymentLink="/payment/53"
-        description="Khóa học giúp bạn khám phá và định hình lại cuộc sống theo cách riêng, tìm ra con đường phát triển bản thân và xây dựng lối sống ý nghĩa."
+        description={t("program_detail.courses.cuoc_song_cua_ban.description")}
         courseSlug="cuoc-song-cua-ban"
       />
       <div className="ios-safe-padding-bottom">
         <Instructor instructors={instructors} />
         <div className="py-4">
-          <Whom title="Ai nên tham gia khóa học này?" items={whomItems} />
+          <Whom title={t("program_detail.common.who_should_join")} items={whomItems} />
         </div>
-        <Testimonials
-          courseSlug="cuoc-song-cua-ban"
-          buttonText="Thêm vào giỏ hàng"
-          buttonType="cart"
-        />
+        <Testimonials {...testimonials} />
         <CourseInfo
-          title="THÔNG TIN KHÓA HỌC"
+          title={t("program_detail.info.title")}
           details={[
             {
               icon: "Star" as const,
-              label: "Chủ đề:",
-              value: "Phát triển bản thân",
+              label: t("program_detail.info.topic"),
+              value: t("program_detail.courses.cuoc_song_cua_ban.topic"),
             },
-            { icon: "Clock" as const, label: "Thời gian học:", value: "10-13/09/2025" },
+            { icon: "Clock" as const, label: t("program_detail.info.schedule"), value: t("program_detail.courses.cuoc_song_cua_ban.schedule") },
             {
               icon: "MapPin" as const,
-              label: "Người dẫn đường:",
-              value: "NhiLe",
+              label: t("program_detail.info.instructor"),
+              value: t("program_detail.courses.cuoc_song_cua_ban.instructor"),
             },
-            { icon: "Calendar" as const, label: "Số buổi học:", value: "3,5 ngày" },
+            { icon: "Calendar" as const, label: t("program_detail.info.sessions"), value: t("program_detail.courses.cuoc_song_cua_ban.sessions") },
             {
               icon: "House" as const,
-              label: "Địa điểm học:",
-              value: "Online qua Zoom",
+              label: t("program_detail.info.location"),
+              value: t("program_detail.courses.cuoc_song_cua_ban.location"),
             },
-            { icon: "Users" as const, label: "Số lượng học viên:", value: "Giới hạn" },
+            { icon: "Users" as const, label: t("program_detail.info.capacity"), value: t("program_detail.courses.cuoc_song_cua_ban.capacity") },
           ]}
         />
         <Organizers />

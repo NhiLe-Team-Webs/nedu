@@ -1,5 +1,7 @@
 "use client";
 import Image from "next/image";
+import { useLanguage } from "@/lib/LanguageContext";
+
 const images = [
   { src: '/picture/p2.jpg', alt: "post-1", cls: "col-span-1 row-span-1" },
   { src: '/picture/nhile.jpg', alt: "post-2", cls: "col-span-1 row-span-1 md:row-span-2" },
@@ -10,15 +12,17 @@ const images = [
 ];
 
 const Connection = () => {
+  const { t } = useLanguage();
+
   return (
     <section className="py-12 bg-background" id="connection">
       <div className="max-w-[1280px] mx-auto px-[32px]">
 
         <h3 className="z-10 text-2xl md:text-[36px] font-bold text-center text-[#F7B50C] mb-5">
-          KẾT NỐI CÙNG N-EDU
+          {t("connection.heading")}
         </h3>
         <p className="z-10 text-xs md:text-[28px] font-bold text-center text-[#484848] mb-[68px]">
-          ĐỂ CẬP NHẬT THÔNG TIN MỚI NHẤT TỪ CÁC KHÓA HỌC
+          {t("connection.subheading")}
         </p>
 
         <div className="grid grid-cols-2 md:grid-cols-4 grid-rows-2 gap-6">

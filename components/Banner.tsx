@@ -5,7 +5,10 @@ import { ArrowRight, CircleAlert } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { useLanguage } from "@/lib/LanguageContext";
+
 export default function Banner() {
+  const { t } = useLanguage();
   const pathname = usePathname();
   const [timeLeft, setTimeLeft] = useState({
     days: 29,
@@ -105,11 +108,11 @@ export default function Banner() {
       {/* Marquee Banner */}
       <div className="bg-[#FFA500] text-[#1F1F1F] text-xs font-bold py-1 overflow-hidden relative">
         <div className="animate-marquee whitespace-nowrap flex items-center gap-8">
-          <span>⚡️ EARLY BIRD GIẢM 10.000.000Đ - CHỈ CÒN 20 SUẤT</span>
-          <span>⚡️ ƯU ĐÃI TỪ 08/12/2025 ĐẾN 08/01/2026</span>
-          <span>⚡️ ĐĂNG KÝ NGAY ĐỂ GIỮ CHỖ</span>
-          <span>⚡️ EARLY BIRD GIẢM 10.000.000Đ - CHỈ CÒN 20 SUẤT</span>
-          <span>⚡️ ƯU ĐÃI KẾT THÚC SAU {timeLeft.days} NGÀY</span>
+          <span>{t("banner.marquee.early_bird")}</span>
+          <span>{t("banner.marquee.date_range")}</span>
+          <span>{t("banner.marquee.register_now")}</span>
+          <span>{t("banner.marquee.early_bird")}</span>
+          <span>{t("banner.marquee.ends_in")} {timeLeft.days} {t("banner.marquee.days")}</span>
         </div>
       </div>
 
@@ -123,7 +126,7 @@ export default function Banner() {
             </div>
             <div className="flex flex-col">
               <div className="font-bold text-[11px] md:text-sm text-white leading-tight">
-                Ưu đãi sắp hết hạn sau:
+                {t("banner.main.expires_in")}
               </div>
               <div className="text-[9px] md:text-[10px] text-gray-300 leading-tight mt-0.5 whitespace-nowrap">
                 08/12/2025 - 08/01/2026
@@ -138,7 +141,7 @@ export default function Banner() {
                 {timeLeft.days}
               </span>
               <span className="text-[8px] md:text-[8px] uppercase mt-0.5 font-medium text-gray-500">
-                Ngày
+                {t("banner.main.days")}
               </span>
             </div>
             <div className="flex flex-col items-center justify-center w-11 h-11 md:w-12 md:h-12 rounded-lg md:rounded-ios-xl bg-white text-gray-900 shadow-ios-card">
@@ -146,7 +149,7 @@ export default function Banner() {
                 {timeLeft.hours}
               </span>
               <span className="text-[8px] md:text-[8px] uppercase mt-0.5 font-medium text-gray-500">
-                Giờ
+                {t("banner.main.hours")}
               </span>
             </div>
             <div className="flex flex-col items-center justify-center w-11 h-11 md:w-12 md:h-12 rounded-lg md:rounded-ios-xl bg-white text-gray-900 shadow-ios-card">
@@ -154,7 +157,7 @@ export default function Banner() {
                 {timeLeft.minutes}
               </span>
               <span className="text-[8px] md:text-[8px] uppercase mt-0.5 font-medium text-gray-500">
-                Phút
+                {t("banner.main.minutes")}
               </span>
             </div>
             <div className="flex flex-col items-center justify-center w-11 h-11 md:w-12 md:h-12 rounded-lg md:rounded-ios-xl bg-white text-gray-900 shadow-ios-card">
@@ -162,7 +165,7 @@ export default function Banner() {
                 {timeLeft.seconds}
               </span>
               <span className="text-[8px] md:text-[8px] uppercase mt-0.5 font-medium text-gray-500">
-                Giây
+                {t("banner.main.seconds")}
               </span>
             </div>
           </div>

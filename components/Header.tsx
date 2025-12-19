@@ -9,6 +9,8 @@ import { useCart } from "@/lib/cart-context";
 import Image from "next/image";
 import TopBanner from "./TopBanner";
 import NotificationModal from "./NotificationModal";
+import { useLanguage } from "@/lib/LanguageContext";
+import LanguageToggle from "./LanguageToggle";
 
 const Header = () => {
   const pathname = usePathname() || "/";
@@ -17,6 +19,7 @@ const Header = () => {
   const { getTotalItems } = useCart();
   const totalItems = getTotalItems();
   const [showNotification, setShowNotification] = useState(false);
+  const { t } = useLanguage();
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 backdrop-blur-sm">
@@ -43,7 +46,7 @@ const Header = () => {
               : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-sm lg:text-base"
               }`}
           >
-            TRANG CHỦ
+            {t("header.home")}
             {isActive("/") && (
               <span className="absolute bottom-0 left-0 w-full h-0.5 bg-amber-400 transform scale-x-100 transition-transform duration-200"></span>
             )}
@@ -55,7 +58,7 @@ const Header = () => {
             rel="noopener noreferrer"
             className="text-gray-600 hover:text-amber-400 uppercase tracking-wide text-sm lg:text-base transition-all duration-200 transform hover:scale-105 active:scale-95 relative"
           >
-            VỀ CHÚNG TÔI
+            {t("header.about")}
             <span className="absolute bottom-0 left-0 w-full h-0.5 bg-amber-400 transform scale-x-0 transition-transform duration-200 hover:scale-x-100"></span>
           </a>
 
@@ -66,7 +69,7 @@ const Header = () => {
               : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-sm lg:text-base"
               }`}
           >
-            KHÓA HỌC
+            {t("header.courses")}
             {isActive("/program") && (
               <span className="absolute bottom-0 left-0 w-full h-0.5 bg-amber-400 transform scale-x-100 transition-transform duration-200"></span>
             )}
@@ -79,7 +82,7 @@ const Header = () => {
               : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-sm lg:text-base"
               }`}
           >
-            THỬ THÁCH 30N
+            {t("header.challenge30")}
             {isActive("/thu-thach-30-ngay") && (
               <span className="absolute bottom-0 left-0 w-full h-0.5 bg-amber-400 transform scale-x-100 transition-transform duration-200"></span>
             )}
@@ -93,7 +96,7 @@ const Header = () => {
               : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-sm lg:text-base"
               }`}
           >
-            LIÊN HỆ
+            {t("header.contact")}
             {isActive("/contact") && (
               <span className="absolute bottom-0 left-0 w-full h-0.5 bg-amber-400 transform scale-x-100 transition-transform duration-200"></span>
             )}
@@ -103,6 +106,10 @@ const Header = () => {
 
         {/* right column: actions aligned to the end */}
         <div className="flex items-center justify-end gap-1 sm:gap-4">
+          <div className="hidden md:block">
+            <LanguageToggle />
+          </div>
+
           {/* Notification Bell - Mobile Only */}
           <Button
             variant="ghost"

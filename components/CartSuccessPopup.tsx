@@ -3,9 +3,11 @@
 import { CheckCircle, ShoppingCart } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
 import { useEffect } from 'react';
+import { useLanguage } from '@/lib/LanguageContext';
 
 export default function CartSuccessPopup() {
   const { showSuccessPopup, setShowSuccessPopup } = useCart();
+  const { t } = useLanguage();
 
   useEffect(() => {
     if (showSuccessPopup) {
@@ -31,10 +33,10 @@ export default function CartSuccessPopup() {
         {/* Message */}
         <div className="flex-1 min-w-0">
           <p className="text-[15px] font-semibold text-gray-900 leading-tight">
-            Đã thêm vào giỏ hàng
+            {t("cart_popup.added")}
           </p>
           <p className="text-[13px] text-gray-600 leading-snug">
-            Khóa học đã được thêm thành công
+            {t("cart_popup.success")}
           </p>
         </div>
 

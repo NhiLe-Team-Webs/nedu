@@ -8,8 +8,10 @@ import { useRouter } from 'next/navigation';
 import { preparePaymentData, sendPaymentRequest, handlePaymentResponse, currencyFormatter, sendSePayPaymentRequest, prepareSePayPaymentData } from '@/lib/payment-utils';
 import SePayPaymentQR from '@/components/SePayPaymentQR';
 import { SePayPaymentResponse } from '@/types/sepay';
+import { useLanguage } from '@/lib/LanguageContext';
 
 export default function CheckoutPage() {
+  const { t } = useLanguage();
   const router = useRouter();
   const { items, getTotalPrice, clearCart } = useCart();
   const [currentStep, setCurrentStep] = useState(1); // 1: Information, 2: Confirmation
@@ -44,7 +46,7 @@ export default function CheckoutPage() {
 
     // Check if cart contains "Là Chính Mình 04" course
     const hasLaChinhMinh4 = items.some(item =>
-      item.id === 2 || item.title.includes('Là Chính Mình 04')
+      item.id === 2
     );
 
     if (code === 'EARLY BIRD' || code === 'EARLYBIRD') {
@@ -127,7 +129,7 @@ export default function CheckoutPage() {
       const programIds = items.map(item => (item.paymentId || item.id).toString());
 
       // Construct course names string (e.g. "Course A, Course B")
-      const courseName = items.map(item => item.title).join(', ');
+      const courseName = items.map(item => t(item.title)).join(', ');
 
       // Determine coupon code used (if any discount applied)
       const appliedCouponCode = discount > 0 ? discountCode : '';
@@ -192,13 +194,13 @@ export default function CheckoutPage() {
       <div className="min-h-screen bg-background-secondary py-12">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="text-center py-16">
-            <h1 className="text-3xl font-bold mb-4 text-text-primary">Giỏ hàng của bạn đang trống</h1>
+            <h1 className="text-3xl font-bold mb-4 text-text-primary">{t("cart.empty_title")}</h1>
             <Link
               href="/program"
               className="btn-primary"
             >
               <ArrowLeft className="w-5 h-5" />
-              Tiếp tục xem khóa học
+              {t("cart.continue_browsing")}
             </Link>
           </div>
         </div>
@@ -215,11 +217,11 @@ export default function CheckoutPage() {
             className="inline-flex items-center gap-2 text-primary hover:text-primary-dark font-semibold transition text-sm sm:text-base group"
           >
             <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:-translate-x-1" />
-            Quay lại giỏ hàng
+            {t("cart.back_to_cart")}
           </Link>
         </div>
 
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-text-primary text-center sm:text-left">Thanh toán</h1>
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-text-primary text-center sm:text-left">{t("checkout.title")}</h1>
 
         {/* SePay QR Code Payment - Show full screen when QR is ready */}
         {showPaymentQR && sepayPaymentData ? (
@@ -262,20 +264,20 @@ export default function CheckoutPage() {
                         <span className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary text-sm">
                           <ShoppingCart size={16} />
                         </span>
-                        Các khóa học trong giỏ hàng
+                        {t("checkout.cart_items_title")}
                       </h2>
                       <div className="space-y-6">
                         {items.map((item) => (
                           <div key={item.id} className="flex flex-col md:flex-row gap-4 pb-6 border-b last:border-b-0 border-gray-100">
                             <img
                               src={item.heroImage}
-                              alt={item.title}
+                              alt={t(item.title)}
                               className="w-full md:w-28 h-28 object-cover rounded-ios-lg shadow-sm"
                             />
 
                             <div className="flex-1 flex flex-col justify-center">
-                              <h3 className="text-lg font-bold mb-1 text-text-primary">{item.title}</h3>
-                              <p className="text-text-secondary mb-2 text-sm">{item.category.join(', ')}</p>
+                              <h3 className="text-lg font-bold mb-1 text-text-primary">{t(item.title)}</h3>
+                              <p className="text-text-secondary mb-2 text-sm">{item.category.map(c => t(c)).join(', ')}</p>
                               <div className="flex items-center justify-between mt-auto">
                                 <div>
                                   <span className="text-text-secondary text-sm font-medium bg-gray-100 px-2 py-1 rounded-md">x{item.quantity}</span>
@@ -297,19 +299,19 @@ export default function CheckoutPage() {
                     <div className="bg-white rounded-ios-xl shadow-ios-card p-5 sm:p-8 border border-white/40">
                       <h2 className="text-xl font-bold mb-6 text-text-primary flex items-center gap-2">
                         <span className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary text-sm">1</span>
-                        THÔNG TIN KHÁCH HÀNG
+                        {t("checkout.customer_info_title")}
                       </h2>
 
                       <form id="checkout-form" onSubmit={handleNextStep} className="space-y-5">
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                           <div>
                             <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base ml-1">
-                              Họ và tên <span className="text-red-500">*</span>
+                              {t("checkout.form.name")} <span className="text-red-500">*</span>
                             </label>
                             <input
                               type="text"
                               required
-                              placeholder="Nguyễn Văn A"
+                              placeholder={t("checkout.form.placeholders.name")}
                               value={formData.name}
                               onChange={(e) => handleInputChange('name', e.target.value)}
                               className="w-full bg-gray-50 border border-gray-200 rounded-ios-md px-4 py-3 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm sm:text-base appearance-none ios-haptic-active"
@@ -318,12 +320,12 @@ export default function CheckoutPage() {
 
                           <div>
                             <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base ml-1">
-                              Email <span className="text-red-500">*</span>
+                              {t("checkout.form.email")} <span className="text-red-500">*</span>
                             </label>
                             <input
                               type="email"
                               required
-                              placeholder="example@email.com"
+                              placeholder={t("checkout.form.placeholders.email")}
                               value={formData.email}
                               onChange={(e) => handleInputChange('email', e.target.value)}
                               className="w-full bg-gray-50 border border-gray-200 rounded-ios-md px-4 py-3 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm sm:text-base appearance-none ios-haptic-active"
@@ -332,12 +334,12 @@ export default function CheckoutPage() {
 
                           <div>
                             <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base ml-1">
-                              Số điện thoại <span className="text-red-500">*</span>
+                              {t("checkout.form.phone")} <span className="text-red-500">*</span>
                             </label>
                             <input
                               type="tel"
                               required
-                              placeholder="0912 345 678"
+                              placeholder={t("checkout.form.placeholders.phone")}
                               value={formData.phone}
                               onChange={(e) => handleInputChange('phone', e.target.value)}
                               className="w-full bg-gray-50 border border-gray-200 rounded-ios-md px-4 py-3 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm sm:text-base appearance-none ios-haptic-active"
@@ -346,14 +348,14 @@ export default function CheckoutPage() {
 
                           <div>
                             <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base ml-1">
-                              Username Telegram <span className="text-red-500">*</span>
+                              {t("checkout.form.telegram")} <span className="text-red-500">*</span>
                             </label>
                             <div className="relative">
                               <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">@</span>
                               <input
                                 type="text"
                                 required
-                                placeholder="username"
+                                placeholder={t("checkout.form.placeholders.telegram")}
                                 value={formData.telegram}
                                 onChange={(e) => handleInputChange('telegram', e.target.value)}
                                 className="w-full bg-gray-50 border border-gray-200 rounded-ios-md pl-9 pr-4 py-3 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm sm:text-base appearance-none ios-haptic-active"
@@ -363,7 +365,7 @@ export default function CheckoutPage() {
 
                           <div>
                             <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base ml-1">
-                              Ngày sinh <span className="text-red-500">*</span>
+                              {t("checkout.form.birthdate")} <span className="text-red-500">*</span>
                             </label>
                             <input
                               type="date"
@@ -376,7 +378,7 @@ export default function CheckoutPage() {
 
                           <div>
                             <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base ml-1">
-                              Giới tính <span className="text-red-500">*</span>
+                              {t("checkout.form.gender")} <span className="text-red-500">*</span>
                             </label>
                             <div className="relative">
                               <select
@@ -385,10 +387,10 @@ export default function CheckoutPage() {
                                 onChange={(e) => handleInputChange('gender', e.target.value)}
                                 className="w-full bg-gray-50 border border-gray-200 rounded-ios-md px-4 py-3 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm sm:text-base appearance-none ios-haptic-active"
                               >
-                                <option value="">Chọn giới tính</option>
-                                <option value="female">Nữ</option>
-                                <option value="male">Nam</option>
-                                <option value="other">Khác</option>
+                                <option value="">{t("checkout.form.gender_options.select")}</option>
+                                <option value="female">{t("checkout.form.gender_options.female")}</option>
+                                <option value="male">{t("checkout.form.gender_options.male")}</option>
+                                <option value="other">{t("checkout.form.gender_options.other")}</option>
                               </select>
                               <ArrowLeft className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 rotate-[-90deg] pointer-events-none text-gray-400" />
                             </div>
@@ -397,11 +399,11 @@ export default function CheckoutPage() {
 
                         <div>
                           <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base ml-1">
-                            Địa chỉ
+                            {t("checkout.form.address")}
                           </label>
                           <input
                             type="text"
-                            placeholder="Số nhà, tên đường, phường/xã, quận/huyện, tỉnh/thành phố"
+                            placeholder={t("checkout.form.placeholders.address")}
                             value={formData.address}
                             onChange={(e) => handleInputChange('address', e.target.value)}
                             className="w-full bg-gray-50 border border-gray-200 rounded-ios-md px-4 py-3 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm sm:text-base appearance-none ios-haptic-active"
@@ -410,11 +412,11 @@ export default function CheckoutPage() {
 
                         <div>
                           <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base ml-1">
-                            Ghi chú
+                            {t("checkout.form.note")}
                           </label>
                           <textarea
                             rows={3}
-                            placeholder="Bạn có yêu cầu đặc biệt nào không?"
+                            placeholder={t("checkout.form.placeholders.note")}
                             value={formData.note}
                             onChange={(e) => handleInputChange('note', e.target.value)}
                             className="w-full bg-gray-50 border border-gray-200 rounded-ios-md px-4 py-3 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm sm:text-base appearance-none ios-haptic-active resize-y min-h-[100px]"
@@ -443,7 +445,7 @@ export default function CheckoutPage() {
                             type="submit"
                             className="flex items-center justify-center px-8 py-3.5 bg-primary text-white text-base font-bold rounded-full shadow-ios-md hover:shadow-ios-lg hover:brightness-105 active:scale-95 transition-all duration-300 ios-haptic-active w-full sm:w-auto"
                           >
-                            Tiếp tục
+                            {t("checkout.continue_btn")}
                             <ArrowLeft className="w-5 h-5 ml-2 rotate-180" />
                           </button>
                         </div>
@@ -455,19 +457,19 @@ export default function CheckoutPage() {
                   <div className="bg-white rounded-ios-xl shadow-ios-card p-5 sm:p-8 border border-white/40">
                     <h2 className="text-xl font-bold mb-8 text-text-primary flex items-center gap-2">
                       <span className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary text-sm">2</span>
-                      XÁC NHẬN THÔNG TIN
+                      {t("checkout.confirm_title")}
                     </h2>
 
                     <div className="space-y-8">
                       {/* Course Summary */}
                       <div>
-                        <h3 className="font-bold text-lg mb-4 text-text-primary border-b pb-2">Khóa học đã chọn</h3>
+                        <h3 className="font-bold text-lg mb-4 text-text-primary border-b pb-2">{t("checkout.selected_courses")}</h3>
                         <div className="space-y-4">
                           {items.map((item) => (
                             <div key={item.id} className="flex justify-between items-center p-4 bg-gray-50 rounded-ios-lg border border-gray-100">
                               <div>
-                                <h4 className="font-bold text-text-primary text-base sm:text-lg">{item.title}</h4>
-                                <p className="text-sm text-text-secondary mt-1">{item.category.join(', ')}</p>
+                                <h4 className="font-bold text-text-primary text-base sm:text-lg">{t(item.title)}</h4>
+                                <p className="text-sm text-text-secondary mt-1">{item.category.map(c => t(c)).join(', ')}</p>
                               </div>
                               <div className="text-right">
                                 <div className="font-bold text-primary price text-base sm:text-lg">
@@ -485,15 +487,20 @@ export default function CheckoutPage() {
 
                       {/* Personal Information */}
                       <div>
-                        <h3 className="font-bold text-lg mb-4 text-text-primary border-b pb-2">Thông tin cá nhân</h3>
+                        <h3 className="font-bold text-lg mb-4 text-text-primary border-b pb-2">{t("checkout.personal_info")}</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           {[
-                            { label: "Họ và tên", value: formData.name },
-                            { label: "Email", value: formData.email },
-                            { label: "Số điện thoại", value: formData.phone },
-                            { label: "Telegram", value: formData.telegram },
-                            { label: "Ngày sinh", value: formData.birthdate },
-                            { label: "Giới tính", value: formData.gender === 'male' ? 'Nam' : formData.gender === 'female' ? 'Nữ' : 'Khác' }
+                            { label: t("checkout.form.name"), value: formData.name },
+                            { label: t("checkout.form.email"), value: formData.email },
+                            { label: t("checkout.form.phone"), value: formData.phone },
+                            { label: t("checkout.form.telegram"), value: formData.telegram },
+                            { label: t("checkout.form.birthdate"), value: formData.birthdate },
+                            {
+                              label: t("checkout.form.gender"),
+                              value: formData.gender === 'male' ? t("checkout.form.gender_options.male")
+                                : formData.gender === 'female' ? t("checkout.form.gender_options.female")
+                                  : t("checkout.form.gender_options.other")
+                            }
                           ].map((field, idx) => (
                             <div key={idx} className="bg-gray-50 p-3 rounded-lg border border-gray-100">
                               <span className="block text-xs text-gray-500 uppercase font-semibold tracking-wider mb-1">{field.label}</span>
@@ -502,13 +509,13 @@ export default function CheckoutPage() {
                           ))}
                           {formData.address && (
                             <div className="md:col-span-2 bg-gray-50 p-3 rounded-lg border border-gray-100">
-                              <span className="block text-xs text-gray-500 uppercase font-semibold tracking-wider mb-1">Địa chỉ</span>
+                              <span className="block text-xs text-gray-500 uppercase font-semibold tracking-wider mb-1">{t("checkout.form.address")}</span>
                               <p className="font-medium text-gray-900">{formData.address}</p>
                             </div>
                           )}
                           {formData.note && (
                             <div className="md:col-span-2 bg-gray-50 p-3 rounded-lg border border-gray-100">
-                              <span className="block text-xs text-gray-500 uppercase font-semibold tracking-wider mb-1">Ghi chú</span>
+                              <span className="block text-xs text-gray-500 uppercase font-semibold tracking-wider mb-1">{t("checkout.form.note")}</span>
                               <p className="font-medium text-gray-900">{formData.note}</p>
                             </div>
                           )}
@@ -525,15 +532,14 @@ export default function CheckoutPage() {
                           className="mt-1 mr-3 w-5 h-5 text-primary rounded focus:ring-primary border-gray-300"
                         />
                         <label htmlFor="terms" className="text-sm text-text-primary leading-relaxed">
-                          Bằng cách tích vào ô này, bạn xác nhận đã đọc, hiểu và đồng ý với{' '}
+                          {t("checkout.terms_agreement")}{' '}
                           <Link href="/policy" target="_blank" rel="noopener noreferrer" className="text-primary font-bold hover:underline">
-                            Chính sách bảo mật
+                            {t("policy.title")}
                           </Link>{' '}
-                          và{' '}
+                          &{' '}
                           <Link href="/terms" target="_blank" rel="noopener noreferrer" className="text-primary font-bold hover:underline">
-                            Điều khoản sử dụng
-                          </Link>{' '}
-                          của chúng tôi.
+                            {t("terms.title")}
+                          </Link>
                         </label>
                       </div>
 
@@ -573,10 +579,10 @@ export default function CheckoutPage() {
                                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                               </svg>
-                              Đang xử lý...
+                              {t("checkout.processing")}
                             </div>
                           ) : (
-                            'Xác nhận và thanh toán'
+                            t("checkout.confirm_pay_btn")
                           )}
                         </button>
                       </div>
@@ -589,14 +595,14 @@ export default function CheckoutPage() {
               <div className="lg:col-span-1">
                 <div className="bg-white rounded-ios-xl shadow-ios-card p-5 sm:p-8 sticky top-24 sm:top-28 border border-white/40">
                   <h2 className="text-lg sm:text-xl font-bold mb-6 text-text-primary border-b pb-4">
-                    {currentStep === 1 ? 'Tóm tắt đơn hàng' : 'Thanh toán'}
+                    {currentStep === 1 ? t("cart.summary_title") : t("checkout.title")}
                   </h2>
 
                   {/* Discount Code - Only show in Step 1 */}
                   {currentStep === 1 && (
                     <div className="mb-6">
                       <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base">
-                        Mã giảm giá
+                        {t("checkout.discount_code")}
                       </label>
                       <div className="flex gap-2">
                         <div className="flex-1 relative">
@@ -604,7 +610,7 @@ export default function CheckoutPage() {
                             type="text"
                             value={discountCode}
                             onChange={(e) => setDiscountCode(e.target.value)}
-                            placeholder="Nhập mã"
+                            placeholder={t("checkout.discount_code")} // Or use a specific placeholder key if added
                             className="w-full bg-gray-50 border border-gray-200 rounded-ios-md px-4 py-2 h-[44px] focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm font-medium uppercase placeholder:normal-case ios-haptic-active"
                           />
                           <Tag className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -614,13 +620,13 @@ export default function CheckoutPage() {
                           onClick={handleApplyDiscount}
                           className="px-4 bg-gray-800 text-white rounded-ios-md hover:bg-black transition-all duration-300 h-[44px] font-bold text-sm shadow-sm ios-haptic-active"
                         >
-                          Áp dụng
+                          {t("checkout.apply_btn")}
                         </button>
                       </div>
                       {discount > 0 && (
                         <div className="mt-2 text-success text-xs sm:text-sm font-bold flex items-center animate-pulse">
                           <span className="w-2 h-2 rounded-full bg-success mr-2"></span>
-                          Đã áp dụng mã giảm giá: {discountType === 'percentage' ? `${discount}%` : `-${currencyFormatter.format(discount)}`}
+                          {t("checkout.applied_discount")} {discountType === 'percentage' ? `${discount}%` : `-${currencyFormatter.format(discount)}`}
                         </div>
                       )}
                     </div>
@@ -628,17 +634,17 @@ export default function CheckoutPage() {
 
                   <div className="space-y-4 mb-8 bg-gray-50 p-4 rounded-ios-lg">
                     <div className="flex justify-between text-sm sm:text-base">
-                      <span className="text-text-secondary">Tạm tính:</span>
+                      <span className="text-text-secondary">{t("checkout.subtotal")}</span>
                       <span className="font-semibold">{currencyFormatter.format(subtotal)}</span>
                     </div>
                     {discount > 0 && (
                       <div className="flex justify-between text-sm sm:text-base">
-                        <span className="text-success font-medium">Giảm giá:</span>
+                        <span className="text-success font-medium">{t("checkout.discount")}</span>
                         <span className="font-bold text-success">-{currencyFormatter.format(discountAmount)}</span>
                       </div>
                     )}
                     <div className="border-t border-gray-200 pt-3 flex justify-between text-base sm:text-lg font-bold items-center">
-                      <span>Tổng cộng:</span>
+                      <span>{t("checkout.total")}</span>
                       <span className="price text-primary text-xl">{currencyFormatter.format(total)}</span>
                     </div>
                   </div>

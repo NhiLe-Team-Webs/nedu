@@ -12,10 +12,18 @@ import Partners from "./Partners";
 import Connection from "./Connection";
 import Privilege from "./Privilege";
 
+import { useLanguage } from "@/lib/LanguageContext";
+
 export default function Home() {
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const texts = ["LÀ CHÍNH MÌNH", "THẤU HIỂU BẢN THÂN", "QUẢN TRỊ CẢM XÚC"];
+  const { t } = useLanguage();
+
+  const texts = [
+    t("home.hero_text_1"),
+    t("home.hero_text_2"),
+    t("home.hero_text_3")
+  ];
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -27,7 +35,7 @@ export default function Home() {
     }, 3000); // Change text every 3 seconds
 
     return () => clearInterval(interval);
-  }, []);
+  }, [texts.length]);
 
   return (
     <div className="min-h-screen bg-white">
@@ -59,7 +67,7 @@ export default function Home() {
           <div className="transition-all duration-1000 ease-out transform opacity-100 translate-y-0" style={{ transitionDelay: '100ms' }}>
             <div className="text-center">
               <p className="text-lg md:text-3xl font-medium text-gray-500 mb-2 md:mb-4 italic">
-                "Hành trình vạn dặm bắt đầu từ một bước chân được...
+                {t("home.hero_subtitle_start")}
               </p>
               <div className="my-4 md:my-6 min-h-[4rem] md:min-h-[7rem] lg:min-h-[9rem] flex items-center justify-center relative">
                 <h1
@@ -72,7 +80,7 @@ export default function Home() {
                 </h1>
               </div>
               <p className="text-xl md:text-4xl font-bold text-[#4A4A4A] mt-2 md:mt-4">
-                ...cùng N-Education"
+                {t("home.hero_subtitle_end")}
               </p>
             </div>
           </div>

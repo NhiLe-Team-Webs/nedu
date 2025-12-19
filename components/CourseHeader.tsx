@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import YouTube from "react-youtube";
 import { useCart } from "@/lib/cart-context";
 import { getCourseBySlug } from "@/data/courses";
+import { useLanguage } from "@/lib/LanguageContext";
 import * as Icons from "lucide-react";
 
 type CourseHeaderProps = {
@@ -36,6 +37,7 @@ const CourseHeader: React.FC<CourseHeaderProps> = ({
   courseSlug,
 }) => {
   const { addToCart, items } = useCart();
+  const { t } = useLanguage();
   const [justAdded, setJustAdded] = useState(false);
 
   // Check if this course is already in cart
@@ -85,7 +87,7 @@ const CourseHeader: React.FC<CourseHeaderProps> = ({
           {title}
         </h1>
         <div className="flex justify-center items-center gap-1 sm:gap-2 mb-1 sm:mb-2">
-          <p className="text-sm sm:text-base lg:text-lg font-semibold">Chi phí:</p>
+          <p className="text-sm sm:text-base lg:text-lg font-semibold">{t("thirty_day_challenge.cost_label")}:</p>
           <p className="text-2xl sm:text-3xl lg:text-4xl font-bold text-green-600">{cost}</p>
           <p className="text-sm sm:text-base lg:text-lg font-semibold">{currency}</p>
         </div>
@@ -107,11 +109,11 @@ const CourseHeader: React.FC<CourseHeaderProps> = ({
           {justAdded ? (
             <>
               <Icons.CheckCircle className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.5} />
-              <span className="ml-2">Đã thêm vào giỏ hàng</span>
+              <span className="ml-2">{t("cart_popup.added")}</span>
             </>
           ) : (
             <>
-              Thêm vào giỏ hàng
+              {t("program_detail.common.add_to_cart")}
               <Icons.ShoppingBagIcon className="ml-1 sm:ml-2 w-5 h-5" />
             </>
           )}

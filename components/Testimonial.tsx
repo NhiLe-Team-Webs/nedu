@@ -3,7 +3,9 @@
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/lib/cart-context";
 import { Course } from "@/data/courses";
-import { ChevronRight, ShoppingBag } from "lucide-react";
+import { ChevronRight, ShoppingBag, CheckCircle } from "lucide-react";
+import { useState } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
 
 interface TestimonialsProps {
   videos: string[];
@@ -27,10 +29,16 @@ const Testimonials: React.FC<TestimonialsProps> = ({
   buttonType = 'link',
 }) => {
   const { addToCart } = useCart();
+  const [justAdded, setJustAdded] = useState(false);
+  const { t } = useLanguage();
 
   const handleButtonClick = () => {
     if (buttonType === 'cart' && course) {
       addToCart(course);
+      setJustAdded(true);
+      setTimeout(() => {
+        setJustAdded(false);
+      }, 3000);
     } else if (buttonLink) {
       window.location.href = buttonLink;
     }
@@ -73,13 +81,26 @@ const Testimonials: React.FC<TestimonialsProps> = ({
         <div className="flex justify-center mt-6 sm:mt-8">
           <button
             onClick={handleButtonClick}
-            className="inline-flex items-center bg-primary hover:bg-yellow-600 text-white px-6 py-3 rounded-ios-btn font-semibold uppercase transition-all duration-200 text-sm sm:text-base shadow-ios-sm hover:shadow-ios-md ios-haptic-active min-h-[44px]"
+            disabled={justAdded}
+            className={`inline-flex items-center px-6 py-3 rounded-ios-btn font-semibold uppercase transition-all duration-300 text-sm sm:text-base min-h-[44px] ${justAdded
+              ? 'bg-transparent border-2 border-green-500 text-green-500 cursor-default'
+              : 'bg-primary hover:bg-yellow-600 text-white shadow-ios-sm hover:shadow-ios-md ios-haptic-active'
+              }`}
           >
-            {buttonText}
-            {buttonType === 'cart' ? (
-              <ShoppingBag className="ml-2 sm:ml-3 w-4 h-4 sm:w-5 sm:h-5" />
+            {justAdded ? (
+              <>
+                {t("cart_popup.added")}
+                <CheckCircle className="ml-2 sm:ml-3 w-4 h-4 sm:w-5 sm:h-5" />
+              </>
             ) : (
-              <ChevronRight className="ml-2 sm:ml-3 w-4 h-4 sm:w-5 sm:h-5" />
+              <>
+                {buttonText}
+                {buttonType === 'cart' ? (
+                  <ShoppingBag className="ml-2 sm:ml-3 w-4 h-4 sm:w-5 sm:h-5" />
+                ) : (
+                  <ChevronRight className="ml-2 sm:ml-3 w-4 h-4 sm:w-5 sm:h-5" />
+                )}
+              </>
             )}
           </button>
         </div>

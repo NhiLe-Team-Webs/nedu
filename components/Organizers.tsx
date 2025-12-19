@@ -1,11 +1,13 @@
 import React from 'react';
+import { useLanguage } from "@/lib/LanguageContext";
 
 const Organizers: React.FC = () => {
+  const { t } = useLanguage();
   return (
     <section className="py-12 sm:py-16 lg:py-20">
       <div className="container mx-auto px-4 sm:px-6">
         <h2 className="text-2xl sm:text-3xl lg:text-[32px] font-bold text-center text-amber-400 uppercase mb-8 sm:mb-10 lg:mb-12">
-          Đơn vị tổ chức và vận hành
+          {t("organizers.heading")}
         </h2>
         <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:gap-8 max-w-md sm:max-w-lg mx-auto mb-8 sm:mb-10">
           {/* Organizer 1 */}

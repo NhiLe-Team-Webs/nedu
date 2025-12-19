@@ -1,8 +1,13 @@
+"use client";
+
 import Link from 'next/link'
 import Image from 'next/image'
 import { Facebook, Youtube, Send } from 'lucide-react'
+import { useLanguage } from '@/lib/LanguageContext'
 
 const Footer = () => {
+  const { t } = useLanguage();
+
   return (
     <footer className="bg-[#4F4F4F] text-white rounded-t-[32px] mt-10 pb-32 sm:pb-12 ios-safe-padding-bottom overflow-hidden relative z-0">
       <div className="container mx-auto px-6 lg:px-16 pt-12 pb-8">
@@ -11,10 +16,10 @@ const Footer = () => {
           {/* Mobile: Nav & Socials on top, Desktop: on right */}
           <div className="flex flex-col items-start gap-6 w-full lg:w-auto order-1 lg:order-2 lg:items-end">
             <nav className="flex flex-wrap gap-x-6 gap-y-3 font-medium text-sm sm:text-base text-gray-300">
-              <Link href="/" className="hover:text-primary transition-colors duration-200">TRANG CHỦ</Link>
-              <a href="https://www.nhi.sg/" target="_blank" rel="noreferrer" className="hover:text-primary transition-colors duration-200">VỀ CHÚNG TÔI</a>
-              <Link href="/program/" className="hover:text-primary transition-colors duration-200">KHÓA HỌC</Link>
-              <Link href="/contact/" className="hover:text-primary transition-colors duration-200">LIÊN HỆ</Link>
+              <Link href="/" className="hover:text-primary transition-colors duration-200">{t("footer.home")}</Link>
+              <a href="https://www.nhi.sg/" target="_blank" rel="noreferrer" className="hover:text-primary transition-colors duration-200">{t("footer.about")}</a>
+              <Link href="/program/" className="hover:text-primary transition-colors duration-200">{t("footer.courses")}</Link>
+              <Link href="/contact/" className="hover:text-primary transition-colors duration-200">{t("footer.contact")}</Link>
             </nav>
             <div className="flex gap-4 pt-2">
               <a href="https://www.facebook.com/neducation.sg" target="_blank" rel="noreferrer" aria-label="Facebook" className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-primary hover:text-white transition-all duration-300 ios-haptic-active">
@@ -48,10 +53,10 @@ const Footer = () => {
               </div>
             </div>
             <div className="text-left">
-              <p className="font-bold text-sm sm:text-base text-white mb-2">CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ NHILE</p>
+              <p className="font-bold text-sm sm:text-base text-white mb-2">{t("footer.company_name")}</p>
               <ul className="text-sm space-y-1 text-gray-400">
-                <li>Mã số thuế: 0317268736</li>
-                <li className="break-words">25 Lê Bá Trinh, Phường Hoà Cường Bắc, Quận Hải Châu, Đà Nẵng</li>
+                <li>{t("footer.tax_code")}: 0317268736</li>
+                <li className="break-words">{t("footer.address")}</li>
               </ul>
             </div>
           </div>
@@ -59,11 +64,11 @@ const Footer = () => {
 
         {/* Lower Footer */}
         <div className="mt-10 pt-6 border-t border-white/10 flex flex-col lg:flex-row justify-between items-center gap-6 text-sm text-gray-500">
-          <p className="order-last lg:order-first">© 2024 N-EDU. All rights reserved</p>
+          <p className="order-last lg:order-first">© 2024 N-EDU. {t("footer.rights_reserved")}</p>
           <div className="flex flex-wrap justify-center gap-6">
-            <Link href="/guide-payment" className="hover:text-primary transition-colors">Hướng dẫn thanh toán</Link>
-            <Link href="/policy" className="hover:text-primary transition-colors">Chính sách bảo mật</Link>
-            <Link href="/terms" className="hover:text-primary transition-colors">Điều khoản sử dụng</Link>
+            <Link href="/guide-payment" className="hover:text-primary transition-colors">{t("footer.payment_guide")}</Link>
+            <Link href="/policy" className="hover:text-primary transition-colors">{t("footer.privacy_policy")}</Link>
+            <Link href="/terms" className="hover:text-primary transition-colors">{t("footer.terms_of_use")}</Link>
           </div>
           <div className="flex items-center gap-3 px-4 py-2 bg-white/5 rounded-full border border-white/10">
             <Image
@@ -73,7 +78,7 @@ const Footer = () => {
               height={24}
               className="w-6 h-6 object-contain"
             />
-            <span className="font-medium text-gray-300 text-xs">Đối tác thanh toán</span>
+            <span className="font-medium text-gray-300 text-xs">{t("footer.payment_partner")}</span>
           </div>
         </div>
       </div>
