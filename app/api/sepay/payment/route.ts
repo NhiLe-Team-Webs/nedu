@@ -19,7 +19,6 @@ import { appendToSheet, findOrderInSheet } from '@/lib/google-sheets';
 import { isSupabaseConfigured } from '@/lib/db';
 import { OrderRepository, TransactionRepository } from '@/lib/repositories';
 import { OrderStatus, TransactionStatus } from '@/lib/db-types';
-import { notifyNewOrder, notifyPaymentError } from '@/lib/telegram';
 
 // Fallback to in-memory store if database not configured
 const orderStore = OrderStore;
@@ -165,26 +164,6 @@ export async function POST(request: NextRequest) {
       // Continue flow, don't fail payment creation just because sheet failed
     }
 
-    // Send Telegram notification for new order
-    try {
-      await notifyNewOrder({
-        orderCode,
-        customerName: body.fullName,
-        email: body.email,
-        phone: body.phone,
-        telegram: body.telegram,
-        birthday: body.birthday,
-        gender: body.gender,
-        address: body.address,
-        note: body.note,
-        amount: body.amount,
-        courseName: body.courseName,
-        couponCode: body.couponCode,
-      });
-    } catch (telegramError) {
-      console.error("Failed to send Telegram notification:", telegramError);
-      // Continue - notification is not critical
-    }
 
     logSePayDebug('Payment created', { orderCode, qrCodeUrl: paymentResponse.qrCodeUrl });
 
