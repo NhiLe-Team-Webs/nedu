@@ -68,7 +68,7 @@ export const courses: Course[] = [
     paymentId: 58,
     info: {
       topic: 'program_detail.courses.suc_manh_vo_han.topic',
-      schedule: 'program_detail.courses.suc_manh_vo_han.schedule',
+      schedule: '5/3-8/3/2025',
       instructor: 'program_detail.courses.suc_manh_vo_han.instructor',
       sessions: 'program_detail.courses.suc_manh_vo_han.sessions',
       location: 'program_detail.courses.suc_manh_vo_han.location',
@@ -130,7 +130,7 @@ export const courses: Course[] = [
     paymentId: 57,
     info: {
       topic: 'program_detail.courses.la_chinh_minh.topic',
-      schedule: 'program_detail.courses.la_chinh_minh.schedule',
+      schedule: '5/3-8/3/2025',
       instructor: 'program_detail.courses.la_chinh_minh.instructor',
       sessions: 'program_detail.courses.la_chinh_minh.sessions',
       location: 'program_detail.courses.la_chinh_minh.location',
@@ -180,7 +180,7 @@ export const courses: Course[] = [
     paymentId: 78,
     info: {
       topic: 'program_detail.courses.gen_ai_101.topic',
-      schedule: 'program_detail.courses.gen_ai_101.schedule',
+      schedule: '5/3-8/3/2025',
       instructor: 'program_detail.courses.gen_ai_101.instructor',
       sessions: 'program_detail.courses.gen_ai_101.sessions',
       location: 'program_detail.courses.gen_ai_101.location',
@@ -220,7 +220,7 @@ export const courses: Course[] = [
     paymentId: 53,
     info: {
       topic: 'program_detail.courses.thuong_hieu_cua_ban.topic',
-      schedule: 'program_detail.courses.thuong_hieu_cua_ban.schedule',
+      schedule: '5/3-8/3/2025',
       instructor: 'program_detail.courses.thuong_hieu_cua_ban.instructor',
       sessions: 'program_detail.courses.thuong_hieu_cua_ban.sessions',
       location: 'program_detail.courses.thuong_hieu_cua_ban.location',
@@ -260,7 +260,7 @@ export const courses: Course[] = [
     paymentId: 54,
     info: {
       topic: 'program_detail.courses.cuoc_song_cua_ban.topic',
-      schedule: 'program_detail.courses.cuoc_song_cua_ban.schedule',
+      schedule: '5/3-8/3/2025',
       instructor: 'program_detail.courses.cuoc_song_cua_ban.instructor',
       sessions: 'program_detail.courses.cuoc_song_cua_ban.sessions',
       location: 'program_detail.courses.cuoc_song_cua_ban.location',
@@ -300,7 +300,7 @@ export const courses: Course[] = [
     paymentId: 79,
     info: {
       topic: 'program_detail.courses.ai_for_business_communication.topic',
-      schedule: 'program_detail.courses.ai_for_business_communication.schedule',
+      schedule: '5/3-8/3/2025',
       instructor: 'program_detail.courses.ai_for_business_communication.instructor',
       sessions: 'program_detail.courses.ai_for_business_communication.sessions',
       location: 'program_detail.courses.ai_for_business_communication.location',
@@ -340,7 +340,7 @@ export const courses: Course[] = [
     paymentId: 80,
     info: {
       topic: 'program_detail.courses.ai_in_marketing.topic',
-      schedule: 'program_detail.courses.ai_in_marketing.schedule',
+      schedule: '5/3-8/3/2025',
       instructor: 'program_detail.courses.ai_in_marketing.instructor',
       sessions: 'program_detail.courses.ai_in_marketing.sessions',
       location: 'program_detail.courses.ai_in_marketing.location',
