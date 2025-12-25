@@ -4,7 +4,8 @@ import { useState, useMemo, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/components/ui/button";
 import { courses as coursesData } from "@/data/courses";
 import { useLanguage } from "@/lib/LanguageContext";
 
@@ -17,6 +18,56 @@ const filters = [
 
 const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      type: "spring" as const,
+      stiffness: 100,
+      damping: 10,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      duration: 0.4,
+    }
+  },
+};
+
+const CourseCardSkeleton = () => (
+  <div className="w-[270px] md:w-[420px] flex-shrink-0 snap-center flex flex-col justify-between animate-pulse">
+    <div className="w-full aspect-video bg-gray-200 rounded-[30px]" />
+    <div className="flex flex-col items-center text-center w-full max-w-full pb-10 flex-grow pt-4">
+      <div className="h-4 w-32 bg-gray-200 rounded mb-2" />
+      <div className="h-8 w-48 bg-gray-200 rounded mb-2" />
+      <div className="h-4 w-60 bg-gray-200 rounded mb-4" />
+      <div className="h-6 w-24 bg-gray-200 rounded mt-4" />
+      <div className="flex gap-4 mt-6">
+        <div className="h-10 w-28 bg-gray-200 rounded-full" />
+        <div className="h-4 w-20 bg-gray-200 rounded mt-2" />
+      </div>
+    </div>
+  </div>
+);
+
 export default function ProgramPage() {
   const [filter, setFilter] = useState("all");
   const router = useRouter();
@@ -24,6 +75,15 @@ export default function ProgramPage() {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading delay
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const navigateToCourse = (mode: string, slug: string) => {
     router.push(`/program-${mode}/${slug}`);
@@ -74,7 +134,12 @@ export default function ProgramPage() {
   return (
     <section className="bg-background overflow-hidden">
       <div className="container max-w-7xl mx-auto px-4">
-        <div className="pt-8 md:pt-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="pt-4 md:pt-12"
+        >
           <h1 className="text-4xl md:text-6xl font-semibold text-primary tracking-tight mb-12">
             {t("program_page.title")}
           </h1>
@@ -102,85 +167,100 @@ export default function ProgramPage() {
               ))}
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
 
-      <div className="mt-12">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="mt-4"
+      >
         <div
           ref={carouselRef}
           onScroll={updateScrollButtons}
           className="w-full overflow-x-auto pb-4 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] py-10"
         >
-          <div className="flex gap-4 md:gap-8 pl-4 md:pl-8 sm:pl-[calc((100%-1280px)/2+2rem)] pr-4 md:pr-8">
-            {filteredCourses.map((course) => (
-              <div
-                key={course.id}
-                data-course-card="true"
-                className="w-[270px] md:w-[420px] flex-shrink-0 snap-center flex flex-col justify-between"
-              >
-                <Link
-                  href={`/program-${course.mode}/${course.slug}`}
-                  className="group block w-full relative aspect-video overflow-hidden transition-transform duration-300 ease-in-out hover:scale-[1.02]"
+          <div className="flex gap-4 md:gap-8 pl-4 2xl:pl-[calc((100vw-1280px)/2+1rem)] pr-4 md:pr-8">
+            {isLoading
+              ? Array(4).fill(0).map((_, i) => <CourseCardSkeleton key={i} />)
+              : filteredCourses.map((course) => (
+                <motion.div
+                  key={course.id}
+                  variants={cardVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="hidden"
+                  data-course-card="true"
+                  className="w-[270px] md:w-[420px] flex-shrink-0 snap-center flex flex-col justify-between"
                 >
-                  <img
-                    alt={t(course.title)}
-                    src={course.heroImage}
-                    className="w-full h-full object-cover rounded-[30px]"
-                  />
-                </Link>
-                <div className="flex flex-col items-center text-center w-full max-w-full pb-10 flex-grow">
-                  <div className="flex gap-2 mt-4 h-5 items-center">
-                    <p className="text-orange-600 font-medium text-xs m-0 text-center w-full">
-                      {t(course.info.topic)}
+                  <Link
+                    href={`/program-${course.mode}/${course.slug}`}
+                    className="group block w-full relative aspect-video overflow-hidden transition-transform duration-300 ease-in-out hover:scale-[1.02]"
+                  >
+                    <img
+                      alt={t(course.title)}
+                      src={course.heroImage}
+                      className="w-full h-full object-cover rounded-[30px]"
+                    />
+                  </Link>
+                  <div className="flex flex-col items-center text-center w-full max-w-full pb-10 flex-grow">
+                    <div className="flex gap-2 mt-4 h-5 items-center">
+                      <p className="text-orange-600 font-medium text-xs m-0 text-center w-full">
+                        {t(course.info.topic)}
+                      </p>
+                    </div>
+                    <h3 className="text-2xl font-semibold text-gray-900 mb-0 leading-tight flex flex-col justify-center h-16">
+                      <span className="block">{t(course.title)}</span>
+                    </h3>
+                    <div className="text-gray-500 text-sm max-w-[90%] mx-auto mb-4 min-h-[40px]">
+                      <span className="block">{t(course.mission).substring(0, 80)}...</span>
+                    </div>
+                    <p className="text-base font-medium">
+                      {course.price.currency === 'VNĐ'
+                        ? `${parseInt(course.price.amount.replace(/[.,]/g, '')).toLocaleString('vi-VN')}\u00A0₫`
+                        : `${course.price.currency} ${course.price.amount}`
+                      }
                     </p>
+                    <div className="flex items-center justify-center gap-4 mt-auto">
+                      <Link
+                        href={`/program-${course.mode}/${course.slug}`}
+                        className="inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 rounded-full bg-primary text-white hover:text-white hover:bg-primary-dark px-5 py-2 text-sm"
+                      >
+                        {t("program_page.card.learn_more")}
+                      </Link>
+                      <button className="text-primary font-medium text-sm hover:underline">
+                        {t("program_page.card.register")}
+                      </button>
+                    </div>
                   </div>
-                  <h3 className="text-2xl font-semibold text-gray-900 mb-0 leading-tight flex flex-col justify-center h-16">
-                    <span className="block">{t(course.title)}</span>
-                  </h3>
-                  <div className="text-gray-500 text-sm max-w-[90%] mx-auto mb-4 min-h-[40px]">
-                    <span className="block">{t(course.mission).substring(0, 80)}...</span>
-                  </div>
-                  <p className="text-base font-medium">
-                    {course.price.currency === 'VNĐ'
-                      ? `${parseInt(course.price.amount.replace(/[.,]/g, '')).toLocaleString('vi-VN')}\u00A0₫`
-                      : `${course.price.currency} ${course.price.amount}`
-                    }
-                  </p>
-                  <div className="flex items-center justify-center gap-4 mt-auto">
-                    <Link
-                      href={`/program-${course.mode}/${course.slug}`}
-                      className="inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 rounded-full bg-primary text-white hover:text-white hover:bg-primary-dark px-5 py-2 text-sm"
-                    >
-                      {t("program_page.card.learn_more")}
-                    </Link>
-                    <button className="text-primary font-medium text-sm hover:underline">
-                      {t("program_page.card.register")}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
+                </motion.div>
+              ))}
           </div>
         </div>
         <div className="container max-w-7xl mx-auto px-4 mt-4 flex justify-end gap-2">
-          <button
+          <Button
+            variant="outline"
+            size="icon"
             onClick={() => scroll('left')}
             disabled={!canScrollLeft}
-            className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none border border-input hover:text-accent-foreground rounded-full w-10 h-10 bg-gray-300 hover:bg-gray-400 disabled:opacity-50"
+            className="rounded-full w-10 h-10 bg-gray-300 hover:bg-gray-400 disabled:opacity-50"
           >
             <ChevronLeft className="h-5 w-5 text-gray-800" />
             <span className="sr-only">{t("program_page.card.previous")}</span>
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
             onClick={() => scroll('right')}
             disabled={!canScrollRight}
-            className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none border border-input hover:text-accent-foreground rounded-full w-10 h-10 bg-gray-300 hover:bg-gray-400 disabled:opacity-50"
+            className="rounded-full w-10 h-10 bg-gray-300 hover:bg-gray-400 disabled:opacity-50"
           >
             <ChevronRight className="h-5 w-5 text-gray-800" />
             <span className="sr-only">{t("program_page.card.next")}</span>
-          </button>
+          </Button>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
