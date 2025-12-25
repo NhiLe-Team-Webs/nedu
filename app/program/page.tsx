@@ -4,6 +4,7 @@ import { useState, useMemo, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { motion } from "framer-motion";
 import { courses as coursesData } from "@/data/courses";
 import { useLanguage } from "@/lib/LanguageContext";
 
@@ -89,7 +90,12 @@ export default function ProgramPage() {
                     }`}
                 >
                   {filter === f.id && (
-                    <div className="absolute inset-0 bg-black rounded-full z-20"></div>
+                    <motion.div
+                      layoutId="active-pill"
+                      className="absolute inset-0 bg-black rounded-full z-20"
+                      style={{ borderRadius: 9999 }}
+                      transition={{ duration: 0.6, type: "spring", bounce: 0.2 }}
+                    />
                   )}
                   <span className="relative z-30">{t(`program_page.filters.${f.id}`)}</span>
                 </button>
