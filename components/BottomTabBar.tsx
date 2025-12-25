@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { Home, BookOpen, Calendar, ShoppingCart, Menu } from "lucide-react";
 import { useCart } from "@/lib/cart-context";
 import { useState } from "react";
-import Sidebar from "./Sidebar";
+
 import { useLanguage } from "@/lib/LanguageContext";
 import LanguageToggle from "./LanguageToggle";
 
