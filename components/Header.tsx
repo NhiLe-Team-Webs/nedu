@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Bell, ShoppingCart, X } from "lucide-react";
-import { useState } from "react";
+import { Bell, ShoppingCart, X, Menu } from "lucide-react";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/lib/cart-context";
 import Image from "next/image";
 import TopBanner from "./TopBanner";
@@ -19,10 +20,20 @@ const Header = () => {
   const { getTotalItems } = useCart();
   const totalItems = getTotalItems();
   const [showNotification, setShowNotification] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { t } = useLanguage();
 
+  // Lock body scroll when menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [isMobileMenuOpen]);
+
   return (
-    <header className="fixed inset-x-0 top-0 z-50 backdrop-blur-sm">
+    <header className="fixed inset-x-0 top-0 z-[100] backdrop-blur-sm">
       <div className="w-full flex justify-between gap-2 sm:gap-4 px-3 sm:px-6 items-center h-14 sm:h-16 md:h-20 bg-white/95 shadow-lg transition-all duration-300">
         {/* Logo */}
         <div className="flex items-center">
@@ -125,7 +136,7 @@ const Header = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="hidden md:inline-flex items-center justify-center gap-2 h-10 w-10 sm:h-10 sm:w-10 text-text-secondary hover:text-primary relative transition-all duration-200 transform hover:scale-110 active:scale-95 overflow-visible"
+            className="inline-flex items-center justify-center gap-2 h-10 w-10 sm:h-10 sm:w-10 text-text-secondary hover:text-primary relative transition-all duration-200 transform hover:scale-110 active:scale-95 overflow-visible"
             onClick={() => router.push('/cart')}
             aria-label="Giỏ hàng"
           >
@@ -136,8 +147,61 @@ const Header = () => {
               </span>
             )}
           </Button>
+
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden inline-flex items-center justify-center h-10 w-10 text-text-secondary hover:text-primary transition-all duration-200"
+            onClick={() => setIsMobileMenuOpen(true)}
+            aria-label="Menu"
+          >
+            <Menu className="h-6 w-6" />
+          </Button>
         </div>
       </div>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: "-100%" }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: "-100%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="fixed top-0 left-0 w-screen h-[100dvh] z-[1000] bg-white md:hidden"
+          >
+            <div className="absolute top-4 right-4">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-gray-800"
+              >
+                <X className="h-6 w-6" />
+              </Button>
+            </div>
+            <div className="flex flex-col p-8 space-y-6 mt-12 text-lg font-medium text-gray-800 bg-white">
+              <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-primary transition-colors">
+                {t("header.home")}
+              </Link>
+              <a href="https://nhi.sg" target="_blank" rel="noopener noreferrer" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-primary transition-colors">
+                {t("header.about")}
+              </a>
+              <Link href="/program" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-primary transition-colors">
+                {t("header.courses")}
+              </Link>
+              <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-primary transition-colors">
+                {t("header.contact")}
+              </Link>
+            </div>
+
+            <div className="absolute bottom-8 left-8">
+              <LanguageToggle />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <TopBanner />
 
       {/* Notification Modal - Mobile Only */}

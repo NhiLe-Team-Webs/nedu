@@ -102,7 +102,7 @@ export default function Banner() {
   // and prevent hydration mismatches if possible, though 'hidden' class handles visibility.
 
   return (
-    <div className={`fixed bottom-[84px] md:bottom-0 left-0 right-0 z-50 shadow-[0_-4px_20px_rgba(0,0,0,0.15)] transition-all duration-500 ease-in-out ${isVisible && !isClosedByUser ? "translate-y-0 opacity-100" : "translate-y-[200%] opacity-0 pointer-events-none"
+    <div className={`fixed bottom-0 left-0 right-0 z-50 shadow-[0_-4px_20px_rgba(0,0,0,0.15)] transition-all duration-500 ease-in-out ${isVisible && !isClosedByUser ? "translate-y-0 opacity-100" : "translate-y-[200%] opacity-0 pointer-events-none"
       }`}>
 
       {/* Marquee Banner */}

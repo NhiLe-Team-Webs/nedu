@@ -276,7 +276,7 @@ export const vi = {
         digital_marketing: "Marketing số"
     },
     program_page: {
-        title: "Các khóa học chất lượng",
+        title: "KHÓA HỌC",
         subtitle: "Lựa chọn chương trình phù hợp với hành trình phát triển bản thân và doanh nghiệp của bạn. Mỗi khóa học đều đi kèm công cụ thực hành và có thể tham gia ngay.",
         filters: {
             all: "Tất cả",

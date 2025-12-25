@@ -74,7 +74,7 @@ export default function ProgramPage() {
   return (
     <section className="bg-background overflow-hidden">
       <div className="container max-w-7xl mx-auto px-4">
-        <div>
+        <div className="pt-8 md:pt-12">
           <h1 className="text-4xl md:text-6xl font-semibold text-primary tracking-tight mb-12">
             {t("program_page.title")}
           </h1>

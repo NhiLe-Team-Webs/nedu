@@ -3,7 +3,7 @@ import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
-import BottomTabBar from '@/components/BottomTabBar'
+
 import Banner from '@/components/Banner'
 import { CartProvider } from '@/lib/cart-context'
 import { LanguageProvider } from '@/lib/LanguageContext'
@@ -145,7 +145,7 @@ export default function RootLayout({
             <main className="pb-32">{children}</main>
 
             <Footer />
-            <BottomTabBar />
+
             <Banner />
             <CartSuccessPopup />
           </CartProvider>

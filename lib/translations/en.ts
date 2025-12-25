@@ -276,7 +276,7 @@ export const en = {
         digital_marketing: "Digital Marketing"
     },
     program_page: {
-        title: "Quality Courses",
+        title: "COURSE",
         subtitle: "Choose the program that fits your personal and business development journey. Each course comes with practical tools and is ready for you to join immediately.",
         filters: {
             all: "All",
