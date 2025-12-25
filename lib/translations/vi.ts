@@ -288,7 +288,11 @@ export const vi = {
             sessions: "Số buổi học",
             instructor: "Người dẫn đường",
             add_to_cart: "Thêm vào giỏ hàng",
-            added: "Đã thêm vào giỏ hàng"
+            added: "Đã thêm vào giỏ hàng",
+            learn_more: "Tìm hiểu thêm",
+            register: "Đăng ký",
+            previous: "Trước",
+            next: "Tiếp"
         }
     },
     program_detail: {

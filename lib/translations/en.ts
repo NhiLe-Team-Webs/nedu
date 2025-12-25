@@ -288,7 +288,11 @@ export const en = {
             sessions: "Sessions",
             instructor: "Instructor",
             add_to_cart: "Add to cart",
-            added: "Added to cart"
+            added: "Added to cart",
+            learn_more: "Learn more",
+            register: "Register",
+            previous: "Previous",
+            next: "Next"
         }
     },
     program_detail: {
