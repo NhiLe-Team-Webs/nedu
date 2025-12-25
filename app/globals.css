@@ -375,9 +375,8 @@ p {
 
 /* Mobile-first responsive improvements */
 @media (max-width: 640px) {
-  .aspect-video {
-    aspect-ratio: 9/16;
-  }
+
+
 
   /* Improve touch targets for mobile */
   button,

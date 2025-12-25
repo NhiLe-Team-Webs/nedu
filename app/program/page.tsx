@@ -111,12 +111,12 @@ export default function ProgramPage() {
           onScroll={updateScrollButtons}
           className="w-full overflow-x-auto pb-4 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] py-10"
         >
-          <div className="flex gap-8 pl-8 sm:pl-[calc((100%-1280px)/2+2rem)] pr-8">
+          <div className="flex gap-4 md:gap-8 pl-4 md:pl-8 sm:pl-[calc((100%-1280px)/2+2rem)] pr-4 md:pr-8">
             {filteredCourses.map((course) => (
               <div
                 key={course.id}
                 data-course-card="true"
-                className="w-[300px] md:w-[420px] flex-shrink-0 snap-center flex flex-col justify-between"
+                className="w-[270px] md:w-[420px] flex-shrink-0 snap-center flex flex-col justify-between"
               >
                 <Link
                   href={`/program-${course.mode}/${course.slug}`}
@@ -130,11 +130,9 @@ export default function ProgramPage() {
                 </Link>
                 <div className="flex flex-col items-center text-center w-full max-w-full pb-10 flex-grow">
                   <div className="flex gap-2 mt-4 h-5 items-center">
-                    {course.category.map((tag, index) => (
-                      <p key={index} className="text-orange-600 font-medium text-xs m-0">
-                        {t(tag)}
-                      </p>
-                    ))}
+                    <p className="text-orange-600 font-medium text-xs m-0 text-center w-full">
+                      {t(course.info.topic)}
+                    </p>
                   </div>
                   <h3 className="text-2xl font-semibold text-gray-900 mb-0 leading-tight flex flex-col justify-center h-16">
                     <span className="block">{t(course.title)}</span>
