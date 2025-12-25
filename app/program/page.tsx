@@ -71,7 +71,7 @@ export default function ProgramPage() {
   };
 
   return (
-    <section className="py-16 lg:py-24 bg-background overflow-hidden">
+    <section className="bg-background overflow-hidden">
       <div className="container max-w-7xl mx-auto px-4">
         <div>
           <h1 className="text-4xl md:text-6xl font-semibold text-primary tracking-tight mb-12">
