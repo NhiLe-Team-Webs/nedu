@@ -136,7 +136,7 @@ export const courses: Course[] = [
       location: 'program_detail.courses.la_chinh_minh.location',
       capacity: 'program_detail.courses.la_chinh_minh.capacity'
     },
-    mission: 'Khóa học "Là Chính Mình" mang sứ mệnh giúp bạn khám phá và chữa lành mọi khía cạnh của bản thân, xây dựng lối sống cân bằng và phát triển toàn diện về tinh thần, cảm xúc, và thể chất.',
+    mission: 'program_detail.courses.la_chinh_minh.mission_desc',
     testimonials: ['PFWDwSf5EGc', 'RAaXaJxFXpE', '8qq6WDQFFQk'],
     curriculum: '/picture/lachinhminh.jpg',
     instructors: [
@@ -186,7 +186,7 @@ export const courses: Course[] = [
       location: 'program_detail.courses.gen_ai_101.location',
       capacity: 'program_detail.courses.gen_ai_101.capacity'
     },
-    mission: 'Giúp người Việt Nam hiểu rõ công nghệ Gen AI và ứng dụng thực tế vào công việc một cách có trách nhiệm và hiệu quả. Đồng thời, tạo nền tảng để tối ưu hoá các thao tác công việc lặp đi lặp lại hàng ngày trong công việc, đặc biệt trong lĩnh vực công và giáo dục.',
+    mission: 'program_detail.courses.gen_ai_101.description',
     testimonials: ['Dm6gg-LHGqs'],
     instructors: [
       {
@@ -226,7 +226,7 @@ export const courses: Course[] = [
       location: 'program_detail.courses.thuong_hieu_cua_ban.location',
       capacity: 'program_detail.courses.thuong_hieu_cua_ban.capacity'
     },
-    mission: 'Kiến thức cơ bản nhất cho người muốn bắt đầu mở doanh nghiệp hay cải tổ doanh nghiệp gia đình. Định hình rõ hơn kinh doanh của bạn trong chỉ 4 ngày với khóa học "Thương Hiệu Của Bạn" - một chương trình được thiết kế đặc biệt cho chủ doanh nghiệp trong kỷ nguyên AI.',
+    mission: 'program_detail.courses.thuong_hieu_cua_ban.description',
     testimonials: ['Dm6gg-LHGqs'],
     instructors: [
       {
@@ -266,7 +266,7 @@ export const courses: Course[] = [
       location: 'program_detail.courses.cuoc_song_cua_ban.location',
       capacity: 'program_detail.courses.cuoc_song_cua_ban.capacity'
     },
-    mission: 'Chương trình là cơ hội giúp bạn hiểu sâu hơn về cảm xúc, khai phá những góc khuất cảm xúc và sự khởi đầu cho con đường phát triển bản thân. Đôi lúc bạn quên đi bạn là tài sản quý giá nhất trong cuộc sống này, ước mơ của bạn là gì và đâu là cuộc đời mà bạn muốn sống. Chúng tôi tin rằng "Cuộc sống của bạn" giúp bạn tìm được câu trả lời và cân bằng hơn trong cuộc sống.',
+    mission: 'program_detail.courses.cuoc_song_cua_ban.description',
     testimonials: ['Dm6gg-LHGqs'],
     instructors: [
       {
@@ -306,7 +306,7 @@ export const courses: Course[] = [
       location: 'program_detail.courses.ai_for_business_communication.location',
       capacity: 'program_detail.courses.ai_for_business_communication.capacity'
     },
-    mission: 'Giúp các chuyên gia doanh nghiệp nâng cao hiệu suất giao tiếp bằng công cụ AI, rút ngắn thời gian viết, đồng thời cải thiện chất lượng nội dung trong mọi ngữ cảnh công việc – từ email đến báo cáo hay thuyết trình.',
+    mission: 'program_detail.courses.ai_for_business_communication.description',
     testimonials: ['Dm6gg-LHGqs'],
     instructors: [
       {
@@ -346,7 +346,7 @@ export const courses: Course[] = [
       location: 'program_detail.courses.ai_in_marketing.location',
       capacity: 'program_detail.courses.ai_in_marketing.capacity'
     },
-    mission: 'Trang bị cho học viên kiến thức nền tảng và kỹ năng thực chiến trong việc ứng dụng AI tạo sinh vào lĩnh vực marketing và chiến lược kinh doanh. Từ đó giúp nâng cao năng lực sáng tạo, lập kế hoạch, nghiên cứu thị trường và triển khai chiến dịch nhanh – chính xác – hiệu quả hơn.',
+    mission: 'program_detail.courses.ai_in_marketing.description',
     testimonials: ['Dm6gg-LHGqs'],
     instructors: [
       {
