@@ -248,7 +248,7 @@ const Header = () => {
                           <h3 className="text-2xl font-semibold">{t("cart.title")}</h3>
                           <Link
                             href="/cart"
-                            className="inline-flex items-center justify-center whitespace-nowrap ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 bg-primary hover:bg-primary-dark !text-white rounded-full px-4 py-2 text-sm font-semibold"
+                            className="inline-flex items-center justify-center whitespace-nowrap ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 bg-primary hover:bg-primary-dark !text-white transition-all rounded-full px-4 py-2 text-sm font-semibold"
                             onClick={() => setIsCartOpen(false)}
                           >
                             {t("cart.view_cart")}

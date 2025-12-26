@@ -821,6 +821,9 @@ export const en = {
         view_all: "View all courses",
         back_to_cart: "Back to Cart",
         view_cart: "View Cart",
+        order_total_text: "Your total order value is",
+        checkout_button: "Checkout",
+        delete_button: "Delete"
     },
     checkout: {
         title: "Checkout",

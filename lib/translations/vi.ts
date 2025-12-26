@@ -820,7 +820,10 @@ export const vi = {
         other_courses: "Các khóa học khác",
         view_all: "Xem tất cả khóa học",
         back_to_cart: "Quay lại giỏ hàng",
-        view_cart: "Xem Giỏ Hàng"
+        view_cart: "Xem Giỏ Hàng",
+        order_total_text: "Tổng giá trị đơn hàng của bạn là",
+        checkout_button: "Thanh toán",
+        delete_button: "Xóa"
     },
     checkout: {
         title: "Thanh toán",
