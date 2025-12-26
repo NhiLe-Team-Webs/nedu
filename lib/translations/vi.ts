@@ -819,7 +819,8 @@ export const vi = {
         continue_shopping: "Tiếp tục mua sắm",
         other_courses: "Các khóa học khác",
         view_all: "Xem tất cả khóa học",
-        back_to_cart: "Quay lại giỏ hàng"
+        back_to_cart: "Quay lại giỏ hàng",
+        view_cart: "Xem Giỏ Hàng"
     },
     checkout: {
         title: "Thanh toán",

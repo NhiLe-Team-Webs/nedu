@@ -17,10 +17,11 @@ const Header = () => {
   const pathname = usePathname() || "/";
   const router = useRouter();
   const isActive = (path: string) => pathname === path;
-  const { getTotalItems } = useCart();
+  const { getTotalItems, items } = useCart();
   const totalItems = getTotalItems();
   const [showNotification, setShowNotification] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
   const { t } = useLanguage();
 
   // Lock body scroll when menu is open
@@ -31,6 +32,19 @@ const Header = () => {
       document.body.style.overflow = "unset";
     }
   }, [isMobileMenuOpen]);
+
+  // Close cart preview when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (isCartOpen && !target.closest('[data-cart-container]') && !target.closest('[data-cart-trigger]')) {
+        setIsCartOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isCartOpen]);
 
   return (
     <header className="fixed inset-x-0 top-0 z-[100] backdrop-blur-sm">
@@ -137,8 +151,9 @@ const Header = () => {
             variant="ghost"
             size="icon"
             className="inline-flex items-center justify-center gap-2 h-10 w-10 sm:h-10 sm:w-10 text-text-secondary hover:text-primary relative transition-all duration-200 transform hover:scale-110 active:scale-95 overflow-visible"
-            onClick={() => router.push('/cart')}
+            onClick={() => setIsCartOpen(!isCartOpen)}
             aria-label="Giỏ hàng"
+            data-cart-trigger
           >
             <ShoppingCart className="h-5 w-5 sm:h-5 sm:w-5 transition-all duration-200" />
             {totalItems > 0 && (
@@ -199,6 +214,72 @@ const Header = () => {
               <LanguageToggle />
             </div>
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Cart Preview Dropdown */}
+      <AnimatePresence>
+        {isCartOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/25 backdrop-blur-md z-[100] h-screen"
+              style={{ top: '80px' }}
+              onClick={() => setIsCartOpen(false)}
+            />
+            {/* Cart Dropdown */}
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="absolute left-0 w-full bg-white z-[100] border-t border-gray-200 shadow-xl"
+              data-cart-container
+            >
+              <div className="max-w-7xl mx-auto px-6 py-8">
+                <div className="grid grid-cols-1">
+                  <div className="col-span-1">
+                    {items.length > 0 ? (
+                      <>
+                        <div className="flex justify-between items-center mb-6">
+                          <h3 className="text-2xl font-semibold">{t("cart.title")}</h3>
+                          <Link
+                            href="/cart"
+                            className="inline-flex items-center justify-center whitespace-nowrap ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 bg-primary hover:bg-primary-dark !text-white rounded-full px-4 py-2 text-sm font-semibold"
+                            onClick={() => setIsCartOpen(false)}
+                          >
+                            {t("cart.view_cart")}
+                          </Link>
+                        </div>
+                        <div className="max-h-[50vh] overflow-y-auto pr-4 -mr-4 space-y-4">
+                          {items.map((item) => (
+                            <div key={item.id} className="flex items-start gap-6 py-4 border-b">
+                              <div className="relative rounded-md overflow-hidden flex-shrink-0">
+                                <img
+                                  src={item.heroImage}
+                                  alt={item.title}
+                                  className="object-cover h-16"
+                                />
+                              </div>
+                              <div className="flex-1">
+                                <p className="font-semibold text-base leading-tight">{t(item.title)}</p>
+                                <p className="text-primary font-bold text-lg mt-1">{item.price.amount.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " " + item.price.currency}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </>
+                    ) : (
+                      <h2 className="text-3xl font-semibold text-gray-900">{t("cart.empty_title")}</h2>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
 
