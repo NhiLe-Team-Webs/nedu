@@ -808,7 +808,7 @@ export const en = {
         }
     },
     cart: {
-        empty_title: "Your cart is empty",
+        empty_title: "Your cart is empty.",
         empty_desc: "Add courses you are interested in to the cart",
         continue_browsing: "Continue browsing courses",
         title: "Your Cart",
@@ -819,7 +819,11 @@ export const en = {
         continue_shopping: "Continue Shopping",
         other_courses: "Other Courses",
         view_all: "View all courses",
-        back_to_cart: "Back to Cart"
+        back_to_cart: "Back to Cart",
+        view_cart: "View Cart",
+        order_total_text: "Your total order value is",
+        checkout_button: "Checkout",
+        delete_button: "Delete"
     },
     checkout: {
         title: "Checkout",
