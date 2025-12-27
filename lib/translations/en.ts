@@ -321,7 +321,8 @@ export const en = {
             day: "Day",
             outcome: "What you get",
             outcome_label: "OUTCOME",
-            whom_title: "Who should join this course?"
+            whom_title: "Who should join this course?",
+            cost_label: "Cost:",
         },
         courses: {
             la_chinh_minh: {

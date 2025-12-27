@@ -59,6 +59,7 @@ export default function SucManhVoHanPage() {
         tags={[t("categories.entrepreneur"), t("categories.business")]}
         title={t("program_detail.courses.suc_manh_vo_han.title")}
         cost="23.960"
+        currency="USD"
         paymentLink="/payment/57"
         deposit="180.000.000"
         dep_currency="VND"

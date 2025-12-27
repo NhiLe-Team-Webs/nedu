@@ -87,7 +87,7 @@ const CourseHeader: React.FC<CourseHeaderProps> = ({
           {title}
         </h1>
         <div className="flex justify-center items-center gap-1 sm:gap-2 mb-1 sm:mb-2">
-          <p className="text-sm sm:text-base lg:text-lg font-semibold">{t("thirty_day_challenge.cost_label")}:</p>
+          <p className="text-sm sm:text-base lg:text-lg font-semibold">{t("program_detail.common.cost_label")}</p>
           <p className="text-2xl sm:text-3xl lg:text-4xl font-bold text-green-600">{cost}</p>
           <p className="text-sm sm:text-base lg:text-lg font-semibold">{currency}</p>
         </div>
