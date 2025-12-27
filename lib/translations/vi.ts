@@ -321,7 +321,8 @@ export const vi = {
             day: "Day",
             outcome: "Giá trị nhận được",
             outcome_label: "OUTCOME",
-            whom_title: "Ai nên tham gia khóa học này?"
+            whom_title: "Ai nên tham gia khóa học này?",
+            cost_label: "Chi phí:",
         },
         courses: {
             la_chinh_minh: {

@@ -43,7 +43,7 @@ export default function CartPage() {
             {/* Header with Total and Checkout */}
             <div className="text-center">
               <h1 className="text-4xl md:text-5xl font-semibold text-gray-900 leading-tight mb-4">
-                {t("cart.order_total_text")} {currencyFormatter.format(getTotalPrice())}.
+                {t("cart.order_total_text")} <span className="text-primary font-bold">{currencyFormatter.format(getTotalPrice())}</span>
               </h1>
               <Link
                 href="/checkout"

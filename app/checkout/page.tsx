@@ -272,7 +272,7 @@ export default function CheckoutPage() {
                             <img
                               src={item.heroImage}
                               alt={t(item.title)}
-                              className="w-full md:w-28 h-28 object-cover rounded-ios-lg shadow-sm"
+                              className="w-full md:w-[200px] object-cover rounded-ios-lg shadow-sm"
                             />
 
                             <div className="flex-1 flex flex-col justify-center">
@@ -440,7 +440,7 @@ export default function CheckoutPage() {
                           </div>
                         )}
 
-                        <div className="flex justify-end pt-4">
+                        {/* <div className="flex justify-end pt-4">
                           <button
                             type="submit"
                             className="flex items-center justify-center px-8 py-3.5 bg-primary text-white text-base font-bold rounded-full shadow-ios-md hover:shadow-ios-lg hover:brightness-105 active:scale-95 transition-all duration-300 ios-haptic-active w-full sm:w-auto"
@@ -448,7 +448,7 @@ export default function CheckoutPage() {
                             {t("checkout.continue_btn")}
                             <ArrowLeft className="w-5 h-5 ml-2 rotate-180" />
                           </button>
-                        </div>
+                        </div> */}
                       </form>
                     </div>
                   </>

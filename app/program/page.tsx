@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { courses as coursesData } from "@/data/courses";
 import { useLanguage } from "@/lib/LanguageContext";
+import { useCart } from "@/lib/cart-context";
 
 const filters = [
   { id: "all", label: "Tất cả" },
@@ -72,6 +73,7 @@ export default function ProgramPage() {
   const [filter, setFilter] = useState("all");
   const router = useRouter();
   const { t } = useLanguage();
+  const { addToCart } = useCart();
   const carouselRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -119,7 +121,12 @@ export default function ProgramPage() {
 
   const scroll = (direction: 'left' | 'right') => {
     if (carouselRef.current) {
-      const scrollAmount = 450; // Width of one card plus gap
+      // Calculate scroll amount based on viewport width
+      // Mobile: 270px card + 16px gap = 286px
+      // Desktop (md and up): 420px card + 32px gap = 452px
+      const isMobile = window.innerWidth < 768;
+      const scrollAmount = isMobile ? 286 : 452;
+
       const newScrollLeft = direction === 'left'
         ? carouselRef.current.scrollLeft - scrollAmount
         : carouselRef.current.scrollLeft + scrollAmount;
@@ -229,7 +236,10 @@ export default function ProgramPage() {
                       >
                         {t("program_page.card.learn_more")}
                       </Link>
-                      <button className="text-primary font-medium text-sm hover:underline">
+                      <button
+                        onClick={() => addToCart(course)}
+                        className="text-primary font-medium text-sm hover:underline"
+                      >
                         {t("program_page.card.register")}
                       </button>
                     </div>
