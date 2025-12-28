@@ -293,6 +293,10 @@ export const vi = {
             register: "Đăng ký",
             previous: "Trước",
             next: "Tiếp"
+        },
+        toast: {
+            added_to_cart: "đã được thêm vào giỏ hàng",
+            max_quantity_reached: "Bạn đã thêm tối đa 10 khóa học này vào giỏ hàng"
         }
     },
     program_detail: {

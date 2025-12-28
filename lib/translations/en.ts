@@ -293,6 +293,10 @@ export const en = {
             register: "Register",
             previous: "Previous",
             next: "Next"
+        },
+        toast: {
+            added_to_cart: "has been added to cart",
+            max_quantity_reached: "You have reached the maximum quantity of 10 for this course"
         }
     },
     program_detail: {
