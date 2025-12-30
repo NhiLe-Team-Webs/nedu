@@ -293,6 +293,10 @@ export const vi = {
             register: "Đăng ký",
             previous: "Trước",
             next: "Tiếp"
+        },
+        toast: {
+            added_to_cart: "đã được thêm vào giỏ hàng",
+            max_quantity_reached: "Bạn đã thêm tối đa 10 khóa học này vào giỏ hàng"
         }
     },
     program_detail: {
@@ -321,7 +325,8 @@ export const vi = {
             day: "Day",
             outcome: "Giá trị nhận được",
             outcome_label: "OUTCOME",
-            whom_title: "Ai nên tham gia khóa học này?"
+            whom_title: "Ai nên tham gia khóa học này?",
+            cost_label: "Chi phí:",
         },
         courses: {
             la_chinh_minh: {
@@ -819,7 +824,11 @@ export const vi = {
         continue_shopping: "Tiếp tục mua sắm",
         other_courses: "Các khóa học khác",
         view_all: "Xem tất cả khóa học",
-        back_to_cart: "Quay lại giỏ hàng"
+        back_to_cart: "Quay lại giỏ hàng",
+        view_cart: "Xem Giỏ Hàng",
+        order_total_text: "Tổng giá trị đơn hàng của bạn là",
+        checkout_button: "Thanh toán",
+        delete_button: "Xóa"
     },
     checkout: {
         title: "Thanh toán",
