@@ -3,7 +3,7 @@
 import { useState, useMemo, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { courses as coursesData } from "@/data/courses";
@@ -11,6 +11,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 import { useCart } from "@/lib/cart-context";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ChallengeRegistrationForm from "@/components/ChallengeRegistrationForm";
 
 const filters = [
   { id: "all", label: "Tất cả" },
@@ -80,6 +81,7 @@ export default function ProgramPage() {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  const [showChallengeModal, setShowChallengeModal] = useState(false);
 
   useEffect(() => {
     // Simulate loading delay
@@ -283,7 +285,13 @@ export default function ProgramPage() {
                           {t("program_page.card.learn_more")}
                         </Link>
                         <button
-                          onClick={() => handleAddToCart(course)}
+                          onClick={() => {
+                            if (course.slug === 'thu-thach-30-ngay') {
+                              setShowChallengeModal(true);
+                            } else {
+                              handleAddToCart(course);
+                            }
+                          }}
                           className="text-primary font-medium text-sm hover:underline"
                         >
                           {t("program_page.card.register")}
@@ -318,6 +326,38 @@ export default function ProgramPage() {
           </div>
         </motion.div>
       </section>
+
+      <AnimatePresence>
+        {showChallengeModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 overflow-y-auto"
+            onClick={(e) => {
+              if (e.target === e.currentTarget) setShowChallengeModal(false);
+            }}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="relative w-full max-w-lg my-8"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="absolute top-4 right-4 z-10">
+                <button
+                  onClick={() => setShowChallengeModal(false)}
+                  className="bg-white/80 p-2 rounded-full hover:bg-white transition-colors shadow-sm"
+                >
+                  <X className="w-5 h-5 text-gray-500" />
+                </button>
+              </div>
+              <ChallengeRegistrationForm />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
