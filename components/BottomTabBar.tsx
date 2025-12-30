@@ -33,11 +33,7 @@ const BottomTabBar = () => {
             icon: BookOpen,
             href: "/program",
         },
-        {
-            label: t("bottom_tab.challenge30"),
-            icon: Calendar,
-            href: "/thu-thach-30-ngay",
-        },
+
         {
             label: t("bottom_tab.cart"),
             icon: ShoppingCart,

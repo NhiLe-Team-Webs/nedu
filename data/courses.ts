@@ -365,6 +365,40 @@ export const courses: Course[] = [
     ],
     audience: [],
     privileges: []
+  },
+  {
+    id: 8,
+    slug: 'thu-thach-30-ngay',
+    mode: 'online',
+    title: 'thirty_day_challenge.title',
+    category: ['categories.personal_development'],
+    heroImage: '/picture/thuthach30day.png',
+    price: {
+      amount: '396.000',
+      currency: 'VNĐ'
+    },
+    paymentId: 99,
+    info: {
+      topic: 'thirty_day_challenge.topic',
+      schedule: '28/12/2025 – 28/01/2026',
+      instructor: 'thirty_day_challenge.mentor.role',
+      sessions: '30 ngày',
+      location: 'Online',
+      capacity: 'Unlimited'
+    },
+    mission: 'thirty_day_challenge.about_content',
+    testimonials: [],
+    instructors: [
+      {
+        name: 'Denise',
+        title: 'thirty_day_challenge.mentor.role',
+        avatar: '/picture/denise.jpg',
+        bio: ['thirty_day_challenge.mentor.desc_1', 'thirty_day_challenge.mentor.desc_2'],
+        social: {}
+      }
+    ],
+    audience: [],
+    privileges: []
   }
 ]
 

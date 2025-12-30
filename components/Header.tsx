@@ -86,19 +86,7 @@ const Header = () => {
             )}
           </Link>
 
-          <a
-            href="/thu-thach-30-ngay"
-            className={`relative transition-all duration-200 transform hover:scale-105 active:scale-95 ${isActive("/thu-thach-30-ngay")
-              ? "text-amber-400 font-semibold uppercase tracking-wide text-sm lg:text-base"
-              : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-sm lg:text-base"
-              }`}
-          >
-            {t("header.challenge30")}
-            {isActive("/thu-thach-30-ngay") && (
-              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-amber-400 transform scale-x-100 transition-transform duration-200"></span>
-            )}
-            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-amber-400 transform scale-x-0 transition-transform duration-200 hover:scale-x-100"></span>
-          </a>
+
 
           <a
             href="/contact"
