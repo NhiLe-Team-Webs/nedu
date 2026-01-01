@@ -18,12 +18,13 @@ import {
 import { useLanguage } from "@/lib/LanguageContext";
 import { useCart } from "@/lib/cart-context";
 import { courses } from "@/data/courses";
+import { getInstructorsByIds } from "@/data/instructors";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import Instructor from "@/components/Instructor";
 
 const challengePosterDesktop = "/picture/thuthach30day_desktop.png";
 const challengePosterMobile = "/picture/thuthach30day_mobile.png";
-const tuyetMaiPhoto = "/picture/denise.jpg";
 
 // Find the 30 day challenge course
 const thirtyDayCourse = courses.find((c) => c.slug === "thu-thach-30-ngay");
@@ -158,14 +159,14 @@ const ThirtyDayPage = () => {
     <div className="min-h-screen bg-[#F2F2F7] pb-20 override-header-spacing font-sans text-gray-900">
       <main className="ios-safe-padding-bottom">
         {/* HERO SECTION - Responsive images for desktop/mobile */}
-        <section className="relative w-full">
+        <section className="relative w-full -mt-14 sm:-mt-16 md:-mt-32 pt-14 sm:pt-16 md:pt-32">
           {/* Desktop Image */}
           <Image
             src={challengePosterDesktop}
             alt={t("thirty_day_challenge.title")}
             width={1920}
             height={1080}
-            className="hidden md:block w-full h-auto object-contain"
+            className="hidden md:block w-full h-auto object-contain hover:transform-none"
             priority
           />
           {/* Mobile Image */}
@@ -174,7 +175,7 @@ const ThirtyDayPage = () => {
             alt={t("thirty_day_challenge.title")}
             width={750}
             height={1334}
-            className="block md:hidden w-full h-auto object-contain"
+            className="block md:hidden w-full h-auto object-contain hover:transform-none"
             priority
           />
         </section>
@@ -354,60 +355,8 @@ const ThirtyDayPage = () => {
           </div>
         </section>
 
-        {/* NGƯỜI DẪN ĐƯỜNG - Mentor Section */}
-        <section
-          id="mentor"
-          className="py-12 sm:py-20 bg-white text-gray-900 relative overflow-hidden"
-        >
-          <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 font-extrabold text-[15vw] sm:text-[10rem] whitespace-nowrap text-[#F8B516]/10 select-none">
-              {t("thirty_day_challenge.mentor.bg_text")}
-            </div>
-          </div>
-
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-center mb-10 text-primary uppercase tracking-widest">
-              {t("thirty_day_challenge.mentor.title")}
-            </h2>
-
-            <div className="bg-white rounded-ios-xl shadow-ios-float overflow-hidden text-gray-900 border border-gray-100">
-              <div className="grid grid-cols-1 md:grid-cols-2">
-                <div className="relative h-64 md:h-auto">
-                  <Image
-                    src={tuyetMaiPhoto}
-                    alt="Denise"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
-                </div>
-                <div className="p-8 sm:p-10 flex flex-col justify-center">
-                  <div className="mb-6">
-                    <h3 className="text-3xl font-black text-gray-900 mb-1">
-                      DENISE
-                    </h3>
-                    <p className="text-primary font-bold tracking-wide uppercase text-sm">
-                      {t("thirty_day_challenge.mentor.role")}
-                    </p>
-                  </div>
-
-                  <div className="space-y-4 text-gray-600 text-sm sm:text-base leading-relaxed">
-                    <p>{t("thirty_day_challenge.mentor.desc_1")}</p>
-                    <p>{t("thirty_day_challenge.mentor.desc_2")}</p>
-                    <div className="bg-gray-50 p-4 rounded-ios-lg border border-gray-100 mt-4">
-                      <p className="font-bold text-gray-900 mb-2">
-                        {t("thirty_day_challenge.mentor.passion_label")}
-                      </p>
-                      <p className="text-sm">
-                        {t("thirty_day_challenge.mentor.passion_content")}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* NGƯỜI DẪN ĐƯỜNG - Instructor Section */}
+        <Instructor instructors={getInstructorsByIds(["nhi-le"])} />
 
         {/* LỰA CHỌN GÓI HỌC - Pricing Section */}
         <section id="pricing" className="bg-[#F2F2F7] py-16 lg:py-20">
@@ -454,12 +403,22 @@ const ThirtyDayPage = () => {
                 <div className="flex-grow" />
                 <Button
                   className={cn(
-                    "w-full mt-8 transition-all duration-300",
-                    addedToCart.monthly && "bg-green-600 hover:bg-green-700"
+                    "w-full mt-8 transition-all duration-500 ease-out transform",
+                    addedToCart.monthly
+                      ? "bg-green-500 hover:bg-green-600 scale-[1.02] shadow-lg shadow-green-500/25"
+                      : "hover:scale-[1.02] active:scale-[0.98]"
                   )}
                   onClick={() => handleAddToCart("monthly")}
                 >
-                  {addedToCart.monthly ? "Đã thêm vào giỏ hàng ✓" : "Đăng ký ngay"}
+                  <span className={cn(
+                    "flex items-center justify-center gap-2 transition-all duration-300",
+                    addedToCart.monthly && "animate-pulse"
+                  )}>
+                    {addedToCart.monthly && (
+                      <Check className="h-5 w-5 animate-in zoom-in-50 duration-300" />
+                    )}
+                    {addedToCart.monthly ? "Đã thêm vào giỏ hàng" : "Đăng ký ngay"}
+                  </span>
                 </Button>
               </div>
 
@@ -489,14 +448,22 @@ const ThirtyDayPage = () => {
                 <div className="flex-grow" />
                 <Button
                   className={cn(
-                    "w-full mt-8 transition-all duration-300",
-                    addedToCart.membership && "bg-green-600 hover:bg-green-700"
+                    "w-full mt-8 transition-all duration-500 ease-out transform",
+                    addedToCart.membership
+                      ? "bg-green-500 hover:bg-green-600 scale-[1.02] shadow-lg shadow-green-500/25"
+                      : "hover:scale-[1.02] active:scale-[0.98]"
                   )}
                   onClick={() => handleAddToCart("membership")}
                 >
-                  {addedToCart.membership
-                    ? "Đã thêm vào giỏ hàng ✓"
-                    : "Chọn Gói Membership"}
+                  <span className={cn(
+                    "flex items-center justify-center gap-2 transition-all duration-300",
+                    addedToCart.membership && "animate-pulse"
+                  )}>
+                    {addedToCart.membership && (
+                      <Check className="h-5 w-5 animate-in zoom-in-50 duration-300" />
+                    )}
+                    {addedToCart.membership ? "Đã thêm vào giỏ hàng" : "Chọn Gói Membership"}
+                  </span>
                 </Button>
               </div>
             </div>
