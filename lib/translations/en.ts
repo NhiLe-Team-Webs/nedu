@@ -621,18 +621,21 @@ export const en = {
             heading: "AFTER 30 DAYS, WHAT DO YOU GET...?",
             block_1: {
                 title: "Know your income and expenses each month",
+                quote: "“Money isn't hard to manage, the hard part is not seeing it clearly.”",
                 collapsed: "KNOW YOUR\\nINCOME & EXPENSES",
-                content: "“Money isn't hard to manage, it's hard when you don't see it clearly.”"
+                content: "After 30 days, you'll know exactly where your money goes each month and your balance. No more 'why did my money run out so fast', no more vague feelings – you'll have a real picture of your personal finances."
             },
             block_2: {
                 title: "Controlled spending",
+                quote: "“Spending isn't wrong, spending without knowing why is exhausting.”",
                 collapsed: "CONTROLLED\\nSPENDING",
-                content: "“Spending money isn't wrong, spending without knowing why is exhausting.”"
+                content: "You'll start thinking before spending. Not over-controlling, but you've shifted from unconscious spending to purposeful spending, clear about every dollar in and out."
             },
             block_3: {
                 title: "Build healthy spending habits",
+                quote: "“It's not money that tires you out, it's how you spend it.”",
                 collapsed: "BUILD\\nHEALTHY\\nSPENDING\\nHABITS",
-                content: "“What tires you isn't money, it's how you spend it.”"
+                content: "After 30 days, you'll form clear and practical money management habits that are sustainable long-term. Money becomes more organized, financial pressure decreases, and you're more proactive in daily spending decisions."
             },
             time_label: "DURATION",
             students_label: "NUMBER OF STUDENTS",

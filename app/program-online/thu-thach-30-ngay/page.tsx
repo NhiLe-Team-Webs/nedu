@@ -213,6 +213,9 @@ const ThirtyDayPage = () => {
                       <h3 className="text-xl md:text-2xl font-bold text-primary mb-4">
                         {t("thirty_day_challenge.timeline.block_1.title")}
                       </h3>
+                      <div className="border-l-4 border-primary pl-4 my-5 italic text-gray-300 font-medium text-sm md:text-base">
+                        {t("thirty_day_challenge.timeline.block_1.quote")}
+                      </div>
                       <div className="flex items-start gap-3 text-gray-300 text-sm md:text-base">
                         <ArrowRight className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
                         <span>
@@ -242,6 +245,9 @@ const ThirtyDayPage = () => {
                       <h3 className="text-xl md:text-2xl font-bold text-primary mb-4">
                         {t("thirty_day_challenge.timeline.block_2.title")}
                       </h3>
+                      <div className="border-l-4 border-primary pl-4 my-5 italic text-gray-300 font-medium text-sm md:text-base">
+                        {t("thirty_day_challenge.timeline.block_2.quote")}
+                      </div>
                       <div className="flex items-start gap-3 text-gray-300 text-sm md:text-base">
                         <ArrowRight className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
                         <span>
@@ -271,6 +277,9 @@ const ThirtyDayPage = () => {
                       <h3 className="text-xl md:text-2xl font-bold text-primary mb-4">
                         {t("thirty_day_challenge.timeline.block_3.title")}
                       </h3>
+                      <div className="border-l-4 border-primary pl-4 my-5 italic text-gray-300 font-medium text-sm md:text-base">
+                        {t("thirty_day_challenge.timeline.block_3.quote")}
+                      </div>
                       <div className="flex items-start gap-3 text-gray-300 text-sm md:text-base">
                         <ArrowRight className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
                         <span>
