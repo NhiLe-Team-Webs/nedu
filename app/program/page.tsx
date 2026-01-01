@@ -287,7 +287,7 @@ export default function ProgramPage() {
                         <button
                           onClick={() => {
                             if (course.slug === 'thu-thach-30-ngay') {
-                              window.open('https://docs.google.com/forms/d/e/1FAIpQLSdFUBpOdZTswjw0mraKvyBW0bU5AGK9hrZYatNC2K3gnpQJdQ/viewform', '_blank');
+                              router.push('/program-online/thu-thach-30-ngay#pricing');
                             } else {
                               handleAddToCart(course);
                             }

@@ -569,6 +569,7 @@ export const vi = {
     },
     thirty_day_challenge: {
         title: "THỬ THÁCH 30 NGÀY",
+        title_membership: "THỬ THÁCH 30 NGÀY - GÓI MEMBERSHIP",
         topic: "Chủ đề Tháng 12:",
         topic_name: "Tỏa sáng cùng Denise",
         cost_label: "Chi phí mỗi tháng:",

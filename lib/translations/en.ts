@@ -569,6 +569,7 @@ export const en = {
     },
     thirty_day_challenge: {
         title: "30 DAY CHALLENGE",
+        title_membership: "30 DAY CHALLENGE - MEMBERSHIP PLAN",
         topic: "Topic of December:",
         topic_name: "Shine with Denise",
         cost_label: "Monthly Cost:",
