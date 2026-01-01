@@ -18,10 +18,8 @@ import {
 import { useLanguage } from "@/lib/LanguageContext";
 import { useCart } from "@/lib/cart-context";
 import { courses } from "@/data/courses";
-import { getInstructorsByIds } from "@/data/instructors";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import Instructor from "@/components/Instructor";
 
 const challengePosterDesktop = "/picture/thuthach30day_desktop.png";
 const challengePosterMobile = "/picture/thuthach30day_mobile.png";
@@ -36,70 +34,66 @@ const formatCurrency = (value: number | undefined) => {
 };
 
 
-// Privileges data
-const privileges = [
-  {
-    icon: <UserPlus className="h-8 w-8 text-primary" />,
-    title: "Tham gia cộng đồng N-Edu",
-    description:
-      "Kết nối với những người cùng chí hướng, sẵn lòng đồng hành và hỗ trợ lẫn nhau.",
-  },
-  {
-    icon: <Globe className="h-8 w-8 text-primary" />,
-    title: "Hợp tác quốc tế",
-    description:
-      "Cơ hội kết nối và học hỏi từ các chuyên gia và đối tác trên toàn cầu.",
-  },
-  {
-    icon: <FileText className="h-8 w-8 text-primary" />,
-    title: "Cá nhân hóa lộ trình",
-    description:
-      "Được tư vấn và xây dựng lộ trình phát triển phù hợp với mục tiêu cá nhân của bạn.",
-  },
-  {
-    icon: <Headphones className="h-8 w-8 text-primary" />,
-    title: "Hỗ trợ liên tục",
-    description:
-      "Nhận được sự đồng hành và hỗ trợ 24/7 từ đội ngũ chuyên nghiệp của N-Education.",
-  },
-];
-
-// Pricing plan features
-const monthlyPlanFeatures = [
-  {
-    text: "Tham gia 01 chủ đề 30 Days trong tháng đăng ký",
-    included: true,
-  },
-  { text: "30 hoạt động mỗi ngày (micro-habits)", included: true },
-  { text: "1 buổi Zoom cùng Host (Nếu có)", included: true },
-  { text: "Tham gia nhóm Telegram của tháng đó", included: true },
-  { text: "Hỗ trợ trong 30 ngày", included: true },
-  { text: "Không truy cập kho nội dung cũ", included: false },
-  { text: "Không bao gồm bonus hoặc workshop thêm", included: false },
-];
-
-const membershipPlanFeatures = [
-  { text: "Truy cập toàn bộ 12 chủ đề 30 Days trong 1 năm", included: true },
-  {
-    text: "Tham gia tất cả các thử thách mà không cần mua thêm",
-    included: true,
-  },
-  { text: "Truy cập kho tài liệu & thử thách cũ", included: true },
-  { text: "Mini workshop bonus dành riêng cho thành viên", included: true },
-  {
-    text: "Gia nhập Group Member (duy trì suốt năm, không reset mỗi tháng)",
-    included: true,
-  },
-  { text: "Hỗ trợ xuyên suốt 12 tháng từ đội ngũ", included: true },
-  { text: "Quyền bảo lưu tối đa 1–2 tháng nếu bận", included: true },
-  {
-    text: "Ưu đãi khi tham gia các chương trình nâng cao của Nhi Lê",
-    included: true,
-  },
-];
-
 const ThirtyDayPage = () => {
   const { t } = useLanguage();
+
+  // Privileges data
+  const privileges = [
+    {
+      icon: <UserPlus className="h-8 w-8 text-primary" />,
+      title: t("thirty_day_challenge.benefits.items.community.title"),
+      description: t("thirty_day_challenge.benefits.items.community.description"),
+    },
+    {
+      icon: <Globe className="h-8 w-8 text-primary" />,
+      title: t("thirty_day_challenge.benefits.items.global.title"),
+      description: t("thirty_day_challenge.benefits.items.global.description"),
+    },
+    {
+      icon: <FileText className="h-8 w-8 text-primary" />,
+      title: t("thirty_day_challenge.benefits.items.personalized.title"),
+      description: t("thirty_day_challenge.benefits.items.personalized.description"),
+    },
+    {
+      icon: <Headphones className="h-8 w-8 text-primary" />,
+      title: t("thirty_day_challenge.benefits.items.support.title"),
+      description: t("thirty_day_challenge.benefits.items.support.description"),
+    },
+  ];
+
+  // Pricing plan features
+  const monthlyPlanFeatures = [
+    {
+      text: t("thirty_day_challenge.pricing.monthly.features.topic"),
+      included: true,
+    },
+    { text: t("thirty_day_challenge.pricing.monthly.features.daily_activities"), included: true },
+    { text: t("thirty_day_challenge.pricing.monthly.features.zoom"), included: true },
+    { text: t("thirty_day_challenge.pricing.monthly.features.telegram"), included: true },
+    { text: t("thirty_day_challenge.pricing.monthly.features.support"), included: true },
+    { text: t("thirty_day_challenge.pricing.monthly.features.no_archive"), included: false },
+    { text: t("thirty_day_challenge.pricing.monthly.features.no_bonus"), included: false },
+  ];
+
+  const membershipPlanFeatures = [
+    { text: t("thirty_day_challenge.pricing.membership.features.all_topics"), included: true },
+    {
+      text: t("thirty_day_challenge.pricing.membership.features.all_challenges"),
+      included: true,
+    },
+    { text: t("thirty_day_challenge.pricing.membership.features.archive_access"), included: true },
+    { text: t("thirty_day_challenge.pricing.membership.features.bonus_workshop"), included: true },
+    {
+      text: t("thirty_day_challenge.pricing.membership.features.member_group"),
+      included: true,
+    },
+    { text: t("thirty_day_challenge.pricing.membership.features.year_support"), included: true },
+    { text: t("thirty_day_challenge.pricing.membership.features.pause_right"), included: true },
+    {
+      text: t("thirty_day_challenge.pricing.membership.features.advanced_discount"),
+      included: true,
+    },
+  ];
   const { addToCart } = useCart();
   const router = useRouter();
 
@@ -197,7 +191,7 @@ const ThirtyDayPage = () => {
           <div className="container mx-auto px-4 sm:px-6">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-5xl font-extrabold text-primary uppercase">
-                SAU 30 NGÀY BẠN ĐƯỢC...?
+                {t("thirty_day_challenge.timeline.heading")}
               </h2>
             </div>
 
@@ -217,20 +211,18 @@ const ThirtyDayPage = () => {
                   {activeBlock === "1" ? (
                     <div className="flex-1">
                       <h3 className="text-xl md:text-2xl font-bold text-primary mb-4">
-                        Nắm rõ thu và chi mỗi tháng
+                        {t("thirty_day_challenge.timeline.block_1.title")}
                       </h3>
                       <div className="flex items-start gap-3 text-gray-300 text-sm md:text-base">
                         <ArrowRight className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
                         <span>
-                          Bạn theo dõi được tiền vào và tiền ra một cách rõ ràng, biết chính xác tiền của mình đang được dùng cho những khoản nào, thay vì chỉ đoán mò cuối tháng và nhận ra là đã xài quá tay.
+                          {t("thirty_day_challenge.timeline.block_1.content")}
                         </span>
                       </div>
                     </div>
                   ) : (
                     <div className="flex items-center justify-center h-full">
-                      <p className="text-base md:text-lg font-bold text-gray-700 uppercase text-center leading-relaxed">
-                        NẮM RÕ THU<br />VÀ CHI<br />MỖI THÁNG
-                      </p>
+                      <p className="text-base md:text-lg font-bold text-gray-700 uppercase text-center leading-relaxed" dangerouslySetInnerHTML={{ __html: t("thirty_day_challenge.timeline.block_1.collapsed").replace(/\\n/g, '<br />') }}></p>
                     </div>
                   )}
                 </div>
@@ -248,20 +240,18 @@ const ThirtyDayPage = () => {
                   {activeBlock === "2" ? (
                     <div className="flex-1">
                       <h3 className="text-xl md:text-2xl font-bold text-primary mb-4">
-                        Chi tiêu có ý thức hơn
+                        {t("thirty_day_challenge.timeline.block_2.title")}
                       </h3>
                       <div className="flex items-start gap-3 text-gray-300 text-sm md:text-base">
                         <ArrowRight className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
                         <span>
-                          Chương trình không yêu cầu bạn cắt bỏ nhu cầu cá nhân hay sống kham khổ. Bạn vẫn chi tiêu bình thường, nhưng bắt đầu nhận ra đâu là khoản cần thiết, đâu là khoản chi theo cảm xúc, từ đó giảm bớt việc tiêu tiền không kiểm soát.
+                          {t("thirty_day_challenge.timeline.block_2.content")}
                         </span>
                       </div>
                     </div>
                   ) : (
                     <div className="flex items-center justify-center h-full">
-                      <p className="text-base md:text-lg font-bold text-gray-700 uppercase text-center leading-relaxed">
-                        CHI TIÊU CÓ<br />Ý THỨC HƠN
-                      </p>
+                      <p className="text-base md:text-lg font-bold text-gray-700 uppercase text-center leading-relaxed" dangerouslySetInnerHTML={{ __html: t("thirty_day_challenge.timeline.block_2.collapsed").replace(/\\n/g, '<br />') }}></p>
                     </div>
                   )}
                 </div>
@@ -279,20 +269,18 @@ const ThirtyDayPage = () => {
                   {activeBlock === "3" ? (
                     <div className="flex-1">
                       <h3 className="text-xl md:text-2xl font-bold text-primary mb-4">
-                        Xây dựng thói quen chi tiêu lành mạnh
+                        {t("thirty_day_challenge.timeline.block_3.title")}
                       </h3>
                       <div className="flex items-start gap-3 text-gray-300 text-sm md:text-base">
                         <ArrowRight className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
                         <span>
-                          Sau 30 ngày, bạn hình thành được thói quen quản lý tiền rõ ràng và thực tế, đủ để duy trì lâu dài. Tiền bạc trở nên gọn gàng hơn, áp lực tài chính giảm đi, và bạn chủ động hơn trong các quyết định chi tiêu hàng ngày.
+                          {t("thirty_day_challenge.timeline.block_3.content")}
                         </span>
                       </div>
                     </div>
                   ) : (
                     <div className="flex items-center justify-center h-full">
-                      <p className="text-base md:text-lg font-bold text-gray-700 uppercase text-center leading-relaxed">
-                        XÂY DỰNG<br />THÓI QUEN<br />CHI TIÊU<br />LÀNH MẠNH
-                      </p>
+                      <p className="text-base md:text-lg font-bold text-gray-700 uppercase text-center leading-relaxed" dangerouslySetInnerHTML={{ __html: t("thirty_day_challenge.timeline.block_3.collapsed").replace(/\\n/g, '<br />') }}></p>
                     </div>
                   )}
                 </div>
@@ -303,7 +291,7 @@ const ThirtyDayPage = () => {
                 <div className="bg-gray-100 rounded-2xl p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
                   <Clock className="h-7 w-7 text-gray-500" />
                   <p className="text-xs text-gray-500 uppercase tracking-wider mt-4">
-                    THỜI GIAN DIỄN RA
+                    {t("thirty_day_challenge.timeline.time_label")}
                   </p>
                   <p className="text-xl md:text-2xl font-bold text-gray-900 mt-1">
                     28/01/2026 - 28/02/2026
@@ -312,19 +300,19 @@ const ThirtyDayPage = () => {
 
                 <div className="bg-gradient-to-br from-gray-700 to-gray-900 rounded-2xl p-6 text-white transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
                   <Users className="h-7 w-7 text-yellow-400" />
-                  <p className="text-xs text-gray-300 uppercase tracking-wider mt-4">
-                    SỐ LƯỢNG HỌC VIÊN
+                  <p className="text-xs text-white uppercase tracking-wider mt-4">
+                    {t("thirty_day_challenge.timeline.students_label")}
                   </p>
-                  <p className="text-xl md:text-2xl font-bold mt-1">99 người</p>
+                  <p className="text-xl md:text-2xl font-bold text-white mt-1">{t("thirty_day_challenge.timeline.students_count")}</p>
                 </div>
 
                 <div className="bg-gray-100 rounded-2xl p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
                   <MapPin className="h-7 w-7 text-gray-500" />
                   <p className="text-xs text-gray-500 uppercase tracking-wider mt-4">
-                    ĐỊA ĐIỂM
+                    {t("thirty_day_challenge.timeline.location_label")}
                   </p>
                   <p className="text-xl md:text-2xl font-bold text-gray-900 mt-1">
-                    Online qua Zoom
+                    {t("thirty_day_challenge.timeline.location_value")}
                   </p>
                 </div>
               </div>
@@ -337,11 +325,10 @@ const ThirtyDayPage = () => {
           <div className="container mx-auto px-4 sm:px-6">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-5xl font-extrabold text-primary uppercase">
-                Đặc Quyền Học Viên
+                {t("thirty_day_challenge.benefits.heading")}
               </h2>
               <p className="mt-4 text-base md:text-lg text-gray-600 max-w-3xl mx-auto">
-                Nhận được sự hỗ trợ toàn diện và những quyền lợi độc quyền khi
-                tham gia hành trình cùng N-Education.
+                {t("privilege.subheading")}
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-4xl mx-auto">
@@ -367,19 +354,64 @@ const ThirtyDayPage = () => {
           </div>
         </section>
 
-        {/* NGƯỜI DẪN ĐƯỜNG - Instructor Section */}
-        <Instructor instructors={getInstructorsByIds(["nhi-le"])} />
+        {/* NGƯỜI DẪN ĐƯỜNG - Custom Section */}
+        <section className="py-12 sm:py-16 lg:py-20 bg-white">
+          <div className="container mx-auto px-4 sm:px-6">
+            <h2 className="text-3xl sm:text-4xl lg:text-[68px] font-black text-center text-primary uppercase mb-8 sm:mb-10 lg:mb-12">
+              {t("thirty_day_challenge.instructor_section.heading")}
+            </h2>
+
+            <div className="max-w-5xl mx-auto bg-white border border-gray-200 rounded-ios-xl p-6 sm:p-8 lg:p-10 shadow-ios-card">
+              <div className="grid gap-8 lg:gap-12 lg:grid-cols-[minmax(0,2.3fr)_minmax(0,1fr)] items-start">
+                {/* Content */}
+                <div className="space-y-6 text-base sm:text-lg text-gray-600 leading-relaxed">
+                  <p>
+                    {t("thirty_day_challenge.instructor_section.bio_1")}
+                  </p>
+                  <p>
+                    {t("thirty_day_challenge.instructor_section.bio_2")}
+                  </p>
+                  <p>
+                    {t("thirty_day_challenge.instructor_section.bio_3")}
+                  </p>
+                </div>
+
+                {/* Sidebar with image */}
+                <aside className="bg-white border border-gray-200 rounded-ios-lg p-6 sm:p-8 shadow-ios-card">
+                  <div className="text-center">
+                    <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">
+                      NhiLe
+                    </h3>
+                    <div className="bg-primary rounded-ios-lg aspect-square max-w-[220px] mx-auto flex items-center justify-center mb-6 overflow-hidden">
+                      <img
+                        src="/picture/nhile_new.jpg"
+                        alt="NhiLe avatar"
+                        loading="lazy"
+                        className="object-cover w-full h-full rounded-ios-lg shadow-sm"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                      {t("thirty_day_challenge.instructor_section.profession_label")}
+                    </h4>
+                    <p className="text-base text-gray-800">{t("thirty_day_challenge.instructor_section.profession")}</p>
+                  </div>
+                </aside>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* LỰA CHỌN GÓI HỌC - Pricing Section */}
         <section id="pricing" className="bg-[#F2F2F7] py-16 lg:py-20">
           <div className="container max-w-4xl mx-auto px-4">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-5xl font-extrabold text-primary uppercase">
-                LỰA CHỌN GÓI HỌC
+                {t("thirty_day_challenge.pricing.heading")}
               </h2>
               <p className="mt-4 text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
-                Chọn gói học phù hợp nhất với nhu cầu và mục tiêu của bạn để bắt
-                đầu hành trình chuyển hóa.
+                {t("thirty_day_challenge.pricing.subtitle")}
               </p>
             </div>
 
@@ -387,13 +419,13 @@ const ThirtyDayPage = () => {
               {/* Monthly Plan Card */}
               <div className="bg-white rounded-2xl p-8 h-full flex flex-col shadow-lg">
                 <p className="text-sm font-semibold text-gray-500">
-                  Gói Theo Tháng
+                  {t("thirty_day_challenge.pricing.monthly.label")}
                 </p>
                 <p className="text-4xl font-bold text-primary my-6">
                   {formatCurrency(monthlyPrice)}
                   <span className="text-lg font-medium text-gray-500">
                     {" "}
-                    / tháng
+                    {t("thirty_day_challenge.pricing.monthly.per_month")}
                   </span>
                 </p>
                 <ul className="space-y-3 text-sm mb-6">
@@ -429,7 +461,7 @@ const ThirtyDayPage = () => {
                     {addedToCart.monthly && (
                       <Check className="h-5 w-5 animate-in zoom-in-50 duration-300" />
                     )}
-                    {addedToCart.monthly ? "Đã thêm vào giỏ hàng" : "Đăng ký ngay"}
+                    {addedToCart.monthly ? t("thirty_day_challenge.pricing.monthly.added") : t("thirty_day_challenge.pricing.monthly.button")}
                   </span>
                 </Button>
               </div>
@@ -437,16 +469,16 @@ const ThirtyDayPage = () => {
               {/* Membership Plan Card */}
               <div className="bg-white rounded-2xl p-8 border-2 border-primary h-full flex flex-col relative overflow-hidden shadow-lg">
                 <div className="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-4 py-1 rounded-bl-lg">
-                  KHUYÊN DÙNG
+                  {t("thirty_day_challenge.pricing.membership.badge")}
                 </div>
                 <p className="text-sm font-semibold text-primary mt-4">
-                  Gói Membership
+                  {t("thirty_day_challenge.pricing.membership.label")}
                 </p>
                 <p className="text-4xl font-bold text-primary my-6">
                   {formatCurrency(membershipPrice)}
                   <span className="text-lg font-medium text-gray-500">
                     {" "}
-                    / 12 tháng
+                    {t("thirty_day_challenge.pricing.membership.per_year")}
                   </span>
                 </p>
                 <ul className="space-y-3 text-sm mb-6">
@@ -474,7 +506,7 @@ const ThirtyDayPage = () => {
                     {addedToCart.membership && (
                       <Check className="h-5 w-5 animate-in zoom-in-50 duration-300" />
                     )}
-                    {addedToCart.membership ? "Đã thêm vào giỏ hàng" : "Chọn Gói Membership"}
+                    {addedToCart.membership ? t("thirty_day_challenge.pricing.membership.added") : t("thirty_day_challenge.pricing.membership.button")}
                   </span>
                 </Button>
               </div>

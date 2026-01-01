@@ -48,7 +48,7 @@ export const instructors: InstructorProps[] = [
         description: "program_detail.instructors.nhi_le.projects.podcast.description",
       },
     ],
-    image: "/picture/nhile.jpg",
+    image: "/picture/nhile_new.jpg",
   },
   {
     id: "mel",

@@ -499,11 +499,11 @@ export const vi = {
         instructors: {
             nhi_le: {
                 profession: ["Doanh nhân"],
-                bio: "Nhi Lê là một doanh nhân, nhà giáo dục và nhà sáng tạo nội dung người Việt Nam. Cô được biết đến là người đầu tiên đưa chủ đề tâm lý học bằng tiếng Việt lên nền tảng YouTube và là người sáng lập nhiều dự án văn hóa - giáo dục có ảnh hưởng tại Việt Nam. Hiện cô đang sinh sống và làm việc tại Singapore.",
+                bio: "Nhi Le là cố vấn tâm lý và doanh nhân, đồng hành cùng nhiều người Việt trong hành trình hiểu bản thân, xây dựng nội lực và tạo ra thay đổi bền vững.",
                 education: [
-                    "Nhi Lê tốt nghiệp chuyên ngành Tâm lý học (Diploma in Psychology) tại Kaplan Singapore. Ngoài ra, cô còn sở hữu nhiều chứng chỉ chuyên sâu khác như \"Lãnh đạo Kiên cường & Kinh doanh Bền vững\" (Resilient Leadership & Business Sustainability) và Chứng chỉ Điều hành về Khoa học Hành vi Ứng dụng (Executive Certificate in Applied Behavioural Science) tại Đại học Quản lý Singapore (SMU)."
+                    "Nhi Le có nền tảng học thuật bài bản trong tâm lý học, coaching và lãnh đạo, với các chứng chỉ chuyên môn từ Kaplan Singapore và Singapore Management University (SMU), bao gồm tâm lý học, coaching doanh nghiệp, lãnh đạo bền vững và hành vi học ứng dụng."
                 ],
-                career: "Nhi Lê hoạt động trong nhiều lĩnh vực, từ kinh doanh, giáo dục đến sáng tạo nội dung. Cô là người có tầm ảnh hưởng trong việc chia sẻ kiến thức về tâm lý học và kỹ năng sống cho thế hệ trẻ.",
+                career: "Sinh ra và lớn lên tại Quảng Nam, hiện là mẹ đơn thân sống và làm việc ở nước ngoài, Nhi Le mang đến góc nhìn rất thực tế về tự lập, kỷ luật cá nhân và trách nhiệm với chính cuộc sống của mình. Chị không dạy lý thuyết suông, mà dẫn dắt bằng trải nghiệm thật và quá trình chuyển hóa thật.",
                 achievements: [
                     { date: "2025-04", description: "Vinh danh với giải thưởng HER Courage Awards 2025." },
                     { date: "2025-08", description: "Người phụ nữ Việt Nam đầu tiên xuất hiện trên blog chính thức của YouTube toàn cầu." }
@@ -616,6 +616,90 @@ export const vi = {
             format: "Hình thức",
             format_content: "Thực hiện thử nghiệm & báo cáo nhóm",
             register: "ĐĂNG KÝ THAM GIA NGAY"
+        },
+        timeline: {
+            heading: "SAU 30 NGÀY BẠN ĐƯỢC...?",
+            block_1: {
+                title: "Nắm rõ thu và chi mỗi tháng",
+                collapsed: "NẮM RÕ\\nTHU VÀ CHI",
+                content: "Sau 30 ngày, bạn sẽ biết rõ mỗi tháng tiền đi đâu, số dư ra sao. Không còn 'sao tiền hết nhanh thế', không còn cảm giác mơ hồ – bạn nắm được bức tranh tài chính cá nhân thật sự."
+            },
+            block_2: {
+                title: "Chi tiêu có ý thức",
+                collapsed: "CHI TIÊU CÓ\\nÝ THỨC",
+                content: "Bạn sẽ bắt đầu suy nghĩ trước khi chi. Không phải kiểm soát quá mức, nhưng bạn đã chuyển từ chi tiêu vô thức sang chi tiêu có chủ đích, rõ ràng với từng đồng tiền ra – vào."
+            },
+            block_3: {
+                title: "Xây dựng thói quen chi tiêu lành mạnh",
+                collapsed: "XÂY DỰNG\\nTHÓI QUEN\\nCHI TIÊU\\nLÀNH MẠNH",
+                content: "Sau 30 ngày, bạn hình thành được thói quen quản lý tiền rõ ràng và thực tế, đủ để duy trì lâu dài. Tiền bạc trở nên gọn gàng hơn, áp lực tài chính giảm đi, và bạn chủ động hơn trong các quyết định chi tiêu hàng ngày."
+            },
+            time_label: "THỜI GIAN DIỄN RA",
+            students_label: "SỐ LƯỢNG HỌC VIÊN",
+            students_count: "99 người",
+            location_label: "ĐỊA ĐIỂM",
+            location_value: "Online qua Zoom"
+        },
+        benefits: {
+            heading: "ĐẶC QUYỀN HỌC VIÊN",
+            items: {
+                community: { title: "Tham gia cộng đồng N-Edu", description: "Kết nối với những người cùng chí hướng, sẵn lòng đồng hành và hỗ trợ lẫn nhau." },
+                global: { title: "Hợp tác quốc tế", description: "Cơ hội kết nối và học hỏi từ các chuyên gia và đối tác trên toàn cầu." },
+                personalized: { title: "Cá nhân hóa lộ trình", description: "Được tư vấn và xây dựng lộ trình phát triển phù hợp với mục tiêu cá nhân của bạn." },
+                support: { title: "Hỗ trợ liên tục", description: "Nhận được sự đồng hành và hỗ trợ 24/7 từ đội ngũ chuyên nghiệp của N-Education." }
+            }
+        },
+        instructor_section: {
+            heading: "NGƯỜI DẪN ĐƯỜNG",
+            profession_label: "NGHỀ NGHIỆP",
+            profession: "Doanh nhân",
+            bio_1: "Nhi Le là cố vấn tâm lý và doanh nhân, đồng hành cùng nhiều người Việt trong hành trình hiểu bản thân, xây dựng nội lực và tạo ra thay đổi bền vững.",
+            bio_2: "Sinh ra và lớn lên tại Quảng Nam, hiện là mẹ đơn thân sống và làm việc ở nước ngoài, Nhi Le mang đến góc nhìn rất thực tế về tự lập, kỷ luật cá nhân và trách nhiệm với chính cuộc sống của mình. Chị không dạy lý thuyết suông, mà dẫn dắt bằng trải nghiệm thật và quá trình chuyển hóa thật.",
+            bio_3: "Nhi Le có nền tảng học thuật bài bản trong tâm lý học, coaching và lãnh đạo, với các chứng chỉ chuyên môn từ Kaplan Singapore và Singapore Management University (SMU), bao gồm tâm lý học, coaching doanh nghiệp, lãnh đạo bền vững và hành vi học ứng dụng."
+        },
+        pricing: {
+            heading: "LỰA CHỌN GÓI HỌC",
+            subtitle: "Chọn gói học phù hợp nhất với nhu cầu và mục tiêu của bạn để bắt đầu hành trình chuyển hóa.",
+            monthly: {
+                label: "Gói Theo Tháng",
+                per_month: "/ tháng",
+                button: "Đăng ký ngay",
+                added: "Đã thêm vào giỏ hàng",
+                features: {
+                    topic: "Tham gia 01 chủ đề 30 Days trong tháng đăng ký",
+                    daily_activities: "30 hoạt động mỗi ngày (micro-habits)",
+                    zoom: "1 buổi Zoom cùng Host (Nếu có)",
+                    telegram: "Tham gia nhóm Telegram của tháng đó",
+                    support: "Hỗ trợ trong 30 ngày",
+                    no_archive: "Không truy cập kho nội dung cũ",
+                    no_bonus: "Không bao gồm bonus hoặc workshop thêm"
+                }
+            },
+            membership: {
+                label: "Gói Membership",
+                per_year: "/ 12 tháng",
+                badge: "KHUYÊN DÙNG",
+                button: "Chọn Gói Membership",
+                added: "Đã thêm vào giỏ hàng",
+                features: {
+                    all_topics: "Truy cập toàn bộ 12 chủ đề 30 Days trong 1 năm",
+                    all_challenges: "Tham gia tất cả các thử thách mà không cần mua thêm",
+                    archive_access: "Truy cập kho tài liệu & thử thách cũ",
+                    bonus_workshop: "Mini workshop bonus dành riêng cho thành viên",
+                    member_group: "Gia nhập Group Member (duy trì suốt năm, không reset mỗi tháng)",
+                    year_support: "Hỗ trợ xuyên suốt 12 tháng từ đội ngũ",
+                    pause_right: "Quyền bảo lưu tối đa 1–2 tháng nếu bận",
+                    advanced_discount: "Ưu đãi khi tham gia các chương trình nâng cao của Nhi Lê"
+                }
+            },
+            features: {
+                zoom: "Tham gia Zoom mỗi tháng",
+                community: "Tham gia cộng đồng học viên",
+                qa: "Hỗ trợ Q&A qua Telegram",
+                review: "Xem lại bài học",
+                all_topics: "Tham gia tất cả chủ đề trong năm",
+                early_access: "Ưu tiên đăng ký các khóa học mới"
+            }
         }
     },
     contact: {

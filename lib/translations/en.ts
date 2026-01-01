@@ -499,11 +499,11 @@ export const en = {
         instructors: {
             nhi_le: {
                 profession: ["Entrepreneur"],
-                bio: "Nhi Le is an entrepreneur, educator, and Vietnamese content creator. She is known as the first person to bring psychology topics in Vietnamese to the YouTube platform and is the founder of many influential cultural and educational projects in Vietnam. She currently lives and works in Singapore.",
+                bio: "Nhi Le is a psychological advisor and entrepreneur, accompanying many Vietnamese people on their journey to understand themselves, build inner strength, and create lasting change.",
                 education: [
-                    "Nhi Le holds a Diploma in Psychology from Kaplan Singapore. In addition, she holds several other specialized certificates such as \"Resilient Leadership & Business Sustainability\" and an Executive Certificate in Applied Behavioural Science from Singapore Management University (SMU)."
+                    "Nhi Le has a solid academic foundation in psychology, coaching, and leadership, with professional certifications from Kaplan Singapore and Singapore Management University (SMU), including psychology, business coaching, sustainable leadership, and applied behavioral science."
                 ],
-                career: "Nhi Le operates in many fields, from business, education to content creation. She is an influential figure in sharing knowledge about psychology and life skills for the younger generation.",
+                career: "Born and raised in Quang Nam, currently a single mother living and working abroad, Nhi Le brings a very practical perspective on self-reliance, personal discipline, and responsibility for one's own life. She doesn't teach empty theory, but leads through real experience and real transformation.",
                 achievements: [
                     { date: "2025-04", description: "Honored with the HER Courage Awards 2025." },
                     { date: "2025-08", description: "The first Vietnamese woman to appear on the official global YouTube blog." }
@@ -616,6 +616,90 @@ export const en = {
             format: "Format",
             format_content: "Execute experiments & group reporting",
             register: "REGISTER TO JOIN NOW"
+        },
+        timeline: {
+            heading: "AFTER 30 DAYS, WHAT DO YOU GET...?",
+            block_1: {
+                title: "Know your income and expenses each month",
+                collapsed: "KNOW YOUR\\nINCOME & EXPENSES",
+                content: "After 30 days, you'll know exactly where your money goes each month and your balance. No more 'why did my money run out so fast', no more vague feelings – you'll have a real picture of your personal finances."
+            },
+            block_2: {
+                title: "Conscious spending",
+                collapsed: "CONSCIOUS\\nSPENDING",
+                content: "You'll start thinking before spending. Not over-controlling, but you've shifted from unconscious spending to purposeful spending, clear about every dollar in and out."
+            },
+            block_3: {
+                title: "Build healthy spending habits",
+                collapsed: "BUILD\\nHEALTHY\\nSPENDING\\nHABITS",
+                content: "After 30 days, you'll form clear and practical money management habits that are sustainable long-term. Money becomes more organized, financial pressure decreases, and you're more proactive in daily spending decisions."
+            },
+            time_label: "DURATION",
+            students_label: "NUMBER OF STUDENTS",
+            students_count: "99 people",
+            location_label: "LOCATION",
+            location_value: "Online via Zoom"
+        },
+        benefits: {
+            heading: "STUDENT PRIVILEGES",
+            items: {
+                community: { title: "Join N-Edu Community", description: "Connect with like-minded people, willing to accompany and support each other." },
+                global: { title: "International Cooperation", description: "Opportunity to connect and learn from experts and partners worldwide." },
+                personalized: { title: "Personalized Roadmap", description: "Get advice and build a development roadmap suitable for your personal goals." },
+                support: { title: "Continuous Support", description: "Receive 24/7 companionship and support from N-Education's professional team." }
+            }
+        },
+        instructor_section: {
+            heading: "INSTRUCTOR",
+            profession_label: "PROFESSION",
+            profession: "Entrepreneur",
+            bio_1: "Nhi Le is a psychological advisor and entrepreneur, accompanying many Vietnamese people on their journey to understand themselves, build inner strength, and create lasting change.",
+            bio_2: "Born and raised in Quang Nam, currently a single mother living and working abroad, Nhi Le brings a very practical perspective on self-reliance, personal discipline, and responsibility for one's own life. She doesn't teach empty theory, but leads through real experience and real transformation.",
+            bio_3: "Nhi Le has a solid academic foundation in psychology, coaching, and leadership, with professional certifications from Kaplan Singapore and Singapore Management University (SMU), including psychology, business coaching, sustainable leadership, and applied behavioral science."
+        },
+        pricing: {
+            heading: "CHOOSE YOUR PLAN",
+            subtitle: "Choose the plan that best fits your needs and goals to start your transformation journey.",
+            monthly: {
+                label: "Monthly Plan",
+                per_month: "/ month",
+                button: "Register Now",
+                added: "Added to cart",
+                features: {
+                    topic: "Participate in 01 30 Days topic in the registration month",
+                    daily_activities: "30 daily activities (micro-habits)",
+                    zoom: "1 Zoom session with Host (If available)",
+                    telegram: "Join the Telegram group of that month",
+                    support: "Support within 30 days",
+                    no_archive: "No access to old content archive",
+                    no_bonus: "Does not include bonus or extra workshops"
+                }
+            },
+            membership: {
+                label: "Membership Plan",
+                per_year: "/ 12 months",
+                badge: "RECOMMENDED",
+                button: "Choose Membership Plan",
+                added: "Added to cart",
+                features: {
+                    all_topics: "Access all 12 30 Days topics in 1 year",
+                    all_challenges: "Participate in all challenges without extra purchase",
+                    archive_access: "Access old materials & challenges archive",
+                    bonus_workshop: "Member-exclusive bonus mini workshop",
+                    member_group: "Join Member Group (maintained throughout the year, no monthly reset)",
+                    year_support: "Support throughout 12 months from the team",
+                    pause_right: "Right to reserve up to 1-2 months if busy",
+                    advanced_discount: "Discount when joining Nhi Le's advanced programs"
+                }
+            },
+            features: {
+                zoom: "Join Zoom every month",
+                community: "Join student community",
+                qa: "Q&A support via Telegram",
+                review: "Review lessons",
+                all_topics: "Join all topics during the year",
+                early_access: "Priority registration for new courses"
+            }
         }
     },
     contact: {
