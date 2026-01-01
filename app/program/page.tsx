@@ -236,7 +236,7 @@ export default function ProgramPage() {
             onScroll={updateScrollButtons}
             className="w-full overflow-x-auto pb-4 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] py-10"
           >
-            <div className="flex gap-4 md:gap-8 pl-4 2xl:pl-[calc((100vw-1280px)/2+1rem)] pr-4 md:pr-8">
+            <div className="flex gap-4 md:gap-6 pl-4 xl:pl-[calc((100vw-1280px)/2+1rem)] pr-4 md:pr-6">
               {isLoading
                 ? Array(4).fill(0).map((_, i) => <CourseCardSkeleton key={i} />)
                 : filteredCourses.map((course) => (
@@ -256,7 +256,7 @@ export default function ProgramPage() {
                       <img
                         alt={t(course.title)}
                         src={course.heroImage}
-                        className="w-full h-full object-cover rounded-[30px]"
+                        className={`w-full h-full object-cover rounded-[30px] ${course.slug === 'thu-thach-30-ngay' ? 'object-top' : ''}`}
                       />
                     </Link>
                     <div className="flex flex-col items-center text-center w-full max-w-full pb-10 flex-grow">

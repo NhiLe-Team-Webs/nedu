@@ -21,7 +21,8 @@ import { courses } from "@/data/courses";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
-const challengePoster = "/picture/thuthach30day.png";
+const challengePosterDesktop = "/picture/thuthach30day_desktop.png";
+const challengePosterMobile = "/picture/thuthach30day_mobile.png";
 const tuyetMaiPhoto = "/picture/denise.jpg";
 
 // Find the 30 day challenge course
@@ -156,14 +157,24 @@ const ThirtyDayPage = () => {
   return (
     <div className="min-h-screen bg-[#F2F2F7] pb-20 override-header-spacing font-sans text-gray-900">
       <main className="ios-safe-padding-bottom">
-        {/* HERO SECTION - Full screen image only */}
+        {/* HERO SECTION - Responsive images for desktop/mobile */}
         <section className="relative w-full">
+          {/* Desktop Image */}
           <Image
-            src={challengePoster}
+            src={challengePosterDesktop}
             alt={t("thirty_day_challenge.title")}
             width={1920}
             height={1080}
-            className="w-full h-auto object-contain"
+            className="hidden md:block w-full h-auto object-contain"
+            priority
+          />
+          {/* Mobile Image */}
+          <Image
+            src={challengePosterMobile}
+            alt={t("thirty_day_challenge.title")}
+            width={750}
+            height={1334}
+            className="block md:hidden w-full h-auto object-contain"
             priority
           />
         </section>

@@ -372,7 +372,7 @@ export const courses: Course[] = [
     mode: 'online',
     title: 'thirty_day_challenge.title',
     category: ['categories.personal_development'],
-    heroImage: '/picture/thuthach30day.png',
+    heroImage: '/picture/thuthach30day_desktop.png',
     price: {
       amount: '396.000',
       currency: 'VNĐ'
