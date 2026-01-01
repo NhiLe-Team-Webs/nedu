@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   ArrowRight,
@@ -108,6 +108,18 @@ const ThirtyDayPage = () => {
     monthly: boolean;
     membership: boolean;
   }>({ monthly: false, membership: false });
+
+  // Auto scroll to pricing section if hash is present
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.hash === '#pricing') {
+      setTimeout(() => {
+        const pricingSection = document.getElementById('pricing');
+        if (pricingSection) {
+          pricingSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 500); // Delay to ensure page is fully loaded
+    }
+  }, []);
 
   const handleAddToCart = (planType: "monthly" | "membership") => {
     if (!thirtyDayCourse) return;
