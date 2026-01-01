@@ -622,17 +622,17 @@ export const vi = {
             block_1: {
                 title: "Nắm rõ thu và chi mỗi tháng",
                 collapsed: "NẮM RÕ\\nTHU VÀ CHI",
-                content: "Sau 30 ngày, bạn sẽ biết rõ mỗi tháng tiền đi đâu, số dư ra sao. Không còn 'sao tiền hết nhanh thế', không còn cảm giác mơ hồ – bạn nắm được bức tranh tài chính cá nhân thật sự."
+                content: "“Tiền không khó quản lý, khó là mình không nhìn rõ nó.”"
             },
             block_2: {
-                title: "Chi tiêu có ý thức",
-                collapsed: "CHI TIÊU CÓ\\nÝ THỨC",
-                content: "Bạn sẽ bắt đầu suy nghĩ trước khi chi. Không phải kiểm soát quá mức, nhưng bạn đã chuyển từ chi tiêu vô thức sang chi tiêu có chủ đích, rõ ràng với từng đồng tiền ra – vào."
+                title: "Chi tiêu có kiểm soát",
+                collapsed: "CHI TIÊU\\nCÓ KIỂM SOÁT",
+                content: "“Xài tiền không sai, xài mà không biết vì sao mới mệt.”"
             },
             block_3: {
                 title: "Xây dựng thói quen chi tiêu lành mạnh",
                 collapsed: "XÂY DỰNG\\nTHÓI QUEN\\nCHI TIÊU\\nLÀNH MẠNH",
-                content: "Sau 30 ngày, bạn hình thành được thói quen quản lý tiền rõ ràng và thực tế, đủ để duy trì lâu dài. Tiền bạc trở nên gọn gàng hơn, áp lực tài chính giảm đi, và bạn chủ động hơn trong các quyết định chi tiêu hàng ngày."
+                content: "“Thứ làm bạn mệt không phải tiền, mà là cách xài tiền.”"
             },
             time_label: "THỜI GIAN DIỄN RA",
             students_label: "SỐ LƯỢNG HỌC VIÊN",

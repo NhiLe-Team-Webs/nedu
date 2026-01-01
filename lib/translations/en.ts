@@ -622,17 +622,17 @@ export const en = {
             block_1: {
                 title: "Know your income and expenses each month",
                 collapsed: "KNOW YOUR\\nINCOME & EXPENSES",
-                content: "After 30 days, you'll know exactly where your money goes each month and your balance. No more 'why did my money run out so fast', no more vague feelings – you'll have a real picture of your personal finances."
+                content: "“Money isn't hard to manage, it's hard when you don't see it clearly.”"
             },
             block_2: {
-                title: "Conscious spending",
-                collapsed: "CONSCIOUS\\nSPENDING",
-                content: "You'll start thinking before spending. Not over-controlling, but you've shifted from unconscious spending to purposeful spending, clear about every dollar in and out."
+                title: "Controlled spending",
+                collapsed: "CONTROLLED\\nSPENDING",
+                content: "“Spending money isn't wrong, spending without knowing why is exhausting.”"
             },
             block_3: {
                 title: "Build healthy spending habits",
                 collapsed: "BUILD\\nHEALTHY\\nSPENDING\\nHABITS",
-                content: "After 30 days, you'll form clear and practical money management habits that are sustainable long-term. Money becomes more organized, financial pressure decreases, and you're more proactive in daily spending decisions."
+                content: "“What tires you isn't money, it's how you spend it.”"
             },
             time_label: "DURATION",
             students_label: "NUMBER OF STUDENTS",
