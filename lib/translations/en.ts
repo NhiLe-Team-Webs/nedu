@@ -577,27 +577,20 @@ export const en = {
         about_title: "Hi there!",
         about_content: "Ever learned something from Nhi but left it in a corner due to procrastination? The 30 Day Challenge was born to pull you into a journey of action together, step by step erasing bad habits.",
         about_content_2: "In 2025, Nhi wants to be closer to her audience, creating more good things for life together with you!",
-        what_is_title: "WHAT'S IN 30 DAYS?",
-        card_1: {
-            title: "What is the 30-day experiment?",
-            desc: "A 30-day journey of continuous action under the observation and companionship of the team. Receive clear tasks every day, complete and report in a private group before 11 PM."
-        },
-        card_2: {
-            title: "What do you receive?",
-            items: [
-                "Practice discipline, continuous action.",
-                "Self-discipline & proactivity: 'do it now' habit.",
-                "Get fueled & inspired every day.",
-                "Sustainable like-minded community."
-            ]
-        },
-        card_3: {
-            title: "Who should join?",
-            items: [
-                "Procrastinators, lacking motivation.",
-                "Those looking for a positive environment.",
-                "Those wanting to upgrade skills & build good habits."
-            ]
+        what_is_section: {
+            heading: "WHAT'S IN 30 DAYS?",
+            col_1: {
+                title: "What is the 30-Day Challenge?",
+                content: "This is a 30-day journey of continuous action under the observation and motivation of Nhi Le. Every day, you receive a task and need to complete and report the results before 11 PM in the study group."
+            },
+            col_2: {
+                title: "Who should join?",
+                items: [
+                    "Those who are procrastinating, lack motivation, and want to change themselves.",
+                    "People looking for an environment for self-development.",
+                    "People who want to learn or upgrade their skills."
+                ]
+            }
         },
         mentor: {
             bg_text: "INSTRUCTOR",

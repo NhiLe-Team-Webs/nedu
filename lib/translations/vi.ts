@@ -577,27 +577,20 @@ export const vi = {
         about_title: "Nhi đây!",
         about_content: "Có ai học kiến thức của Nhi xong bỏ vô góc trì hoãn không làm không? Thử Thách 30 Ngày ra đời để kéo bạn vào hành trình hành động cùng nhau, từng bước xoá thói quen xấu.",
         about_content_2: "Năm 2025, Nhi muốn gần hơn với khán giả của mình, cùng các bạn tạo ra nhiều điều tốt đẹp hơn cho cuộc sống!",
-        what_is_title: "30 NGÀY CÓ GÌ?",
-        card_1: {
-            title: "Thử nghiệm 30 ngày là gì?",
-            desc: "Hành trình 30 ngày hành động liên tục dưới sự quan sát và đồng hành của đội ngũ. Mỗi ngày nhận nhiệm vụ rõ ràng, hoàn thành và báo cáo trong nhóm riêng trước 23h."
-        },
-        card_2: {
-            title: "Bạn nhận được gì?",
-            items: [
-                "Rèn luyện tính kỷ luật, hành động liên tục.",
-                "Tự giác & chủ động: thói quen 'làm ngay'.",
-                "Được tiếp lửa & truyền cảm hứng mỗi ngày.",
-                "Cộng đồng cùng chí hướng bền vững."
-            ]
-        },
-        card_3: {
-            title: "Ai nên tham gia?",
-            items: [
-                "Người đang trì hoãn, thiếu động lực.",
-                "Người muốn tìm môi trường tích cực.",
-                "Người muốn nâng cấp kỹ năng & xây dựng thói quen tốt."
-            ]
+        what_is_section: {
+            heading: "30 NGÀY CÓ GÌ?",
+            col_1: {
+                title: "Thử thách 30 ngày là gì?",
+                content: "Đây là hành trình 30 ngày hành động liên tục dưới sự quan sát và thúc đẩy của Nhi Lê. Mỗi ngày, bạn nhận nhiệm vụ và cần hoàn thành, báo cáo kết quả trước 11h đêm trong nhóm học."
+            },
+            col_2: {
+                title: "Ai nên tham gia?",
+                items: [
+                    "Những ai đang trì hoãn, thiếu động lực và muốn thay đổi bản thân.",
+                    "Người đang tìm kiếm môi trường để phát triển bản thân.",
+                    "Người muốn học hoặc muốn nâng cấp các kỹ năng."
+                ]
+            }
         },
         mentor: {
             bg_text: "NGƯỜI HƯỚNG DẪN",

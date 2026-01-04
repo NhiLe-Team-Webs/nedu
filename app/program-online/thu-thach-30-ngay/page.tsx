@@ -186,6 +186,45 @@ const ThirtyDayPage = () => {
           />
         </section>
 
+
+        {/* 30 NGÀY CÓ GÌ? - What is Section */}
+        <section className="bg-white pt-16 pb-8 md:pt-24 md:pb-12">
+          <div className="container mx-auto px-4 sm:px-6">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-5xl font-extrabold text-primary uppercase">
+                {t("thirty_day_challenge.what_is_section.heading")}
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
+              <div className="border border-gray-200 rounded-3xl p-8 md:p-10 flex flex-col items-start h-full hover:shadow-lg transition-shadow duration-300">
+                <h3 className="text-xl md:text-2xl font-bold text-primary mb-6">
+                  {t("thirty_day_challenge.what_is_section.col_1.title")}
+                </h3>
+                <p className="text-gray-600 text-base md:text-lg leading-relaxed">
+                  {t("thirty_day_challenge.what_is_section.col_1.content")}
+                </p>
+              </div>
+
+              <div className="border border-gray-200 rounded-3xl p-8 md:p-10 flex flex-col items-start h-full hover:shadow-lg transition-shadow duration-300">
+                <h3 className="text-xl md:text-2xl font-bold text-primary mb-6">
+                  {t("thirty_day_challenge.what_is_section.col_2.title")}
+                </h3>
+                <ul className="space-y-4 w-full">
+                  {(() => {
+                    const items = t("thirty_day_challenge.what_is_section.col_2.items");
+                    return Array.isArray(items) ? items.map((item: string, idx: number) => (
+                      <li key={idx} className="flex items-start gap-3">
+                        <span className="text-primary font-bold text-xl leading-none">-</span>
+                        <span className="text-gray-600 text-base md:text-lg leading-relaxed">{item}</span>
+                      </li>
+                    )) : null;
+                  })()}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* SAU 30 NGÀY BẠN ĐƯỢC GÌ? - Timeline Section */}
         <section className="bg-white py-16 md:py-24">
           <div className="container mx-auto px-4 sm:px-6">
