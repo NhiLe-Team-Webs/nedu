@@ -83,8 +83,7 @@ const ThirtyDayPage = () => {
       text: t("thirty_day_challenge.pricing.membership.features.all_challenges"),
       included: true,
     },
-    { text: t("thirty_day_challenge.pricing.membership.features.archive_access"), included: true },
-    { text: t("thirty_day_challenge.pricing.membership.features.bonus_workshop"), included: true },
+   
     {
       text: t("thirty_day_challenge.pricing.membership.features.member_group"),
       included: true,
