@@ -601,6 +601,71 @@ export const en = {
             passion_label: "Passion for changing perception:",
             passion_content: "Helping you realize you don't need to change your personality to achieve great things — grow by being yourself."
         },
+        faq: {
+            heading: "Frequently Asked Questions",
+            description: "Answers to the most common questions about training programs at N-Education.",
+            contact_button: "Contact Consultant",
+            see_all: "See all",
+            collapse: "Collapse",
+            items: [
+                {
+                    question: "Can I join if I'm not a member of NhiLe Team?",
+                    answer: "Absolutely 💛 30 Days is open to everyone. You don't need to be a prior member of NhiLe Team; you just need the desire to change and the readiness to start."
+                },
+                {
+                    question: "Is it suitable for beginners who have never participated in a challenge before?",
+                    answer: "Very suitable. 30 Days is designed for beginners too; all tasks are simple, easy to understand, and come with clear instructions."
+                },
+                {
+                    question: "Can I keep up if I'm busy and not online often?",
+                    answer: "Yes, you can. You only need to spend about 5–10 minutes each day, no need to be online constantly or present all the time. But hey, Admin encourages you to be active and chat with everyone in the group. This is also a way to develop yourself ^^"
+                },
+                {
+                    question: "Is there an age or profession limit?",
+                    answer: "No limits at all. Whether you are a student, working, or at any stage of life, if you find it suitable, you can join."
+                },
+                {
+                    question: "Will the 2026 topics be the same as 2025?",
+                    answer: "In 2026, there will be both new topics and some familiar ones returning.\\nHowever, 30 Days is always designed as a gentle journey to experience and refresh yourself, so each time you participate, you will perceive different perspectives."
+                },
+                {
+                    question: "Should I join again if I have participated in 30 Days before?",
+                    answer: "Highly recommended 💛 Many friends return to 30 Days to deepen their practice, keep the rhythm, and break through to a new level.\\nAnd if you feel you want to go even deeper, you can explore Nhi Le's intensive programs to continue your self-development journey."
+                },
+                {
+                    question: "What do I have to do each day and how long does it take?",
+                    answer: "Each day you will receive a small, easy-to-do task, taking only about 5–10 minutes to complete and check-in to the group."
+                },
+                {
+                    question: "Is the group very active or just for receiving tasks?",
+                    answer: "The group is quite active, but very gentle. You can share, read others' stories, or just check-in briefly, depending on your comfort level."
+                },
+                {
+                    question: "Do I need to share a lot of personal information?",
+                    answer: "No need. When registering, you only need to fill in the necessary information to join the program.\\nIf additional information is needed during the organization process, the admin will always message you to discuss first, and will not collect or use it for purposes other than the program without permission."
+                },
+                {
+                    question: "Is it suitable if I'm introverted and quiet?",
+                    answer: "Very suitable. 30 Days doesn't require you to talk a lot or express yourself constantly, just be present and follow your own pace."
+                },
+                {
+                    question: "Will anyone remind me if I forget to do a task?",
+                    answer: "Yes. The Telegram group always has gentle reminders so you don't forget or miss too many days."
+                },
+                {
+                    question: "Should I choose the monthly plan or the 12-month Membership?",
+                    answer: "The monthly plan is suitable if you want to try the experience.\\nThe 12-month Membership is for those who want to accompany us long-term and participate fully in the topics throughout the year."
+                },
+                {
+                    question: "Can I join in the middle?",
+                    answer: "30 Days only opens registration for a certain period.\\nThe program encourages you to join from the beginning of the journey, because when we go together for the full 30 days, the experience will be more fun, the connection better, and the effectiveness clearer.\\nTherefore, the program does not accept mid-stream participation to ensure quality for everyone."
+                },
+                {
+                    question: "Can Membership be paused if I'm busy?",
+                    answer: "Yes. In case you are busy or need to take a break for a while, Membership will be supported for reservation according to the program's policy."
+                }
+            ]
+        },
         info: {
             title: "COURSE INFORMATION",
             topic: "Topic",

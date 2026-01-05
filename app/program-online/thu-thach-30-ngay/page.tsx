@@ -14,6 +14,8 @@ import {
   UserPlus,
   Check,
   X,
+  ChevronDown,
+  HelpCircle,
 } from "lucide-react";
 import { useLanguage } from "@/lib/LanguageContext";
 import { useCart } from "@/lib/cart-context";
@@ -102,6 +104,12 @@ const ThirtyDayPage = () => {
     monthly: boolean;
     membership: boolean;
   }>({ monthly: false, membership: false });
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
+  const [showAllFaq, setShowAllFaq] = useState(false);
+
+  const toggleFaq = (index: number) => {
+    setOpenFaqIndex(openFaqIndex === index ? null : index);
+  };
 
   // Auto scroll to pricing section if hash is present
   useEffect(() => {
@@ -557,6 +565,107 @@ const ThirtyDayPage = () => {
                     {addedToCart.membership ? t("thirty_day_challenge.pricing.membership.added") : t("thirty_day_challenge.pricing.membership.button")}
                   </span>
                 </Button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="bg-white py-16 lg:py-24">
+          <div className="container mx-auto px-4 sm:px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+              {/* Left Column: Info */}
+              <div className="lg:col-span-4">
+                <div className="sticky top-32">
+                  <div className="w-12 h-12 bg-yellow-50 rounded-full flex items-center justify-center mb-6">
+                    <HelpCircle className="h-6 w-6 text-yellow-500" />
+                  </div>
+                  <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
+                    {t("thirty_day_challenge.faq.heading")}
+                  </h2>
+                  <p className="text-gray-500 text-lg mb-8 leading-relaxed">
+                    {t("thirty_day_challenge.faq.description")}
+                  </p>
+                  <Button
+                    onClick={() => router.push('/contact')}
+                    className="bg-gray-900 text-white hover:bg-gray-800 px-8 py-6 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                  >
+                    {t("thirty_day_challenge.faq.contact_button")}
+                  </Button>
+                </div>
+              </div>
+
+              {/* Right Column: Accordion */}
+              <div className="lg:col-span-8">
+                <div className="space-y-4">
+                  {(() => {
+                    const items = t("thirty_day_challenge.faq.items");
+                    if (!Array.isArray(items)) return null;
+
+                    const listItems = items as any[];
+                    const displayedItems = showAllFaq ? listItems : listItems.slice(0, 5);
+
+                    return displayedItems.map((item: any, index: number) => (
+                      <div
+                        key={index}
+                        className={cn(
+                          "border rounded-2xl overflow-hidden transition-all duration-300",
+                          openFaqIndex === index
+                            ? "border-gray-200 bg-white shadow-lg"
+                            : "border-transparent bg-gray-50 hover:bg-gray-100"
+                        )}
+                      >
+                        <button
+                          onClick={() => toggleFaq(index)}
+                          className="w-full flex items-center justify-between p-5 md:p-6 text-left transition-colors"
+                        >
+                          <div className="flex gap-4 items-start pr-4">
+                            <span className="text-sm md:text-base font-bold text-gray-400 mt-0.5">
+                              {index + 1}/
+                            </span>
+                            <span className={cn(
+                              "text-base md:text-lg font-bold transition-colors",
+                              openFaqIndex === index ? "text-primary" : "text-gray-900"
+                            )}>
+                              {item.question}
+                            </span>
+                          </div>
+                          <ChevronDown
+                            className={cn(
+                              "h-5 w-5 text-gray-400 transition-transform duration-300 flex-shrink-0 mt-1",
+                              openFaqIndex === index ? "transform rotate-180 text-primary" : ""
+                            )}
+                          />
+                        </button>
+                        <div
+                          className={cn(
+                            "overflow-hidden transition-all duration-300 ease-in-out",
+                            openFaqIndex === index ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+                          )}
+                        >
+                          <div className="p-6 pt-0 pl-12 md:pl-14 text-gray-600 leading-relaxed whitespace-pre-line text-base md:text-lg">
+                            {item.answer ? item.answer.split('\\n').map((line: string, i: number) => (
+                              <span key={i} className="block mb-2 last:mb-0">{line}</span>
+                            )) : ''}
+                          </div>
+                        </div>
+                      </div>
+                    ));
+                  })()}
+                </div>
+
+                <div className="mt-8 text-center lg:text-right">
+                  <button
+                    onClick={() => setShowAllFaq(!showAllFaq)}
+                    className="group inline-flex items-center gap-2 px-6 py-3 bg-white border border-gray-200 rounded-xl text-sm font-bold text-gray-600 hover:text-primary hover:border-primary hover:shadow-md transition-all duration-300"
+                  >
+                    {showAllFaq ? t("thirty_day_challenge.faq.collapse") : t("thirty_day_challenge.faq.see_all")}
+                    <ChevronDown className={cn(
+                      "h-4 w-4 transition-transform duration-300 group-hover:text-primary",
+                      showAllFaq ? "rotate-180" : ""
+                    )} />
+                  </button>
+                </div>
               </div>
             </div>
           </div>

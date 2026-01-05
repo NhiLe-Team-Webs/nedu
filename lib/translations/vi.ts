@@ -601,6 +601,71 @@ export const vi = {
             passion_label: "Đam mê với việc thay đổi nhận thức:",
             passion_content: "Giúp bạn nhận ra không cần thay đổi tính cách để đạt được điều tuyệt vời — hãy phát triển bằng cách là chính mình."
         },
+        faq: {
+            heading: "Câu hỏi thường gặp",
+            description: "Giải đáp những thắc mắc phổ biến nhất về các chương trình đào tạo tại N-Education.",
+            contact_button: "Liên hệ tư vấn viên",
+            see_all: "Xem tất cả",
+            collapse: "Thu gọn",
+            items: [
+                {
+                    question: "Không là thành viên của NhiLe Team thì có tham gia được không?",
+                    answer: "Hoàn toàn được nhé 💛 30 Days mở cho tất cả mọi người. Bạn không cần là thành viên của NhiLe Team từ trước, chỉ cần mong muốn thay đổi và sẵn sàng bắt đầu là đủ."
+                },
+                {
+                    question: "Người mới, chưa từng tham gia thử thách bao giờ có phù hợp không?",
+                    answer: "Rất phù hợp. 30 Days được thiết kế cho cả người mới bắt đầu, mọi nhiệm vụ đều đơn giản, dễ hiểu và có hướng dẫn rõ ràng."
+                },
+                {
+                    question: "Mình bận, không online thường xuyên thì có theo được không?",
+                    answer: "Có thể theo được nha. Mỗi ngày bạn chỉ cần dành khoảng 5–10 phút, không cần online liên tục hay lúc nào cũng phải có mặt. Nhưng bạn ơi, Admin khuyến khích bạn hãy tích cực hoạt động và trò chuyện với mọi người trong nhóm. Đây cũng là một cách để phát triển bản thân nhé ^^"
+                },
+                {
+                    question: "Có giới hạn độ tuổi hoặc ngành nghề không?",
+                    answer: "Không có giới hạn nào cả. Dù bạn đang đi học, đi làm hay ở giai đoạn nào trong cuộc sống, nếu thấy phù hợp thì đều có thể tham gia."
+                },
+                {
+                    question: "Các chủ đề năm 2026 có giống năm 2025 không?",
+                    answer: "Trong 2026 sẽ có cả những chủ đề mới và một số chủ đề quen thuộc quay lại.\\nTuy nhiên, 30 Days luôn được thiết kế như một hành trình nhẹ nhàng để trải nghiệm và làm mới bản thân, nên mỗi lần tham gia, bạn sẽ cảm nhận được những góc nhìn khác nhau."
+                },
+                {
+                    question: "Nếu đã tham gia 30 Days trước đây thì có nên tham gia lại không?",
+                    answer: "Rất nên nha 💛 Nhiều bạn quay lại 30 Days để đào sâu hơn, giữ nhịp và bứt phá ở tầng mới.\\nVà nếu bạn cảm thấy mình muốn đi sâu hơn nữa, bạn có thể tham khảo thêm các chương trình chuyên sâu của Nhi Lê để tiếp tục hành trình phát triển bản thân."
+                },
+                {
+                    question: "Mỗi ngày mình phải làm gì và mất bao lâu?",
+                    answer: "Mỗi ngày bạn sẽ nhận một nhiệm vụ nhỏ, dễ thực hiện, chỉ mất khoảng 5–10 phút để hoàn thành và check-in trong nhóm."
+                },
+                {
+                    question: "Nhóm có hoạt động nhiều không hay chỉ nhận nhiệm vụ?",
+                    answer: "Nhóm hoạt động khá đều, nhưng rất nhẹ nhàng. Bạn có thể chia sẻ, đọc câu chuyện của người khác hoặc chỉ check-in ngắn gọn, tuỳ theo mức thoải mái của bạn."
+                },
+                {
+                    question: "Mình có cần chia sẻ nhiều thông tin cá nhân không?",
+                    answer: "Không cần đâu. Khi đăng ký, bạn chỉ cần điền những thông tin cần thiết để tham gia chương trình.\\nNếu trong quá trình tổ chức có cần thêm thông tin, admin sẽ luôn nhắn tin trao đổi trước với bạn, không tự ý thu thập hay sử dụng ngoài mục đích chương trình."
+                },
+                {
+                    question: "Nếu mình hướng nội, ít nói thì có phù hợp không?",
+                    answer: "Rất phù hợp. 30 Days không yêu cầu bạn phải nói nhiều hay thể hiện liên tục, chỉ cần bạn hiện diện và làm theo nhịp của mình."
+                },
+                {
+                    question: "Có ai nhắc nhở nếu mình quên làm nhiệm vụ không?",
+                    answer: "Có nhé. Group Telegram luôn có nhắc nhở nhẹ nhàng để bạn không bị quên hay bỏ lỡ quá nhiều ngày."
+                },
+                {
+                    question: "Nên chọn gói theo tháng hay Membership 12 tháng?",
+                    answer: "Gói theo tháng phù hợp nếu bạn muốn thử trải nghiệm.\\nMembership 12 tháng dành cho những bạn muốn đồng hành lâu dài và tham gia trọn vẹn các chủ đề trong năm."
+                },
+                {
+                    question: "Nếu tham gia giữa chừng thì có được không?",
+                    answer: "30 Days chỉ mở đăng ký trong thời gian nhất định thôi.\\nChương trình khuyến khích bạn tham gia từ đầu hành trình, vì khi đi cùng nhau trọn vẹn 30 ngày thì trải nghiệm sẽ vui hơn, kết nối tốt hơn và hiệu quả cũng rõ ràng hơn.\\nVì vậy, chương trình không nhận tham gia giữa chừng để đảm bảo chất lượng cho tất cả mọi người."
+                },
+                {
+                    question: "Membership có thể bảo lưu nếu bận không?",
+                    answer: "Có. Trong trường hợp bạn bận hoặc cần nghỉ một thời gian, Membership sẽ được hỗ trợ bảo lưu theo chính sách của chương trình."
+                }
+            ]
+        },
         info: {
             title: "THÔNG TIN KHÓA HỌC",
             topic: "Chủ đề",
