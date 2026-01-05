@@ -217,7 +217,7 @@ const ThirtyDayPage = () => {
                     const items = t("thirty_day_challenge.what_is_section.col_2.items");
                     return Array.isArray(items) ? items.map((item: string, idx: number) => (
                       <li key={idx} className="flex items-start gap-3">
-                     
+                        <span className="text-primary font-bold text-xl leading-none">→</span>
                         <span className="text-gray-600 text-base md:text-lg leading-relaxed">{item}</span>
                       </li>
                     )) : null;

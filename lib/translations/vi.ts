@@ -586,9 +586,9 @@ export const vi = {
             col_2: {
                 title: "Ai nên tham gia?",
                 items: [
-                    "-> Những người đang mất động lực, trì hoãn và muốn bắt đầu lại.",
-                    "-> Người muốn xây dựng thói quen, kỹ năng và năng lượng sống tốt hơn.",
-                    "-> Người muốn ở trong một môi trường tích cực để phát triển bản thân."
+                    "Những người đang mất động lực, trì hoãn và muốn bắt đầu lại.",
+                    "Người muốn xây dựng thói quen, kỹ năng và năng lượng sống tốt hơn.",
+                    "Người muốn ở trong một môi trường tích cực để phát triển bản thân."
                 ]
             }
         },
