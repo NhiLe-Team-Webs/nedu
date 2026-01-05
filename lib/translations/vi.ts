@@ -581,14 +581,14 @@ export const vi = {
             heading: "30 NGÀY CÓ GÌ?",
             col_1: {
                 title: "Thử thách 30 ngày là gì?",
-                content: "Đây là hành trình 30 ngày hành động liên tục dưới sự quan sát và thúc đẩy của Nhi Lê. Mỗi ngày, bạn nhận nhiệm vụ và cần hoàn thành, báo cáo kết quả trước 11h đêm trong nhóm học."
+                content: "Đây là hành trình 30 ngày hành động liên tục dưới sự quan sát và thúc đẩy của Nhi Lê, ngoài ra còn được hỗ trợ 24/7 từ đội ngũ chuyên nghiệp.\n\nMỗi ngày, bạn chỉ cần dành 5–10 phút để thực hiện một nhiệm vụ đơn giản và check-in trong nhóm.\n\nTừng bước nhỏ, nhưng đủ để bạn cảm nhận mình đang thay đổi."
             },
             col_2: {
                 title: "Ai nên tham gia?",
                 items: [
-                    "Những ai đang trì hoãn, thiếu động lực và muốn thay đổi bản thân.",
-                    "Người đang tìm kiếm môi trường để phát triển bản thân.",
-                    "Người muốn học hoặc muốn nâng cấp các kỹ năng."
+                    "Những người đang mất động lực, trì hoãn và muốn bắt đầu lại.",
+                    "Người muốn xây dựng thói quen, kỹ năng và năng lượng sống tốt hơn.",
+                    "Người muốn ở trong một môi trường tích cực để phát triển bản thân."
                 ]
             }
         },

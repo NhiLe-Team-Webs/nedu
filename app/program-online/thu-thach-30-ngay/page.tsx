@@ -208,9 +208,12 @@ const ThirtyDayPage = () => {
                 <h3 className="text-xl md:text-2xl font-bold text-primary mb-6">
                   {t("thirty_day_challenge.what_is_section.col_1.title")}
                 </h3>
-                <p className="text-gray-600 text-base md:text-lg leading-relaxed">
-                  {t("thirty_day_challenge.what_is_section.col_1.content")}
-                </p>
+                <p 
+                  className="text-gray-600 text-base md:text-lg leading-relaxed"
+                  dangerouslySetInnerHTML={{ 
+                    __html: t("thirty_day_challenge.what_is_section.col_1.content").replace(/\n\n/g, '<br /><br />').replace(/\n/g, '<br />') 
+                  }}
+                />
               </div>
 
               <div className="border border-gray-200 rounded-3xl p-8 md:p-10 flex flex-col items-start h-full hover:shadow-lg transition-shadow duration-300">
@@ -222,7 +225,7 @@ const ThirtyDayPage = () => {
                     const items = t("thirty_day_challenge.what_is_section.col_2.items");
                     return Array.isArray(items) ? items.map((item: string, idx: number) => (
                       <li key={idx} className="flex items-start gap-3">
-                        <span className="text-primary font-bold text-xl leading-none">-</span>
+                        <span className="text-primary font-bold text-xl leading-none">→</span>
                         <span className="text-gray-600 text-base md:text-lg leading-relaxed">{item}</span>
                       </li>
                     )) : null;
