@@ -12,6 +12,9 @@ import { useCart } from "@/lib/cart-context";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { getCourseDetailBySlug } from "@/lib/services/courseService";
+import { CourseDetail } from "@/lib/types/course";
+
 
 const filters = [
   { id: "all", label: "Tất cả" },
@@ -73,6 +76,7 @@ const CourseCardSkeleton = () => (
 );
 
 export default function ProgramPage() {
+  const [courses, setCourses] = useState(coursesData);
   const [filter, setFilter] = useState("all");
   const router = useRouter();
   const { t } = useLanguage();
@@ -82,13 +86,45 @@ export default function ProgramPage() {
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
 
-
   useEffect(() => {
-    // Simulate loading delay
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-    return () => clearTimeout(timer);
+    async function fetchDynamicData() {
+      setIsLoading(true);
+      try {
+        // Fetch updated data for 30-day challenge (ID 82)
+        const dynamicData = await getCourseDetailBySlug("thu-thach-30-ngay");
+
+        if (dynamicData) {
+          setCourses(prev => prev.map(course => {
+            if (course.slug === 'thu-thach-30-ngay') {
+              // Extract data from ID 82 record
+              const p = dynamicData.program;
+              const d = dynamicData.description;
+
+              return {
+                ...course,
+                title: d?.program_name || p?.program_name || course.title,
+                mission: d?.short_description || course.mission,
+                heroImage: p?.image || course.heroImage,
+                price: {
+                  ...course.price,
+                  amount: p?.program_price ? p.program_price.toLocaleString('vi-VN') : course.price.amount
+                },
+                info: {
+                  ...course.info,
+                  topic: p?.hashtag || d?.topic || course.info.topic,
+                }
+              };
+            }
+            return course;
+          }));
+        }
+      } catch (error) {
+        console.error("Error updating dynamic course data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchDynamicData();
   }, []);
 
   const navigateToCourse = (mode: string, slug: string) => {
@@ -125,11 +161,11 @@ export default function ProgramPage() {
   };
 
   const filteredCourses = useMemo(() => {
-    if (filter === "all") return coursesData;
-    if (filter === "offline") return coursesData.filter((c) => c.mode === "offline");
-    if (filter === "online") return coursesData.filter((c) => c.mode === "online");
-    return coursesData.filter((c) => c.category.includes("Doanh nghiệp"));
-  }, [filter]);
+    if (filter === "all") return courses;
+    if (filter === "offline") return courses.filter((c) => c.mode === "offline");
+    if (filter === "online") return courses.filter((c) => c.mode === "online");
+    return courses.filter((c) => c.category.includes("Doanh nghiệp"));
+  }, [filter, courses]);
 
   const updateScrollButtons = () => {
     if (carouselRef.current) {

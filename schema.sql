@@ -176,6 +176,10 @@ CREATE TABLE public.order (
   status smallint DEFAULT '0'::smallint,
   code uuid NOT NULL DEFAULT gen_random_uuid() UNIQUE,
   program_data jsonb DEFAULT '{}'::jsonb,
+  transaction_id bigint,
+  receipt_id bigint,
+  coupon_code character varying,
+  course_name text,
   CONSTRAINT order_pkey PRIMARY KEY (id)
 );
 CREATE TABLE public.page_common (
@@ -300,6 +304,24 @@ CREATE TABLE public.program_partner (
   created_at timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT program_partner_pkey PRIMARY KEY (program_id, partner_id)
 );
+CREATE TABLE public.receipts (
+  id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  order_id bigint NOT NULL,
+  transaction_id bigint NOT NULL,
+  receipt_number character varying NOT NULL UNIQUE,
+  customer_name character varying NOT NULL,
+  customer_email character varying NOT NULL,
+  customer_phone character varying,
+  amount numeric NOT NULL,
+  currency character varying DEFAULT 'VND'::character varying,
+  payment_method character varying DEFAULT 'bank_transfer'::character varying,
+  program_data jsonb DEFAULT '{}'::jsonb,
+  issued_at timestamp with time zone NOT NULL DEFAULT now(),
+  CONSTRAINT receipts_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_receipts_order FOREIGN KEY (order_id) REFERENCES public.order(id),
+  CONSTRAINT fk_receipts_transaction FOREIGN KEY (transaction_id) REFERENCES public.transactions(id)
+);
 CREATE TABLE public.roles (
   id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
   created_at timestamp with time zone NOT NULL DEFAULT now(),
@@ -320,6 +342,24 @@ CREATE TABLE public.setting (
   is_public smallint DEFAULT '1'::smallint,
   CONSTRAINT setting_pkey PRIMARY KEY (id)
 );
+CREATE TABLE public.transactions (
+  id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  updated_at timestamp with time zone DEFAULT now(),
+  order_id bigint NOT NULL,
+  order_code character varying NOT NULL,
+  amount numeric NOT NULL,
+  currency character varying DEFAULT 'VND'::character varying,
+  status character varying NOT NULL DEFAULT 'pending'::character varying,
+  gateway character varying DEFAULT 'sepay'::character varying,
+  gateway_transaction_id character varying,
+  gateway_reference_code character varying,
+  qr_code_url text,
+  payment_date timestamp with time zone,
+  metadata jsonb DEFAULT '{}'::jsonb,
+  CONSTRAINT transactions_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_transactions_order FOREIGN KEY (order_id) REFERENCES public.order(id)
+);
 CREATE TABLE public.user (
   deleted boolean NOT NULL DEFAULT false,
   updated_at timestamp without time zone DEFAULT now(),
@@ -335,4 +375,19 @@ CREATE TABLE public.user (
   provider_type smallint,
   id integer NOT NULL DEFAULT nextval('user_id_seq1'::regclass),
   CONSTRAINT user_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.webhook_logs (
+  id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  gateway character varying NOT NULL,
+  event_type character varying,
+  raw_payload jsonb NOT NULL,
+  headers jsonb,
+  processed boolean DEFAULT false,
+  processing_result character varying,
+  error_message text,
+  order_code character varying,
+  order_id bigint,
+  source_ip character varying,
+  CONSTRAINT webhook_logs_pkey PRIMARY KEY (id)
 );

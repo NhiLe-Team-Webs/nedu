@@ -22,6 +22,13 @@ import { useCart } from "@/lib/cart-context";
 import { courses } from "@/data/courses";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { getCourseDetailBySlug } from "@/lib/services/courseService";
+import { CourseDetail } from "@/lib/types/course";
+
+const Skeleton = ({ className }: { className?: string }) => (
+  <div className={cn("animate-pulse bg-gray-200 rounded", className)} />
+);
+
 
 const challengePosterDesktop = "/picture/thuthach30day_desktop.png";
 const challengePosterMobile = "/picture/thuthach30day_mobile.png";
@@ -38,8 +45,53 @@ const formatCurrency = (value: number | undefined) => {
 
 const ThirtyDayPage = () => {
   const { t } = useLanguage();
+  const { addToCart } = useCart();
+  const router = useRouter();
 
-  // Privileges data
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
+  const [showAllFaq, setShowAllFaq] = useState(false);
+  const [courseData, setCourseData] = useState<CourseDetail | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [activeBlock, setActiveBlock] = useState("1");
+  const [addedToCart, setAddedToCart] = useState<{
+    monthly: boolean;
+    membership: boolean;
+  }>({ monthly: false, membership: false });
+
+  useEffect(() => {
+    async function fetchData() {
+      setIsLoading(true);
+      const data = await getCourseDetailBySlug("thu-thach-30-ngay");
+      if (data) {
+        setCourseData(data);
+      }
+      setIsLoading(false);
+    }
+    fetchData();
+  }, []);
+
+  // Sync some data from DB to local variables if available
+  const dbInfo = courseData?.description?.information || {};
+  const dbPrivileges = Array.isArray(courseData?.description?.privilege) ? courseData?.description?.privilege : null;
+  const dbMentor = courseData?.mentors?.[0];
+
+  // Logic mapping fields FROM YOUR DATABASE LOG
+  const displaySchedule = courseData?.program?.total_sessions || t("thirty_day_challenge.timeline.time_value");
+
+  const displayStudentCount = (courseData?.program as any)?.course
+    ? `${(courseData?.program as any).course} người`
+    : (dbInfo.student_count || t("thirty_day_challenge.timeline.students_count"));
+
+  const displayLocation = courseData?.program?.link_payment || t("thirty_day_challenge.timeline.location_value");
+
+  const displayCourseName = courseData?.program?.program_name || courseData?.description?.program_name || t("thirty_day_challenge.title");
+  const displayTopic = courseData?.program?.hashtag || courseData?.description?.topic || t("thirty_day_challenge.topic_name");
+  const displayShortDesc = courseData?.description?.short_description || t("thirty_day_challenge.what_is_section.col_1.content");
+
+  // Map 'privilege' from DB to the "Sau 30 ngày..." blocks as requested
+  const highlightFeatures = dbPrivileges;
+
+  // Privileges data - Reverted to static translations as requested
   const privileges = [
     {
       icon: <UserPlus className="h-8 w-8 text-primary" />,
@@ -83,7 +135,7 @@ const ThirtyDayPage = () => {
       text: t("thirty_day_challenge.pricing.membership.features.all_challenges"),
       included: true,
     },
-   
+
     {
       text: t("thirty_day_challenge.pricing.membership.features.member_group"),
       included: true,
@@ -95,16 +147,6 @@ const ThirtyDayPage = () => {
       included: true,
     },
   ];
-  const { addToCart } = useCart();
-  const router = useRouter();
-
-  const [activeBlock, setActiveBlock] = useState("1");
-  const [addedToCart, setAddedToCart] = useState<{
-    monthly: boolean;
-    membership: boolean;
-  }>({ monthly: false, membership: false });
-  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
-  const [showAllFaq, setShowAllFaq] = useState(false);
 
   const toggleFaq = (index: number) => {
     setOpenFaqIndex(openFaqIndex === index ? null : index);
@@ -174,23 +216,31 @@ const ThirtyDayPage = () => {
         {/* HERO SECTION - Responsive images for desktop/mobile */}
         <section className="relative w-full -mt-14 sm:-mt-16 md:-mt-32 pt-14 sm:pt-16 md:pt-32">
           {/* Desktop Image */}
-          <Image
-            src={challengePosterDesktop}
-            alt={t("thirty_day_challenge.title")}
-            width={1920}
-            height={1080}
-            className="hidden md:block w-full h-auto object-contain hover:transform-none"
-            priority
-          />
+          {isLoading ? (
+            <Skeleton className="hidden md:block w-full aspect-[16/9]" />
+          ) : (
+            <Image
+              src={challengePosterDesktop}
+              alt={displayCourseName}
+              width={1920}
+              height={1080}
+              className="hidden md:block w-full h-auto object-contain hover:transform-none"
+              priority
+            />
+          )}
           {/* Mobile Image */}
-          <Image
-            src={challengePosterMobile}
-            alt={t("thirty_day_challenge.title")}
-            width={750}
-            height={1334}
-            className="block md:hidden w-full h-auto object-contain hover:transform-none"
-            priority
-          />
+          {isLoading ? (
+            <Skeleton className="block md:hidden w-full aspect-[750/1334]" />
+          ) : (
+            <Image
+              src={challengePosterMobile}
+              alt={displayCourseName}
+              width={750}
+              height={1334}
+              className="block md:hidden w-full h-auto object-contain hover:transform-none"
+              priority
+            />
+          )}
         </section>
 
 
@@ -205,14 +255,22 @@ const ThirtyDayPage = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
               <div className="border border-gray-200 rounded-3xl p-8 md:p-10 flex flex-col items-start h-full hover:shadow-lg transition-shadow duration-300">
                 <h3 className="text-xl md:text-2xl font-bold text-primary mb-6">
-                  {t("thirty_day_challenge.what_is_section.col_1.title")}
+                  {isLoading ? <Skeleton className="h-8 w-48" /> : (courseData?.description?.topic || t("thirty_day_challenge.what_is_section.col_1.title"))}
                 </h3>
-                <p 
-                  className="text-gray-600 text-base md:text-lg leading-relaxed"
-                  dangerouslySetInnerHTML={{ 
-                    __html: t("thirty_day_challenge.what_is_section.col_1.content").replace(/\n\n/g, '<br /><br />').replace(/\n/g, '<br />') 
-                  }}
-                />
+                {isLoading ? (
+                  <div className="space-y-4 w-full">
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-3/4" />
+                  </div>
+                ) : (
+                  <p
+                    className="text-gray-600 text-base md:text-lg leading-relaxed"
+                    dangerouslySetInnerHTML={{
+                      __html: displayShortDesc.replace(/\n\n/g, '<br /><br />').replace(/\n/g, '<br />')
+                    }}
+                  />
+                )}
               </div>
 
               <div className="border border-gray-200 rounded-3xl p-8 md:p-10 flex flex-col items-start h-full hover:shadow-lg transition-shadow duration-300">
@@ -247,101 +305,65 @@ const ThirtyDayPage = () => {
             <div className="flex flex-col gap-4">
               {/* Main Content Row - 3 expandable columns */}
               <div className="flex flex-col md:flex-row w-full gap-4 md:h-[280px]">
-                {/* Block 1 - Nắm rõ thu và chi */}
-                <div
-                  onClick={() => setActiveBlock("1")}
-                  className={cn(
-                    "relative flex flex-col p-6 md:p-8 rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 ease-in-out",
-                    activeBlock === "1"
-                      ? "flex-[3] bg-gray-800 text-white"
-                      : "flex-[1] bg-gray-100 text-gray-700 hover:bg-gray-200 justify-center min-h-[120px] md:min-h-auto"
-                  )}
-                >
-                  {activeBlock === "1" ? (
-                    <div className="flex-1">
-                      <h3 className="text-xl md:text-2xl font-bold text-primary mb-4">
-                        {t("thirty_day_challenge.timeline.block_1.title")}
-                      </h3>
-                      <div className="border-l-4 border-primary pl-4 my-5 italic text-gray-300 font-medium text-sm md:text-base">
-                        {t("thirty_day_challenge.timeline.block_1.quote")}
-                      </div>
-                      <div className="flex items-start gap-3 text-gray-300 text-sm md:text-base">
-                        <ArrowRight className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                        <span>
-                          {t("thirty_day_challenge.timeline.block_1.content")}
-                        </span>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="flex items-center justify-center h-full">
-                      <p className="text-base md:text-lg font-bold text-gray-700 uppercase text-center leading-relaxed" dangerouslySetInnerHTML={{ __html: t("thirty_day_challenge.timeline.block_1.collapsed").replace(/\\n/g, '<br />') }}></p>
-                    </div>
-                  )}
-                </div>
+                {/* Dynamic highlight features or fallback blocks */}
+                {[0, 1, 2].map((idx) => {
+                  const feature = highlightFeatures?.[idx];
+                  const blockId = (idx + 1).toString();
+                  const isActive = activeBlock === blockId;
 
-                {/* Block 2 - Chi tiêu có ý thức */}
-                <div
-                  onClick={() => setActiveBlock("2")}
-                  className={cn(
-                    "relative flex flex-col p-6 md:p-8 rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 ease-in-out",
-                    activeBlock === "2"
-                      ? "flex-[3] bg-gray-800 text-white"
-                      : "flex-[1] bg-gray-100 text-gray-700 hover:bg-gray-200 justify-center min-h-[120px] md:min-h-auto"
-                  )}
-                >
-                  {activeBlock === "2" ? (
-                    <div className="flex-1">
-                      <h3 className="text-xl md:text-2xl font-bold text-primary mb-4">
-                        {t("thirty_day_challenge.timeline.block_2.title")}
-                      </h3>
-                      <div className="border-l-4 border-primary pl-4 my-5 italic text-gray-300 font-medium text-sm md:text-base">
-                        {t("thirty_day_challenge.timeline.block_2.quote")}
-                      </div>
-                      <div className="flex items-start gap-3 text-gray-300 text-sm md:text-base">
-                        <ArrowRight className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                        <span>
-                          {t("thirty_day_challenge.timeline.block_2.content")}
-                        </span>
-                      </div>
+                  return (
+                    <div
+                      key={blockId}
+                      onClick={() => setActiveBlock(blockId)}
+                      className={cn(
+                        "relative flex flex-col p-6 md:p-8 rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 ease-in-out",
+                        isActive
+                          ? "flex-[3] bg-gray-800 text-white"
+                          : "flex-[1] bg-gray-100 text-gray-700 hover:bg-gray-200 justify-center min-h-[120px] md:min-h-auto"
+                      )}
+                    >
+                      {isActive ? (
+                        <div className="flex-1">
+                          {isLoading ? (
+                            <div className="space-y-4">
+                              <Skeleton className="h-8 w-3/4 bg-gray-700" />
+                              <Skeleton className="h-12 w-full bg-gray-700" />
+                              <Skeleton className="h-16 w-full bg-gray-700" />
+                            </div>
+                          ) : (
+                            <>
+                              <h3 className="text-xl md:text-2xl font-bold text-primary mb-4">
+                                {feature?.title || t(`thirty_day_challenge.timeline.block_${blockId}.title`)}
+                              </h3>
+                              <div className="border-l-4 border-primary pl-4 my-5 italic text-gray-300 font-medium text-sm md:text-base">
+                                {feature?.quote || (feature?.description?.split('\n')[0]) || t(`thirty_day_challenge.timeline.block_${blockId}.quote`)}
+                              </div>
+                              <div className="flex items-start gap-3 text-gray-300 text-sm md:text-base">
+                                <ArrowRight className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                                <span>
+                                  {feature?.content || feature?.description || t(`thirty_day_challenge.timeline.block_${blockId}.content`)}
+                                </span>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      ) : (
+                        <div className="flex items-center justify-center h-full">
+                          {isLoading ? (
+                            <Skeleton className="h-12 w-full" />
+                          ) : (
+                            <p
+                              className="text-base md:text-lg font-bold text-gray-700 uppercase text-center leading-relaxed"
+                              dangerouslySetInnerHTML={{
+                                __html: (feature?.collapsed_title || feature?.title || t(`thirty_day_challenge.timeline.block_${blockId}.collapsed`)).replace(/\\n/g, '<br />')
+                              }}
+                            ></p>
+                          )}
+                        </div>
+                      )}
                     </div>
-                  ) : (
-                    <div className="flex items-center justify-center h-full">
-                      <p className="text-base md:text-lg font-bold text-gray-700 uppercase text-center leading-relaxed" dangerouslySetInnerHTML={{ __html: t("thirty_day_challenge.timeline.block_2.collapsed").replace(/\\n/g, '<br />') }}></p>
-                    </div>
-                  )}
-                </div>
-
-                {/* Block 3 - Xây dựng thói quen */}
-                <div
-                  onClick={() => setActiveBlock("3")}
-                  className={cn(
-                    "relative flex flex-col p-6 md:p-8 rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 ease-in-out",
-                    activeBlock === "3"
-                      ? "flex-[3] bg-gray-800 text-white"
-                      : "flex-[1] bg-gray-100 text-gray-700 hover:bg-gray-200 justify-center min-h-[120px] md:min-h-auto"
-                  )}
-                >
-                  {activeBlock === "3" ? (
-                    <div className="flex-1">
-                      <h3 className="text-xl md:text-2xl font-bold text-primary mb-4">
-                        {t("thirty_day_challenge.timeline.block_3.title")}
-                      </h3>
-                      <div className="border-l-4 border-primary pl-4 my-5 italic text-gray-300 font-medium text-sm md:text-base">
-                        {t("thirty_day_challenge.timeline.block_3.quote")}
-                      </div>
-                      <div className="flex items-start gap-3 text-gray-300 text-sm md:text-base">
-                        <ArrowRight className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                        <span>
-                          {t("thirty_day_challenge.timeline.block_3.content")}
-                        </span>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="flex items-center justify-center h-full">
-                      <p className="text-base md:text-lg font-bold text-gray-700 uppercase text-center leading-relaxed" dangerouslySetInnerHTML={{ __html: t("thirty_day_challenge.timeline.block_3.collapsed").replace(/\\n/g, '<br />') }}></p>
-                    </div>
-                  )}
-                </div>
+                  );
+                })}
               </div>
 
               {/* Info Cards */}
@@ -351,9 +373,11 @@ const ThirtyDayPage = () => {
                   <p className="text-xs text-gray-500 uppercase tracking-wider mt-4">
                     {t("thirty_day_challenge.timeline.time_label")}
                   </p>
-                  <p className="text-xl md:text-2xl font-bold text-gray-900 mt-1">
-                    28/01/2026 - 28/02/2026
-                  </p>
+                  {isLoading ? <Skeleton className="h-8 w-full mt-1" /> : (
+                    <p className="text-xl md:text-2xl font-bold text-gray-900 mt-1">
+                      {displaySchedule}
+                    </p>
+                  )}
                 </div>
 
                 <div className="bg-gradient-to-br from-gray-700 to-gray-900 rounded-2xl p-6 text-white transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
@@ -361,7 +385,9 @@ const ThirtyDayPage = () => {
                   <p className="text-xs text-white uppercase tracking-wider mt-4">
                     {t("thirty_day_challenge.timeline.students_label")}
                   </p>
-                  <p className="text-xl md:text-2xl font-bold text-white mt-1">{t("thirty_day_challenge.timeline.students_count")}</p>
+                  {isLoading ? <Skeleton className="h-8 w-24 mt-1 bg-gray-600" /> : (
+                    <p className="text-xl md:text-2xl font-bold text-white mt-1">{displayStudentCount}</p>
+                  )}
                 </div>
 
                 <div className="bg-gray-100 rounded-2xl p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
@@ -369,9 +395,11 @@ const ThirtyDayPage = () => {
                   <p className="text-xs text-gray-500 uppercase tracking-wider mt-4">
                     {t("thirty_day_challenge.timeline.location_label")}
                   </p>
-                  <p className="text-xl md:text-2xl font-bold text-gray-900 mt-1">
-                    {t("thirty_day_challenge.timeline.location_value")}
-                  </p>
+                  {isLoading ? <Skeleton className="h-8 w-full mt-1" /> : (
+                    <p className="text-xl md:text-2xl font-bold text-gray-900 mt-1">
+                      {displayLocation}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -423,37 +451,57 @@ const ThirtyDayPage = () => {
               <div className="grid gap-8 lg:gap-12 lg:grid-cols-[minmax(0,2.3fr)_minmax(0,1fr)] items-start">
                 {/* Content */}
                 <div className="space-y-6 text-base sm:text-lg text-gray-600 leading-relaxed">
-                  <p>
-                    {t("thirty_day_challenge.instructor_section.bio_1")}
-                  </p>
-                  <p>
-                    {t("thirty_day_challenge.instructor_section.bio_2")}
-                  </p>
-                  <p>
-                    {t("thirty_day_challenge.instructor_section.bio_3")}
-                  </p>
+                  {isLoading ? (
+                    <div className="space-y-4">
+                      <Skeleton className="h-4 w-full" />
+                      <Skeleton className="h-4 w-full" />
+                      <Skeleton className="h-4 w-5/6" />
+                      <Skeleton className="h-4 w-full" />
+                      <Skeleton className="h-4 w-4/6" />
+                    </div>
+                  ) : dbMentor ? (
+                    <div className="whitespace-pre-line">
+                      {dbMentor.bio}
+                    </div>
+                  ) : (
+                    <>
+                      <p>
+                        {t("thirty_day_challenge.instructor_section.bio_1")}
+                      </p>
+                      <p>
+                        {t("thirty_day_challenge.instructor_section.bio_2")}
+                      </p>
+                      <p>
+                        {t("thirty_day_challenge.instructor_section.bio_3")}
+                      </p>
+                    </>
+                  )}
                 </div>
 
                 {/* Sidebar with image */}
                 <aside className="bg-white border border-gray-200 rounded-ios-lg p-6 sm:p-8 shadow-ios-card">
                   <div className="text-center">
                     <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">
-                      NhiLe
+                      {isLoading ? <Skeleton className="h-8 w-24 mx-auto" /> : (dbMentor?.name || "NhiLe")}
                     </h3>
                     <div className="bg-primary rounded-ios-lg aspect-square max-w-[220px] mx-auto flex items-center justify-center mb-6 overflow-hidden">
-                      <img
-                        src="/picture/nhile_new.jpg"
-                        alt="NhiLe avatar"
-                        loading="lazy"
-                        className="object-cover w-full h-full rounded-ios-lg shadow-sm"
-                      />
+                      {isLoading ? <Skeleton className="w-full h-full" /> : (
+                        <img
+                          src={dbMentor?.avatar_url || "/picture/nhile_new.jpg"}
+                          alt={dbMentor?.name || "NhiLe avatar"}
+                          loading="lazy"
+                          className="object-cover w-full h-full rounded-ios-lg shadow-sm"
+                        />
+                      )}
                     </div>
                   </div>
                   <div>
                     <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">
                       {t("thirty_day_challenge.instructor_section.profession_label")}
                     </h4>
-                    <p className="text-base text-gray-800">{t("thirty_day_challenge.instructor_section.profession")}</p>
+                    {isLoading ? <Skeleton className="h-6 w-32" /> : (
+                      <p className="text-base text-gray-800">{dbMentor?.role || t("thirty_day_challenge.instructor_section.profession")}</p>
+                    )}
                   </div>
                 </aside>
               </div>
