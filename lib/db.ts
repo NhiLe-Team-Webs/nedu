@@ -26,6 +26,16 @@ const safeUrl = supabaseUrl || 'https://placeholder.supabase.co';
 const safeAnonKey = supabaseAnonKey || 'placeholder-key';
 const safeServiceKey = supabaseServiceRoleKey || safeAnonKey;
 
+// Debug log for environment variables (safely)
+if (typeof window !== 'undefined') {
+    console.log('--- SUPABASE CLIENT INIT ---');
+    console.log('URL:', safeUrl);
+    console.log('Key length:', safeAnonKey?.length);
+    if (safeAnonKey === 'placeholder-key' || safeAnonKey.length < 50) {
+        console.error('CRITICAL: Supabase Anon Key is INVALID (too short or placeholder). Please check .env.local');
+    }
+}
+
 /**
  * Supabase client for anonymous/public access
  * Use this for client-side operations with RLS
