@@ -53,23 +53,13 @@ const Courses: React.FC = () => {
       type: "online"
     },
     {
-      id: 6,
-      slug: "ai-for-business-communication",
-      image: "/picture/ai_for_business.png",
-      date: "30/07/2025",
-      title: t("courses.slides.ai_biz.title"),
+      id: 8,
+      slug: "thu-thach-30-ngay",
+      image: "/picture/thuthach30day_desktop.png",
+      date: "28/12/2025 – 28/01/2026",
+      title: t("courses.slides.tt30n.title"),
       label: t("courses.online"),
-      content: t("courses.slides.ai_biz.content"),
-      type: "online"
-    },
-    {
-      id: 7,
-      slug: "ai-in-marketing",
-      image: "/picture/ai_in_mkt.png",
-      date: "05/08/2025",
-      title: t("courses.slides.ai_mkt.title"),
-      label: t("courses.online"),
-      content: t("courses.slides.ai_mkt.content"),
+      content: t("courses.slides.tt30n.content"),
       type: "online"
     }
   ], [t]);

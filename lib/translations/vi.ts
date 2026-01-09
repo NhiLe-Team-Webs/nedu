@@ -80,6 +80,10 @@ export const vi = {
             ai_mkt: {
                 title: "AI In Marketing",
                 content: "Ứng dụng AI vào vận hành và kinh doanh."
+            },
+            tt30n: {
+                title: "Thử Thách 30 Ngày",
+                content: "Hành trình 30 ngày cùng Nhi Lê vượt qua sự trì hoãn."
             }
         }
     },
@@ -105,7 +109,7 @@ export const vi = {
         subheading: "ĐỂ CẬP NHẬT THÔNG TIN MỚI NHẤT TỪ CÁC KHÓA HỌC"
     },
     privilege: {
-        heading: "Đặc Quyền Của BạnBạn",
+        heading: "Đặc Quyền Của Bạn",
         subheading: "Nhận được sự hỗ trợ toàn diện và những quyền lợi độc quyền khi tham gia hành trình cùng N-Education.",
         items: {
             community: {
@@ -744,7 +748,7 @@ export const vi = {
                 added: "Đã thêm vào giỏ hàng",
                 features: {
                     all_topics: "Truy cập toàn bộ 12 chủ đề 30Days trong 1 năm (Kể cả kho tài liệu và thử thách cũ)",
-                    all_challenges: "Tham gia tất cả các thử thách mà không cần mua thêm",                  
+                    all_challenges: "Tham gia tất cả các thử thách mà không cần mua thêm",
                     member_group: "Gia nhập Group Member (duy trì suốt năm, không reset mỗi tháng)",
                     year_support: "Hỗ trợ xuyên suốt 12 tháng từ đội ngũ",
                     pause_right: "Quyền bảo lưu tối đa 1–2 tháng nếu bận",

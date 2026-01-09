@@ -166,46 +166,48 @@ export const courses: Course[] = [
     audience: [],
     privileges: []
   },
-  {
-    id: 3,
-    slug: 'gen-ai-101',
-    mode: 'online',
-    title: 'program_detail.courses.gen_ai_101.title',
-    category: ['categories.ai'],
-    heroImage: '/picture/thum_yt_1.png',
-    price: {
-      amount: '13.069.000',
-      currency: 'VNĐ'
-    },
-    paymentId: 78,
-    info: {
-      topic: 'program_detail.courses.gen_ai_101.topic',
-      schedule: '5/3-8/3/2025',
-      instructor: 'program_detail.courses.gen_ai_101.instructor',
-      sessions: 'program_detail.courses.gen_ai_101.sessions',
-      location: 'program_detail.courses.gen_ai_101.location',
-      capacity: 'program_detail.courses.gen_ai_101.capacity'
-    },
-    mission: 'program_detail.courses.gen_ai_101.description',
-    testimonials: ['Dm6gg-LHGqs'],
-    instructors: [
-      {
-        name: 'Linda Hui-Isaac',
-        title: 'Doanh nhân',
-        avatar: '/picture/linda.jpg',
-        bio: [
-          'Với hơn 20 năm kinh nghiệm quốc tế trong chiến lược thương hiệu và tiếp thị số, Linda Hui-Isaac là chuyên gia hàng đầu về AI Marketing và Digital Transformation. Bà từng đảm nhiệm vai trò cố vấn cho các doanh nghiệp lớn, SMEs, tổ chức chính phủ, cũng như tập đoàn đa quốc gia – bao gồm các công ty niêm yết SGX và thương hiệu xa xỉ châu Âu.'
-        ],
-        social: {
-          linkedin: 'https://www.linkedin.com/in/nhisg/',
-          facebook: 'https://www.facebook.com/nhile.sg',
-          instagram: 'https://www.instagram.com/nhile.sg/'
+  /*
+    {
+      id: 3,
+      slug: 'gen-ai-101',
+      mode: 'online',
+      title: 'program_detail.courses.gen_ai_101.title',
+      category: ['categories.ai'],
+      heroImage: '/picture/thum_yt_1.png',
+      price: {
+        amount: '13.069.000',
+        currency: 'VNĐ'
+      },
+      paymentId: 78,
+      info: {
+        topic: 'program_detail.courses.gen_ai_101.topic',
+        schedule: '5/3-8/3/2025',
+        instructor: 'program_detail.courses.gen_ai_101.instructor',
+        sessions: 'program_detail.courses.gen_ai_101.sessions',
+        location: 'program_detail.courses.gen_ai_101.location',
+        capacity: 'program_detail.courses.gen_ai_101.capacity'
+      },
+      mission: 'program_detail.courses.gen_ai_101.description',
+      testimonials: ['Dm6gg-LHGqs'],
+      instructors: [
+        {
+          name: 'Linda Hui-Isaac',
+          title: 'Doanh nhân',
+          avatar: '/picture/linda.jpg',
+          bio: [
+            'Với hơn 20 năm kinh nghiệm quốc tế trong chiến lược thương hiệu và tiếp thị số, Linda Hui-Isaac là chuyên gia hàng đầu về AI Marketing và Digital Transformation. Bà từng đảm nhiệm vai trò cố vấn cho các doanh nghiệp lớn, SMEs, tổ chức chính phủ, cũng như tập đoàn đa quốc gia – bao gồm các công ty niêm yết SGX và thương hiệu xa xỉ châu Âu.'
+          ],
+          social: {
+            linkedin: 'https://www.linkedin.com/in/nhisg/',
+            facebook: 'https://www.facebook.com/nhile.sg',
+            instagram: 'https://www.instagram.com/nhile.sg/'
+          }
         }
-      }
-    ],
-    audience: [],
-    privileges: []
-  },
+      ],
+      audience: [],
+      privileges: []
+    },
+  */
   {
     id: 4,
     slug: 'thuong-hieu-cua-ban',
@@ -286,86 +288,90 @@ export const courses: Course[] = [
     audience: [],
     privileges: []
   },
-  {
-    id: 6,
-    slug: 'ai-for-business-communication',
-    mode: 'online',
-    title: 'program_detail.courses.ai_for_business_communication.title',
-    category: ['categories.applied_ai'],
-    heroImage: '/picture/thum_yt_2.png',
-    price: {
-      amount: '23.609.000',
-      currency: 'VNĐ'
-    },
-    paymentId: 79,
-    info: {
-      topic: 'program_detail.courses.ai_for_business_communication.topic',
-      schedule: '5/3-8/3/2025',
-      instructor: 'program_detail.courses.ai_for_business_communication.instructor',
-      sessions: 'program_detail.courses.ai_for_business_communication.sessions',
-      location: 'program_detail.courses.ai_for_business_communication.location',
-      capacity: 'program_detail.courses.ai_for_business_communication.capacity'
-    },
-    mission: 'program_detail.courses.ai_for_business_communication.description',
-    testimonials: ['Dm6gg-LHGqs'],
-    instructors: [
-      {
-        name: 'Linda Hui-Isaac',
-        title: 'Chuyên gia chiến lược AI & Cố vấn Marketing',
-        avatar: '/picture/linda.jpg',
-        bio: [
-          'Với hơn 20 năm kinh nghiệm quốc tế trong chiến lược thương hiệu và tiếp thị số, Linda Hui-Isaac là chuyên gia hàng đầu về AI Marketing và Digital Transformation. Bà từng đảm nhiệm vai trò cố vấn cho các doanh nghiệp lớn, SMEs, tổ chức chính phủ, cũng như tập đoàn đa quốc gia – bao gồm các công ty niêm yết SGX và thương hiệu xa xỉ châu Âu.'
-        ],
-        social: {
-          linkedin: 'https://www.linkedin.com/in/nhisg/',
-          facebook: 'https://www.facebook.com/nhile.sg',
-          instagram: 'https://www.instagram.com/nhile.sg/'
+  /*
+    {
+      id: 6,
+      slug: 'ai-for-business-communication',
+      mode: 'online',
+      title: 'program_detail.courses.ai_for_business_communication.title',
+      category: ['categories.applied_ai'],
+      heroImage: '/picture/thum_yt_2.png',
+      price: {
+        amount: '23.609.000',
+        currency: 'VNĐ'
+      },
+      paymentId: 79,
+      info: {
+        topic: 'program_detail.courses.ai_for_business_communication.topic',
+        schedule: '5/3-8/3/2025',
+        instructor: 'program_detail.courses.ai_for_business_communication.instructor',
+        sessions: 'program_detail.courses.ai_for_business_communication.sessions',
+        location: 'program_detail.courses.ai_for_business_communication.location',
+        capacity: 'program_detail.courses.ai_for_business_communication.capacity'
+      },
+      mission: 'program_detail.courses.ai_for_business_communication.description',
+      testimonials: ['Dm6gg-LHGqs'],
+      instructors: [
+        {
+          name: 'Linda Hui-Isaac',
+          title: 'Chuyên gia chiến lược AI & Cố vấn Marketing',
+          avatar: '/picture/linda.jpg',
+          bio: [
+            'Với hơn 20 năm kinh nghiệm quốc tế trong chiến lược thương hiệu và tiếp thị số, Linda Hui-Isaac là chuyên gia hàng đầu về AI Marketing và Digital Transformation. Bà từng đảm nhiệm vai trò cố vấn cho các doanh nghiệp lớn, SMEs, tổ chức chính phủ, cũng như tập đoàn đa quốc gia – bao gồm các công ty niêm yết SGX và thương hiệu xa xỉ châu Âu.'
+          ],
+          social: {
+            linkedin: 'https://www.linkedin.com/in/nhisg/',
+            facebook: 'https://www.facebook.com/nhile.sg',
+            instagram: 'https://www.instagram.com/nhile.sg/'
+          }
         }
-      }
-    ],
-    audience: [],
-    privileges: []
-  },
-  {
-    id: 7,
-    slug: 'ai-in-marketing',
-    mode: 'online',
-    title: 'program_detail.courses.ai_in_marketing.title',
-    category: ['categories.digital_marketing'],
-    heroImage: '/picture/thum_yt_3.png',
-    price: {
-      amount: '28.985.000',
-      currency: 'VNĐ'
+      ],
+      audience: [],
+      privileges: []
     },
-    paymentId: 80,
-    info: {
-      topic: 'program_detail.courses.ai_in_marketing.topic',
-      schedule: '5/3-8/3/2025',
-      instructor: 'program_detail.courses.ai_in_marketing.instructor',
-      sessions: 'program_detail.courses.ai_in_marketing.sessions',
-      location: 'program_detail.courses.ai_in_marketing.location',
-      capacity: 'program_detail.courses.ai_in_marketing.capacity'
-    },
-    mission: 'program_detail.courses.ai_in_marketing.description',
-    testimonials: ['Dm6gg-LHGqs'],
-    instructors: [
-      {
-        name: 'Linda Hui-Isaac',
-        title: 'Chuyên gia chiến lược AI & Cố vấn Marketing',
-        avatar: '/picture/linda.jpg',
-        bio: [
-          'Với hơn 20 năm kinh nghiệm quốc tế trong chiến lược thương hiệu và tiếp thị số, Linda Hui-Isaac là chuyên gia hàng đầu về AI Marketing và Digital Transformation. Bà từng đảm nhiệm vai trò cố vấn cho các doanh nghiệp lớn, SMEs, tổ chức chính phủ, cũng như tập đoàn đa quốc gia – bao gồm các công ty niêm yết SGX và thương hiệu xa xỉ châu Âu.'
-        ],
-        social: {
-          linkedin: 'https://www.linkedin.com/in/nhisg/',
-          facebook: 'https://www.facebook.com/nhile.sg',
-          instagram: 'https://www.instagram.com/nhile.sg/'
+  */
+  /*
+    {
+      id: 7,
+      slug: 'ai-in-marketing',
+      mode: 'online',
+      title: 'program_detail.courses.ai_in_marketing.title',
+      category: ['categories.digital_marketing'],
+      heroImage: '/picture/thum_yt_3.png',
+      price: {
+        amount: '28.985.000',
+        currency: 'VNĐ'
+      },
+      paymentId: 80,
+      info: {
+        topic: 'program_detail.courses.ai_in_marketing.topic',
+        schedule: '5/3-8/3/2025',
+        instructor: 'program_detail.courses.ai_in_marketing.instructor',
+        sessions: 'program_detail.courses.ai_in_marketing.sessions',
+        location: 'program_detail.courses.ai_in_marketing.location',
+        capacity: 'program_detail.courses.ai_in_marketing.capacity'
+      },
+      mission: 'program_detail.courses.ai_in_marketing.description',
+      testimonials: ['Dm6gg-LHGqs'],
+      instructors: [
+        {
+          name: 'Linda Hui-Isaac',
+          title: 'Chuyên gia chiến lược AI & Cố vấn Marketing',
+          avatar: '/picture/linda.jpg',
+          bio: [
+            'Với hơn 20 năm kinh nghiệm quốc tế trong chiến lược thương hiệu và tiếp thị số, Linda Hui-Isaac là chuyên gia hàng đầu về AI Marketing và Digital Transformation. Bà từng đảm nhiệm vai trò cố vấn cho các doanh nghiệp lớn, SMEs, tổ chức chính phủ, cũng như tập đoàn đa quốc gia – bao gồm các công ty niêm yết SGX và thương hiệu xa xỉ châu Âu.'
+          ],
+          social: {
+            linkedin: 'https://www.linkedin.com/in/nhisg/',
+            facebook: 'https://www.facebook.com/nhile.sg',
+            instagram: 'https://www.instagram.com/nhile.sg/'
+          }
         }
-      }
-    ],
-    audience: [],
-    privileges: []
-  },
+      ],
+      audience: [],
+      privileges: []
+    },
+  */
   {
     id: 8,
     slug: 'thu-thach-30-ngay',

@@ -80,6 +80,10 @@ export const en = {
             ai_mkt: {
                 title: "AI In Marketing",
                 content: "Apply AI to operations and business."
+            },
+            tt30n: {
+                title: "30-Day Challenge",
+                content: "A 30-day journey with Nhi Le to overcome procrastination."
             }
         }
     },
