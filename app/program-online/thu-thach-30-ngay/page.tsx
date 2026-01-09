@@ -86,7 +86,7 @@ const ThirtyDayPage = () => {
 
   const displayCourseName = courseData?.program?.program_name || courseData?.description?.program_name || t("thirty_day_challenge.title");
   const displayTopic = courseData?.program?.hashtag || courseData?.description?.topic || t("thirty_day_challenge.topic_name");
-  const displayShortDesc = courseData?.description?.short_description || t("thirty_day_challenge.what_is_section.col_1.content");
+  const displayShortDesc = t("thirty_day_challenge.what_is_section.col_1.content");
 
   // Map 'privilege' from DB to the "Sau 30 ngày..." blocks as requested
   const highlightFeatures = dbPrivileges;
@@ -255,22 +255,14 @@ const ThirtyDayPage = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
               <div className="border border-gray-200 rounded-3xl p-8 md:p-10 flex flex-col items-start h-full hover:shadow-lg transition-shadow duration-300">
                 <h3 className="text-xl md:text-2xl font-bold text-primary mb-6">
-                  {isLoading ? <Skeleton className="h-8 w-48" /> : (courseData?.description?.topic || t("thirty_day_challenge.what_is_section.col_1.title"))}
+                  {t("thirty_day_challenge.what_is_section.col_1.title")}
                 </h3>
-                {isLoading ? (
-                  <div className="space-y-4 w-full">
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-4 w-3/4" />
-                  </div>
-                ) : (
-                  <p
-                    className="text-gray-600 text-base md:text-lg leading-relaxed"
-                    dangerouslySetInnerHTML={{
-                      __html: displayShortDesc.replace(/\n\n/g, '<br /><br />').replace(/\n/g, '<br />')
-                    }}
-                  />
-                )}
+                <p
+                  className="text-gray-600 text-base md:text-lg leading-relaxed"
+                  dangerouslySetInnerHTML={{
+                    __html: displayShortDesc.replace(/\n\n/g, '<br /><br />').replace(/\n/g, '<br />')
+                  }}
+                />
               </div>
 
               <div className="border border-gray-200 rounded-3xl p-8 md:p-10 flex flex-col items-start h-full hover:shadow-lg transition-shadow duration-300">
