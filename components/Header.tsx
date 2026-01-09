@@ -271,7 +271,7 @@ const Header = () => {
         )}
       </AnimatePresence>
 
-      <TopBanner />
+      {/* <TopBanner /> */}
 
       {/* Notification Modal - Mobile Only */}
       <NotificationModal

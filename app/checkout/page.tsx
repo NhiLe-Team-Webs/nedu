@@ -49,29 +49,29 @@ export default function CheckoutPage() {
       item.id === 2
     );
 
-    if (code === 'EARLY BIRD' || code === 'EARLYBIRD') {
-      if (hasLaChinhMinh4) {
-        setDiscount(10000000); // 10 triệu VNĐ
-        setDiscountType('fixed');
-        alert('Đã áp dụng mã giảm giá EARLY BIRD: -10.000.000 VNĐ');
-      } else {
-        setDiscount(0);
-        setDiscountType('percentage');
-        alert('Mã giảm giá EARLY BIRD chỉ áp dụng cho khóa "Là Chính Mình 04"');
-      }
-    } else if (code === 'SAVE10') {
-      setDiscount(10);
-      setDiscountType('percentage');
-      alert('Đã áp dụng mã giảm giá: 10%');
-    } else if (code === 'SAVE20') {
-      setDiscount(20);
-      setDiscountType('percentage');
-      alert('Đã áp dụng mã giảm giá: 20%');
-    } else {
-      setDiscount(0);
-      setDiscountType('percentage');
-      alert('Mã giảm giá không hợp lệ');
-    }
+    // if (code === 'EARLY BIRD' || code === 'EARLYBIRD') {
+    //   if (hasLaChinhMinh4) {
+    //     setDiscount(10000000); // 10 triệu VNĐ
+    //     setDiscountType('fixed');
+    //     alert('Đã áp dụng mã giảm giá EARLY BIRD: -10.000.000 VNĐ');
+    //   } else {
+    //     setDiscount(0);
+    //     setDiscountType('percentage');
+    //     alert('Mã giảm giá EARLY BIRD chỉ áp dụng cho khóa "Là Chính Mình 04"');
+    //   }
+    // } else if (code === 'SAVE10') {
+    //   setDiscount(10);
+    //   setDiscountType('percentage');
+    //   alert('Đã áp dụng mã giảm giá: 10%');
+    // } else if (code === 'SAVE20') {
+    //   setDiscount(20);
+    //   setDiscountType('percentage');
+    //   alert('Đã áp dụng mã giảm giá: 20%');
+    // } else {
+    //   setDiscount(0);
+    //   setDiscountType('percentage');
+    //   alert('Mã giảm giá không hợp lệ');
+    // }
   };
 
   const handleNextStep = (e: React.FormEvent) => {
