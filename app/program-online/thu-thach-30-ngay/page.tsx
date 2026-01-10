@@ -89,13 +89,7 @@ const ThirtyDayPage = () => {
   const displayShortDesc = t("thirty_day_challenge.what_is_section.col_1.content");
 
   // Map 'privilege' from DB to the "Sau 30 ngày..." blocks as requested
-  const highlightFeatures = courseData?.thirtyDayConfig
-    ? [
-      { title: courseData.thirtyDayConfig.benefit_1_title, quoteText: courseData.thirtyDayConfig.benefit_1_quote, quote: courseData.thirtyDayConfig.benefit_1_description },
-      { title: courseData.thirtyDayConfig.benefit_2_title, quoteText: courseData.thirtyDayConfig.benefit_2_quote, quote: courseData.thirtyDayConfig.benefit_2_description },
-      { title: courseData.thirtyDayConfig.benefit_3_title, quoteText: courseData.thirtyDayConfig.benefit_3_quote, quote: courseData.thirtyDayConfig.benefit_3_description }
-    ].filter(item => item.title)
-    : dbPrivileges;
+  const highlightFeatures = dbPrivileges;
 
   // Privileges data - Reverted to static translations as requested
   const privileges = [
@@ -211,14 +205,10 @@ const ThirtyDayPage = () => {
   };
 
   // Parse the price from the course
-  /* 
-   * NEW: Use dynamic pricing from DB (thirtyDayConfig) if available.
-   * Fallback to data/courses.ts (thirtyDayCourse) or hardcoded defaults.
-   */
-  const monthlyPrice = courseData?.thirtyDayConfig?.monthly_fee
-    ?? (thirtyDayCourse ? parseInt(thirtyDayCourse.price.amount.replace(/\./g, "")) : 396000);
-
-  const membershipPrice = courseData?.thirtyDayConfig?.membership_fee ?? 3960000;
+  const monthlyPrice = thirtyDayCourse
+    ? parseInt(thirtyDayCourse.price.amount.replace(/\./g, ""))
+    : 396000;
+  const membershipPrice = 3960000; // 12 months membership
 
   return (
     <div className="min-h-screen bg-[#F2F2F7] pb-20 override-header-spacing font-sans text-gray-900">
