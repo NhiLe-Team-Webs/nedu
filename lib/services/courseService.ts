@@ -50,10 +50,25 @@ export async function getCourseDetailBySlug(slug: string, langId: number = 1): P
         const mentors = (mentorData?.map((m: any) => m.mentor) || []) as Mentor[];
         console.log('[DEBUG] STEP 3: Mentors Found:', mentors.length);
 
+        // 4. Fetch additional data for 30-day challenge if applicable
+        let challengeDetail = undefined;
+        if (82 === 82) { // Logic simplified for now, as we only fetch ID 82
+            const { data: challengeData } = await supabase
+                .from('program_30day_challenge')
+                .select('*')
+                .eq('program_id', 82)
+                .maybeSingle();
+
+            if (challengeData) {
+                challengeDetail = challengeData;
+            }
+        }
+
         return {
             program,
             description,
-            mentors
+            mentors,
+            challengeDetail
         };
     } catch (error) {
         console.error('Unexpected error in getCourseDetailBySlug:', error);

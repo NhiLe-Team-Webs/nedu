@@ -39,6 +39,8 @@ export interface ProgramDescription {
     content: string | null;
     video_url: string | null;
     highlight_features: any | null;
+    course_type?: string | null;
+    is_featured?: boolean | null;
 }
 
 export interface Mentor {
@@ -51,8 +53,25 @@ export interface Mentor {
     is_featured: boolean;
 }
 
+export interface Program30DayChallenge {
+    id: number;
+    program_id: number;
+    monthly_price: number;
+    membership_price: number;
+    benefit_1_title: string;
+    benefit_1_quote: string;
+    benefit_1_description: string;
+    benefit_2_title: string;
+    benefit_2_quote: string;
+    benefit_2_description: string;
+    benefit_3_title: string;
+    benefit_3_quote: string;
+    benefit_3_description: string;
+}
+
 export interface CourseDetail {
     program: Program;
     description: ProgramDescription;
     mentors: Mentor[];
+    challengeDetail?: Program30DayChallenge;
 }

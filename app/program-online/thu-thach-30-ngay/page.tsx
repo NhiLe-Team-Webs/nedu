@@ -89,7 +89,23 @@ const ThirtyDayPage = () => {
   const displayShortDesc = t("thirty_day_challenge.what_is_section.col_1.content");
 
   // Map 'privilege' from DB to the "Sau 30 ngày..." blocks as requested
-  const highlightFeatures = dbPrivileges;
+  const highlightFeatures = courseData?.challengeDetail ? [
+    {
+      title: courseData.challengeDetail.benefit_1_title,
+      quote: courseData.challengeDetail.benefit_1_quote,
+      description: courseData.challengeDetail.benefit_1_description
+    },
+    {
+      title: courseData.challengeDetail.benefit_2_title,
+      quote: courseData.challengeDetail.benefit_2_quote,
+      description: courseData.challengeDetail.benefit_2_description
+    },
+    {
+      title: courseData.challengeDetail.benefit_3_title,
+      quote: courseData.challengeDetail.benefit_3_quote,
+      description: courseData.challengeDetail.benefit_3_description
+    },
+  ] : dbPrivileges;
 
   // Privileges data - Reverted to static translations as requested
   const privileges = [
@@ -167,16 +183,22 @@ const ThirtyDayPage = () => {
   const handleAddToCart = (planType: "monthly" | "membership") => {
     if (!thirtyDayCourse) return;
 
+    const formattedMonthlyPrice = new Intl.NumberFormat("vi-VN").format(monthlyPrice);
+    const formattedMembershipPrice = new Intl.NumberFormat("vi-VN").format(membershipPrice);
+
     // Create a modified course with the appropriate price based on plan type
     const courseToAdd =
       planType === "membership"
         ? {
           ...thirtyDayCourse,
           id: thirtyDayCourse.id + 1000, // Different ID for membership
-          price: { ...thirtyDayCourse.price, amount: "3.960.000" },
+          price: { ...thirtyDayCourse.price, amount: formattedMembershipPrice },
           title: "thirty_day_challenge.title_membership",
         }
-        : thirtyDayCourse;
+        : {
+          ...thirtyDayCourse,
+          price: { ...thirtyDayCourse.price, amount: formattedMonthlyPrice }
+        };
 
     addToCart(courseToAdd);
     setAddedToCart((prev) => ({ ...prev, [planType]: true }));
@@ -190,25 +212,32 @@ const ThirtyDayPage = () => {
   const handleDirectCheckout = (planType: "monthly" | "membership") => {
     if (!thirtyDayCourse) return;
 
+    const formattedMonthlyPrice = new Intl.NumberFormat("vi-VN").format(monthlyPrice);
+    const formattedMembershipPrice = new Intl.NumberFormat("vi-VN").format(membershipPrice);
+
     const courseToAdd =
       planType === "membership"
         ? {
           ...thirtyDayCourse,
           id: thirtyDayCourse.id + 1000,
-          price: { ...thirtyDayCourse.price, amount: "3.960.000" },
+          price: { ...thirtyDayCourse.price, amount: formattedMembershipPrice },
           title: "thirty_day_challenge.title_membership",
         }
-        : thirtyDayCourse;
+        : {
+          ...thirtyDayCourse,
+          price: { ...thirtyDayCourse.price, amount: formattedMonthlyPrice }
+        };
 
     addToCart(courseToAdd);
     router.push("/cart?checkout=true");
   };
 
-  // Parse the price from the course
-  const monthlyPrice = thirtyDayCourse
+  // Parse the price from the course - Prioritize data from program_30day_challenge table
+  const monthlyPrice = courseData?.challengeDetail?.monthly_price ?? (thirtyDayCourse
     ? parseInt(thirtyDayCourse.price.amount.replace(/\./g, ""))
-    : 396000;
-  const membershipPrice = 3960000; // 12 months membership
+    : 396000);
+
+  const membershipPrice = courseData?.challengeDetail?.membership_price ?? 3960000; // Fallback to 3.960.000
 
   return (
     <div className="min-h-screen bg-[#F2F2F7] pb-20 override-header-spacing font-sans text-gray-900">
