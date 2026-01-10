@@ -50,10 +50,18 @@ export async function getCourseDetailBySlug(slug: string, langId: number = 1): P
         const mentors = (mentorData?.map((m: any) => m.mentor) || []) as Mentor[];
         console.log('[DEBUG] STEP 3: Mentors Found:', mentors.length);
 
+        // 4. Fetch 30-day config
+        const { data: thirtyDayConfig } = await supabase
+            .from('thirty_day_config')
+            .select('*')
+            .eq('program_id', 82)
+            .maybeSingle();
+
         return {
             program,
             description,
-            mentors
+            mentors,
+            thirtyDayConfig
         };
     } catch (error) {
         console.error('Unexpected error in getCourseDetailBySlug:', error);

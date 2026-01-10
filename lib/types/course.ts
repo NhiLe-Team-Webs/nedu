@@ -51,8 +51,25 @@ export interface Mentor {
     is_featured: boolean;
 }
 
+export interface ThirtyDayConfig {
+    id: number;
+    program_id: number;
+    monthly_fee: number;
+    membership_fee: number;
+    benefit_1_title: string | null;
+    benefit_1_quote: string | null;
+    benefit_1_description: string | null;
+    benefit_2_title: string | null;
+    benefit_2_quote: string | null;
+    benefit_2_description: string | null;
+    benefit_3_title: string | null;
+    benefit_3_quote: string | null;
+    benefit_3_description: string | null;
+}
+
 export interface CourseDetail {
     program: Program;
     description: ProgramDescription;
     mentors: Mentor[];
+    thirtyDayConfig?: ThirtyDayConfig | null;
 }
