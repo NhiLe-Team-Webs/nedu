@@ -4,71 +4,65 @@ import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight, Calendar } from "lucide-react";
+import { useLanguage } from "@/lib/LanguageContext";
 
-const slides = [
-  {
-    id: 2,
-    slug: "la-chinh-minh",
-    image: "/picture/la_chinh_minh.jpg",
-    date: "18/03/2026",
-    title: "Là Chính Mình 04",
-    label: "Khóa học sắp diễn ra",
-    content: "Người Việt, làm hàng Việt, cho người Việt.",
-    type: "offline"
-  },
-  {
-    id: 1,
-    slug: "suc-manh-vo-han",
-    image: "/picture/suc_manh_vo_han.jpg",
-    date: "01/04/2026",
-    title: "Sức Mạnh Vô Hạn",
-    label: "Giới thiệu",
-    content: "Khám phá bản thân và phát triển cá nhân.",
-    type: "offline"
-  },
-  {
-    id: 4,
-    slug: "thuong-hieu-cua-ban",
-    image: "/picture/thuong_hieu_cua_ban.png",
-    date: "01/11/2025",
-    title: "Thương Hiệu Của Bạn",
-    label: "Các khóa học Online",
-    content: "Bắt đầu sự nghiệp với AI từ con số 0.",
-    type: "online"
-  },
-  {
-    id: 5,
-    slug: "cuoc-song-cua-ban",
-    image: "/picture/cuoc_song_cua_ban.png",
-    date: "01/11/2025",
-    title: "Cuộc Sống Của Bạn",
-    label: "Các khóa học Online",
-    content: "Xây dựng thương hiệu cá nhân và doanh nghiệp.",
-    type: "online"
-  },
-  {
-    id: 6,
-    slug: "ai-for-business-communication",
-    image: "/picture/ai_for_business.png",
-    date: "30/07/2025",
-    title: "AI For Business Communication",
-    label: "Các khóa học Online",
-    content: "Quản lý cảm xúc và cân bằng cuộc sống.",
-    type: "online"
-  },
-  {
-    id: 7,
-    slug: "ai-in-marketing",
-    image: "/picture/ai_in_mkt.png",
-    date: "05/08/2025",
-    title: "AI In Marketing",
-    label: "Các khóa học Online",
-    content: "Ứng dụng AI vào vận hành và kinh doanh.",
-    type: "online"
-  }
-];
+
 
 const Courses: React.FC = () => {
+  const { t } = useLanguage();
+
+  const slides = React.useMemo(() => [
+    {
+      id: 2,
+      slug: "la-chinh-minh",
+      image: "/picture/la_chinh_minh.jpg",
+      date: "5/3-8/3/2025",
+      title: t("courses.slides.lcm.title"),
+      label: t("courses.upcoming"),
+      content: t("courses.slides.lcm.content"),
+      type: "offline"
+    },
+    {
+      id: 1,
+      slug: "suc-manh-vo-han",
+      image: "/picture/suc_manh_vo_han.jpg",
+      date: "01/04/2026",
+      title: t("courses.slides.smvh.title"),
+      label: t("courses.intro"),
+      content: t("courses.slides.smvh.content"),
+      type: "offline"
+    },
+    {
+      id: 4,
+      slug: "thuong-hieu-cua-ban",
+      image: "/picture/thuong_hieu_cua_ban.png",
+      date: "01/11/2025",
+      title: t("courses.slides.thcb.title"),
+      label: t("courses.online"),
+      content: t("courses.slides.thcb.content"),
+      type: "online"
+    },
+    {
+      id: 5,
+      slug: "cuoc-song-cua-ban",
+      image: "/picture/cuoc_song_cua_ban.png",
+      date: "01/11/2025",
+      title: t("courses.slides.cscb.title"),
+      label: t("courses.online"),
+      content: t("courses.slides.cscb.content"),
+      type: "online"
+    },
+    {
+      id: 8,
+      slug: "thu-thach-30-ngay",
+      image: "/picture/thuthach30day_desktop.png",
+      date: "28/12/2025 – 28/01/2026",
+      title: t("courses.slides.tt30n.title"),
+      label: t("courses.online"),
+      content: t("courses.slides.tt30n.content"),
+      type: "online"
+    }
+  ], [t]);
   const [currentIndex, setCurrentIndex] = React.useState(1); // Start with "Sức Mạnh Vô Hạn" in center
   const totalCourses = slides.length;
   const [viewportWidth, setViewportWidth] = React.useState(0); // Start with 0 to avoid SSR/client mismatch
@@ -232,7 +226,7 @@ const Courses: React.FC = () => {
     <section className="relative flex flex-col items-center justify-center overflow-hidden min-h-screen bg-gray-100 pt-16 sm:pt-20 pb-12 sm:pb-16">
       <div className="relative flex flex-col justify-center items-center h-[90%] w-full max-w-7xl px-3 sm:px-4">
         <h2 className="text-center text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black text-[#f7b50c] uppercase mb-8 sm:mb-12 px-2">
-          Người Việt, làm hàng Việt, cho người Việt
+          {t("courses.heading")}
         </h2>
 
         {/* Carousel Container */}

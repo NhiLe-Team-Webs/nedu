@@ -5,13 +5,16 @@ import { usePathname } from "next/navigation";
 import { Home, BookOpen, Calendar, ShoppingCart, Menu } from "lucide-react";
 import { useCart } from "@/lib/cart-context";
 import { useState } from "react";
-import Sidebar from "./Sidebar";
+
+import { useLanguage } from "@/lib/LanguageContext";
+import LanguageToggle from "./LanguageToggle";
 
 const BottomTabBar = () => {
     const pathname = usePathname() || "/";
     const { getTotalItems } = useCart();
     const totalItems = getTotalItems();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { t } = useLanguage();
 
     const isActive = (path: string) => {
         if (path === "/" && pathname === "/") return true;
@@ -21,22 +24,18 @@ const BottomTabBar = () => {
 
     const tabs = [
         {
-            label: "Trang chủ",
+            label: t("bottom_tab.home"),
             icon: Home,
             href: "/",
         },
         {
-            label: "Khóa học",
+            label: t("bottom_tab.courses"),
             icon: BookOpen,
             href: "/program",
         },
+
         {
-            label: "30 Ngày",
-            icon: Calendar,
-            href: "/thu-thach-30-ngay",
-        },
-        {
-            label: "Giỏ hàng",
+            label: t("bottom_tab.cart"),
             icon: ShoppingCart,
             href: "/cart",
             badge: totalItems > 0 ? totalItems : null,
@@ -81,7 +80,7 @@ const BottomTabBar = () => {
                             }`}
                     >
                         <Menu size={24} strokeWidth={2} />
-                        <span className="text-[10px] font-medium tracking-wide">Menu</span>
+                        <span className="text-[10px] font-medium tracking-wide">{t("bottom_tab.menu")}</span>
                     </button>
                 </div>
             </nav>
@@ -99,7 +98,12 @@ const BottomTabBar = () => {
                     <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-[20px] p-6 pb-[calc(80px+env(safe-area-inset-bottom))] animate-ios-slide-up shadow-2xl">
                         <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mb-6" />
 
-                        <h3 className="text-lg font-bold text-gray-900 mb-4 px-2">Menu mở rộng</h3>
+                        {/* Language Toggle */}
+                        <div className="mb-6">
+                            <LanguageToggle variant="mobile" />
+                        </div>
+
+                        <h3 className="text-lg font-bold text-gray-900 mb-4 px-2">{t("bottom_tab.extended_menu")}</h3>
 
                         <div className="grid grid-cols-2 gap-4">
                             <Link
@@ -110,7 +114,7 @@ const BottomTabBar = () => {
                                 <div className="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
                                     <Menu size={20} />
                                 </div>
-                                <span className="font-medium text-sm text-gray-700">Liên hệ</span>
+                                <span className="font-medium text-sm text-gray-700">{t("bottom_tab.contact")}</span>
                             </Link>
 
                             <Link
@@ -122,7 +126,7 @@ const BottomTabBar = () => {
                                 <div className="w-10 h-10 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center">
                                     <BookOpen size={20} />
                                 </div>
-                                <span className="font-medium text-sm text-gray-700">Về chúng tôi</span>
+                                <span className="font-medium text-sm text-gray-700">{t("bottom_tab.about")}</span>
                             </Link>
 
                             <Link
@@ -133,7 +137,7 @@ const BottomTabBar = () => {
                                 <div className="w-10 h-10 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center">
                                     <ShieldCheckIcon />
                                 </div>
-                                <span className="font-medium text-sm text-gray-700">Chính sách</span>
+                                <span className="font-medium text-sm text-gray-700">{t("bottom_tab.policy")}</span>
                             </Link>
 
                             <Link
@@ -144,7 +148,7 @@ const BottomTabBar = () => {
                                 <div className="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
                                     <CreditCardIcon />
                                 </div>
-                                <span className="font-medium text-sm text-gray-700">Thanh toán</span>
+                                <span className="font-medium text-sm text-gray-700">{t("bottom_tab.payment")}</span>
                             </Link>
                         </div>
 
@@ -153,7 +157,7 @@ const BottomTabBar = () => {
                                 onClick={() => setIsMenuOpen(false)}
                                 className="w-full py-3 bg-gray-100 text-gray-900 font-semibold rounded-xl active:scale-95 transition-transform"
                             >
-                                Đóng
+                                {t("bottom_tab.close")}
                             </button>
                         </div>
                     </div>

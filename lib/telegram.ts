@@ -218,3 +218,56 @@ ${content}
 
     return sendTelegramMessage(message);
 }
+
+/**
+ * Daily summary notification data
+ */
+interface DailySummaryData {
+    date: string;
+    totalOrders: number;
+    totalAmount: number;
+    successfulPayments: number;
+    successfulAmount: number;
+    pendingPayments: number;
+    pendingAmount: number;
+    orders: Array<{
+        orderCode: string;
+        customerName: string;
+        amount: number;
+        status: string;
+        courseName?: string;
+        paymentDate?: string;
+    }>;
+}
+
+/**
+ * Send daily summary notification
+ */
+export async function sendDailySummary(data: DailySummaryData): Promise<boolean> {
+    const message = `
+📊 <b>BÁO CÁO DOANH THU HÀNG NGÀY</b>
+📅 <b>Ngày:</b> ${data.date}
+
+<b>📈 TỔNG QUAN</b>
+• Tổng đơn hàng: ${data.totalOrders}
+• Tổng giá trị: ${formatCurrency(data.totalAmount)}
+
+<b>✅ THANH TOÁN THÀNH CÔNG</b>
+• Số đơn: ${data.successfulPayments}
+• Doanh thu: ${formatCurrency(data.successfulAmount)}
+
+<b>⏳ ĐANG CHỜ THANH TOÁN</b>
+• Số đơn: ${data.pendingPayments}
+• Giá trị: ${formatCurrency(data.pendingAmount)}
+
+<b>📋 CHI TIẾT ĐƠN HÀNG</b>
+${data.orders.map(order => {
+    const statusIcon = order.status === 'success' ? '✅' : order.status === 'pending' ? '⏳' : '❌';
+    return `${statusIcon} <code>${order.orderCode}</code> - ${escapeHtml(order.customerName)} - ${formatCurrency(order.amount)}${order.courseName ? ` - ${escapeHtml(order.courseName)}` : ''}${order.paymentDate ? ` (${order.paymentDate})` : ''}`;
+}).join('\n')}
+
+<i>Generated at ${new Date().toLocaleString('vi-VN')}</i>
+`.trim();
+
+    return sendTelegramMessage(message);
+}

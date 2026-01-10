@@ -1,12 +1,20 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ShoppingCart } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { useCart } from "@/lib/cart-context";
 import { courses as coursesData } from "@/data/courses";
+import { useLanguage } from "@/lib/LanguageContext";
+import { useCart } from "@/lib/cart-context";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import { getCourseDetailBySlug } from "@/lib/services/courseService";
+import { CourseDetail } from "@/lib/types/course";
+
 
 const filters = [
   { id: "all", label: "Tất cả" },
@@ -17,174 +25,345 @@ const filters = [
 
 const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      type: "spring" as const,
+      stiffness: 100,
+      damping: 10,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      duration: 0.4,
+    }
+  },
+};
+
+const CourseCardSkeleton = () => (
+  <div className="w-[270px] md:w-[420px] flex-shrink-0 snap-center flex flex-col justify-between animate-pulse">
+    <div className="w-full aspect-video bg-gray-200 rounded-[30px]" />
+    <div className="flex flex-col items-center text-center w-full max-w-full pb-10 flex-grow pt-4">
+      <div className="h-4 w-32 bg-gray-200 rounded mb-2" />
+      <div className="h-8 w-48 bg-gray-200 rounded mb-2" />
+      <div className="h-4 w-60 bg-gray-200 rounded mb-4" />
+      <div className="h-6 w-24 bg-gray-200 rounded mt-4" />
+      <div className="flex gap-4 mt-6">
+        <div className="h-10 w-28 bg-gray-200 rounded-full" />
+        <div className="h-4 w-20 bg-gray-200 rounded mt-2" />
+      </div>
+    </div>
+  </div>
+);
+
 export default function ProgramPage() {
+  const [courses, setCourses] = useState(coursesData);
   const [filter, setFilter] = useState("all");
   const router = useRouter();
+  const { t } = useLanguage();
   const { addToCart, items } = useCart();
-  const [justAdded, setJustAdded] = useState<Record<string, boolean>>({});
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const handleCardMouseMove = (event: React.MouseEvent<HTMLElement>) => {
-    const card = event.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
-    card.style.setProperty("--mouse-x", `${x}px`);
-    card.style.setProperty("--mouse-y", `${y}px`);
-  };
+  useEffect(() => {
+    async function fetchDynamicData() {
+      setIsLoading(true);
+      try {
+        // Fetch updated data for 30-day challenge (ID 82)
+        const dynamicData = await getCourseDetailBySlug("thu-thach-30-ngay");
 
-  const handleCardMouseLeave = (event: React.MouseEvent<HTMLElement>) => {
-    const card = event.currentTarget;
-    card.style.removeProperty("--mouse-x");
-    card.style.removeProperty("--mouse-y");
-  };
+        if (dynamicData) {
+          setCourses(prev => prev.map(course => {
+            if (course.slug === 'thu-thach-30-ngay') {
+              // Extract data from ID 82 record
+              const p = dynamicData.program;
+              const d = dynamicData.description;
+
+              return {
+                ...course,
+                title: d?.program_name || p?.program_name || course.title,
+                mission: d?.short_description || course.mission,
+                heroImage: p?.image || course.heroImage,
+                price: {
+                  ...course.price,
+                  amount: p?.program_price ? p.program_price.toLocaleString('vi-VN') : course.price.amount
+                },
+                info: {
+                  ...course.info,
+                  topic: p?.hashtag || d?.topic || course.info.topic,
+                }
+              };
+            }
+            return course;
+          }));
+        }
+      } catch (error) {
+        console.error("Error updating dynamic course data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchDynamicData();
+  }, []);
 
   const navigateToCourse = (mode: string, slug: string) => {
     router.push(`/program-${mode}/${slug}`);
   };
 
-  const handleCardKeyDown = (
-    event: React.KeyboardEvent<HTMLElement>,
-    mode: string,
-    slug: string
-  ) => {
-    if (event.key === "Enter") {
-      navigateToCourse(mode, slug);
+  const handleAddToCart = (course: any) => {
+    // Check if course already exists in cart
+    const existingItem = items.find(item => item.id === course.id);
+
+    // If item exists and quantity is already 10, show warning
+    if (existingItem && existingItem.quantity >= 10) {
+      toast.warning(t("program_page.toast.max_quantity_reached"), {
+        position: "bottom-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      return;
     }
-  };
 
-  const handleAddToCart = (event: React.MouseEvent, course: any) => {
-    // Ngăn chặn sự kiện click lan truyền đến card cha
-    event.stopPropagation();
-
-    // Thêm khóa học vào giỏ hàng
+    // Add to cart
     addToCart(course);
-
-    // Set justAdded state for this course
-    setJustAdded(prev => ({ ...prev, [course.id]: true }));
-
-    // Reset after 3 seconds
-    setTimeout(() => {
-      setJustAdded(prev => ({ ...prev, [course.id]: false }));
-    }, 3000);
+    toast.success(`${t(course.title)} ${t("program_page.toast.added_to_cart")}`, {
+      position: "bottom-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
   };
 
   const filteredCourses = useMemo(() => {
-    if (filter === "all") return coursesData;
-    if (filter === "offline") return coursesData.filter((c) => c.mode === "offline");
-    if (filter === "online") return coursesData.filter((c) => c.mode === "online");
-    return coursesData.filter((c) => c.category.includes("Doanh nghiệp"));
-  }, [filter]);
+    if (filter === "all") return courses;
+    if (filter === "offline") return courses.filter((c) => c.mode === "offline");
+    if (filter === "online") return courses.filter((c) => c.mode === "online");
+    return courses.filter((c) => c.category.includes("Doanh nghiệp"));
+  }, [filter, courses]);
+
+  const updateScrollButtons = () => {
+    if (carouselRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+    }
+  };
+
+  // Update scroll button states when filter changes
+  useEffect(() => {
+    // Reset scroll position to start when filter changes
+    if (carouselRef.current) {
+      carouselRef.current.scrollLeft = 0;
+    }
+    // Update button states after a brief delay to allow DOM to update
+    const timer = setTimeout(() => {
+      updateScrollButtons();
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [filteredCourses]);
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (carouselRef.current) {
+      // Calculate scroll amount based on viewport width
+      // Mobile: 270px card + 16px gap = 286px
+      // Desktop (md and up): 420px card + 32px gap = 452px
+      const isMobile = window.innerWidth < 768;
+      const scrollAmount = isMobile ? 286 : 452;
+
+      const newScrollLeft = direction === 'left'
+        ? carouselRef.current.scrollLeft - scrollAmount
+        : carouselRef.current.scrollLeft + scrollAmount;
+
+      carouselRef.current.scrollTo({
+        left: newScrollLeft,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-[#F2F2F7] py-8 sm:py-12 ios-safe-padding-bottom">
-      <div className="container mx-auto px-3 sm:px-4">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-3 sm:mb-4 text-primary uppercase tracking-tight px-2">
-          Các khóa học chất lượng
-        </h1>
-        <p className="text-center text-gray-500 font-medium mb-8 sm:mb-10 lg:mb-12 max-w-3xl mx-auto text-sm sm:text-base px-4">
-          Lựa chọn chương trình phù hợp với hành trình phát triển bản thân và doanh nghiệp của
-          bạn. Mỗi khóa học đều đi kèm công cụ thực hành và có thể tham gia ngay.
-        </p>
-
-        <div className="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 mb-8 sm:mb-12 px-2">
-          {filters.map((f) => (
-            <button
-              key={f.id}
-              onClick={() => setFilter(f.id)}
-              className={`px-4 sm:px-6 py-2 rounded-full font-semibold transition-all transform active:scale-95 text-sm sm:text-base min-h-[44px] ios-haptic-active ${filter === f.id
-                ? "bg-primary text-white shadow-ios-md"
-                : "bg-white text-gray-700 hover:bg-gray-50 shadow-ios-sm hover:shadow-ios-md"
-                }`}
-            >
-              {f.label}
-            </button>
-          ))}
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-7xl mx-auto">
-          {filteredCourses.map((course) => (
-            <div
-              key={course.id}
-              className="group bg-white rounded-ios-xl shadow-ios-card overflow-hidden hover:shadow-ios-float transition-all duration-300 ios-haptic-active border border-white/40"
-              onMouseMove={handleCardMouseMove}
-              onMouseLeave={handleCardMouseLeave}
-              onClick={() => navigateToCourse(course.mode, course.slug)}
-              onKeyDown={(e) => handleCardKeyDown(e, course.mode, course.slug)}
-              role="button"
-              tabIndex={0}
-            >
-              <div className="overflow-hidden">
-                <img
-                  src={course.heroImage}
-                  alt={course.title}
-                  className="w-full h-48 sm:h-56 md:h-64 object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-              </div>
-              <div className="p-5 sm:p-6">
-                <div className="flex flex-wrap gap-1 sm:gap-2 mb-3 sm:mb-4">
-                  {course.category.map((tag, index) => (
-                    <span
-                      key={index}
-                      className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full font-semibold uppercase tracking-wide"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                <h3 className="text-xl sm:text-2xl font-bold mb-2 group-hover:text-primary transition-colors line-clamp-2 text-gray-900">
-                  {course.title}
-                </h3>
-                <div className="text-lg sm:text-xl font-bold text-primary mb-3">
-                  {course.price.currency === 'VNĐ'
-                    ? `${parseInt(course.price.amount.replace(/[.,]/g, '')).toLocaleString('vi-VN')} ${course.price.currency}`
-                    : `${course.price.currency} ${course.price.amount}`
-                  }
-                </div>
-                <div className="space-y-2 mb-4">
-                  <p className="text-sm text-gray-500 flex items-center gap-2 font-medium">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="#F7B50C" className="flex-shrink-0">
-                      <path d="M560-564v-68q33-14 67.5-21t72.5-7q26 0 51 4t49 10v64q-24-9-48.5-13.5T700-600q-38 0-73 9.5T560-564Zm0 220v-68q33-14 67.5-21t72.5-7q26 0 51 4t49 10v64q-24-9-48.5-13.5T700-380q-38 0-73 9t-67 27Zm0-110v-68q33-14 67.5-21t72.5-7q26 0 51 4t49 10v64q-24-9-48.5-13.5T700-490q-38 0-73 9.5T560-454ZM260-320q47 0 91.5 10.5T440-278v-394q-41-24-87-36t-93-12q-36 0-71.5 7T120-692v396q35-12 69.5-18t70.5-6Zm260 42q44-21 88.5-31.5T700-320q36 0 70.5 6t69.5 18v-396q-33-14-68.5-21t-71.5-7q-47 0-93 12t-87 36v394Zm-40 118q-48-38-104-59t-116-21q-42 0-82.5 11T100-198q-21 11-40.5-1T40-234v-482q0-11 5.5-21T62-752q46-24 96-36t102-12q58 0 113.5 15T480-740q51-30 106.5-45T700-800q52 0 102 12t96 36q11 5 16.5 15t5.5 21v482q0 23-19.5 35t-40.5 1q-37-20-77.5-31T700-240q-60 0-116 21t-104 59ZM280-494Z" />
-                    </svg>
-                    Số buổi học: <span className="font-semibold text-gray-700">{course.info.sessions}</span>
-                  </p>
-                  <p className="text-sm text-gray-500 flex items-center gap-2 font-medium">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="#F7B50C" className="flex-shrink-0">
-                      <path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Zm80-80h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z" />
-                    </svg>
-                    Người dẫn đường: <span className="font-semibold text-gray-700">{course.info.instructor}</span>
-                  </p>
-                </div>
-                <div className="mt-5">
-                  <Button
-                    variant="ios-primary"
-                    size="sm"
-                    onClick={(e) => handleAddToCart(e, course)}
-                    disabled={justAdded[course.id]}
-                    className={`w-full flex items-center justify-center gap-2 transition-all duration-300 ease-out font-bold rounded-full py-3 min-h-[44px] ${justAdded[course.id]
-                        ? 'bg-transparent border-2 border-green-500 text-green-500 cursor-default'
-                        : 'bg-primary text-white hover:bg-primary-dark shadow-ios-sm hover:shadow-ios-md ios-haptic-active'
+    <>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        closeButton={false}
+        className="!bottom-4 !right-4 md:!bottom-8 md:!right-8"
+        toastClassName="!w-[calc(100vw-2rem)] md:!w-auto !max-w-md !mx-4 md:!mx-0 !rounded-xl overflow-hidden"
+      />
+      <section className="bg-background overflow-hidden">
+        <div className="container max-w-7xl mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="pt-4 md:pt-12"
+          >
+            <h1 className="text-4xl md:text-6xl font-semibold text-primary tracking-tight mb-12">
+              {t("program_page.title")}
+            </h1>
+            <div className="relative w-full flex items-center">
+              <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 md:flex-wrap md:gap-1 md:bg-gray-100 md:rounded-full md:p-1 items-center scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+                {filters.map((f) => (
+                  <button
+                    key={f.id}
+                    onClick={() => setFilter(f.id)}
+                    className={`relative rounded-full px-4 py-2 text-xs sm:text-sm font-medium transition-colors duration-300 whitespace-nowrap md:flex-shrink-0 ${filter === f.id
+                      ? "text-white"
+                      : "bg-gray-100 text-gray-600 hover:text-black"
                       }`}
                   >
-                    {justAdded[course.id] ? (
-                      <>
-                        <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span>Đã thêm vào giỏ hàng</span>
-                      </>
-                    ) : (
-                      <>
-                        <ShoppingCart className="w-5 h-5" />
-                        Thêm vào giỏ hàng
-                      </>
+                    {filter === f.id && (
+                      <motion.div
+                        layoutId="active-pill"
+                        className="absolute inset-0 bg-black rounded-full z-20"
+                        style={{ borderRadius: 9999 }}
+                        transition={{ duration: 0.6, type: "spring", bounce: 0.2 }}
+                      />
                     )}
-                  </Button>
-                </div>
+                    <span className="relative z-30">{t(`program_page.filters.${f.id}`)}</span>
+                  </button>
+                ))}
               </div>
             </div>
-          ))}
+          </motion.div>
         </div>
-      </div>
-    </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="mt-4"
+        >
+          <div
+            ref={carouselRef}
+            onScroll={updateScrollButtons}
+            className="w-full overflow-x-auto pb-4 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] py-10"
+          >
+            <div className="flex gap-4 md:gap-6 pl-4 xl:pl-[calc((100vw-1280px)/2+1rem)] pr-4 md:pr-6">
+              {isLoading
+                ? Array(4).fill(0).map((_, i) => <CourseCardSkeleton key={i} />)
+                : filteredCourses.map((course) => (
+                  <motion.div
+                    key={course.id}
+                    variants={cardVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="hidden"
+                    data-course-card="true"
+                    className="w-[270px] md:w-[420px] flex-shrink-0 snap-center flex flex-col justify-between"
+                  >
+                    <Link
+                      href={`/program-${course.mode}/${course.slug}`}
+                      className="group block w-full relative aspect-video overflow-hidden transition-transform duration-300 ease-in-out hover:scale-[1.02]"
+                    >
+                      <img
+                        alt={t(course.title)}
+                        src={course.heroImage}
+                        className={`w-full h-full object-cover rounded-[30px] ${course.slug === 'thu-thach-30-ngay' ? 'object-top' : ''}`}
+                      />
+                    </Link>
+                    <div className="flex flex-col items-center text-center w-full max-w-full pb-10 flex-grow">
+                      <div className="flex gap-2 mt-4 h-5 items-center">
+                        <p className="text-orange-600 font-medium text-xs m-0 text-center w-full">
+                          {t(course.info.topic)}
+                        </p>
+                      </div>
+                      <h3 className="text-2xl font-semibold text-gray-900 mb-0 leading-tight flex flex-col justify-center h-16">
+                        <span className="block">{t(course.title)}</span>
+                      </h3>
+                      <div className="text-gray-500 text-sm max-w-[90%] mx-auto mb-4 min-h-[40px]">
+                        <span className="block">{t(course.mission).substring(0, 80)}...</span>
+                      </div>
+                      <p className="text-base font-medium">
+                        {course.price.currency === 'VNĐ'
+                          ? `${parseInt(course.price.amount.replace(/[.,]/g, '')).toLocaleString('vi-VN')}\u00A0₫`
+                          : `${course.price.currency} ${course.price.amount}`
+                        }
+                      </p>
+                      <div className="flex items-center justify-center gap-4 mt-auto">
+                        <Link
+                          href={`/program-${course.mode}/${course.slug}`}
+                          className="inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 rounded-full bg-primary text-white hover:text-white hover:bg-primary-dark px-5 py-2 text-sm"
+                        >
+                          {t("program_page.card.learn_more")}
+                        </Link>
+                        <button
+                          onClick={() => {
+                            if (course.slug === 'thu-thach-30-ngay') {
+                              router.push('/program-online/thu-thach-30-ngay#pricing');
+                            } else {
+                              handleAddToCart(course);
+                            }
+                          }}
+                          className="text-primary font-medium text-sm hover:underline"
+                        >
+                          {t("program_page.card.register")}
+                        </button>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+            </div>
+          </div>
+          <div className="container max-w-7xl mx-auto px-4 mt-4 flex justify-end gap-2">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => scroll('left')}
+              disabled={!canScrollLeft}
+              className="rounded-full w-10 h-10 bg-gray-300 hover:bg-gray-400 disabled:opacity-50"
+            >
+              <ChevronLeft className="h-5 w-5 text-gray-800" />
+              <span className="sr-only">{t("program_page.card.previous")}</span>
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => scroll('right')}
+              disabled={!canScrollRight}
+              className="rounded-full w-10 h-10 bg-gray-300 hover:bg-gray-400 disabled:opacity-50"
+            >
+              <ChevronRight className="h-5 w-5 text-gray-800" />
+              <span className="sr-only">{t("program_page.card.next")}</span>
+            </Button>
+          </div>
+        </motion.div>
+      </section>
+
+
+    </>
   );
 }

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import Link from "next/link";
 import YouTube from "react-youtube";
@@ -10,59 +10,62 @@ import CourseInfo from "@/components/CourseInfo";
 import Organizers from "@/components/Organizers";
 import { useCart } from "@/lib/cart-context";
 import { getInstructorsByIds } from "@/data/instructors";
+import { useLanguage } from "@/lib/LanguageContext";
 
 export default function AIInMarketingPage() {
   const { addToCart } = useCart();
+  const { t } = useLanguage();
 
   const instructors = getInstructorsByIds(["linda-hui-isaac"]);
   const whomItems = [
     {
       icon: "Sprout" as const,
-      heading: "Sinh viên & người mới đi làm",
-      description:
-        "Trang bị nền tảng thực tế để hiểu rõ AI dùng trong công việc viết – trình bày – giao tiếp, mở ra cơ hội phát triển sớm trong môi trường chuyên nghiệp.",
+      heading: t("program_detail.whom.student_newbie.heading"),
+      description: t("program_detail.whom.student_newbie.description"),
     },
     {
       icon: "Recycle" as const,
-      heading: "Người muốn chuyển ngành",
-      description:
-        "Khóa học phù hợp cho những ai muốn khám phá tiềm năng AI để ứng dụng trong công việc mới như marketing, truyền thông, quản lý, nhân sự...",
+      heading: t("program_detail.whom.career_switcher.heading"),
+      description: t("program_detail.whom.career_switcher.description"),
     },
     {
       icon: "Split" as const,
-      heading: "Người mới bắt đầu học AI",
-      description:
-        "Không cần nền tảng kỹ thuật – chỉ cần bạn tò mò, ham học hỏi và muốn dùng AI một cách thực tế để nâng cấp kỹ năng và tăng năng suất cá nhân.",
+      heading: t("program_detail.whom.ai_beginner.heading"),
+      description: t("program_detail.whom.ai_beginner.description"),
     },
   ];
   const courseInfo = {
-    title: "THÔNG TIN KHÓA HỌC",
+    title: t("program_detail.info.title"),
     details: [
       {
         icon: "Star" as const,
-        label: "Chủ đề:",
-        value: "AI In Marketing",
+        label: t("program_detail.info.topic"),
+        value: t("program_detail.courses.ai_in_marketing.topic"),
       },
       {
         icon: "Clock" as const,
-        label: "Thời gian học:",
-        value: "28-29 tháng 7 năm 2025",
+        label: t("program_detail.info.schedule"),
+        value: t("program_detail.courses.ai_in_marketing.schedule"),
       },
       {
         icon: "MapPin" as const,
-        label: "Người dẫn đường:",
-        value: "Linda Hui-Isaac",
+        label: t("program_detail.info.instructor"),
+        value: t("program_detail.courses.ai_in_marketing.instructor"),
       },
-      { icon: "Calendar" as const, label: "Số buổi học:", value: "2 buổi" },
+      {
+        icon: "Calendar" as const,
+        label: t("program_detail.info.sessions"),
+        value: t("program_detail.courses.ai_in_marketing.sessions"),
+      },
       {
         icon: "House" as const,
-        label: "Địa điểm học:",
-        value: "Online qua Zoom",
+        label: t("program_detail.info.location"),
+        value: t("program_detail.courses.ai_in_marketing.location"),
       },
       {
         icon: "Users" as const,
-        label: "Số lượng học viên:",
-        value: "40 học viên / lớp",
+        label: t("program_detail.info.capacity"),
+        value: t("program_detail.courses.ai_in_marketing.capacity"),
       },
     ],
   };
@@ -70,11 +73,11 @@ export default function AIInMarketingPage() {
     <div className="min-h-screen bg-[#F2F2F7] pb-20 override-header-spacing">
       <CourseHeader
         imageUrl="/picture/ai_in_mkt.png"
-        altText="AI In Marketing"
-        time="Khóa học Online"
-        tags={["AI", "Marketing"]}
-        title="AI In Marketing"
-        description="Khóa học chuyên sâu về ứng dụng AI trong marketing, giúp các marketer hiện đại hóa chiến lược và tối ưu hóa hiệu quả chiến dịch."
+        altText={t("program_detail.courses.ai_in_marketing.title")}
+        time={t("program_detail.common.online_course")}
+        tags={[t("categories.ai"), "Marketing"]}
+        title={t("program_detail.courses.ai_in_marketing.title")}
+        description={t("program_detail.courses.ai_in_marketing.description")}
         cost="13.069.000"
         paymentLink="/payment/57"
         courseSlug="ai-in-marketing"
@@ -82,11 +85,11 @@ export default function AIInMarketingPage() {
       <div className="ios-safe-padding-bottom">
         <Instructor instructors={instructors} />
         <div className="py-4">
-          <Whom title="Ai nên tham gia khóa học này?" items={whomItems} />
+          <Whom title={t("program_detail.common.who_should_join")} items={whomItems} />
         </div>
         <Testimonials
           courseSlug="ai-in-marketing"
-          buttonText="Thêm vào giỏ hàng"
+          buttonText={t("program_detail.common.add_to_cart")}
           buttonType="cart"
         />
         <CourseInfo {...courseInfo} />

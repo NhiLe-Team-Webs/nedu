@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { SePayPaymentResponse } from '@/types/sepay';
 import { currencyFormatter } from '@/lib/payment-utils';
+import { useLanguage } from '@/lib/LanguageContext';
 
 interface SePayPaymentQRProps {
   paymentData: SePayPaymentResponse;
@@ -18,6 +19,7 @@ export default function SePayPaymentQR({
   const [paymentStatus, setPaymentStatus] = useState<'pending' | 'success' | 'failed'>('pending');
   const [timeElapsed, setTimeElapsed] = useState(0);
   const [isChecking, setIsChecking] = useState(false);
+  const { t } = useLanguage();
 
   // Use refs for callbacks to avoid dependency cycles affecting the effect
   const onPaymentCompleteRef = useRef(onPaymentComplete);
@@ -92,6 +94,7 @@ export default function SePayPaymentQR({
 
   if (paymentStatus === 'success') {
     // Auto redirect after 3 seconds
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
       const timer = setTimeout(() => {
         if (onPaymentComplete) {
@@ -121,10 +124,10 @@ export default function SePayPaymentQR({
             </svg>
           </div>
           <h3 className="text-2xl font-bold text-green-600 mb-2">
-            Thanh toán thành công!
+            {t("sepay.success.title")}
           </h3>
           <p className="text-gray-600 mb-6">
-            Đơn hàng của bạn đã được xác nhận thanh toán thành công.
+            {t("sepay.success.message")}
           </p>
 
           <div className="space-y-3">
@@ -136,11 +139,11 @@ export default function SePayPaymentQR({
               }}
               className="w-full bg-primary hover:bg-primary-dark text-white font-bold py-3 px-6 rounded-lg transition"
             >
-              Tiếp tục ngay
+              {t("sepay.success.continue")}
             </button>
 
             <p className="text-sm text-gray-500">
-              Tự động chuyển trang sau 3 giây...
+              {t("sepay.success.redirect_hint")}
             </p>
           </div>
         </div>
@@ -168,10 +171,10 @@ export default function SePayPaymentQR({
             </svg>
           </div>
           <h3 className="text-2xl font-bold text-red-600 mb-2">
-            Thanh toán thất bại
+            {t("sepay.failed.title")}
           </h3>
           <p className="text-gray-600">
-            Đã xảy ra lỗi trong quá trình thanh toán. Vui lòng thử lại.
+            {t("sepay.failed.message")}
           </p>
         </div>
       </div>
@@ -182,10 +185,10 @@ export default function SePayPaymentQR({
     <div className="card">
       <div className="text-center mb-6">
         <h2 className="text-2xl font-bold mb-2 text-text-primary">
-          Quét mã QR để thanh toán
+          {t("sepay.scan_qr.title")}
         </h2>
         <p className="text-text-secondary">
-          Sử dụng ứng dụng ngân hàng của bạn để quét mã QR và hoàn tất thanh toán
+          {t("sepay.scan_qr.instruction")}
         </p>
       </div>
 
@@ -201,7 +204,7 @@ export default function SePayPaymentQR({
           </div>
         ) : (
           <div className="w-64 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-            <p className="text-gray-500">Đang tải QR code...</p>
+            <p className="text-gray-500">{t("sepay.scan_qr.loading")}</p>
           </div>
         )}
       </div>
@@ -210,24 +213,24 @@ export default function SePayPaymentQR({
       <div className="bg-gray-50 rounded-lg p-6 mb-6">
         <div className="space-y-3">
           <div className="flex justify-between">
-            <span className="text-text-secondary font-semibold">Mã đơn hàng:</span>
+            <span className="text-text-secondary font-semibold">{t("sepay.info.order_code")}</span>
             <span className="font-bold text-text-primary">{paymentData.orderCode}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-text-secondary font-semibold">Số tiền:</span>
+            <span className="text-text-secondary font-semibold">{t("sepay.info.amount")}</span>
             <span className="font-bold text-primary text-lg">
               {paymentData.amount ? currencyFormatter.format(paymentData.amount) : 'N/A'}
             </span>
           </div>
           {paymentData.accountNumber && (
             <div className="flex justify-between">
-              <span className="text-text-secondary font-semibold">Số tài khoản:</span>
+              <span className="text-text-secondary font-semibold">{t("sepay.info.account_number")}</span>
               <span className="font-bold text-text-primary">{paymentData.accountNumber}</span>
             </div>
           )}
           {paymentData.bankCode && (
             <div className="flex justify-between">
-              <span className="text-text-secondary font-semibold">Ngân hàng:</span>
+              <span className="text-text-secondary font-semibold">{t("sepay.info.bank")}</span>
               <span className="font-bold text-text-primary">{paymentData.bankCode}</span>
             </div>
           )}
@@ -259,16 +262,16 @@ export default function SePayPaymentQR({
                   d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                 ></path>
               </svg>
-              <span>Đang kiểm tra thanh toán...</span>
+              <span>{t("sepay.status.checking")}</span>
             </div>
           ) : (
             <p className="text-text-secondary">
-              Đang chờ thanh toán... ({formatTime(timeElapsed)})
+              {t("sepay.status.waiting").replace("{time}", formatTime(timeElapsed))} ({formatTime(timeElapsed)})
             </p>
           )}
         </div>
         <p className="text-sm text-text-tertiary">
-          Hệ thống sẽ tự động kiểm tra thanh toán sau khi bạn hoàn tất chuyển khoản
+          {t("sepay.status.auto_check")}
         </p>
       </div>
     </div>

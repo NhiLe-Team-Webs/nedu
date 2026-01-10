@@ -375,9 +375,8 @@ p {
 
 /* Mobile-first responsive improvements */
 @media (max-width: 640px) {
-  .aspect-video {
-    aspect-ratio: 9/16;
-  }
+
+
 
   /* Improve touch targets for mobile */
   button,
@@ -911,4 +910,10 @@ html {
   .line-clamp-3 {
     max-height: 4.5em;
   }
+}
+
+.override-header-spacing {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
 }

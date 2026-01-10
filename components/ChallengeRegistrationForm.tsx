@@ -1,12 +1,12 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Loader2, CheckCircle2 } from "lucide-react";
+import { useLanguage } from "@/lib/LanguageContext";
 
 export default function ChallengeRegistrationForm() {
     const router = useRouter();
+    const { t } = useLanguage();
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -85,10 +85,9 @@ export default function ChallengeRegistrationForm() {
     if (result) {
         return (
             <div className="bg-white p-6 rounded-2xl shadow-xl border border-gray-100 max-w-md mx-auto text-center animate-in fade-in zoom-in duration-300">
-                <h3 className="text-2xl font-bold text-[#F8B516] mb-4">Quét mã thanh toán</h3>
+                <h3 className="text-2xl font-bold text-[#F8B516] mb-4">{t("challenge_register.scan_title")}</h3>
                 <p className="text-gray-600 mb-6 text-sm">
-                    Vui lòng quét mã QR bên dưới để hoàn tất đăng ký.
-                    <br />Hệ thống sẽ tự động xác nhận khi nhận được tiền.
+                    <span dangerouslySetInnerHTML={{ __html: t("challenge_register.scan_desc") }} />
                 </p>
 
                 <div className="flex justify-center mb-6">
@@ -105,30 +104,30 @@ export default function ChallengeRegistrationForm() {
 
                 <div className="text-left bg-gray-50 p-4 rounded-lg space-y-2 text-sm border border-gray-100">
                     <div className="flex justify-between">
-                        <span className="text-gray-500">Người thụ hưởng:</span>
+                        <span className="text-gray-500">{t("challenge_register.beneficiary")}</span>
                         <span className="font-bold text-gray-800 uppercase">{result.accountName}</span>
                     </div>
                     <div className="flex justify-between">
-                        <span className="text-gray-500">Số tài khoản:</span>
+                        <span className="text-gray-500">{t("sepay.info.account_number")}</span>
                         <span className="font-bold text-gray-800">{result.accountNumber} ({result.bankCode})</span>
                     </div>
                     <div className="flex justify-between">
-                        <span className="text-gray-500">Số tiền:</span>
+                        <span className="text-gray-500">{t("sepay.info.amount")}</span>
                         <span className="font-bold text-[#F8B516] text-lg">{result.amount.toLocaleString()} VND</span>
                     </div>
                     <div className="flex justify-between items-center pt-2 border-t border-gray-200 mt-2">
-                        <span className="text-gray-500">Nội dung CK:</span>
+                        <span className="text-gray-500">{t("challenge_register.content_ck")}</span>
                         <span className="font-mono font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded select-all cursor-pointer"
                             onClick={() => navigator.clipboard.writeText(result.orderCode)}>
                             {result.orderCode}
                         </span>
                     </div>
-                    <p className="text-xs text-center text-gray-400 mt-2 italic">(*Bấm vào nội dung để sao chép)</p>
+                    <p className="text-xs text-center text-gray-400 mt-2 italic">{t("challenge_register.copy_hint")}</p>
                 </div>
 
                 <div className="mt-6 flex items-center justify-center gap-2 text-gray-500 text-sm">
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    Đang chờ xác nhận thanh toán...
+                    {t("challenge_register.waiting_confirm")}
                 </div>
             </div>
         );
@@ -137,19 +136,19 @@ export default function ChallengeRegistrationForm() {
     return (
         <div className="bg-white p-8 rounded-[24px] shadow-[0_10px_30px_rgba(0,0,0,0.08)] border border-gray-100 max-w-lg mx-auto">
             <h3 className="text-2xl font-bold text-center mb-6 text-[#F8B516]">
-                ĐĂNG KÝ THAM GIA
+                {t("challenge_register.form_title")}
             </h3>
 
             <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Họ và tên
+                        {t("challenge_register.labels.name")}
                     </label>
                     <input
                         type="text"
                         required
                         name="name"
-                        placeholder="Nhập họ tên của bạn"
+                        placeholder={t("challenge_register.placeholders.name")}
                         className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#F8B516] focus:border-transparent transition"
                         value={formData.name}
                         onChange={handleChange}
@@ -158,13 +157,13 @@ export default function ChallengeRegistrationForm() {
 
                 <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Email
+                        {t("challenge_register.labels.email")}
                     </label>
                     <input
                         type="email"
                         required
                         name="email"
-                        placeholder="example@gmail.com"
+                        placeholder={t("challenge_register.placeholders.email")}
                         className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#F8B516] focus:border-transparent transition"
                         value={formData.email}
                         onChange={handleChange}
@@ -173,13 +172,13 @@ export default function ChallengeRegistrationForm() {
 
                 <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Số điện thoại *
+                        {t("challenge_register.labels.phone")}
                     </label>
                     <input
                         type="tel"
                         required
                         name="phone"
-                        placeholder="Nhập số điện thoại (Zalo)"
+                        placeholder={t("challenge_register.placeholders.phone")}
                         pattern="[0-9]{10,11}"
                         title="Vui lòng nhập số điện thoại hợp lệ (10-11 số)"
                         className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#F8B516] focus:border-transparent transition"
@@ -190,13 +189,13 @@ export default function ChallengeRegistrationForm() {
 
                 <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Username Telegram *
+                        {t("challenge_register.labels.telegram")}
                     </label>
                     <input
                         type="text"
                         required
                         name="telegram"
-                        placeholder="@username"
+                        placeholder={t("challenge_register.placeholders.telegram")}
                         className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#F8B516] focus:border-transparent transition"
                         value={formData.telegram}
                         onChange={handleChange}
@@ -206,7 +205,7 @@ export default function ChallengeRegistrationForm() {
                 <div className="grid grid-cols-2 gap-4">
                     <div>
                         <label className="block text-sm font-semibold text-gray-700 mb-2">
-                            Ngày sinh *
+                            {t("challenge_register.labels.dob")}
                         </label>
                         <input
                             type="date"
@@ -219,7 +218,7 @@ export default function ChallengeRegistrationForm() {
                     </div>
                     <div>
                         <label className="block text-sm font-semibold text-gray-700 mb-2">
-                            Giới tính *
+                            {t("challenge_register.labels.gender")}
                         </label>
                         <select
                             required
@@ -228,22 +227,22 @@ export default function ChallengeRegistrationForm() {
                             value={formData.gender}
                             onChange={handleChange}
                         >
-                            <option value="">Chọn giới tính</option>
-                            <option value="Nam">Nam</option>
-                            <option value="Nữ">Nữ</option>
-                            <option value="Khác">Khác</option>
+                            <option value="">{t("challenge_register.placeholders.select_gender")}</option>
+                            <option value="Nam">{t("challenge_register.gender_options.male")}</option>
+                            <option value="Nữ">{t("challenge_register.gender_options.female")}</option>
+                            <option value="Khác">{t("challenge_register.gender_options.other")}</option>
                         </select>
                     </div>
                 </div>
 
                 <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Địa chỉ
+                        {t("challenge_register.labels.address")}
                     </label>
                     <input
                         type="text"
                         name="address"
-                        placeholder="Nhập địa chỉ của bạn"
+                        placeholder={t("challenge_register.placeholders.address")}
                         className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#F8B516] focus:border-transparent transition"
                         value={formData.address}
                         onChange={handleChange}
@@ -252,12 +251,12 @@ export default function ChallengeRegistrationForm() {
 
                 <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Ghi chú
+                        {t("challenge_register.labels.note")}
                     </label>
                     <textarea
                         name="note"
                         rows={3}
-                        placeholder="Nhập ghi chú (nếu có)"
+                        placeholder={t("challenge_register.placeholders.note")}
                         className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#F8B516] focus:border-transparent transition resize-none"
                         value={formData.note}
                         onChange={handleChange}
@@ -272,17 +271,17 @@ export default function ChallengeRegistrationForm() {
                     {loading ? (
                         <>
                             <Loader2 className="w-5 h-5 animate-spin" />
-                            Đang xử lý...
+                            {t("challenge_register.buttons.processing")}
                         </>
                     ) : (
                         <>
-                            THANH TOÁN (396.000đ)
+                            {t("challenge_register.buttons.pay")}
                         </>
                     )}
                 </button>
 
                 <p className="text-xs text-center text-gray-400 pt-2">
-                    Thông tin thanh toán sẽ được gửi và tích hợp tự động.
+                    {t("challenge_register.footer")}
                 </p>
             </form>
         </div>

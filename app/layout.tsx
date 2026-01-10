@@ -2,10 +2,11 @@ import type { Metadata } from 'next'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import Sidebar from '@/components/Sidebar'
-import BottomTabBar from '@/components/BottomTabBar'
+
+
 import Banner from '@/components/Banner'
 import { CartProvider } from '@/lib/cart-context'
+import { LanguageProvider } from '@/lib/LanguageContext'
 import CartSuccessPopup from '@/components/CartSuccessPopup'
 import ErrorHandler from '@/components/ErrorHandler'
 import Script from 'next/script'
@@ -44,13 +45,14 @@ export default function RootLayout({
         </Script>
       </head>
       <body>
-        <CartProvider>
-          <ErrorHandler />
-          <Script
-            id="payment-error-handler"
-            strategy="afterInteractive"
-            dangerouslySetInnerHTML={{
-              __html: `
+        <LanguageProvider>
+          <CartProvider>
+            <ErrorHandler />
+            <Script
+              id="payment-error-handler"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
                 // Global error handler that runs after all other scripts
                 (function() {
                   // Define all potentially undefined variables immediately
@@ -136,17 +138,18 @@ export default function RootLayout({
                   }
                 })();
               `
-            }}
-          />
-          <Header />
-          <div className="h-24 sm:h-28 md:h-32" />
-          <main className="pb-32">{children}</main>
-          <Sidebar />
-          <Footer />
-          <BottomTabBar />
-          <Banner />
-          <CartSuccessPopup />
-        </CartProvider>
+              }}
+            />
+            <Header />
+            <div className="h-14 sm:h-16 md:h-32" />
+            <main className="pb-32">{children}</main>
+
+            <Footer />
+
+            <Banner />
+            <CartSuccessPopup />
+          </CartProvider>
+        </LanguageProvider>
       </body>
     </html>
   )

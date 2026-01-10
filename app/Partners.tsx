@@ -1,6 +1,7 @@
 "use client";
 import React from 'react';
 import Image from 'next/image';
+import { useLanguage } from "@/lib/LanguageContext";
 
 const partners = [
   { name: "NLF", logo: '/picture/nlf.png' },
@@ -17,6 +18,8 @@ const partners = [
 ];
 
 const Partners = () => {
+  const { t } = useLanguage();
+
   return (
     <section id="partner" className="relative min-h-screen flex items-center justify-center bg-gradient-to-b from-background to-secondary/20">
       <div className="ww-section ww-section-d339226d-c645-44c1-b466-0081e70467c7" style={{ height: 'auto', zIndex: 'unset', minHeight: 'unset', maxHeight: 'unset', display: 'flex', background: 'none' }}>
@@ -48,7 +51,7 @@ const Partners = () => {
             textOverflow: 'initial',
             whiteSpace: 'pre-wrap'
           }}>
-            Partners
+            {t("partners.background_text")}
           </p>
 
           <div className="ww-layout ww-flexbox ww-element py-10 sm:py-12 md:py-16 lg:py-20" style={{
@@ -88,7 +91,7 @@ const Partners = () => {
               textOverflow: 'initial',
               whiteSpace: 'pre-wrap'
             }}>
-              30+ đối tác
+              {t("partners.heading")}
             </p>
 
             {/* First row of partners (6 columns) */}

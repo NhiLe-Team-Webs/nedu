@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   Carousel,
@@ -8,11 +9,12 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { InstructorProps } from "@/data/instructors";
-
+import { useLanguage } from "@/lib/LanguageContext";
 
 const Instructor: React.FC<{ instructors: InstructorProps[] }> = ({
   instructors,
 }) => {
+  const { t } = useLanguage();
   const [api, setApi] = React.useState<CarouselApi | null>(null);
   const [selected, setSelected] = React.useState(0);
 
@@ -46,7 +48,7 @@ const Instructor: React.FC<{ instructors: InstructorProps[] }> = ({
     <section className="py-12 sm:py-16 lg:py-20 bg-white">
       <div className="container mx-auto px-4 sm:px-6">
         <h2 className="text-3xl sm:text-4xl lg:text-[68px] font-black text-center text-amber-400 uppercase mb-8 sm:mb-10 lg:mb-12">
-          Người Dẫn Đường
+          {t("program_detail.instructor_component.heading")}
         </h2>
         <Carousel
           setApi={setApi}
@@ -60,31 +62,31 @@ const Instructor: React.FC<{ instructors: InstructorProps[] }> = ({
                   <div className="grid gap-8 lg:gap-12 lg:grid-cols-[minmax(0,2.3fr)_minmax(0,1fr)] items-start">
                     <div>
                       <p className="text-base sm:text-lg lg:text-xl text-gray-600 leading-relaxed mb-6 sm:mb-8">
-                        {instructor.bio}
+                        {t(instructor.bio)}
                       </p>
 
                       <div className="space-y-6 sm:space-y-8">
                         <section>
                           <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800 mb-3 sm:mb-4">
-                            Học vấn
+                            {t("program_detail.instructor_component.education")}
                           </h3>
                           <div className="space-y-3 text-sm sm:text-base text-gray-600 leading-relaxed">
                             {Array.isArray(instructor.education) ? (
                               instructor.education.map((edu, index) => (
-                                <p key={index}>{edu}</p>
+                                <p key={index}>{t(edu)}</p>
                               ))
                             ) : (
-                              <p>{instructor.education}</p>
+                              <p>{t(instructor.education)}</p>
                             )}
                           </div>
                         </section>
 
                         <section>
                           <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800 mb-3 sm:mb-4">
-                            Sự nghiệp và các dự án nổi bật
+                            {t("program_detail.instructor_component.career")}
                           </h3>
                           <p className="text-sm sm:text-base text-gray-600 leading-relaxed mb-4">
-                            {instructor.career}
+                            {t(instructor.career)}
                           </p>
                           <ul className="space-y-2 text-sm sm:text-base text-gray-700">
                             {instructor.projects.map((project, index) => (
@@ -93,8 +95,8 @@ const Instructor: React.FC<{ instructors: InstructorProps[] }> = ({
                                   •
                                 </span>
                                 <span>
-                                  <strong>{project.title}:</strong>{" "}
-                                  {project.description}
+                                  <strong>{t(project.title)}:</strong>{" "}
+                                  {t(project.description)}
                                 </span>
                               </li>
                             ))}
@@ -103,7 +105,7 @@ const Instructor: React.FC<{ instructors: InstructorProps[] }> = ({
 
                         <section>
                           <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800 mb-3 sm:mb-4">
-                            Thành tích và giải thưởng
+                            {t("program_detail.instructor_component.achievements")}
                           </h3>
                           <ul className="space-y-2 text-sm sm:text-base text-gray-700">
                             {instructor.achievements.map((achievement, index) => (
@@ -111,7 +113,7 @@ const Instructor: React.FC<{ instructors: InstructorProps[] }> = ({
                                 <span className="text-amber-400 font-semibold whitespace-nowrap">
                                   {achievement.date}
                                 </span>
-                                <span>{achievement.description}</span>
+                                <span>{t(achievement.description)}</span>
                               </li>
                             ))}
                           </ul>
@@ -135,11 +137,11 @@ const Instructor: React.FC<{ instructors: InstructorProps[] }> = ({
                       </div>
                       <div>
                         <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">
-                          Nghề nghiệp
+                          {t("program_detail.instructor_component.profession")}
                         </h4>
                         <div className="space-y-1 text-base text-gray-800">
                           {instructor.profession.map((job, index) => (
-                            <p key={index}>{job}</p>
+                            <p key={index}>{t(job)}</p>
                           ))}
                         </div>
                       </div>
