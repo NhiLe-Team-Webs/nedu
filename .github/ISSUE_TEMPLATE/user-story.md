@@ -7,14 +7,14 @@ assignees: ''
 
 ---
 
-**As a** [role]  
- **I need** [function]  
- **So that** [benefit]  
+**Là** [vai trò]  
+**Tôi muốn** [chức năng]  
+**Để** [lợi ích]  
    
- ### Details and Assumptions
- * [document what you know]
+ ### Chi tiết & Giả định
+ * [thông tin mà bạn biết]
    
- ### Acceptance Criteria  
+ ### Tiêu chí chấp nhận  
    
  ```gherkin
  Given [some context]
