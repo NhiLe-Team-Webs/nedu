@@ -132,7 +132,6 @@ const Header = () => {
             aria-label="Thông báo"
           >
             <Bell className="h-5 w-5 transition-all duration-200" />
-            <span className="absolute top-1 right-1 w-2 h-2 bg-[#F8B516] rounded-full animate-pulse"></span>
           </Button>
 
           <Button
