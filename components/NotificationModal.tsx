@@ -1,7 +1,6 @@
 "use client";
 
-import { X, Sparkles, Copy, Check } from "lucide-react";
-import Link from "next/link";
+import { X, Sparkles } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 
@@ -12,7 +11,6 @@ interface NotificationModalProps {
 
 const NotificationModal = ({ isOpen, onClose }: NotificationModalProps) => {
     const [isAnimating, setIsAnimating] = useState(false);
-    const [copied, setCopied] = useState(false);
     const { t } = useLanguage();
 
     useEffect(() => {
@@ -27,14 +25,6 @@ const NotificationModal = ({ isOpen, onClose }: NotificationModalProps) => {
             document.body.style.overflow = 'unset';
         };
     }, [isOpen]);
-
-    const handleCopy = (e: React.MouseEvent) => {
-        e.preventDefault();
-        e.stopPropagation();
-        navigator.clipboard.writeText("EARLY BIRD");
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-    };
 
     const handleClose = () => {
         setIsAnimating(false);
@@ -70,8 +60,7 @@ const NotificationModal = ({ isOpen, onClose }: NotificationModalProps) => {
                         {/* Title */}
                         <div className="flex-1 min-w-0">
                             <div className="flex items-baseline justify-between gap-2">
-                                <h3 className="font-semibold text-[15px] text-gray-900 leading-tight">{t("notification_modal.title")}</h3>
-                                <span className="text-[13px] text-gray-500 shrink-0">{t("notification_modal.now")}</span>
+                                <h3 className="font-semibold text-[15px] text-gray-900 leading-tight">Thông báo</h3>
                             </div>
                         </div>
 
@@ -86,50 +75,9 @@ const NotificationModal = ({ isOpen, onClose }: NotificationModalProps) => {
                     </div>
 
                     {/* Content */}
-                    <div className="px-4 py-4 space-y-3">
-                        {/* Description */}
-                        <p className="text-[15px] text-gray-600 leading-snug">
-                            {t("notification_modal.discount_prefix")} <span className="font-semibold text-gray-900">10.000.000Đ</span> {t("notification_modal.discount_suffix")}
-                        </p>
-
-                        {/* Code Display */}
-                        <div className="bg-gray-100/80 backdrop-blur-sm rounded-[12px] px-3 py-2.5">
-                            <p className="text-[11px] text-gray-500 font-medium mb-1.5 uppercase tracking-wide">{t("notification_modal.code_label")}</p>
-                            <div className="flex items-center justify-between gap-2">
-                                <p className="text-[15px] font-mono font-semibold text-gray-900 tracking-wide">EARLY BIRD</p>
-                                <button
-                                    onClick={handleCopy}
-                                    className="text-[13px] font-semibold text-[#F8B516] active:opacity-60 transition-opacity px-2 py-1"
-                                >
-                                    {copied ? (
-                                        <span className="flex items-center gap-1">
-                                            <Check className="w-3.5 h-3.5" />
-                                            {t("notification_modal.copied")}
-                                        </span>
-                                    ) : (
-                                        <span className="flex items-center gap-1">
-                                            <Copy className="w-3.5 h-3.5" />
-                                            {t("notification_modal.copy")}
-                                        </span>
-                                    )}
-                                </button>
-                            </div>
-                        </div>
-
-                        {/* CTA Button */}
-                        <Link
-                            href="/program-offline/la-chinh-minh"
-                            onClick={handleClose}
-                            className="block w-full"
-                        >
-                            <div className="bg-[#1C1C1E] hover:bg-[#2C2C2E] active:bg-[#3C3C3E] text-white text-center py-3 rounded-[12px] font-semibold text-[15px] transition-colors">
-                                {t("notification_modal.button")}
-                            </div>
-                        </Link>
-
-                        {/* Fine Print */}
-                        <p className="text-[12px] text-gray-500 leading-relaxed text-center">
-                            {t("notification_modal.footer")}
+                    <div className="px-4 py-6">
+                        <p className="text-[15px] text-gray-500 text-center">
+                            Không có thông báo mới
                         </p>
                     </div>
                 </div>
