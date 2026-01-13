@@ -413,7 +413,36 @@ export const vi = {
                         title: "Kết quả Hữu hình",
                         desc: "Ra về với 'Bản thiết kế cuộc đời' 5 năm chi tiết. Biến nội lực thành hành động thực tế."
                     }
-                ]
+                ],
+                faq: {
+                    heading: "Câu hỏi thường gặp",
+                    description: "Giải đáp những thắc mắc phổ biến nhất về khóa học Là Chính Mình.",
+                    contact_button: "Liên hệ tư vấn viên",
+                    see_all: "Xem tất cả",
+                    collapse: "Thu gọn",
+                    items: [
+                        {
+                            question: "Khoá học Là Chính Mình phù hợp với ai?",
+                            answer: "Dành cho người đang lạc hướng, mệt mỏi, muốn hiểu mình là ai và sống đúng với bản thân mình."
+                        },
+                        {
+                            question: "Học phí đã bao gồm những gì?",
+                            answer: "Học phí trên đã bao gồm toàn bộ chi phí khoá học khi tham gia và chi phí ăn ở tại khách sạn (không bao gồm chi phí di chuyển tới địa điểm học)"
+                        },
+                        {
+                            question: "Tôi chưa từng học ở N-Education có tham gia được không?",
+                            answer: "Có. Khoá học được thiết kế để phù hợp với tất cả các đối tượng, kể cả người mới chưa từng tham gia khoá học nào tại N-Education"
+                        },
+                        {
+                            question: "Sau khoá học tôi còn được hỗ trợ không?",
+                            answer: "Có. Bạn được đồng hành và dẫn dắt bởi cộng đồng, đội ngũ giảng viên và lộ trình phát triển cá nhân."
+                        },
+                        {
+                            question: "Nếu tôi không đủ khả năng đóng full học phí thì sao?",
+                            answer: "Có phương án hỗ trợ linh hoạt cho người nghiêm túc với hành trình và khi đăng ký học. Vui lòng liên hệ telegram @neducationvn để được tư vấn chi tiết."
+                        }
+                    ]
+                }
             },
             suc_manh_vo_han: {
                 title: "Sức Mạnh Vô Hạn",

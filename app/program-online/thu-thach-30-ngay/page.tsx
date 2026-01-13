@@ -243,7 +243,7 @@ const ThirtyDayPage = () => {
     <div className="min-h-screen bg-[#F2F2F7] pb-20 override-header-spacing font-sans text-gray-900">
       <main className="ios-safe-padding-bottom">
         {/* HERO SECTION - Responsive images for desktop/mobile */}
-        <section className="relative w-full -mt-14 sm:-mt-16 md:-mt-32 pt-14 sm:pt-16 md:pt-32">
+        <section className="relative w-full -mt-14 sm:-mt-16 md:-mt-20 pt-14 sm:pt-16 md:pt-20">
           {/* Desktop Image */}
           {isLoading ? (
             <Skeleton className="hidden md:block w-full aspect-[16/9]" />

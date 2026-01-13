@@ -141,7 +141,7 @@ export default function RootLayout({
               }}
             />
             <Header />
-            <div className="h-14 sm:h-16 md:h-32" />
+            <div className="h-14 sm:h-16 md:h-20" />
             <main className="pb-32">{children}</main>
 
             <Footer />

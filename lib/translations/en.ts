@@ -413,7 +413,36 @@ export const en = {
                         title: "Tangible Results",
                         desc: "Leave with a detailed 5-year 'Life Design'. Turning inner strength into practical action."
                     }
-                ]
+                ],
+                faq: {
+                    heading: "Frequently Asked Questions",
+                    description: "Answers to the most common questions about the 'Be Yourself' course.",
+                    contact_button: "Contact Consultant",
+                    see_all: "See all",
+                    collapse: "Collapse",
+                    items: [
+                        {
+                            question: "Who is the 'Be Yourself' course for?",
+                            answer: "For those who are lost, tired, want to understand who they are and live true to themselves."
+                        },
+                        {
+                            question: "What does the tuition fee include?",
+                            answer: "The tuition fee includes all course expenses while participating and hotel accommodation costs (excluding transportation to the study location)."
+                        },
+                        {
+                            question: "Can I participate if I have never studied at N-Education?",
+                            answer: "Yes. The course is designed to suit everyone, including newcomers who have never participated in any course at N-Education."
+                        },
+                        {
+                            question: "Will I still be supported after the course?",
+                            answer: "Yes. You will be accompanied and guided by the community, instructors, and a personal development roadmap."
+                        },
+                        {
+                            question: "What if I cannot afford to pay the full tuition fee?",
+                            answer: "There are flexible support options for those serious about the journey when registering. Please contact telegram @neducationvn for detailed advice."
+                        }
+                    ]
+                }
             },
             suc_manh_vo_han: {
                 title: "Unlimited Power",
