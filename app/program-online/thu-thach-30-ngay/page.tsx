@@ -273,6 +273,32 @@ const ThirtyDayPage = () => {
         </section>
 
 
+        {/* VÌ SAO NHI LÀM 30 DAYS? */}
+        <section className="bg-[#F2F2F7] py-16 md:py-20">
+          <div className="container mx-auto px-4 sm:px-6">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-5xl font-extrabold text-primary uppercase">
+                Vì sao Nhi làm 30 Days?
+              </h2>
+            </div>
+            <div className="max-w-4xl mx-auto text-center text-gray-600 text-base md:text-lg leading-relaxed">
+              <p className="mb-4">
+                Nhi đây, có ai học kiến thức của Nhi xong bỏ vô góc trì hoãn không làm không?
+              </p>
+              <p className="mb-4">
+                Nhi tin rằng nhiều người không thiếu kiến thức, chỉ thiếu một không gian để bắt đầu làm từng việc nhỏ mỗi ngày và trở thành một phiên bản tốt hơn của chính mình...
+              </p>
+              <p className="mb-4">
+                Nhi quyết định tạo ra Thử Thách 30 Ngày để đồng hành cùng các bạn bắt đầu tạo thói quen tốt.
+              </p>
+              <p>
+                Năm 2026, Nhi muốn gần hơn với khán giả của Nhi, cùng các bạn và các em tạo ra nhiều thứ tốt đẹp hơn cho cuộc sống!
+              </p>
+            </div>
+          </div>
+        </section>
+
+
         {/* 30 NGÀY CÓ GÌ? - What is Section */}
         <section className="bg-white pt-16 pb-8 md:pt-24 md:pb-12">
           <div className="container mx-auto px-4 sm:px-6">
