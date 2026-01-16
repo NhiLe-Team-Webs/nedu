@@ -4,17 +4,18 @@ import { streamText } from 'ai';
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
-    const { messages, language = 'vi' } = await req.json();
+    try {
+        const { messages, language = 'vi' } = await req.json();
 
-    // Language-specific instructions
-    const languageInstruction = language === 'vi'
-        ? "BẠN PHẢI TRẢ LỜI BẰNG TIẾNG VIỆT."
-        : "YOU MUST RESPOND IN ENGLISH.";
+        // Language-specific instructions
+        const languageInstruction = language === 'vi'
+            ? "BẠN PHẢI TRẢ LỜI BẰNG TIẾNG VIỆT."
+            : "YOU MUST RESPOND IN ENGLISH.";
 
-    const result = await streamText({
-        model: google('gemini-2.5-flash'),
-        messages,
-        system: `Bạn là trợ lý ảo thông minh của N-EDU.
+        const result = await streamText({
+            model: google('gemini-2.5-flash'),
+            messages,
+            system: `Bạn là trợ lý ảo thông minh của N-EDU.
     
 ${languageInstruction}
 
@@ -62,8 +63,28 @@ GỢI Ý CHO NGƯỜI DÙNG (BẮT BUỘC):
 - Ví dụ sau khi giới thiệu khoá học: [SUGGESTIONS: Xem chi tiết | Xem giá | Khoá học khác]
 - Ví dụ khi chào hỏi: [SUGGESTIONS: Xem khoá học | Giới thiệu N-EDU | Liên hệ tư vấn]
 `,
-    });
+        });
 
-    return result.toTextStreamResponse();
+        return result.toTextStreamResponse();
+    } catch (error) {
+        console.error('Chat API error:', error);
+
+        // Always return a friendly fallback message
+        const fallbackMessage = `Xin chào! Tôi là trợ lý N-EDU. Hiện tại hệ thống đang bảo trì, nhưng tôi vẫn có thể giúp bạn!
+
+N-EDU có 5 khoá học:
+• Sức Mạnh Vô Hạn - 180 triệu VNĐ
+• Là Chính Mình - 59.7 triệu VNĐ  
+• Thử thách 30 ngày - 396K VNĐ
+• Thương Hiệu Của Bạn - 18.96 triệu VNĐ
+• Cuộc Sống Của Bạn - 18.96 triệu VNĐ
+
+Liên hệ tư vấn: https://nedu.vn/contact
+
+[SUGGESTIONS: Xem khoá học | Liên hệ tư vấn | Trang chủ]`;
+
+        return new Response(fallbackMessage, {
+            headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+        });
+    }
 }
-
