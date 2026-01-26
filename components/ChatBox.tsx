@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { MessageCircle, X, Send, Bot, Loader2, Compass } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/lib/LanguageContext';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 type ActivityStatus = 'idle' | 'thinking' | 'speaking' | 'navigating';
 
@@ -231,7 +233,15 @@ export default function ChatBox() {
                                                     : 'bg-white text-gray-800 border border-gray-100 rounded-tl-none'
                                                     }`}
                                             >
-                                                <div className="whitespace-pre-wrap">{displayContent}</div>
+                                                <div className={`prose prose-sm max-w-none prose-p:leading-relaxed prose-p:my-1 prose-headings:my-2 prose-ul:my-2 prose-li:my-0.5 ${message.role === 'user' ? 'prose-invert text-white' : 'text-gray-800 prose-a:text-[#F7B418] prose-a:font-bold hover:prose-a:text-yellow-600'}`}>
+                                                    {message.role === 'user' ? (
+                                                        <div className="whitespace-pre-wrap">{displayContent}</div>
+                                                    ) : (
+                                                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                                            {displayContent}
+                                                        </ReactMarkdown>
+                                                    )}
+                                                </div>
                                             </div>
                                         </div>
 

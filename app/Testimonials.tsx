@@ -90,10 +90,10 @@ const Testimonials = ({
             disabled={justAdded}
             className={`px-4 sm:px-6 py-2 sm:py-3 transition-all duration-300 ${justAdded
               ? "!bg-transparent !border-2 !border-green-500 !text-green-500 !shadow-none !opacity-100 cursor-default"
-              : ""
+              : "!bg-amber-400 hover:!bg-amber-500 !border-none !shadow-lg"
               }`}
           >
-            <span className={`inline-flex items-center uppercase text-sm sm:text-base ${justAdded ? "text-green-500" : "text-white"}`}>
+            <span className={`inline-flex items-center uppercase text-sm sm:text-base font-bold ${justAdded ? "text-green-500" : "text-black"}`}>
               {justAdded ? (
                 <>
                   {t("cart_popup.added")}
