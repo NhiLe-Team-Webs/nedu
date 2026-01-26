@@ -10,6 +10,8 @@ import { LanguageProvider } from '@/lib/LanguageContext'
 import CartSuccessPopup from '@/components/CartSuccessPopup'
 import ErrorHandler from '@/components/ErrorHandler'
 import Script from 'next/script'
+import ChatBox from '@/components/ChatBox'
+import DevTools from '@/components/DevTools'
 
 export const metadata: Metadata = {
   title: 'N-Edu - Giáo dục chất lượng cho người Việt',
@@ -148,6 +150,8 @@ export default function RootLayout({
 
             <Banner />
             <CartSuccessPopup />
+            <ChatBox />
+            <DevTools />
           </CartProvider>
         </LanguageProvider>
       </body>

@@ -293,8 +293,9 @@ export const en = {
             instructor: "Instructor",
             add_to_cart: "Add to cart",
             added: "Added to cart",
-            learn_more: "Learn more",
-            register: "Register",
+            learn_more: "Checkout",
+            register: "Add to cart",
+            ended_registration: "Registration time has ended",
             previous: "Previous",
             next: "Next"
         },

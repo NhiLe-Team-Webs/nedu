@@ -3,7 +3,7 @@
 import { useState, useMemo, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ShoppingCart } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { courses as coursesData } from "@/data/courses";
@@ -307,31 +307,53 @@ export default function ProgramPage() {
                       <div className="text-gray-500 text-sm max-w-[90%] mx-auto mb-4 min-h-[40px]">
                         <span className="block">{t(course.mission).substring(0, 80)}...</span>
                       </div>
-                      <p className="text-base font-medium">
+                      <p className="text-base font-medium mb-4">
                         {course.price.currency === 'VNĐ'
                           ? `${parseInt(course.price.amount.replace(/[.,]/g, '')).toLocaleString('vi-VN')}\u00A0₫`
                           : `${course.price.currency} ${course.price.amount}`
                         }
                       </p>
-                      <div className="flex items-center justify-center gap-4 mt-auto">
-                        <Link
-                          href={`/program-${course.mode}/${course.slug}`}
-                          className="inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 rounded-full bg-primary text-white hover:text-white hover:bg-primary-dark px-5 py-2 text-sm"
-                        >
-                          {t("program_page.card.learn_more")}
-                        </Link>
-                        <button
-                          onClick={() => {
-                            if (course.slug === 'thu-thach-30-ngay') {
-                              router.push('/program-online/thu-thach-30-ngay#pricing');
-                            } else {
-                              handleAddToCart(course);
-                            }
-                          }}
-                          className="text-primary font-medium text-sm hover:underline"
-                        >
-                          {t("program_page.card.register")}
-                        </button>
+                      <div className="flex flex-col items-center justify-center gap-3 mt-auto w-full px-2">
+                        {course.slug !== 'thu-thach-30-ngay' ? (
+                          <div className="flex items-center justify-center gap-2 w-full">
+                            <button
+                              onClick={() => handleAddToCart(course)}
+                              title={t("program_page.card.register")}
+                              className="flex-1 h-10 inline-flex items-center justify-center gap-2 rounded-lg bg-[#ffeeee] text-[#d0011b] border border-[#d0011b] transition-all hover:bg-[#ffdada] active:scale-95 px-2"
+                            >
+                              <ShoppingCart className="w-4 h-4 flex-shrink-0" />
+                              <span className="font-bold text-xs sm:text-sm whitespace-nowrap overflow-hidden text-ellipsis">
+                                {t("program_page.card.register")}
+                              </span>
+                            </button>
+                            <Link
+                              href="/checkout"
+                              className="flex-1 inline-flex items-center justify-center h-10 rounded-lg bg-[#d0011b] text-white transition-all hover:bg-[#b00118] active:scale-95 shadow-md font-bold text-sm"
+                            >
+                              {t("program_page.card.learn_more")}
+                            </Link>
+                          </div>
+                        ) : (
+                          <div
+                            className="flex items-center justify-center gap-2 w-full opacity-60 cursor-not-allowed"
+                            title={t("program_page.card.ended_registration")}
+                          >
+                            <button
+                              disabled
+                              className="flex-1 h-10 inline-flex items-center justify-center gap-2 rounded-lg bg-[#ffeeee] text-[#d0011b] border border-[#d0011b] px-1 pointer-events-none"
+                            >
+                              <ShoppingCart className="w-4 h-4 flex-shrink-0" />
+                              <span className="font-bold text-xs sm:text-sm whitespace-nowrap overflow-hidden text-ellipsis">
+                                {t("program_page.card.register")}
+                              </span>
+                            </button>
+                            <div
+                              className="flex-1 inline-flex items-center justify-center h-10 rounded-lg bg-[#d0011b] text-white shadow-md font-bold text-sm pointer-events-none"
+                            >
+                              {t("program_page.card.learn_more")}
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </motion.div>
