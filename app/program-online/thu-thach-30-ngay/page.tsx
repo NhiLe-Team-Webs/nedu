@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -606,6 +606,7 @@ const ThirtyDayPage = () => {
                       : "hover:scale-[1.02] active:scale-[0.98]"
                   )}
                   onClick={() => handleAddToCart("monthly")}
+                  disabled={true}
                 >
                   <span className={cn(
                     "flex items-center justify-center gap-2 transition-all duration-300",
@@ -651,6 +652,7 @@ const ThirtyDayPage = () => {
                       : "hover:scale-[1.02] active:scale-[0.98]"
                   )}
                   onClick={() => handleAddToCart("membership")}
+                  disabled={true}
                 >
                   <span className={cn(
                     "flex items-center justify-center gap-2 transition-all duration-300",
