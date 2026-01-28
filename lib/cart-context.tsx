@@ -10,6 +10,7 @@ interface CartItem extends Course {
 interface CartContextType {
   items: CartItem[];
   addToCart: (course: Course) => void;
+  buyNow: (course: Course) => void;
   removeFromCart: (courseId: number) => void;
   updateQuantity: (courseId: number, quantity: number) => void;
   clearCart: () => void;
@@ -38,6 +39,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
       return [...prevItems, { ...course, quantity: 1 }];
     });
     // Popup removed - using button state change instead
+  };
+
+  const buyNow = (course: Course) => {
+    setItems([{ ...course, quantity: 1 }]);
   };
 
   const removeFromCart = (courseId: number) => {
@@ -77,6 +82,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     <CartContext.Provider value={{
       items,
       addToCart,
+      buyNow,
       removeFromCart,
       updateQuantity,
       clearCart,

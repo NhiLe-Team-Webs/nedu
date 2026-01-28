@@ -45,7 +45,7 @@ const formatCurrency = (value: number | undefined) => {
 
 const ThirtyDayPage = () => {
   const { t } = useLanguage();
-  const { addToCart } = useCart();
+  const { addToCart, buyNow } = useCart();
   const router = useRouter();
 
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
@@ -228,8 +228,8 @@ const ThirtyDayPage = () => {
           price: { ...thirtyDayCourse.price, amount: formattedMonthlyPrice }
         };
 
-    addToCart(courseToAdd);
-    router.push("/cart?checkout=true");
+    buyNow(courseToAdd);
+    router.push("/checkout");
   };
 
   // Parse the price from the course - Prioritize data from program_30day_challenge table
@@ -598,13 +598,10 @@ const ThirtyDayPage = () => {
                   ))}
                 </ul>
                 <div className="flex-grow" />
-                <div
-                  className="w-full mt-8 opacity-60 cursor-not-allowed"
-                  title={t("program_page.card.ended_registration")}
-                >
+                <div className="w-full mt-8">
                   <Button
-                    disabled
-                    className="w-full pointer-events-none"
+                    onClick={() => handleDirectCheckout("monthly")}
+                    className="w-full"
                   >
                     <span className="flex items-center justify-center gap-2">
                       {t("thirty_day_challenge.pricing.monthly.button")}
@@ -637,13 +634,10 @@ const ThirtyDayPage = () => {
                   ))}
                 </ul>
                 <div className="flex-grow" />
-                <div
-                  className="w-full mt-8 opacity-60 cursor-not-allowed"
-                  title={t("program_page.card.ended_registration")}
-                >
+                <div className="w-full mt-8">
                   <Button
-                    disabled
-                    className="w-full pointer-events-none"
+                    onClick={() => handleDirectCheckout("membership")}
+                    className="w-full"
                   >
                     <span className="flex items-center justify-center gap-2">
                       {t("thirty_day_challenge.pricing.membership.button")}
