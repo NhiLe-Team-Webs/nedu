@@ -16,7 +16,7 @@ const Courses: React.FC = () => {
       id: 2,
       slug: "la-chinh-minh",
       image: "/picture/la_chinh_minh.jpg",
-      date: "5/3-8/3/2025",
+      date: "5/3-8/3/2026",
       title: t("courses.slides.lcm.title"),
       label: t("courses.upcoming"),
       content: t("courses.slides.lcm.content"),
