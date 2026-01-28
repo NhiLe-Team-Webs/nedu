@@ -572,25 +572,19 @@ const ThirtyDayPage = () => {
                   ))}
                 </ul>
                 <div className="flex-grow" />
-                <Button
-                  className={cn(
-                    "w-full mt-8 transition-all duration-500 ease-out transform",
-                    addedToCart.monthly
-                      ? "bg-green-500 hover:bg-green-600 scale-[1.02] shadow-lg shadow-green-500/25"
-                      : "hover:scale-[1.02] active:scale-[0.98]"
-                  )}
-                  onClick={() => handleAddToCart("monthly")}
+                <div
+                  className="w-full mt-8 opacity-60 cursor-not-allowed"
+                  title={t("program_page.card.ended_registration")}
                 >
-                  <span className={cn(
-                    "flex items-center justify-center gap-2 transition-all duration-300",
-                    addedToCart.monthly && "animate-pulse"
-                  )}>
-                    {addedToCart.monthly && (
-                      <Check className="h-5 w-5 animate-in zoom-in-50 duration-300" />
-                    )}
-                    {addedToCart.monthly ? t("thirty_day_challenge.pricing.monthly.added") : t("thirty_day_challenge.pricing.monthly.button")}
-                  </span>
-                </Button>
+                  <Button
+                    disabled
+                    className="w-full pointer-events-none"
+                  >
+                    <span className="flex items-center justify-center gap-2">
+                      {t("thirty_day_challenge.pricing.monthly.button")}
+                    </span>
+                  </Button>
+                </div>
               </div>
 
               {/* Membership Plan Card */}
@@ -617,25 +611,19 @@ const ThirtyDayPage = () => {
                   ))}
                 </ul>
                 <div className="flex-grow" />
-                <Button
-                  className={cn(
-                    "w-full mt-8 transition-all duration-500 ease-out transform",
-                    addedToCart.membership
-                      ? "bg-green-500 hover:bg-green-600 scale-[1.02] shadow-lg shadow-green-500/25"
-                      : "hover:scale-[1.02] active:scale-[0.98]"
-                  )}
-                  onClick={() => handleAddToCart("membership")}
+                <div
+                  className="w-full mt-8 opacity-60 cursor-not-allowed"
+                  title={t("program_page.card.ended_registration")}
                 >
-                  <span className={cn(
-                    "flex items-center justify-center gap-2 transition-all duration-300",
-                    addedToCart.membership && "animate-pulse"
-                  )}>
-                    {addedToCart.membership && (
-                      <Check className="h-5 w-5 animate-in zoom-in-50 duration-300" />
-                    )}
-                    {addedToCart.membership ? t("thirty_day_challenge.pricing.membership.added") : t("thirty_day_challenge.pricing.membership.button")}
-                  </span>
-                </Button>
+                  <Button
+                    disabled
+                    className="w-full pointer-events-none"
+                  >
+                    <span className="flex items-center justify-center gap-2">
+                      {t("thirty_day_challenge.pricing.membership.button")}
+                    </span>
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
