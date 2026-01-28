@@ -80,7 +80,7 @@ export default function ProgramPage() {
   const [filter, setFilter] = useState("all");
   const router = useRouter();
   const { t } = useLanguage();
-  const { addToCart, items } = useCart();
+  const { addToCart, buyNow, items } = useCart();
   const carouselRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -326,12 +326,15 @@ export default function ProgramPage() {
                                 {t("program_page.card.register")}
                               </span>
                             </button>
-                            <Link
-                              href="/checkout"
+                            <button
+                              onClick={() => {
+                                buyNow(course);
+                                router.push("/checkout");
+                              }}
                               className="inline-flex items-center justify-center h-10 rounded-lg bg-[#d0011b] text-white transition-all hover:bg-[#b00118] active:scale-95 shadow-md font-bold text-sm px-3 w-fit"
                             >
                               {t("program_page.card.learn_more")}
-                            </Link>
+                            </button>
                           </div>
                         ) : (
                           <div
