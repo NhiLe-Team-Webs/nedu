@@ -319,16 +319,16 @@ export default function ProgramPage() {
                             <button
                               onClick={() => handleAddToCart(course)}
                               title={t("program_page.card.register")}
-                              className="flex-1 h-10 inline-flex items-center justify-center gap-2 rounded-lg bg-[#ffeeee] text-[#d0011b] border border-[#d0011b] transition-all hover:bg-[#ffdada] active:scale-95 px-2"
+                              className="h-10 inline-flex items-center justify-center gap-2 rounded-lg bg-[#ffeeee] text-[#d0011b] border border-[#d0011b] transition-all hover:bg-[#ffdada] active:scale-95 px-3 w-fit"
                             >
                               <ShoppingCart className="w-4 h-4 flex-shrink-0" />
-                              <span className="font-bold text-xs sm:text-sm whitespace-nowrap overflow-hidden text-ellipsis">
+                              <span className="font-bold text-xs sm:text-sm whitespace-nowrap">
                                 {t("program_page.card.register")}
                               </span>
                             </button>
                             <Link
                               href="/checkout"
-                              className="flex-1 inline-flex items-center justify-center h-10 rounded-lg bg-[#d0011b] text-white transition-all hover:bg-[#b00118] active:scale-95 shadow-md font-bold text-sm"
+                              className="inline-flex items-center justify-center h-10 rounded-lg bg-[#d0011b] text-white transition-all hover:bg-[#b00118] active:scale-95 shadow-md font-bold text-sm px-3 w-fit"
                             >
                               {t("program_page.card.learn_more")}
                             </Link>
@@ -340,15 +340,15 @@ export default function ProgramPage() {
                           >
                             <button
                               disabled
-                              className="flex-1 h-10 inline-flex items-center justify-center gap-2 rounded-lg bg-[#ffeeee] text-[#d0011b] border border-[#d0011b] px-1 pointer-events-none"
+                              className="h-10 inline-flex items-center justify-center gap-2 rounded-lg bg-[#ffeeee] text-[#d0011b] border border-[#d0011b] px-3 w-fit pointer-events-none"
                             >
                               <ShoppingCart className="w-4 h-4 flex-shrink-0" />
-                              <span className="font-bold text-xs sm:text-sm whitespace-nowrap overflow-hidden text-ellipsis">
+                              <span className="font-bold text-xs sm:text-sm whitespace-nowrap">
                                 {t("program_page.card.register")}
                               </span>
                             </button>
                             <div
-                              className="flex-1 inline-flex items-center justify-center h-10 rounded-lg bg-[#d0011b] text-white shadow-md font-bold text-sm pointer-events-none"
+                              className="inline-flex items-center justify-center h-10 rounded-lg bg-[#d0011b] text-white shadow-md font-bold text-sm px-3 w-fit pointer-events-none"
                             >
                               {t("program_page.card.learn_more")}
                             </div>
