@@ -223,6 +223,7 @@ export const en = {
             order_code: "Order Code:",
             amount: "Amount:",
             account_number: "Account Number:",
+            account_name: "Account Holder:",
             bank: "Bank:"
         },
         status: {

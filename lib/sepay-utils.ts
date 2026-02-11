@@ -4,7 +4,7 @@
 
 import { SePayPaymentRequest, SePayPaymentResponse, SePayWebhookPayload } from '@/types/sepay';
 import crypto from 'crypto';
-import { SEPAY_CONFIG } from './sepay-config';
+import { SEPAY_CONFIG, SEPAY_ACCOUNTS, AccountType } from './sepay-config';
 
 /**
  * Generate a unique order code
@@ -64,10 +64,10 @@ export function verifySePayWebhook(
     content: payload.content?.substring(0, 50) + '...',
     transactionDate: payload.transactionDate
   });
-  
+
   // Always return true to allow webhook processing
   return true;
-  
+
   // FUTURE IMPLEMENTATION: When SePay provides clear documentation:
   // 1. Check if signature exists in headers or payload
   // 2. Extract the signature
@@ -82,7 +82,8 @@ export function createSePayPaymentResponse(
   request: SePayPaymentRequest,
   orderCode: string,
   accountNumber: string,
-  bankCode: string
+  bankCode: string,
+  accountName?: string
 ): SePayPaymentResponse {
   const amount = formatAmount(request.amount);
   const description = orderCode; // Use order code as description
@@ -102,18 +103,20 @@ export function createSePayPaymentResponse(
     bankCode,
     amount,
     description,
+    accountName,
   };
 }
 
 /**
  * Get SePay configuration
  */
-export function getSePayConfig() {
+export function getSePayConfig(accountType?: AccountType) {
+  const account = SEPAY_ACCOUNTS[accountType || 'PERSONAL'];
   return {
     apiKey: SEPAY_CONFIG.API_KEY,
-    accountNumber: SEPAY_CONFIG.ACCOUNT_NUMBER,
-    bankCode: SEPAY_CONFIG.BANK_CODE,
-    webhookSecret: SEPAY_CONFIG.WEBHOOK_SECRET,
+    accountNumber: account.ACCOUNT_NUMBER,
+    bankCode: account.BANK_CODE,
+    accountName: account.ACCOUNT_NAME,
     appUrl: SEPAY_CONFIG.APP_URL,
     debug: SEPAY_CONFIG.DEBUG,
   };

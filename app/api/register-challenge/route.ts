@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { appendToSheet } from '@/lib/google-sheets';
-import { SEPAY_CONFIG } from '@/lib/sepay-config';
+import { SEPAY_ACCOUNTS } from '@/lib/sepay-config';
 import { OrderStore } from '@/lib/order-store';
 
 export async function POST(request: Request) {
@@ -27,7 +27,15 @@ export async function POST(request: Request) {
         // Let's use a unique string ID. 
         const orderCode = `TT30N${Math.floor(Date.now() % 1000000)}`;
 
-        const amount = 396000;
+        let amount = 396000;
+
+        // ⚠️ TEST MODE: Override amount for payment testing
+        if (process.env.SEPAY_TEST_MODE === 'true') {
+            const testAmount = parseInt(process.env.SEPAY_TEST_AMOUNT || '2000');
+            console.warn(`⚠️ SEPAY TEST MODE (Challenge): Amount overridden from ${amount} → ${testAmount} VND`);
+            amount = testAmount;
+        }
+
         const description = `${orderCode} ${phone}`;
         // Description length limited, keep it short. Sepay matches regex usually.
 
@@ -72,18 +80,18 @@ export async function POST(request: Request) {
             programId: 'challenge-30-days'
         });
 
-        // 3. Generate QR Url
-        // https://qr.sepay.vn/img?acc={acc}&bank={bank}&amount={amount}&des={des}
-        const qrUrl = `https://qr.sepay.vn/img?acc=${SEPAY_CONFIG.ACCOUNT_NUMBER}&bank=${SEPAY_CONFIG.BANK_CODE}&amount=${amount}&des=${orderCode}`;
+        // 3. Generate QR Url - 30 Days Challenge always uses PERSONAL account (MB)
+        const account = SEPAY_ACCOUNTS.PERSONAL;
+        const qrUrl = `https://qr.sepay.vn/img?acc=${account.ACCOUNT_NUMBER}&bank=${account.BANK_CODE}&amount=${amount}&des=${orderCode}`;
 
         return NextResponse.json({
             success: true,
             qrUrl,
             orderCode,
             amount,
-            accountNumber: SEPAY_CONFIG.ACCOUNT_NUMBER,
-            bankCode: SEPAY_CONFIG.BANK_CODE,
-            accountName: 'NHI LE TEAM' // Or dynamic if available, usually not in config.
+            accountNumber: account.ACCOUNT_NUMBER,
+            bankCode: account.BANK_CODE,
+            accountName: account.ACCOUNT_NAME
         });
 
     } catch (error) {

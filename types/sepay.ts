@@ -25,6 +25,7 @@ export interface SePayPaymentResponse {
   orderCode?: string;
   accountNumber?: string;
   bankCode?: string;
+  accountName?: string;
   amount?: number;
   description?: string;
   error?: string;

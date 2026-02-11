@@ -9,6 +9,7 @@ import { preparePaymentData, sendPaymentRequest, handlePaymentResponse, currency
 import SePayPaymentQR from '@/components/SePayPaymentQR';
 import { SePayPaymentResponse } from '@/types/sepay';
 import { useLanguage } from '@/lib/LanguageContext';
+import { validateCartAccountConsistency } from '@/lib/sepay-config';
 
 export default function CheckoutPage() {
   const { t } = useLanguage();
@@ -60,12 +61,43 @@ export default function CheckoutPage() {
       return;
     }
 
-    // Validate required fields
-    const requiredFields = ['name', 'email', 'phone', 'telegram', 'birthdate', 'gender'];
-    const missingFields = requiredFields.filter(field => !formData[field as keyof typeof formData]);
+    // 1. Process Telegram username to ensure @ prefix
+    let telegram = formData.telegram.trim();
+    if (telegram && !telegram.startsWith('@')) {
+      telegram = `@${telegram}`;
+    }
 
-    if (missingFields.length > 0) {
-      setErrors(['Vui lòng điền đầy đủ các trường bắt buộc']);
+    // 2. Validate required fields with specific error messages
+    const validationErrors: string[] = [];
+    if (!formData.name.trim()) validationErrors.push('Vui lòng nhập họ tên');
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim()) {
+      validationErrors.push('Vui lòng nhập địa chỉ email');
+    } else if (!emailRegex.test(formData.email)) {
+      validationErrors.push('Địa chỉ email không hợp lệ');
+    }
+
+    const phoneDigits = formData.phone.replace(/\D/g, '');
+    if (!formData.phone.trim()) {
+      validationErrors.push('Vui lòng nhập số điện thoại');
+    } else if (phoneDigits.length < 10 || phoneDigits.length > 11) {
+      validationErrors.push('Số điện thoại phải có 10 hoặc 11 chữ số');
+    }
+
+    if (!telegram) validationErrors.push('Vui lòng nhập Telegram username');
+    if (!formData.birthdate) validationErrors.push('Vui lòng chọn ngày sinh');
+    if (!formData.gender) validationErrors.push('Vui lòng chọn giới tính');
+
+    if (validationErrors.length > 0) {
+      setErrors(validationErrors);
+      // Scroll to error display
+      setTimeout(() => {
+        const errorDiv = document.querySelector('.bg-red-50');
+        if (errorDiv) {
+          errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 100);
       return;
     }
 
@@ -84,15 +116,25 @@ export default function CheckoutPage() {
       // Get all program IDs from cart items
       const programIds = items.map(item => (item.paymentId || item.id).toString());
 
+      // Validate cart has no mixed bank accounts
+      const cartValidation = validateCartAccountConsistency(programIds);
+      if (!cartValidation.isValid) {
+        setErrors([
+          'Giỏ hàng chứa các khoá học thuộc tài khoản thanh toán khác nhau. Vui lòng tách thành các đơn hàng riêng biệt để thanh toán.'
+        ]);
+        setIsLoading(false);
+        return;
+      }
+
       // Construct course names string (e.g. "Course A, Course B")
       const courseName = items.map(item => t(item.title)).join(', ');
 
       // Determine coupon code used (if any discount applied)
       const appliedCouponCode = discount > 0 ? discountCode : '';
 
-      // Prepare SePay payment data
+      // Prepare SePay payment data with processed telegram
       const sepayData = prepareSePayPaymentData(
-        formData,
+        { ...formData, telegram },
         finalAmount,
         undefined, // No single programId for checkout
         programIds, // Use programIds for multiple courses
@@ -142,7 +184,13 @@ export default function CheckoutPage() {
   };
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    if (field === 'telegram') {
+      // Strip leading @ if user types it, because we have a fixed @ span in UI
+      const cleanValue = value.replace(/^@+/, '');
+      setFormData(prev => ({ ...prev, [field]: cleanValue }));
+    } else {
+      setFormData(prev => ({ ...prev, [field]: value }));
+    }
   };
 
   if (items.length === 0) {
@@ -231,8 +279,7 @@ export default function CheckoutPage() {
 
                 {/* Payment Form */}
                 <div className="bg-white rounded-ios-xl shadow-ios-card p-5 sm:p-8 border border-white/40">
-                  <h2 className="text-xl font-bold mb-6 text-text-primary flex items-center gap-2">
-                    <span className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary text-sm">1</span>
+                  <h2 className="text-xl font-bold mb-6 text-text-primary">
                     {t("checkout.customer_info_title")}
                   </h2>
 

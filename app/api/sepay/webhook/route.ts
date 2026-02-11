@@ -8,7 +8,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { SePayWebhookPayload } from '@/types/sepay';
-import { verifySePayWebhook, getSePayConfig, logSePayDebug } from '@/lib/sepay-utils';
+import { getSePayConfig, logSePayDebug } from '@/lib/sepay-utils';
 import { OrderStore } from '@/lib/order-store';
 import { updateSheetStatus } from '@/lib/google-sheets';
 import { isSupabaseConfigured } from '@/lib/db';
@@ -27,6 +27,21 @@ export async function POST(request: NextRequest) {
   let orderCode: string | null = null;
 
   try {
+    // Verify API Key authentication
+    const expectedApiKey = process.env.SEPAY_WEBHOOK_API_KEY;
+    if (expectedApiKey) {
+      const authHeader = request.headers.get('authorization') || '';
+      const providedKey = authHeader.replace(/^Apikey\s+/i, '').trim();
+
+      if (providedKey !== expectedApiKey) {
+        console.error('Webhook authentication failed: invalid API key');
+        return NextResponse.json(
+          { success: false, error: 'Unauthorized' },
+          { status: 401 }
+        );
+      }
+    }
+
     const body: SePayWebhookPayload = await request.json();
     logSePayDebug('Webhook received', body);
 
@@ -65,18 +80,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Verify webhook signature
-    if (config.webhookSecret) {
-      const isValid = verifySePayWebhook(body, config.webhookSecret);
-      if (!isValid) {
-        console.error('Invalid webhook signature');
-        await updateWebhookLog(webhookLogId, false, 'invalid_signature', 'Invalid webhook signature');
-        return NextResponse.json(
-          { success: false, error: 'Invalid signature' },
-          { status: 401 }
-        );
-      }
-    }
+    // Note: Authentication is handled via API Key header check above (lines 30-42)
 
     // Extract order information from webhook payload
     orderCode = body.orderCode || body.code || null;
