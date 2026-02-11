@@ -223,6 +223,7 @@ export const vi = {
             order_code: "Mã đơn hàng:",
             amount: "Số tiền:",
             account_number: "Số tài khoản:",
+            account_name: "Chủ tài khoản:",
             bank: "Ngân hàng:"
         },
         status: {
