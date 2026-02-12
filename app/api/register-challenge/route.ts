@@ -80,8 +80,8 @@ export async function POST(request: Request) {
             programId: 'challenge-30-days'
         });
 
-        // 3. Generate QR Url - 30 Days Challenge always uses PERSONAL account (MB)
-        const account = SEPAY_ACCOUNTS.PERSONAL;
+        // 3. Generate QR Url - All courses now use BUSINESS account (ACB)
+        const account = SEPAY_ACCOUNTS.BUSINESS;
         const qrUrl = `https://qr.sepay.vn/img?acc=${account.ACCOUNT_NUMBER}&bank=${account.BANK_CODE}&amount=${amount}&des=${orderCode}`;
 
         return NextResponse.json({
