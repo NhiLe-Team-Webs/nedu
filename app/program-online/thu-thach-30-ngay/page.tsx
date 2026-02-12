@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -45,7 +45,7 @@ const formatCurrency = (value: number | undefined) => {
 
 const ThirtyDayPage = () => {
   const { t } = useLanguage();
-  const { addToCart } = useCart();
+  const { addToCart, buyNow } = useCart();
   const router = useRouter();
 
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
@@ -228,8 +228,8 @@ const ThirtyDayPage = () => {
           price: { ...thirtyDayCourse.price, amount: formattedMonthlyPrice }
         };
 
-    addToCart(courseToAdd);
-    router.push("/cart?checkout=true");
+    buyNow(courseToAdd);
+    router.push("/checkout");
   };
 
   // Parse the price from the course - Prioritize data from program_30day_challenge table
@@ -270,6 +270,32 @@ const ThirtyDayPage = () => {
               priority
             />
           )}
+        </section>
+
+
+        {/* VÌ SAO NHI LÀM 30 DAYS? */}
+        <section className="bg-[#F2F2F7] py-16 md:py-20">
+          <div className="container mx-auto px-4 sm:px-6">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-5xl font-extrabold text-primary uppercase">
+                Vì sao Nhi làm 30 Days?
+              </h2>
+            </div>
+            <div className="max-w-4xl mx-auto text-center text-gray-600 text-base md:text-lg leading-relaxed">
+              <p className="mb-4">
+                Nhi đây, có ai học kiến thức của Nhi xong bỏ vô góc trì hoãn không làm không?
+              </p>
+              <p className="mb-4">
+                Nhi tin rằng nhiều người không thiếu kiến thức, chỉ thiếu một không gian để bắt đầu làm từng việc nhỏ mỗi ngày và trở thành một phiên bản tốt hơn của chính mình...
+              </p>
+              <p className="mb-4">
+                Nhi quyết định tạo ra Thử Thách 30 Ngày để đồng hành cùng các bạn bắt đầu tạo thói quen tốt.
+              </p>
+              <p>
+                Năm 2026, Nhi muốn gần hơn với khán giả của Nhi, cùng các bạn và các em tạo ra nhiều thứ tốt đẹp hơn cho cuộc sống!
+              </p>
+            </div>
+          </div>
         </section>
 
 
@@ -572,25 +598,16 @@ const ThirtyDayPage = () => {
                   ))}
                 </ul>
                 <div className="flex-grow" />
-                <Button
-                  className={cn(
-                    "w-full mt-8 transition-all duration-500 ease-out transform",
-                    addedToCart.monthly
-                      ? "bg-green-500 hover:bg-green-600 scale-[1.02] shadow-lg shadow-green-500/25"
-                      : "hover:scale-[1.02] active:scale-[0.98]"
-                  )}
-                  onClick={() => handleAddToCart("monthly")}
-                >
-                  <span className={cn(
-                    "flex items-center justify-center gap-2 transition-all duration-300",
-                    addedToCart.monthly && "animate-pulse"
-                  )}>
-                    {addedToCart.monthly && (
-                      <Check className="h-5 w-5 animate-in zoom-in-50 duration-300" />
-                    )}
-                    {addedToCart.monthly ? t("thirty_day_challenge.pricing.monthly.added") : t("thirty_day_challenge.pricing.monthly.button")}
-                  </span>
-                </Button>
+                <div className="w-full mt-8">
+                  <Button
+                    onClick={() => handleDirectCheckout("monthly")}
+                    className="w-full"
+                  >
+                    <span className="flex items-center justify-center gap-2">
+                      {t("thirty_day_challenge.pricing.monthly.button")}
+                    </span>
+                  </Button>
+                </div>
               </div>
 
               {/* Membership Plan Card */}
@@ -617,25 +634,16 @@ const ThirtyDayPage = () => {
                   ))}
                 </ul>
                 <div className="flex-grow" />
-                <Button
-                  className={cn(
-                    "w-full mt-8 transition-all duration-500 ease-out transform",
-                    addedToCart.membership
-                      ? "bg-green-500 hover:bg-green-600 scale-[1.02] shadow-lg shadow-green-500/25"
-                      : "hover:scale-[1.02] active:scale-[0.98]"
-                  )}
-                  onClick={() => handleAddToCart("membership")}
-                >
-                  <span className={cn(
-                    "flex items-center justify-center gap-2 transition-all duration-300",
-                    addedToCart.membership && "animate-pulse"
-                  )}>
-                    {addedToCart.membership && (
-                      <Check className="h-5 w-5 animate-in zoom-in-50 duration-300" />
-                    )}
-                    {addedToCart.membership ? t("thirty_day_challenge.pricing.membership.added") : t("thirty_day_challenge.pricing.membership.button")}
-                  </span>
-                </Button>
+                <div className="w-full mt-8">
+                  <Button
+                    onClick={() => handleDirectCheckout("membership")}
+                    className="w-full"
+                  >
+                    <span className="flex items-center justify-center gap-2">
+                      {t("thirty_day_challenge.pricing.membership.button")}
+                    </span>
+                  </Button>
+                </div>
               </div>
             </div>
           </div>

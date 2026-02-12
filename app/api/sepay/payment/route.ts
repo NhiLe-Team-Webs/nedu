@@ -14,6 +14,7 @@ import {
   getSePayConfig,
   logSePayDebug,
 } from '@/lib/sepay-utils';
+import { getAccountForProgram } from '@/lib/sepay-config';
 import { OrderStore } from '@/lib/order-store';
 import { appendToSheet, findOrderInSheet } from '@/lib/google-sheets';
 import { isSupabaseConfigured } from '@/lib/db';
@@ -44,10 +45,27 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Get SePay configuration
+    // ⚠️ TEST MODE: Override amount for payment testing
+    if (process.env.SEPAY_TEST_MODE === 'true') {
+      const testAmount = parseInt(process.env.SEPAY_TEST_AMOUNT || '2000');
+      console.warn(`⚠️ SEPAY TEST MODE: Amount overridden from ${body.amount} → ${testAmount} VND`);
+      body.amount = testAmount;
+    }
+
+    // Determine which bank account to use based on programs
+    const programIdentifiers: string[] = [];
+    if (body.programIds && body.programIds.length > 0) {
+      programIdentifiers.push(...body.programIds);
+    } else if (body.programId) {
+      programIdentifiers.push(body.programId);
+    }
+    const accountType = getAccountForProgram(programIdentifiers);
+    logSePayDebug('Account routing', { programIdentifiers, accountType });
+
+    // Get SePay configuration for the determined account
     let config;
     try {
-      config = getSePayConfig();
+      config = getSePayConfig(accountType);
     } catch (error) {
       console.error('SePay configuration error:', error);
       return NextResponse.json(
@@ -64,7 +82,8 @@ export async function POST(request: NextRequest) {
       body,
       orderCode,
       config.accountNumber,
-      config.bankCode
+      config.bankCode,
+      config.accountName
     );
 
     // Variables to track database records
@@ -72,8 +91,10 @@ export async function POST(request: NextRequest) {
     let dbTransactionId: number | null = null;
 
     // Try to save to database first
+    console.log('[Payment] isSupabaseConfigured:', isSupabaseConfigured());
     if (isSupabaseConfigured()) {
       try {
+        console.log('[Payment] Saving order to Supabase DB...');
         // Create order in database
         const order = await OrderRepository.create({
           fullName: body.fullName,
@@ -96,6 +117,7 @@ export async function POST(request: NextRequest) {
         });
 
         dbOrderId = order.id;
+        console.log('[Payment] ✅ Order saved to DB, orderId:', order.id);
 
         // Create transaction record
         const transaction = await TransactionRepository.create({
@@ -107,6 +129,7 @@ export async function POST(request: NextRequest) {
         });
 
         dbTransactionId = transaction.id;
+        console.log('[Payment] ✅ Transaction saved to DB, transactionId:', transaction.id);
 
         // Link transaction to order
         await OrderRepository.setTransactionId(order.id, transaction.id);
@@ -117,9 +140,11 @@ export async function POST(request: NextRequest) {
           orderCode
         });
       } catch (dbError) {
-        console.error('Database error, falling back to memory store:', dbError);
+        console.error('[Payment] ❌ Database error:', dbError);
         // Continue with in-memory store as fallback
       }
+    } else {
+      console.warn('[Payment] ⚠️ Supabase NOT configured, skipping DB save');
     }
 
     // Always save to in-memory store for backward compatibility
@@ -144,6 +169,7 @@ export async function POST(request: NextRequest) {
 
     // Save to Google Sheet as backup
     try {
+      console.log('[Payment] Saving order to Google Sheet...');
       await appendToSheet({
         name: body.fullName,
         email: body.email,
@@ -159,8 +185,9 @@ export async function POST(request: NextRequest) {
         orderCode,
         status: 'Chờ thanh toán',
       });
+      console.log('[Payment] ✅ Order saved to Google Sheet');
     } catch (sheetError) {
-      console.error("Failed to save order to sheet", sheetError);
+      console.error('[Payment] ❌ Failed to save order to sheet:', sheetError);
       // Continue flow, don't fail payment creation just because sheet failed
     }
 

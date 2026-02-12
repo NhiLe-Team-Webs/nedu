@@ -30,6 +30,18 @@ export default function SePayPaymentQR({
     onPaymentFailedRef.current = onPaymentFailed;
   }, [onPaymentComplete, onPaymentFailed]);
 
+  // Warn user when trying to close/reload tab during pending payment
+  useEffect(() => {
+    if (paymentStatus !== 'pending') return;
+
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [paymentStatus]);
+
   // Polling to check payment status
   useEffect(() => {
     if (!paymentData.orderCode || paymentStatus !== 'pending') {
@@ -226,6 +238,12 @@ export default function SePayPaymentQR({
             <div className="flex justify-between">
               <span className="text-text-secondary font-semibold">{t("sepay.info.account_number")}</span>
               <span className="font-bold text-text-primary">{paymentData.accountNumber}</span>
+            </div>
+          )}
+          {paymentData.accountName && (
+            <div className="flex justify-between">
+              <span className="text-text-secondary font-semibold">{t("sepay.info.account_name")}</span>
+              <span className="font-bold text-text-primary text-right">{paymentData.accountName}</span>
             </div>
           )}
           {paymentData.bankCode && (

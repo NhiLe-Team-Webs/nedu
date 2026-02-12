@@ -130,7 +130,7 @@ export const courses: Course[] = [
     paymentId: 57,
     info: {
       topic: 'program_detail.courses.la_chinh_minh.topic',
-      schedule: '5/3-8/3/2025',
+      schedule: '5/3-8/3/2026',
       instructor: 'program_detail.courses.la_chinh_minh.instructor',
       sessions: 'program_detail.courses.la_chinh_minh.sessions',
       location: 'program_detail.courses.la_chinh_minh.location',

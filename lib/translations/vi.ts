@@ -223,6 +223,7 @@ export const vi = {
             order_code: "Mã đơn hàng:",
             amount: "Số tiền:",
             account_number: "Số tài khoản:",
+            account_name: "Chủ tài khoản:",
             bank: "Ngân hàng:"
         },
         status: {
@@ -293,8 +294,9 @@ export const vi = {
             instructor: "Người dẫn đường",
             add_to_cart: "Thêm vào giỏ hàng",
             added: "Đã thêm vào giỏ hàng",
-            learn_more: "Tìm hiểu thêm",
-            register: "Đăng ký",
+            learn_more: "Thanh toán",
+            register: "Thêm vào giỏ hàng",
+            ended_registration: "Đã hết thời gian đăng ký",
             previous: "Trước",
             next: "Tiếp"
         },

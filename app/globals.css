@@ -230,6 +230,7 @@ p {
 
 .btn-primary:hover {
   background-color: var(--color-primary-dark);
+  color: white;
   transform: scale(var(--scale-hover)) translateY(-1px);
   box-shadow: var(--shadow-lg);
 }
