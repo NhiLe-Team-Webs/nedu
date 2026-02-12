@@ -111,7 +111,7 @@ export function createSePayPaymentResponse(
  * Get SePay configuration
  */
 export function getSePayConfig(accountType?: AccountType) {
-  const account = SEPAY_ACCOUNTS[accountType || 'PERSONAL'];
+  const account = SEPAY_ACCOUNTS[accountType || 'BUSINESS'];
   return {
     apiKey: SEPAY_CONFIG.API_KEY,
     accountNumber: account.ACCOUNT_NUMBER,

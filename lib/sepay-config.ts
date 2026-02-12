@@ -1,6 +1,6 @@
 /**
  * SePay Payment Gateway Configuration
- * Multi-account configuration for routing payments to different bank accounts
+ * All courses now route to BUSINESS account (ACB - CONG TY TNHH TMDV NHLE)
  */
 
 /** Account type identifier */
@@ -14,9 +14,8 @@ export interface BankAccountConfig {
 }
 
 /**
- * Multi-account SePay configuration
- * BUSINESS: ACB - CONG TY TNHH TMDV NHLE (for "Là Chính Mình", "Sức Mạnh Vô Hạn")
- * PERSONAL: MB  - PHAM THI THANH THUY (for "30 Days", "Cuộc sống của bạn", "Thương hiệu của bạn")
+ * SePay bank account configuration
+ * ALL courses now use BUSINESS account: ACB - CONG TY TNHH TMDV NHLE
  */
 export const SEPAY_ACCOUNTS: Record<AccountType, BankAccountConfig> = {
   BUSINESS: {
@@ -24,71 +23,34 @@ export const SEPAY_ACCOUNTS: Record<AccountType, BankAccountConfig> = {
     BANK_CODE: process.env.SEPAY_BUSINESS_BANK_CODE || 'ACB',
     ACCOUNT_NAME: 'CONG TY TNHH TMDV NHLE',
   },
+  // PERSONAL account kept for backward compatibility but no longer used
   PERSONAL: {
-    ACCOUNT_NUMBER: process.env.SEPAY_PERSONAL_ACCOUNT_NUMBER || '8789785904',
-    BANK_CODE: process.env.SEPAY_PERSONAL_BANK_CODE || 'MB',
-    ACCOUNT_NAME: 'PHAM THI THANH THUY',
+    ACCOUNT_NUMBER: process.env.SEPAY_BUSINESS_ACCOUNT_NUMBER || '929899468',
+    BANK_CODE: process.env.SEPAY_BUSINESS_BANK_CODE || 'ACB',
+    ACCOUNT_NAME: 'CONG TY TNHH TMDV NHLE',
   },
 } as const;
 
 /**
- * Program IDs/slugs that route to BUSINESS account (ACB)
- * All other programs default to PERSONAL account (MB)
- */
-const BUSINESS_PROGRAM_IDENTIFIERS = new Set([
-  // Course IDs
-  '1',   // Sức Mạnh Vô Hạn
-  '2',   // Là Chính Mình
-  // Payment IDs
-  '57',  // Là Chính Mình paymentId
-  '58',  // Sức Mạnh Vô Hạn paymentId
-  // Slugs
-  'la-chinh-minh',
-  'suc-manh-vo-han',
-]);
-
-/**
  * Determine which bank account to use based on program identifiers.
- * Returns 'BUSINESS' for "Là Chính Mình" and "Sức Mạnh Vô Hạn",
- * 'PERSONAL' for everything else.
+ * ALL programs now route to BUSINESS account (ACB).
  */
-export function getAccountForProgram(programIdentifiers: string[]): AccountType {
-  const isBusiness = programIdentifiers.some(id =>
-    BUSINESS_PROGRAM_IDENTIFIERS.has(id)
-  );
-  return isBusiness ? 'BUSINESS' : 'PERSONAL';
+export function getAccountForProgram(_programIdentifiers: string[]): AccountType {
+  return 'BUSINESS';
 }
 
 /**
  * Check if a cart with mixed programs (different account types) is valid.
- * Returns true if all programs route to the same account.
+ * Since all programs now use the same BUSINESS account, this always returns valid.
  */
 export function validateCartAccountConsistency(programIdentifiers: string[]): {
   isValid: boolean;
   accountType: AccountType;
   conflictingItems?: { business: string[]; personal: string[] };
 } {
-  const businessItems = programIdentifiers.filter(id =>
-    BUSINESS_PROGRAM_IDENTIFIERS.has(id)
-  );
-  const personalItems = programIdentifiers.filter(id =>
-    !BUSINESS_PROGRAM_IDENTIFIERS.has(id)
-  );
-
-  if (businessItems.length > 0 && personalItems.length > 0) {
-    return {
-      isValid: false,
-      accountType: 'BUSINESS',
-      conflictingItems: {
-        business: businessItems,
-        personal: personalItems,
-      },
-    };
-  }
-
   return {
     isValid: true,
-    accountType: businessItems.length > 0 ? 'BUSINESS' : 'PERSONAL',
+    accountType: 'BUSINESS',
   };
 }
 
@@ -96,7 +58,6 @@ export function validateCartAccountConsistency(programIdentifiers: string[]): {
 export const SEPAY_CONFIG = {
   // SePay API Key (shared for the same SePay account)
   API_KEY: process.env.SEPAY_API_KEY || '',
-
 
   // Application URL
   APP_URL: process.env.NEXT_PUBLIC_APP_URL || process.env.APP_URL || 'http://localhost:3000',
