@@ -277,7 +277,7 @@ function PaymentSuccessContent() {
                   {message}
                 </p>
                 <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
-                  Bạn vui lòng check{' '}
+                  Bạn vui lòng kiểm tra{' '}
                   <a href="https://gmail.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-semibold">
                     Gmail
                   </a>{' '}
