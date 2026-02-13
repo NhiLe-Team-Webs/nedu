@@ -15,6 +15,7 @@ import {
   logSePayDebug,
 } from '@/lib/sepay-utils';
 import { getAccountForProgram } from '@/lib/sepay-config';
+import { isEventActive, LCM_PAYMENT_ID, THCB_PAYMENT_ID } from '@/lib/event-config';
 import { OrderStore } from '@/lib/order-store';
 import { appendToSheet, findOrderInSheet } from '@/lib/google-sheets';
 import { isSupabaseConfigured } from '@/lib/db';
@@ -60,6 +61,17 @@ export async function POST(request: NextRequest) {
       programIdentifiers.push(body.programId);
     }
     const accountType = getAccountForProgram(programIdentifiers);
+
+    // ─── Event Promo: Inject THCB bonus when LCM is purchased ────────
+    if (isEventActive()) {
+      if (programIdentifiers.includes(LCM_PAYMENT_ID) && !programIdentifiers.includes(THCB_PAYMENT_ID)) {
+        programIdentifiers.push(THCB_PAYMENT_ID);
+        body.courseName = (body.courseName || '') + ', Thương Hiệu Của Bạn (Tặng kèm)';
+        console.log('[Event] 🎁 THCB bonus injected for LCM purchase');
+      }
+    }
+    // ──────────────────────────────────────────────────────────────────
+
     logSePayDebug('Account routing', { programIdentifiers, accountType });
 
     // Get SePay configuration for the determined account

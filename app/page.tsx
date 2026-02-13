@@ -11,15 +11,34 @@ import Testimonials from "./Testimonials";
 import Partners from "./Partners";
 import Connection from "./Connection";
 import Privilege from "./Privilege";
-
+import HeroSection from "@/components/HeroSection";
+import { useRouter } from "next/navigation";
 import { useLanguage } from "@/lib/LanguageContext";
+import { useCart } from "@/lib/cart-context";
+import { courses } from "@/data/courses";
 
 export default function Home() {
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const { t } = useLanguage();
+  const router = useRouter();
+  const { buyNow } = useCart();
+
+  const handleRegister = () => {
+    const lcmCourse = courses.find(c => c.slug === 'la-chinh-minh');
+    if (lcmCourse) {
+      buyNow(lcmCourse);
+      router.push('/checkout');
+    } else {
+      const coursesSection = document.getElementById("courses-section");
+      if (coursesSection) {
+        coursesSection.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
 
   const texts = [
+    // ... (lines 23-89 unchanged, just commented out in the return)
     t("home.hero_text_1"),
     t("home.hero_text_2"),
     t("home.hero_text_3")
@@ -39,11 +58,13 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section with Google Drive Video */}
+      <HeroSection onRegister={handleRegister} />
+      {/* 
+      // Hero Section with Google Drive Video
       <section className="bg-white pt-2 md:pt-0 pb-8 md:pb-0">
         <div className="container mx-auto px-4 md:px-6">
           <div className="w-full">
-            {/* Mobile: Taller aspect ratio + iOS styling */}
+            // Mobile: Taller aspect ratio + iOS styling
             <div className="relative pb-[75%] md:pb-[56.25%] h-0 overflow-hidden rounded-[24px] md:rounded-lg shadow-ios-md md:shadow-none transition-all duration-300">
               <div className="absolute top-0 left-0 w-full h-full">
                 <video
@@ -60,6 +81,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      */}
 
       {/* Animated Hero Text Section */}
       <section className="bg-white py-8 md:py-24">

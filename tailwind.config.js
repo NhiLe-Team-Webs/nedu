@@ -60,6 +60,7 @@ module.exports = {
         'ios-slide-up': 'iosSlideUp 0.5s cubic-bezier(0.33, 1, 0.68, 1) forwards',
         'ios-fade-in': 'iosFadeIn 0.4s ease-out forwards',
         'ios-scale-in': 'iosScaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
+        'bounce-x': 'bounce-x 1s ease-in-out infinite',
       },
       keyframes: {
         iosSlideUp: {
@@ -73,6 +74,10 @@ module.exports = {
         iosScaleIn: {
           '0%': { transform: 'scale(0.95)', opacity: '0' },
           '100%': { transform: 'scale(1)', opacity: '1' },
+        },
+        'bounce-x': {
+          '0%, 100%': { transform: 'translateX(0)' },
+          '50%': { transform: 'translateX(3px)' },
         },
       },
     },

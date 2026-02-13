@@ -5,10 +5,15 @@ import Image from 'next/image';
 import { Minus, Plus } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
 import { useLanguage } from "@/lib/LanguageContext";
+import { shouldApplyEventPromo, getBonusCourse } from '@/lib/event-config';
 
 export default function CartPage() {
   const { t } = useLanguage();
   const { items, updateQuantity, removeFromCart, getTotalPrice } = useCart();
+
+  // Event promo state
+  const eventPromoActive = shouldApplyEventPromo(items);
+  const bonusCourse = getBonusCourse();
 
   const currencyFormatter = new Intl.NumberFormat('vi-VN', {
     style: 'currency',
@@ -58,7 +63,10 @@ export default function CartPage() {
               {items.map((item) => (
                 <div
                   key={item.id}
-                  className="flex flex-col md:flex-row items-start gap-6 py-6 border-b border-gray-200"
+                  className={`flex flex-col md:flex-row items-start gap-6 py-6 border-b border-gray-200 ${eventPromoActive && (item.slug === 'la-chinh-minh' || item.id === 2 || item.paymentId === 57)
+                    ? 'border-b-0 pb-2'
+                    : ''
+                    }`}
                 >
                   {/* Product Image */}
                   <div className="relative w-full md:w-48 h-auto md:h-32 rounded-lg overflow-hidden flex-shrink-0 aspect-video md:aspect-auto">
@@ -120,8 +128,51 @@ export default function CartPage() {
                       </button>
                     </div>
                   </div>
+                  {/* Product Info, Price and Actions ... */}
                 </div>
               ))}
+
+              {/* Event Promo: Bonus THCB Course in Cart (free with LCM) */}
+              {eventPromoActive && bonusCourse && (
+                <div className="relative ml-10 sm:ml-16 mt-2 mb-10">
+                  {/* Thick Vertical Connector Line - Synced with Checkout UI */}
+                  <div className="absolute -left-7 top-[-4px] bottom-0 w-[3px] bg-gray-300/80 rounded-full"></div>
+
+                  <div className="flex flex-col md:flex-row gap-4 relative group">
+                    <div className="shrink-0">
+                      <div className="relative w-[120px] h-[80px] md:w-[130px] md:h-[85px] rounded-ios-lg overflow-hidden shadow-sm opacity-90 transition-opacity group-hover:opacity-100">
+                        <Image
+                          alt={t(bonusCourse.title)}
+                          src={bonusCourse.heroImage}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 120px, 130px"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex-1 flex flex-col justify-center">
+                      <h3 className="text-base font-bold mb-0.5 text-text-primary leading-tight">{t(bonusCourse.title)}</h3>
+                      <p className="text-text-secondary mb-2 text-[13px]">{bonusCourse.category.map(c => t(c)).join(', ')}</p>
+
+                      <div className="flex items-center justify-between mt-auto">
+                        <div>
+                          <span className="text-text-secondary text-[11px] font-medium bg-gray-100 px-1.5 py-0.5 rounded-md">x1</span>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          <span className="text-lg font-bold text-gray-400/80 line-through decoration-[1.5px] decoration-gray-400/50">
+                            {bonusCourse.price.currency === 'VNĐ'
+                              ? currencyFormatter.format(parseInt(bonusCourse.price.amount.replace(/\./g, '')))
+                              : `${bonusCourse.price.currency} ${bonusCourse.price.amount}`
+                            }
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

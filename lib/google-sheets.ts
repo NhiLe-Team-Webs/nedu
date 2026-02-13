@@ -40,7 +40,7 @@ export const appendToSheet = async (data: {
 
         await doc.loadInfo(); // loads document properties and worksheets
 
-        const sheet = doc.sheetsByIndex[0]; // loading the first sheet
+        const sheet = doc.sheetsByTitle['RAW_FORM_DATA']; // Priority to RAW_FORM_DATA tab
 
         // Check if header row exists, if not set it
         await sheet.loadHeaderRow();
@@ -106,7 +106,7 @@ export const updateSheetStatus = async (orderCode: string, newStatus: string, am
 
         const doc = new GoogleSpreadsheet(GOOGLE_SHEET_ID, serviceAccountAuth);
         await doc.loadInfo();
-        const sheet = doc.sheetsByIndex[0];
+        const sheet = doc.sheetsByTitle['RAW_FORM_DATA'] || doc.sheetsByIndex[0];
 
         const rows = await sheet.getRows();
         // Find row with matching Order Code
@@ -145,7 +145,7 @@ export const findOrderInSheet = async (orderCode: string): Promise<Order | null>
 
         const doc = new GoogleSpreadsheet(GOOGLE_SHEET_ID, serviceAccountAuth);
         await doc.loadInfo();
-        const sheet = doc.sheetsByIndex[0];
+        const sheet = doc.sheetsByTitle['RAW_FORM_DATA'] || doc.sheetsByIndex[0];
 
         const rows = await sheet.getRows();
         const row = rows.find(r => r.get('Order Code') === orderCode);
