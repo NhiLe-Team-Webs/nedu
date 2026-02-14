@@ -3,368 +3,271 @@
 import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronRight, Calendar } from "lucide-react";
+import { ChevronRight, ChevronLeft, Calendar, ArrowRight } from "lucide-react";
 import { useLanguage } from "@/lib/LanguageContext";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import type { Swiper as SwiperType } from 'swiper';
+import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { useCart } from "@/lib/cart-context";
+import { useRouter } from "next/navigation";
+import { courses } from "@/data/courses";
 
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
+interface CourseSlide {
+  id: number;
+  slug: string;
+  image: string;
+  imageMobile?: string;
+  date: string;
+  title: string;
+  label: string;
+  content: string;
+  type: string;
+}
+
+const SlideContent = ({ slide }: { slide: CourseSlide }) => {
+  const { t } = useLanguage();
+  const { buyNow } = useCart();
+  const router = useRouter();
+
+  const handleRegister = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const courseData = courses.find(c => c.slug === slide.slug);
+    if (courseData) {
+      buyNow(courseData);
+      router.push('/checkout');
+    }
+  };
+
+  return (
+    <div className="relative w-full h-full group/slide overflow-hidden">
+      {/* Background Images */}
+      <Image
+        src={slide.image}
+        alt={slide.title}
+        fill
+        className="object-contain w-full h-full transition-transform duration-700 hidden md:block bg-white"
+      />
+      <Image
+        src={slide.imageMobile || slide.image}
+        alt={slide.title}
+        fill
+        className="object-contain w-full h-full transition-transform duration-700 md:hidden bg-white"
+      />
+
+      {/* Subtle Bottom Gradient for Readability */}
+      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 via-black/20 to-transparent pointer-events-none" />
+
+      {/* Mobile Layout (Centered & Bottom-Aligned) */}
+      <div className="absolute inset-0 p-6 flex flex-col justify-end items-center text-white text-center md:hidden pb-12">
+        <div className="space-y-4 w-full max-w-sm">
+          <h3 className="text-2xl font-black tracking-tight drop-shadow-lg text-white">{slide.type}</h3>
+          <p className="text-sm font-medium text-white/90 line-clamp-2 px-4 drop-shadow-md">
+            {slide.content}
+          </p>
+          <Button
+            className="rounded-full bg-white text-black hover:bg-[#F7B50C] hover:text-white px-10 py-6 text-base font-black transition-all duration-300 shadow-2xl active:scale-95"
+            onClick={handleRegister}
+          >
+            Tìm hiểu thêm
+          </Button>
+        </div>
+      </div>
+
+      {/* Desktop Layout */}
+      <div className="absolute inset-x-0 bottom-0 px-8 py-6 hidden md:flex flex-col justify-end text-white">
+        <div className="info-bottom slide-bottom flex items-center gap-4">
+          <Button
+            className="rounded-full bg-white text-black hover:bg-white/90 px-6 py-2.5 text-sm font-bold h-auto shrink-0 shadow-lg"
+            onClick={handleRegister}
+          >
+            Đăng ký ngay
+          </Button>
+          <p className="text-lg font-medium truncate drop-shadow-md mb-0 flex items-center h-full translate-y-[2px]">
+            <span className="font-bold text-white">{slide.type}</span>
+            <span className="mx-2 text-white/50">•</span>
+            <span className="text-white/80">{slide.content}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const Courses: React.FC = () => {
   const { t } = useLanguage();
+  const swiperRef = React.useRef<SwiperType | null>(null);
+  const [isMounted, setIsMounted] = React.useState(false);
 
-  const slides = React.useMemo(() => [
+  React.useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  const slides: CourseSlide[] = React.useMemo(() => [
     {
       id: 2,
       slug: "la-chinh-minh",
       image: "/picture/la_chinh_minh.jpg",
+      imageMobile: "/picture/la_chinh_minh.jpg",
       date: "5/3-8/3/2026",
       title: t("courses.slides.lcm.title"),
       label: t("courses.upcoming"),
       content: t("courses.slides.lcm.content"),
-      type: "offline"
+      type: "Offline"
     },
     {
       id: 1,
       slug: "suc-manh-vo-han",
       image: "/picture/suc_manh_vo_han.jpg",
+      imageMobile: "/picture/suc_manh_vo_han.jpg",
       date: "01/04/2026",
       title: t("courses.slides.smvh.title"),
       label: t("courses.intro"),
       content: t("courses.slides.smvh.content"),
-      type: "offline"
+      type: "Offline"
     },
     {
       id: 4,
       slug: "thuong-hieu-cua-ban",
       image: "/picture/thuong_hieu_cua_ban.png",
+      imageMobile: "/picture/thuong_hieu_cua_ban.png",
       date: "01/11/2025",
       title: t("courses.slides.thcb.title"),
       label: t("courses.online"),
       content: t("courses.slides.thcb.content"),
-      type: "online"
+      type: "Online"
     },
     {
       id: 5,
       slug: "cuoc-song-cua-ban",
       image: "/picture/cuoc_song_cua_ban.png",
+      imageMobile: "/picture/cuoc_song_cua_ban.png",
       date: "01/11/2025",
       title: t("courses.slides.cscb.title"),
       label: t("courses.online"),
       content: t("courses.slides.cscb.content"),
-      type: "online"
+      type: "Online"
     },
     {
       id: 8,
       slug: "thu-thach-30-ngay",
       image: "/picture/thuthach30day_desktop.png",
+      imageMobile: "/picture/thuthach30day_mobile.png",
       date: "28/12/2025 – 28/01/2026",
       title: t("courses.slides.tt30n.title"),
       label: t("courses.online"),
       content: t("courses.slides.tt30n.content"),
-      type: "online"
+      type: "Membership"
     }
   ], [t]);
-  const [currentIndex, setCurrentIndex] = React.useState(1); // Start with "Sức Mạnh Vô Hạn" in center
-  const totalCourses = slides.length;
-  const [viewportWidth, setViewportWidth] = React.useState(0); // Start with 0 to avoid SSR/client mismatch
-  const [isClient, setIsClient] = React.useState(false); // Track if we're on client
 
-  React.useEffect(() => {
-    // Set client flag and initial viewport width
-    setIsClient(true);
-    if (typeof window !== "undefined") {
-      setViewportWidth(window.innerWidth);
-    }
-
-    const handleResize = () => setViewportWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  // Auto-play functionality
-  React.useEffect(() => {
-    if (!isClient) return; // Only run on client
-
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % totalCourses);
-    }, 4000); // Change slide every 4 seconds
-
-    return () => clearInterval(interval);
-  }, [isClient, totalCourses]);
-
-  const isMobile = isClient && viewportWidth < 640;
-  const isTablet = isClient && viewportWidth >= 640 && viewportWidth < 1024;
-  const cardWidth = React.useMemo(() => {
-    if (!isClient) return 300; // Default width for SSR
-    if (isMobile) {
-      return Math.max(240, Math.min(viewportWidth - 40, 300));
-    }
-    if (isTablet) {
-      return 320;
-    }
-    return 400;
-  }, [viewportWidth, isMobile, isTablet, isClient]);
-
-  const cardHeight = React.useMemo(() => {
-    if (!isClient) return 350; // Default height for SSR
-    if (isMobile) return 350;
-    if (isTablet) return 400;
-    return 450;
-  }, [isMobile, isTablet, isClient]);
-
-  const trackHeight = React.useMemo(() => {
-    if (!isClient) return 380; // Default height for SSR
-    if (isMobile) return 380;
-    if (isTablet) return 450;
-    return 550;
-  }, [isMobile, isTablet, isClient]);
-
-  const getPositionClass = (index: number) => {
-    let relativeIndex = index - currentIndex;
-
-    // Adjust for circular carousel
-    if (relativeIndex > 3) {
-      relativeIndex -= totalCourses;
-    } else if (relativeIndex < -3) {
-      relativeIndex += totalCourses;
-    }
-
-    // Map to position classes
-    const positionMap: { [key: number]: string } = {
-      '-3': 'pos-0', // HiddenLeft
-      '-2': 'pos-1', // Left2
-      '-1': 'pos-2', // Left1
-      '0': 'pos-3',  // Center
-      '1': 'pos-4',  // Right1
-      '2': 'pos-5',  // Right2
-      '3': 'pos-6'   // HiddenRight
-    };
-
-    return positionMap[relativeIndex] || 'pos-0';
-  };
-
-  const handleItemClick = (index: number) => {
-    if (index !== currentIndex) {
-      setCurrentIndex(index);
-    }
-  };
-
-  const navigate = (direction: number) => {
-    setCurrentIndex((prev) => (prev + direction + totalCourses) % totalCourses);
-  };
-
-  const [touchStart, setTouchStart] = React.useState(0);
-  const [touchEnd, setTouchEnd] = React.useState(0);
-  const [isDragging, setIsDragging] = React.useState(false);
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    const touch = e.changedTouches[0];
-    setTouchStart(touch.clientX);
-    setTouchEnd(touch.clientX);
-    setIsDragging(true);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging) return;
-    const touch = e.changedTouches[0];
-    setTouchEnd(touch.clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (!isDragging) return;
-
-    const swipeDistance = touchStart - touchEnd;
-    const minSwipeDistance = 50;
-
-    if (Math.abs(swipeDistance) > minSwipeDistance) {
-      if (swipeDistance > 0) {
-        navigate(1); // Swipe Left - Next
-      } else {
-        navigate(-1); // Swipe Right - Previous
-      }
-    }
-
-    setIsDragging(false);
-  };
-
-  // Mouse drag support for desktop
-  const handleMouseDown = (e: React.MouseEvent) => {
-    setTouchStart(e.clientX);
-    setTouchEnd(e.clientX);
-    setIsDragging(true);
-    e.preventDefault();
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging) return;
-    setTouchEnd(e.clientX);
-  };
-
-  const handleMouseUp = () => {
-    if (!isDragging) return;
-
-    const swipeDistance = touchStart - touchEnd;
-    const minSwipeDistance = 50;
-
-    if (Math.abs(swipeDistance) > minSwipeDistance) {
-      if (swipeDistance > 0) {
-        navigate(1); // Drag Left - Next
-      } else {
-        navigate(-1); // Drag Right - Previous
-      }
-    }
-
-    setIsDragging(false);
-  };
-
-  const handleMouseLeave = () => {
-    if (isDragging) {
-      setIsDragging(false);
-    }
-  };
+  if (!isMounted) return null;
 
   return (
-    <section className="relative flex flex-col items-center justify-center overflow-hidden min-h-screen bg-gray-100 pt-16 sm:pt-20 pb-12 sm:pb-16">
-      <div className="relative flex flex-col justify-center items-center h-[90%] w-full max-w-7xl px-3 sm:px-4">
-        <h2 className="text-center text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black text-[#f7b50c] uppercase mb-8 sm:mb-12 px-2">
-          {t("courses.heading")}
-        </h2>
+    <section
+      id="courses-section"
+      className="relative py-16 lg:py-24 bg-[#F3F4F6] overflow-x-hidden"
+    >
+      <div className="container px-4 mx-auto">
+        {/* Header Section */}
+        <div className="mb-12 text-center max-w-4xl mx-auto">
+          <h2 className="text-3xl md:text-5xl font-black tracking-tight text-[#F7B50C] uppercase leading-tight">
+            {t("courses.heading")}
+          </h2>
+        </div>
 
-        {/* Carousel Container */}
-        <div
-          className={`relative w-full max-w-6xl flex items-center justify-center px-2 sm:px-0 select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
-          style={{ height: isClient ? trackHeight : 380 }}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseLeave}
-        >
-          {slides.map((slide, index) => {
-            const isCenter = index === currentIndex;
-            const positionClass = getPositionClass(index);
-
-            return (
-              <div
+        {/* Swiper Carousel */}
+        <div className="relative group/carousel">
+          <Swiper
+            onSwiper={(swiper) => {
+              swiperRef.current = swiper;
+            }}
+            centeredSlides={true}
+            loop={true}
+            speed={800}
+            autoplay={{
+              delay: 5000,
+              disableOnInteraction: false,
+            }}
+            navigation={{
+              prevEl: '.swiper-btn-prev',
+              nextEl: '.swiper-btn-next',
+            }}
+            pagination={{
+              clickable: true,
+              dynamicBullets: true,
+            }}
+            modules={[Autoplay, Pagination, Navigation]}
+            className="!overflow-visible"
+            breakpoints={{
+              320: {
+                slidesPerView: 1.15,
+                spaceBetween: 12,
+              },
+              640: {
+                slidesPerView: 1.2,
+                spaceBetween: 20,
+              },
+              768: {
+                slidesPerView: 1.1,
+                spaceBetween: 24,
+              },
+              1024: {
+                slidesPerView: 1.2,
+                spaceBetween: 32,
+              }
+            }}
+          >
+            {slides.map((slide) => (
+              <SwiperSlide
                 key={slide.id}
-                className={`carousel-item ${positionClass} rounded-ios-lg shadow-ios-card cursor-pointer transition-all duration-500 ease-in-out overflow-hidden bg-white hover:shadow-ios-float`}
-                onClick={() => handleItemClick(index)}
-                style={{
-                  width: isClient ? `${cardWidth}px` : '300px',
-                  height: isClient ? `${cardHeight}px` : '350px',
-                  position: 'absolute',
-                  willChange: 'transform, opacity, z-index, box-shadow',
-                  ...(positionClass === 'pos-0' && {
-                    transform: isClient ? `translateX(-${cardWidth * 1.7}px) scale(0.5)` : 'translateX(-510px) scale(0.5)',
-                    opacity: 0,
-                    zIndex: 10,
-                    pointerEvents: 'none'
-                  }),
-                  ...(positionClass === 'pos-1' && {
-                    transform: isClient ? `translateX(-${cardWidth * 1.1}px) scale(0.7)` : 'translateX(-330px) scale(0.7)',
-                    opacity: 0.6,
-                    zIndex: 20,
-                    filter: 'brightness(0.8)'
-                  }),
-                  ...(positionClass === 'pos-2' && {
-                    transform: isClient ? `translateX(-${cardWidth * 0.55}px) scale(0.9)` : 'translateX(-165px) scale(0.9)',
-                    opacity: 0.9,
-                    zIndex: 30,
-                    filter: 'brightness(0.95)'
-                  }),
-                  ...(positionClass === 'pos-3' && {
-                    transform: isClient ? 'translateX(0) scale(1.05)' : 'translateX(0px) scale(1.05)',
-                    opacity: 1,
-                    zIndex: 40,
-                    backgroundColor: '#10B981',
-                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-                    border: '2px solid rgba(16, 185, 129, 0.2)'
-                  }),
-                  ...(positionClass === 'pos-4' && {
-                    transform: isClient ? `translateX(${cardWidth * 0.55}px) scale(0.9)` : 'translateX(165px) scale(0.9)',
-                    opacity: 0.9,
-                    zIndex: 30,
-                    filter: 'brightness(0.95)'
-                  }),
-                  ...(positionClass === 'pos-5' && {
-                    transform: isClient ? `translateX(${cardWidth * 1.1}px) scale(0.7)` : 'translateX(330px) scale(0.7)',
-                    opacity: 0.6,
-                    zIndex: 20,
-                    filter: 'brightness(0.8)'
-                  }),
-                  ...(positionClass === 'pos-6' && {
-                    transform: isClient ? `translateX(${cardWidth * 1.7}px) scale(0.5)` : 'translateX(510px) scale(0.5)',
-                    opacity: 0,
-                    zIndex: 10,
-                    pointerEvents: 'none'
-                  })
-                }}
+                className={cn(
+                  "overflow-hidden md:aspect-video aspect-[9/16] bg-white",
+                  "cursor-pointer transition-all duration-500"
+                )}
               >
-                {/* Top Part - Full Size Image */}
-                <div className="relative h-3/5 overflow-hidden rounded-t-ios-lg">
-                  <Image
-                    src={slide.image}
-                    alt={slide.title}
-                    fill
-                    className="object-cover transition-all duration-300 hover:scale-110"
-                  />
-                </div>
+                <SlideContent slide={slide} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
 
-                {/* Bottom Part - Text and Cart */}
-                <div className="flex flex-col justify-between h-2/5 p-3 sm:p-4 pb-4 sm:pb-6 bg-white">
-
-                  {isCenter ? (
-                    <div className="text-center">
-                      <h3 className="text-sm sm:text-lg font-bold text-gray-800 mb-1 line-clamp-2">{slide.title.toUpperCase()}</h3>
-                      <p className="text-xs text-gray-600 mb-2 line-clamp-2 sm:line-clamp-3">{slide.content}</p>
-                    </div>
-                  ) : (
-                    <div className="text-center">
-                      <p className="text-xs text-gray-600 line-clamp-2">{slide.content}</p>
-                    </div>
-                  )}
-
-                  <div className="flex justify-between items-end relative z-50 mt-2">
-                    <div className="flex items-center bg-white/90 backdrop-blur-sm px-2 py-1.5 sm:px-3 sm:py-2 rounded-full transition-all duration-200 hover:bg-white hover:shadow-md">
-                      <Calendar className="w-3 h-3 sm:w-4 sm:h-4 mr-1.5 sm:mr-2 text-gray-600 flex-shrink-0 transition-all duration-200" />
-                      <span className="text-xs sm:text-sm text-gray-600 font-medium whitespace-nowrap">{slide.date}</span>
-                    </div>
-                    <Link href={`/program-${slide.type}/${slide.slug}`}>
-                      <button
-                        onClick={(e) => e.stopPropagation()}
-                        className="bg-yellow-400 hover:bg-yellow-500 text-white p-2 sm:p-3 w-8 h-8 sm:w-10 sm:h-10 rounded-full transition-all duration-200 flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-110 active:scale-95 transform"
-                      >
-                        <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 transition-all duration-200" />
-                      </button>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-
-
-        {/* Navigation Buttons */}
-        <div className="flex gap-3 sm:gap-4 mt-4 sm:mt-6">
-          <button
-            onClick={() => navigate(-1)}
-            className="p-3 sm:p-4 rounded-full bg-white text-gray-700 hover:bg-gray-100 transition-all duration-200 shadow-md hover:shadow-lg hover:scale-110 active:scale-95 transform"
-          >
-            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 rotate-180 transition-all duration-200" />
+          {/* Navigation Buttons - Visible on all devices */}
+          <button className="swiper-btn-prev absolute left-1 md:left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 md:w-16 md:h-16 flex items-center justify-center rounded-full text-[#F7B50C] transition-all duration-300 hover:scale-110 active:scale-95">
+            <svg xmlns="http://www.w3.org/2000/svg" height="40" viewBox="0 -960 960 960" width="40" fill="currentColor" className="rotate-180 scale-75 md:scale-100">
+              <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" />
+            </svg>
           </button>
-          <button
-            onClick={() => navigate(1)}
-            className="p-3 sm:p-4 rounded-full bg-white text-gray-700 hover:bg-gray-100 transition-all duration-200 shadow-md hover:shadow-lg hover:scale-110 active:scale-95 transform"
-          >
-            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 transition-all duration-200" />
+          <button className="swiper-btn-next absolute right-1 md:right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 md:w-16 md:h-16 flex items-center justify-center rounded-full text-[#F7B50C] transition-all duration-300 hover:scale-110 active:scale-95">
+            <svg xmlns="http://www.w3.org/2000/svg" height="40" viewBox="0 -960 960 960" width="40" fill="currentColor" className="scale-75 md:scale-100">
+              <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" />
+            </svg>
           </button>
         </div>
-
       </div>
 
+      <style jsx global>{`
+                .swiper-pagination {
+                    bottom: -40px !important;
+                }
+                .swiper-pagination-bullet {
+                    background: #aaa !important;
+                    opacity: 1 !important;
+                    width: 8px;
+                    height: 8px;
+                    transition: all 0.3s;
+                }
+                .swiper-pagination-bullet-active {
+                    background: #FDB913 !important;
+                    width: 24px;
+                    border-radius: 4px;
+                }
+            `}</style>
     </section>
   );
 };

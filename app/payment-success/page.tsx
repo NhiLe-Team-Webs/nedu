@@ -119,7 +119,7 @@ function PaymentSuccessContent() {
                 if (amountIn > 0) {
                   processedRef.current = true
                   setStatus('success')
-                  setMessage('Thanh toán thành công! Cảm ơn bạn đã đăng ký khóa học.')
+                  setMessage('Cảm ơn bạn đã đăng ký khóa học.')
                   // Optional: Verify amount matches if 'amount' param is present
                   if (amount) {
                     const expectedAmount = parseFloat(amount.toString());
@@ -158,7 +158,7 @@ function PaymentSuccessContent() {
           if (status === 'success' || status === 'completed' || status === '00' || status === 'SUCCESS') {
             processedRef.current = true
             setStatus('success')
-            setMessage('Thanh toán thành công! Cảm ơn bạn đã đăng ký khóa học.')
+            setMessage('Cảm ơn bạn đã đăng ký khóa học.')
 
             // Clear the cart after successful payment
             clearCart()
@@ -212,7 +212,7 @@ function PaymentSuccessContent() {
             // Payment successful
             processedRef.current = true
             setStatus('success')
-            setMessage('Thanh toán thành công! Cảm ơn bạn đã đăng ký khóa học.')
+            setMessage('Cảm ơn bạn đã đăng ký khóa học.')
 
             // Clear the cart after successful payment
             clearCart()
@@ -273,13 +273,20 @@ function PaymentSuccessContent() {
                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-green-600 mb-3 sm:mb-4">
                   Thanh toán thành công!
                 </h1>
-                <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
+                <p className="text-base sm:text-lg text-gray-600 mb-2 max-w-2xl mx-auto px-4">
                   {message}
+                </p>
+                <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
+                  Bạn vui lòng kiểm tra{' '}
+                  <a href="https://gmail.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-semibold">
+                    Gmail
+                  </a>{' '}
+                  ngay để nhận thông tin nhé.
                 </p>
                 <div className="mt-8 space-y-3 sm:space-y-4">
                   <Link
                     href="/"
-                    className="inline-block bg-primary hover:bg-primary-dark text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-semibold transition text-sm sm:text-base sm:text-lg"
+                    className="inline-block bg-primary hover:bg-primary-dark text-white hover:text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-semibold transition text-sm sm:text-base sm:text-lg"
                   >
                     Về trang chủ
                   </Link>
@@ -330,7 +337,7 @@ function PaymentSuccessContent() {
             )}
           </div>
         </div>
-      </div>
+      </div >
     </>
   )
 }
