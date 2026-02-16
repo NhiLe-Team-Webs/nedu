@@ -332,15 +332,15 @@ export default function CheckoutPage() {
                           {t("checkout.form.telegram")} <span className="text-red-500">*</span>
                         </label>
                         <div className="relative">
-                          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">@</span>
                           <input
                             type="text"
                             required
                             placeholder={t("checkout.form.placeholders.telegram")}
                             value={formData.telegram}
                             onChange={(e) => handleInputChange('telegram', e.target.value)}
-                            className="w-full bg-gray-50 border border-gray-200 rounded-ios-md pl-9 pr-4 py-3 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm sm:text-base appearance-none ios-haptic-active"
+                            className="peer w-full bg-gray-50 border border-gray-200 rounded-ios-md pl-9 pr-4 py-3 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm sm:text-base appearance-none ios-haptic-active"
                           />
+                          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none z-10 peer-focus:text-primary transition-colors">@</span>
                         </div>
                       </div>
 
