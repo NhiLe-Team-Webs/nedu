@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Tag, ShoppingCart, Clock } from 'lucide-react';
+import { ArrowLeft, Tag, ShoppingCart } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
 import { useRouter } from 'next/navigation';
 import { preparePaymentData, sendPaymentRequest, handlePaymentResponse, currencyFormatter, sendSePayPaymentRequest, prepareSePayPaymentData } from '@/lib/payment-utils';
@@ -10,8 +10,6 @@ import SePayPaymentQR from '@/components/SePayPaymentQR';
 import { SePayPaymentResponse } from '@/types/sepay';
 import { useLanguage } from '@/lib/LanguageContext';
 import { validateCartAccountConsistency } from '@/lib/sepay-config';
-import { shouldApplyEventPromo, getBonusCourse, EVENT_END, THCB_PAYMENT_ID } from '@/lib/event-config';
-import CountdownTimer from '@/components/CountdownTimer';
 
 export default function CheckoutPage() {
   const { t } = useLanguage();
@@ -36,9 +34,6 @@ export default function CheckoutPage() {
   const [sepayPaymentData, setSepayPaymentData] = useState<SePayPaymentResponse | null>(null);
   const [showPaymentQR, setShowPaymentQR] = useState(false);
 
-  // Event promo state
-  const eventPromoActive = shouldApplyEventPromo(items);
-  const bonusCourse = eventPromoActive ? getBonusCourse() : undefined;
 
   const subtotal = getTotalPrice();
   const discountAmount = discountType === 'percentage'
@@ -245,21 +240,8 @@ export default function CheckoutPage() {
           <>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
               <div className="lg:col-span-2">
-                {/* Event Promo Countdown Banner */}
-                {eventPromoActive && (
-                  <div className="bg-[#FFF5F4] rounded-t-ios-xl shadow-ios-card px-5 sm:px-8 py-4 sm:py-5 border border-red-100/50 border-b-0">
-                    <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-                      <div className="flex items-center gap-2 text-red-700 font-bold text-sm sm:text-base">
-                        <Clock size={18} className="text-red-600" />
-                        <span>Ưu đãi 22.02 kết thúc trong:</span>
-                      </div>
-                      <CountdownTimer compact targetDate={EVENT_END} />
-                    </div>
-                  </div>
-                )}
-
-                {/* Cart Items Summary */}
-                <div className={`bg-white shadow-ios-card p-5 sm:p-8 mb-6 border border-white/40 ${eventPromoActive ? 'rounded-b-ios-xl rounded-t-none border-t-red-50' : 'rounded-ios-xl'}`}>
+                {/* Cart Items Summary - Integrated from Step 2 style but simplified */}
+                <div className="bg-white rounded-ios-xl shadow-ios-card p-5 sm:p-8 mb-6 border border-white/40">
                   <h2 className="text-xl font-bold mb-6 text-text-primary flex items-center gap-2">
                     <span className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary text-sm">
                       <ShoppingCart size={16} />
@@ -292,46 +274,6 @@ export default function CheckoutPage() {
                         </div>
                       </div>
                     ))}
-
-                    {/* Event Promo: Bonus THCB Course (free with LCM) */}
-                    {eventPromoActive && bonusCourse && (
-                      <div className="relative ml-10 sm:ml-16 mt-2 pb-2">
-                        {/* Vertical Connector Line */}
-                        {/* Thick Vertical Connector Line */}
-                        <div className="absolute -left-7 top-[-36px] bottom-1/2 w-[3px] bg-gray-300/80 rounded-full"></div>
-
-                        <div className="flex flex-col md:flex-row gap-4 relative group">
-                          <div className="shrink-0">
-                            <img
-                              src={bonusCourse.heroImage}
-                              alt={t(bonusCourse.title)}
-                              className="w-[120px] h-[80px] md:w-[130px] md:h-[85px] object-cover rounded-ios-lg shadow-sm opacity-90 transition-opacity group-hover:opacity-100"
-                            />
-                          </div>
-
-                          <div className="flex-1 flex flex-col justify-center">
-                            <h3 className="text-base font-bold mb-0.5 text-text-primary leading-tight">{t(bonusCourse.title)}</h3>
-                            <p className="text-text-secondary mb-2 text-[13px]">{bonusCourse.category.map(c => t(c)).join(', ')}</p>
-
-                            <div className="flex items-center justify-between mt-auto">
-                              <div>
-                                <span className="text-text-secondary text-[11px] font-medium bg-gray-100 px-1.5 py-0.5 rounded-md">x1</span>
-                              </div>
-
-                              <div className="flex items-center gap-2">
-                                <span className="text-xl leading-none select-none">🧧</span>
-                                <span className="text-lg font-bold text-gray-400/80 line-through decoration-[1.5px] decoration-gray-400/50">
-                                  {bonusCourse.price.currency === 'VNĐ'
-                                    ? currencyFormatter.format(parseInt(bonusCourse.price.amount.replace(/\./g, '')))
-                                    : `${bonusCourse.price.currency} ${bonusCourse.price.amount}`
-                                  }
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
                   </div>
                 </div>
 
