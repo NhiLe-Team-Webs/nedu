@@ -12,8 +12,6 @@ import TopBanner from "./TopBanner";
 import NotificationModal from "./NotificationModal";
 import { useLanguage } from "@/lib/LanguageContext";
 import LanguageToggle from "./LanguageToggle";
-import DealSection from "./DealSection";
-import { shouldApplyEventPromo, getBonusCourse } from '@/lib/event-config';
 
 const Header = () => {
   const pathname = usePathname() || "/";
@@ -49,7 +47,7 @@ const Header = () => {
   }, [isCartOpen]);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-[100] backdrop-blur-sm flex flex-col">
+    <header className="fixed inset-x-0 top-0 z-[100] backdrop-blur-sm">
       <div className="w-full flex justify-between gap-2 sm:gap-4 px-3 sm:px-6 items-center h-14 sm:h-16 md:h-20 bg-white/95 shadow-lg transition-all duration-300">
         {/* Logo */}
         <div className="flex items-center">
@@ -163,7 +161,6 @@ const Header = () => {
           </Button>
         </div>
       </div>
-      <DealSection />
 
       {/* Mobile Menu Overlay */}
       <AnimatePresence>
@@ -246,10 +243,7 @@ const Header = () => {
                         </div>
                         <div className="max-h-[50vh] overflow-y-auto pr-4 -mr-4 space-y-4">
                           {items.map((item) => (
-                            <div key={item.id} className={`flex items-start gap-6 py-4 border-b ${shouldApplyEventPromo(items) && (item.slug === 'la-chinh-minh' || item.id === 2 || item.paymentId === 57)
-                              ? 'border-b-0 pb-1'
-                              : ''
-                              }`}>
+                            <div key={item.id} className="flex items-start gap-6 py-4 border-b">
                               <div className="relative rounded-md overflow-hidden flex-shrink-0">
                                 <img
                                   src={item.heroImage}
@@ -263,32 +257,6 @@ const Header = () => {
                               </div>
                             </div>
                           ))}
-
-                          {/* Event Promo: Bonus THCB Course (free with LCM) in Header Cart */}
-                          {shouldApplyEventPromo(items) && (
-                            <div className="relative ml-12 mt-4 pb-2">
-                              {/* Long Vertical Connector Line - Professional Look */}
-                              <div className="absolute -left-8 top-[-32px] w-[2px] h-20 bg-gray-300/60 rounded-full"></div>
-
-                              <div className="flex items-start gap-6 py-2">
-                                <div className="relative rounded-md overflow-hidden flex-shrink-0 opacity-90">
-                                  <img
-                                    src={getBonusCourse()?.heroImage}
-                                    alt="Thương hiệu của bạn"
-                                    className="object-cover h-12"
-                                  />
-                                </div>
-                                <div className="flex-1">
-                                  <p className="font-semibold text-sm leading-tight text-text-primary">{t("Thương Hiệu Của Bạn")}</p>
-                                  <div className="flex items-center gap-2 mt-1">
-                                    <p className="text-base font-bold text-gray-400/80 line-through">
-                                      {getBonusCourse()?.price.amount.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " " + getBonusCourse()?.price.currency}
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          )}
                         </div>
                       </>
                     ) : (
