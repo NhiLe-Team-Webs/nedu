@@ -142,7 +142,7 @@ export default function LaChinhMinhPage() {
         time={t("program_detail.common.offline_course")}
         tags={[t("categories.personal_development"), t("categories.be_yourself")]}
         title={t("program_detail.courses.la_chinh_minh.title")}
-        cost={course?.price.amount || "59.696.000"}
+        cost={course?.price.amount || "68.690.000"}
         paymentLink="/payment/57"
         courseSlug="la-chinh-minh"
       />

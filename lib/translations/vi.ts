@@ -58,7 +58,7 @@ export const vi = {
         online: "Các khóa học Online",
         slides: {
             lcm: {
-                title: "Là Chính Mình 04",
+                title: "Là Chính Mình 05",
                 content: "Người Việt, làm hàng Việt, cho người Việt."
             },
             smvh: {
@@ -336,10 +336,10 @@ export const vi = {
         },
         courses: {
             la_chinh_minh: {
-                title: "Là Chính Mình 04",
+                title: "Là Chính Mình 05",
                 mission_desc: "Là Chính Mình - Hành trình 3.5 ngày đánh thức sức mạnh nội tại, giúp bạn gỡ bỏ những rào cản tâm lý để sống một cuộc đời rực rỡ và trọn vẹn nhất.",
                 topic: "Phát triển bản thân và khám phá nội tâm",
-                schedule: "05–08/03/2026",
+                schedule: "Tháng 6 / 2026",
                 instructor: "NhiLe x Guest Instructors",
                 sessions: "3,5 ngày",
                 location: "Đà Nẵng",

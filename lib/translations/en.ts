@@ -336,10 +336,10 @@ export const en = {
         },
         courses: {
             la_chinh_minh: {
-                title: "Be Yourself 04",
+                title: "Be Yourself 05",
                 mission_desc: "Be Yourself - A 3.5-day journey to awaken your inner strength, helping you remove psychological barriers to live a brilliant and most complete life.",
                 topic: "Self-development & Inner Exploration",
-                schedule: "05–08/03/2026",
+                schedule: "June / 2026",
                 instructor: "NhiLe x Guest Instructors",
                 sessions: "3.5 days",
                 location: "Da Nang",
