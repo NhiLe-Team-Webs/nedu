@@ -37,6 +37,7 @@ export interface Course {
   title: string
   category: string[]
   heroImage: string
+  mobileImage?: string  // Optional mobile-optimized image
   price: {
     amount: string
     currency: 'VNĐ' | 'USD'
@@ -378,7 +379,7 @@ export const courses: Course[] = [
     mode: 'online',
     title: 'thirty_day_challenge.title',
     category: ['categories.personal_development'],
-    heroImage: '/picture/thuthach30day_desktop.png',
+    heroImage: '/picture/thuthach30day_desktop.png', // Primary image used in listings
     price: {
       amount: '396.000',
       currency: 'VNĐ'
@@ -404,7 +405,9 @@ export const courses: Course[] = [
       }
     ],
     audience: [],
-    privileges: []
+    privileges: [],
+    // Add mobileImage property to explicitly handle responsive images
+    mobileImage: '/picture/thuthach30day_mobile.png'  // Mobile optimized image for the course page
   }
 ]
 

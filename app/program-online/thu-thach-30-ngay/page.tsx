@@ -30,9 +30,6 @@ const Skeleton = ({ className }: { className?: string }) => (
 );
 
 
-const challengePosterDesktop = "/picture/thuthach30day_desktop.png";
-const challengePosterMobile = "/picture/thuthach30day_mobile.png";
-
 // Find the 30 day challenge course
 const thirtyDayCourse = courses.find((c) => c.slug === "thu-thach-30-ngay");
 
@@ -69,6 +66,11 @@ const ThirtyDayPage = () => {
     }
     fetchData();
   }, []);
+
+  // Determine which images to use (prioritize dynamic DB data over static data)
+  // These values will be calculated using the current state of courseData
+  const challengePosterDesktop = courseData?.program?.image || thirtyDayCourse?.heroImage || "/picture/thuthach30day_desktop.png";
+  const challengePosterMobile = courseData?.program?.image || thirtyDayCourse?.mobileImage || "/picture/thuthach30day_mobile.png";
 
   // Sync some data from DB to local variables if available
   const dbInfo = courseData?.description?.information || {};
