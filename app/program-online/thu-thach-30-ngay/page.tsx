@@ -600,8 +600,6 @@ const ThirtyDayPage = () => {
                 <div className="flex-grow" />
                 <div className="w-full mt-8">
                   <Button
-                    disabled
-                    title={t("program_page.card.ended_registration")}
                     onClick={() => handleDirectCheckout("monthly")}
                     className="w-full"
                   >
@@ -638,8 +636,6 @@ const ThirtyDayPage = () => {
                 <div className="flex-grow" />
                 <div className="w-full mt-8">
                   <Button
-                    disabled
-                    title={t("program_page.card.ended_registration")}
                     onClick={() => handleDirectCheckout("membership")}
                     className="w-full"
                   >

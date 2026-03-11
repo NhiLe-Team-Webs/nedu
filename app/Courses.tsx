@@ -72,8 +72,6 @@ const SlideContent = ({ slide }: { slide: CourseSlide }) => {
             {slide.content}
           </p>
           <Button
-            disabled={slide.slug === 'thu-thach-30-ngay'}
-            title={slide.slug === 'thu-thach-30-ngay' ? t("program_page.card.ended_registration") : undefined}
             className="rounded-full bg-white text-black hover:bg-[#F7B50C] hover:text-white px-10 py-6 text-base font-black transition-all duration-300 shadow-2xl active:scale-95"
             onClick={handleRegister}
           >
@@ -86,8 +84,6 @@ const SlideContent = ({ slide }: { slide: CourseSlide }) => {
       <div className="absolute inset-x-0 bottom-0 px-8 py-6 hidden md:flex flex-col justify-end text-white">
         <div className="info-bottom slide-bottom flex items-center gap-4">
           <Button
-            disabled={slide.slug === 'thu-thach-30-ngay'}
-            title={slide.slug === 'thu-thach-30-ngay' ? t("program_page.card.ended_registration") : undefined}
             className="rounded-full bg-white text-black hover:bg-white/90 px-6 py-2.5 text-sm font-bold h-auto shrink-0 shadow-lg"
             onClick={handleRegister}
           >
