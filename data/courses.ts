@@ -125,13 +125,13 @@ export const courses: Course[] = [
     category: ['categories.personal_development', 'categories.be_yourself'],
     heroImage: '/picture/la_chinh_minh.jpg',
     price: {
-      amount: '59.696.000',
+      amount: '68.690.000',
       currency: 'VNĐ'
     },
     paymentId: 57,
     info: {
       topic: 'program_detail.courses.la_chinh_minh.topic',
-      schedule: '5/3-8/3/2026',
+      schedule: 'Tháng 6 / 2026',
       instructor: 'program_detail.courses.la_chinh_minh.instructor',
       sessions: 'program_detail.courses.la_chinh_minh.sessions',
       location: 'program_detail.courses.la_chinh_minh.location',
