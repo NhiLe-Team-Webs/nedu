@@ -1,6 +1,6 @@
 /**
  * SePay Payment Gateway Configuration
- * All courses now route to BUSINESS account (ACB - CONG TY TNHH TMDV NHLE)
+ * All courses now route to BUSINESS account (ACB - CONG TY TNHH TMDV NHILE)
  */
 
 /** Account type identifier */
@@ -15,19 +15,19 @@ export interface BankAccountConfig {
 
 /**
  * SePay bank account configuration
- * ALL courses now use BUSINESS account: ACB - CONG TY TNHH TMDV NHLE
+ * ALL courses now use BUSINESS account: ACB - CONG TY TNHH TMDV NHILE
  */
 export const SEPAY_ACCOUNTS: Record<AccountType, BankAccountConfig> = {
   BUSINESS: {
     ACCOUNT_NUMBER: process.env.SEPAY_BUSINESS_ACCOUNT_NUMBER || '929899468',
     BANK_CODE: process.env.SEPAY_BUSINESS_BANK_CODE || 'ACB',
-    ACCOUNT_NAME: 'CONG TY TNHH TMDV NHLE',
+    ACCOUNT_NAME: 'CONG TY TNHH TMDV NHILE',
   },
   // PERSONAL account kept for backward compatibility but no longer used
   PERSONAL: {
     ACCOUNT_NUMBER: process.env.SEPAY_BUSINESS_ACCOUNT_NUMBER || '929899468',
     BANK_CODE: process.env.SEPAY_BUSINESS_BANK_CODE || 'ACB',
-    ACCOUNT_NAME: 'CONG TY TNHH TMDV NHLE',
+    ACCOUNT_NAME: 'CONG TY TNHH TMDV NHILE',
   },
 } as const;
 
