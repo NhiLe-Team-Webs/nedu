@@ -777,6 +777,8 @@ export const vi = {
                 badge: "KHUYÊN DÙNG",
                 button: "Chọn Gói Membership",
                 added: "Đã thêm vào giỏ hàng",
+                savings_label: "tiết kiệm",
+                bonus_months_suffix: "tháng tặng",
                 features: {
                     all_topics: "Truy cập toàn bộ 12 chủ đề 30Days trong 1 năm (Kể cả kho tài liệu và thử thách cũ)",
                     all_challenges: "Tham gia tất cả các thử thách mà không cần mua thêm",
