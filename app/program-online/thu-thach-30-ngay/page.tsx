@@ -16,6 +16,8 @@ import {
   X,
   ChevronDown,
   HelpCircle,
+  Sparkles,
+  Gift,
 } from "lucide-react";
 import { useLanguage } from "@/lib/LanguageContext";
 import { useCart } from "@/lib/cart-context";
@@ -240,6 +242,10 @@ const ThirtyDayPage = () => {
     : 396000);
 
   const membershipPrice = courseData?.challengeDetail?.membership_price ?? 3960000; // Fallback to 3.960.000
+  const membershipSavings = Math.max(monthlyPrice * 12 - membershipPrice, 0);
+  const membershipBonusMonths = monthlyPrice > 0
+    ? Math.max(Math.floor(membershipSavings / monthlyPrice), 0)
+    : 0;
 
   return (
     <div className="min-h-screen bg-[#F2F2F7] pb-20 override-header-spacing font-sans text-gray-900">
@@ -576,18 +582,21 @@ const ThirtyDayPage = () => {
                 <p className="text-sm font-semibold text-gray-500">
                   {t("thirty_day_challenge.pricing.monthly.label")}
                 </p>
-                <p className="text-4xl font-bold text-primary my-6">
-                  {formatCurrency(monthlyPrice)}
-                  <span className="text-lg font-medium text-gray-500">
-                    {" "}
+                <div className="my-6 flex flex-wrap items-end gap-2.5">
+                  <p className="text-4xl font-black tracking-[-0.05em] text-slate-900 md:text-5xl">
+                    {formatCurrency(monthlyPrice)}
+                  </p>
+                  <span className="pb-1 text-base font-medium text-gray-500">
                     {t("thirty_day_challenge.pricing.monthly.per_month")}
                   </span>
-                </p>
+                </div>
                 <ul className="space-y-3 text-sm mb-6">
                   {monthlyPlanFeatures.map((feature, index) => (
-                    <li key={index} className="flex items-start gap-3">
+                    <li key={index} className="group flex items-start gap-3">
                       {feature.included ? (
-                        <Check className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                        <div className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-emerald-100 transition-all duration-300 group-hover:bg-primary">
+                          <Check className="h-3.5 w-3.5 text-emerald-700 transition-colors duration-300 group-hover:text-white" strokeWidth={3.5} />
+                        </div>
                       ) : (
                         <X className="h-5 w-5 text-red-500 flex-shrink-0 mt-0.5" />
                       )}
@@ -600,10 +609,11 @@ const ThirtyDayPage = () => {
                   ))}
                 </ul>
                 <div className="flex-grow" />
-                <div className="w-full mt-8">
+                <div className="relative w-full mt-8 group/button">
+                  <div className="absolute -inset-0.5 rounded-full bg-gradient-to-r from-primary to-yellow-300 opacity-0 blur transition duration-500 group-hover/button:opacity-30" />
                   <Button
                     onClick={() => handleDirectCheckout("monthly")}
-                    className="w-full"
+                    className="relative w-full bg-primary text-slate-900 shadow-[0_14px_28px_rgba(246,185,23,0.24)] transition-all duration-300 hover:scale-100 hover:bg-slate-900 hover:text-primary hover:shadow-[0_18px_34px_rgba(15,23,42,0.22)] active:scale-[0.99]"
                   >
                     <span className="flex items-center justify-center gap-2">
                       {t("thirty_day_challenge.pricing.monthly.button")}
@@ -613,38 +623,71 @@ const ThirtyDayPage = () => {
               </div>
 
               {/* Membership Plan Card */}
-              <div className="bg-white rounded-2xl p-8 border-2 border-primary h-full flex flex-col relative overflow-hidden shadow-lg">
-                <div className="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-4 py-1 rounded-bl-lg">
+              <div className="relative h-full overflow-hidden rounded-[2rem] border-2 border-primary bg-[linear-gradient(180deg,#fffef7_0%,#ffffff_46%,#fff9e8_100%)] p-7 shadow-[0_20px_48px_rgba(15,23,42,0.1)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_28px_68px_rgba(15,23,42,0.15)]">
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_top_right,rgba(246,185,23,0.22),transparent_60%)]" />
+                <div className="absolute top-0 right-0 rounded-bl-[1.25rem] bg-primary px-5 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.22em] text-slate-900 shadow-lg">
                   {t("thirty_day_challenge.pricing.membership.badge")}
                 </div>
-                <p className="text-sm font-semibold text-primary mt-4">
-                  {t("thirty_day_challenge.pricing.membership.label")}
-                </p>
-                <p className="text-4xl font-bold text-primary my-6">
-                  {formatCurrency(membershipPrice)}
-                  <span className="text-lg font-medium text-gray-500">
-                    {" "}
-                    {t("thirty_day_challenge.pricing.membership.per_year")}
-                  </span>
-                </p>
-                <ul className="space-y-3 text-sm mb-6">
-                  {membershipPlanFeatures.map((feature, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <Check className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                      <span>{feature.text}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="flex-grow" />
-                <div className="w-full mt-8">
-                  <Button
-                    onClick={() => handleDirectCheckout("membership")}
-                    className="w-full"
-                  >
-                    <span className="flex items-center justify-center gap-2">
-                      {t("thirty_day_challenge.pricing.membership.button")}
-                    </span>
-                  </Button>
+                <div className="relative flex h-full flex-col">
+                  <div className="mb-7 space-y-4">
+                    <div className="flex items-center gap-3 text-primary">
+                      <div className="h-1 w-8 rounded-full bg-primary" />
+                      <p className="text-xs font-extrabold uppercase tracking-[0.22em] sm:text-sm">
+                        {t("thirty_day_challenge.pricing.membership.label")}
+                      </p>
+                    </div>
+                    <div className="space-y-4">
+                      <div className="flex flex-wrap items-end gap-2.5">
+                        <p className="text-4xl font-black tracking-[-0.05em] text-slate-900 md:text-5xl">
+                          {formatCurrency(membershipPrice)}
+                        </p>
+                        <span className="pb-1 text-base font-medium text-slate-400">
+                          {t("thirty_day_challenge.pricing.membership.per_year")}
+                        </span>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {membershipSavings > 0 && (
+                          <div className="flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-red-600 to-orange-500 px-3 py-1.5 text-xs font-bold text-white shadow-[0_5px_14px_rgba(220,38,38,0.24)]">
+                            <Sparkles className="h-3.5 w-3.5" />
+                            <span>
+                              {formatCurrency(membershipSavings)} {t("thirty_day_challenge.pricing.membership.savings_label")}
+                            </span>
+                          </div>
+                        )}
+                        {membershipBonusMonths > 0 && (
+                          <div className="flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-3 py-1.5 text-xs font-bold text-white shadow-[0_5px_14px_rgba(37,99,235,0.24)]">
+                            <Gift className="h-3.5 w-3.5" />
+                            <span>
+                              +{membershipBonusMonths} {t("thirty_day_challenge.pricing.membership.bonus_months_suffix")}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  <ul className="mb-6 space-y-3 text-sm">
+                    {membershipPlanFeatures.map((feature, index) => (
+                      <li key={index} className="group flex items-start gap-3">
+                        <div className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-emerald-100 transition-all duration-300 group-hover:bg-primary">
+                          <Check className="h-3.5 w-3.5 text-emerald-700 transition-colors duration-300 group-hover:text-white" strokeWidth={3.5} />
+                        </div>
+                        <span className="leading-6 text-slate-700">{feature.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="flex-grow" />
+                  <div className="relative mt-6 w-full group/button">
+                    <div className="absolute -inset-0.5 rounded-2xl bg-gradient-to-r from-primary to-yellow-300 opacity-20 blur transition duration-500 group-hover/button:opacity-35" />
+                    <Button
+                      onClick={() => handleDirectCheckout("membership")}
+                      className="relative h-11 w-full rounded-2xl bg-primary px-5 text-sm font-black uppercase tracking-[0.18em] text-slate-900 shadow-[0_14px_28px_rgba(246,185,23,0.24)] transition-all duration-300 hover:scale-100 hover:bg-slate-900 hover:text-primary hover:shadow-[0_18px_34px_rgba(15,23,42,0.22)] active:scale-[0.99]"
+                    >
+                      <span className="flex items-center justify-center gap-2">
+                        {t("thirty_day_challenge.pricing.membership.button")}
+                        <ArrowRight className="h-4 w-4" />
+                      </span>
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>

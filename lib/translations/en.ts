@@ -777,6 +777,8 @@ export const en = {
                 badge: "RECOMMENDED",
                 button: "Choose Membership Plan",
                 added: "Added to cart",
+                savings_label: "saved",
+                bonus_months_suffix: "bonus months",
                 features: {
                     all_topics: "Access all 12 30 Days topics in 1 year",
                     all_challenges: "Participate in all challenges without extra purchase",
