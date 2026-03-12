@@ -615,7 +615,7 @@ const ThirtyDayPage = () => {
                     onClick={() => handleDirectCheckout("monthly")}
                     className="relative w-full bg-primary text-slate-900 shadow-[0_14px_28px_rgba(246,185,23,0.24)] transition-all duration-300 hover:scale-100 hover:bg-slate-900 hover:text-primary hover:shadow-[0_18px_34px_rgba(15,23,42,0.22)] active:scale-[0.99]"
                   >
-                    <span className="flex items-center justify-center gap-2">
+                    <span className="flex items-center justify-center gap-2 text-sm font-black uppercase tracking-[0.18em]">
                       {t("thirty_day_challenge.pricing.monthly.button")}
                     </span>
                   </Button>
@@ -682,7 +682,7 @@ const ThirtyDayPage = () => {
                       onClick={() => handleDirectCheckout("membership")}
                       className="relative h-11 w-full rounded-2xl bg-primary px-5 text-sm font-black uppercase tracking-[0.18em] text-slate-900 shadow-[0_14px_28px_rgba(246,185,23,0.24)] transition-all duration-300 hover:scale-100 hover:bg-slate-900 hover:text-primary hover:shadow-[0_18px_34px_rgba(15,23,42,0.22)] active:scale-[0.99]"
                     >
-                      <span className="flex items-center justify-center gap-2">
+                      <span className="flex items-center justify-center gap-2 text-sm font-black uppercase tracking-[0.18em]">
                         {t("thirty_day_challenge.pricing.membership.button")}
                         <ArrowRight className="h-4 w-4" />
                       </span>
