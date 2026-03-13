@@ -853,6 +853,14 @@ html {
   animation: digit-tick 1s ease-in-out infinite;
 }
 
+@keyframes pulse-gentle {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+.animate-pulse-gentle {
+  animation: pulse-gentle 3s infinite ease-in-out;
+}
+
 /* Smooth page transitions */
 .page-transition-enter {
   opacity: 0;

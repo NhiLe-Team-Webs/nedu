@@ -578,30 +578,35 @@ const ThirtyDayPage = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Monthly Plan Card */}
-              <div className="bg-white rounded-2xl p-8 h-full flex flex-col shadow-lg">
-                <p className="text-sm font-semibold text-gray-500">
-                  {t("thirty_day_challenge.pricing.monthly.label")}
-                </p>
-                <div className="my-6 flex flex-wrap items-end gap-2.5">
+              <div className="h-full rounded-[2rem] bg-white p-7 flex flex-col shadow-[0_20px_48px_rgba(15,23,42,0.08)] border border-slate-200/70 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_56px_rgba(15,23,42,0.12)]">
+                <div className="mb-4">
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="h-1 w-8 rounded-full bg-primary flex-shrink-0" />
+                    <p className="text-sm font-extrabold uppercase tracking-[0.22em] text-primary">
+                      {t("thirty_day_challenge.pricing.monthly.label")}
+                    </p>
+                  </div>
+                <div className="flex flex-wrap items-end gap-2">
                   <p className="text-4xl font-black tracking-[-0.05em] text-slate-900 md:text-5xl">
                     {formatCurrency(monthlyPrice)}
                   </p>
-                  <span className="pb-1 text-base font-medium text-gray-500">
+                  <span className="pb-1 text-base font-medium text-slate-400">
                     {t("thirty_day_challenge.pricing.monthly.per_month")}
                   </span>
+                </div>
                 </div>
                 <ul className="space-y-3 text-sm mb-6">
                   {monthlyPlanFeatures.map((feature, index) => (
                     <li key={index} className="group flex items-start gap-3">
                       {feature.included ? (
-                        <div className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-emerald-100 transition-all duration-300 group-hover:bg-primary">
-                          <Check className="h-3.5 w-3.5 text-emerald-700 transition-colors duration-300 group-hover:text-white" strokeWidth={3.5} />
+                        <div className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-green-50 text-green-600 border border-green-100 transition-all duration-300 group-hover:bg-primary group-hover:text-white group-hover:border-primary shadow-sm">
+                          <Check className="h-3.5 w-3.5" strokeWidth={4} />
                         </div>
                       ) : (
                         <X className="h-5 w-5 text-red-500 flex-shrink-0 mt-0.5" />
                       )}
                       <span
-                        className={cn(!feature.included && "text-gray-400")}
+                        className={cn("leading-6 text-sm", feature.included ? "font-semibold text-slate-700" : "text-gray-400")}
                       >
                         {feature.text}
                       </span>
@@ -609,85 +614,108 @@ const ThirtyDayPage = () => {
                   ))}
                 </ul>
                 <div className="flex-grow" />
-                <div className="relative w-full mt-8 group/button">
-                  <div className="absolute -inset-0.5 rounded-full bg-gradient-to-r from-primary to-yellow-300 opacity-0 blur transition duration-500 group-hover/button:opacity-30" />
+                <div className="relative w-full mt-6 group/button">
+                  <div className="absolute -inset-x-0.5 inset-y-0 rounded-[1.1rem] bg-gradient-to-r from-[#F6B917] to-yellow-300 opacity-5 blur-sm transition duration-500 group-hover/button:opacity-10" />
                   <Button
                     onClick={() => handleDirectCheckout("monthly")}
-                    className="relative w-full bg-primary text-slate-900 shadow-[0_14px_28px_rgba(246,185,23,0.24)] transition-all duration-300 hover:scale-100 hover:bg-slate-900 hover:text-primary hover:shadow-[0_18px_34px_rgba(15,23,42,0.22)] active:scale-[0.99]"
+                    className="relative h-11 w-full rounded-[0.95rem] border border-black/[0.04] bg-[#F6B917] px-5 text-sm font-black uppercase tracking-[0.15em] text-slate-900 shadow-[0_2px_6px_rgba(15,23,42,0.06)] transition-all duration-300 hover:scale-100 hover:bg-slate-900 hover:text-[#F6B917] hover:shadow-[0_3px_8px_rgba(15,23,42,0.08)] active:scale-[0.99]"
                   >
-                    <span className="flex items-center justify-center gap-2 text-sm font-black uppercase tracking-[0.18em]">
+                    <span className="flex items-center justify-center gap-2 text-sm font-[950] uppercase tracking-[0.15em]">
                       {t("thirty_day_challenge.pricing.monthly.button")}
                     </span>
                   </Button>
                 </div>
+                <div className="mt-3 min-h-[1.75rem]" aria-hidden="true" />
               </div>
 
               {/* Membership Plan Card */}
-              <div className="relative h-full overflow-hidden rounded-[2rem] border-2 border-primary bg-[linear-gradient(180deg,#fffef7_0%,#ffffff_46%,#fff9e8_100%)] p-7 shadow-[0_20px_48px_rgba(15,23,42,0.1)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_28px_68px_rgba(15,23,42,0.15)]">
-                <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_top_right,rgba(246,185,23,0.22),transparent_60%)]" />
+              <div className="relative h-full overflow-hidden rounded-[2rem] border-2 border-primary bg-white p-7 shadow-[0_20px_48px_rgba(15,23,42,0.1)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_28px_68px_rgba(15,23,42,0.15)]">
                 <div className="absolute top-0 right-0 rounded-bl-[1.25rem] bg-primary px-5 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.22em] text-slate-900 shadow-lg">
                   {t("thirty_day_challenge.pricing.membership.badge")}
                 </div>
                 <div className="relative flex h-full flex-col">
-                  <div className="mb-7 space-y-4">
-                    <div className="flex items-center gap-3 text-primary">
-                      <div className="h-1 w-8 rounded-full bg-primary" />
-                      <p className="text-xs font-extrabold uppercase tracking-[0.22em] sm:text-sm">
+                  <div className="mb-4">
+                    {/* Title */}
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="h-1 w-8 rounded-full bg-primary flex-shrink-0" />
+                      <p className="text-sm font-extrabold uppercase tracking-[0.22em] text-primary">
                         {t("thirty_day_challenge.pricing.membership.label")}
                       </p>
                     </div>
-                    <div className="space-y-4">
-                      <div className="flex flex-wrap items-end gap-2.5">
-                        <p className="text-4xl font-black tracking-[-0.05em] text-slate-900 md:text-5xl">
-                          {formatCurrency(membershipPrice)}
-                        </p>
-                        <span className="pb-1 text-base font-medium text-slate-400">
-                          {t("thirty_day_challenge.pricing.membership.per_year")}
-                        </span>
-                      </div>
-                      <div className="flex flex-wrap gap-2">
-                        {membershipSavings > 0 && (
-                          <div className="flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-red-600 to-orange-500 px-3 py-1.5 text-xs font-bold text-white shadow-[0_5px_14px_rgba(220,38,38,0.24)]">
-                            <Sparkles className="h-3.5 w-3.5" />
-                            <span>
-                              {formatCurrency(membershipSavings)} {t("thirty_day_challenge.pricing.membership.savings_label")}
+                    {/* Pricing */}
+                    <div className="flex flex-col gap-1">
+                      {/* Original price – red strikethrough */}
+                      {monthlyPrice > 0 && (
+                        <div className="flex items-center gap-2 text-red-600 font-bold">
+                          <span className="text-base line-through decoration-red-600 decoration-2">
+                            {formatCurrency(monthlyPrice * 12)}
+                          </span>
+                          <span className="inline-block ml-0.5 text-sm">
+                            <span className="relative">
+                              đ
+                              <span className="absolute left-0 -bottom-0.5 w-full h-[1px] bg-current" />
                             </span>
-                          </div>
-                        )}
+                          </span>
+                          <span className="text-[10px] font-black uppercase tracking-wider bg-red-50 px-2 py-0.5 rounded border border-red-100 ml-1">
+                            Giá gốc
+                          </span>
+                        </div>
+                      )}
+                      {/* Discounted price + gift badge */}
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+                        <div className="flex items-baseline gap-1">
+                          <span className="text-4xl md:text-5xl font-black tracking-[-0.05em] text-slate-900 leading-none">
+                            {formatCurrency(membershipPrice)}
+                          </span>
+                          <span className="inline-block ml-0.5 text-2xl md:text-3xl text-slate-900 font-bold">
+                            <span className="relative">
+                              đ
+                              <span className="absolute left-0 -bottom-0.5 w-full h-[1px] bg-current" />
+                            </span>
+                          </span>
+                          <span className="pb-1 text-base font-medium text-slate-400 ml-1">
+                            {t("thirty_day_challenge.pricing.membership.per_year")}
+                          </span>
+                        </div>
                         {membershipBonusMonths > 0 && (
-                          <div className="flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-3 py-1.5 text-xs font-bold text-white shadow-[0_5px_14px_rgba(37,99,235,0.24)]">
-                            <Gift className="h-3.5 w-3.5" />
-                            <span>
-                              +{membershipBonusMonths} {t("thirty_day_challenge.pricing.membership.bonus_months_suffix")}
+                          <div className="flex items-center gap-1.5 bg-[#E11D48] text-white px-3 py-1.5 rounded-full shadow-lg shadow-rose-200 animate-pulse-gentle">
+                            <Gift className="h-3.5 w-3.5 text-white flex-shrink-0" strokeWidth={2.5} />
+                            <span className="font-bold text-[11px] tracking-wide uppercase whitespace-nowrap">
+                              Tặng {membershipBonusMonths} tháng
                             </span>
                           </div>
                         )}
                       </div>
                     </div>
                   </div>
-                  <ul className="mb-6 space-y-3 text-sm">
+                  {/* Benefits list */}
+                  <div className="space-y-3 mb-6">
+                    <p className="text-[10px] font-bold text-slate-300 uppercase tracking-[0.3em]">
+                      Đặc quyền dành riêng cho bạn
+                    </p>
                     {membershipPlanFeatures.map((feature, index) => (
-                      <li key={index} className="group flex items-start gap-3">
-                        <div className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-emerald-100 transition-all duration-300 group-hover:bg-primary">
-                          <Check className="h-3.5 w-3.5 text-emerald-700 transition-colors duration-300 group-hover:text-white" strokeWidth={3.5} />
+                      <div key={index} className="group flex items-start gap-3">
+                        <div className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-green-50 text-green-600 border border-green-100 transition-all duration-300 group-hover:bg-primary group-hover:text-white group-hover:border-primary shadow-sm">
+                          <Check className="h-3.5 w-3.5" strokeWidth={4} />
                         </div>
-                        <span className="leading-6 text-slate-700">{feature.text}</span>
-                      </li>
+                        <span className="leading-6 text-slate-700 text-sm font-semibold">{feature.text}</span>
+                      </div>
                     ))}
-                  </ul>
+                  </div>
                   <div className="flex-grow" />
-                  <div className="relative mt-6 w-full group/button">
-                    <div className="absolute -inset-0.5 rounded-2xl bg-gradient-to-r from-primary to-yellow-300 opacity-20 blur transition duration-500 group-hover/button:opacity-35" />
+                  {/* CTA button */}
+                  <div className="relative w-full group/button">
+                      <div className="absolute -inset-x-0.5 inset-y-0 rounded-[1.1rem] bg-gradient-to-r from-[#F6B917] to-yellow-300 opacity-5 blur-sm transition duration-500 group-hover/button:opacity-10" />
                     <Button
                       onClick={() => handleDirectCheckout("membership")}
-                      className="relative h-11 w-full rounded-2xl bg-primary px-5 text-sm font-black uppercase tracking-[0.18em] text-slate-900 shadow-[0_14px_28px_rgba(246,185,23,0.24)] transition-all duration-300 hover:scale-100 hover:bg-slate-900 hover:text-primary hover:shadow-[0_18px_34px_rgba(15,23,42,0.22)] active:scale-[0.99]"
+                        className="relative h-11 w-full rounded-[0.95rem] border border-black/[0.04] bg-[#F6B917] px-5 text-sm font-black uppercase tracking-[0.15em] text-slate-900 shadow-[0_2px_6px_rgba(15,23,42,0.06)] transition-all duration-300 hover:scale-100 hover:bg-slate-900 hover:text-[#F6B917] hover:shadow-[0_3px_8px_rgba(15,23,42,0.08)] active:scale-[0.99]"
                     >
-                      <span className="flex items-center justify-center gap-2 text-sm font-black uppercase tracking-[0.18em]">
-                        {t("thirty_day_challenge.pricing.membership.button")}
-                        <ArrowRight className="h-4 w-4" />
-                      </span>
+                      <span className="font-[950]">Đăng ký nhận ưu đãi ngay</span>
                     </Button>
                   </div>
+                  <p className="text-center text-[10px] text-slate-400 mt-3 font-medium leading-snug">
+                    * Ưu đãi tặng 2 tháng và giảm giá trực tiếp chỉ áp dụng cho lượt đăng ký hôm nay.
+                  </p>
                 </div>
               </div>
             </div>
