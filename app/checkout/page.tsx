@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Tag, ShoppingCart } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
@@ -10,6 +10,7 @@ import SePayPaymentQR from '@/components/SePayPaymentQR';
 import { SePayPaymentResponse } from '@/types/sepay';
 import { useLanguage } from '@/lib/LanguageContext';
 import { validateCartAccountConsistency } from '@/lib/sepay-config';
+import { getCourseDetailBySlug } from '@/lib/services/courseService';
 
 export default function CheckoutPage() {
   const { t } = useLanguage();
@@ -33,7 +34,28 @@ export default function CheckoutPage() {
   const [errors, setErrors] = useState<string[]>([]);
   const [sepayPaymentData, setSepayPaymentData] = useState<SePayPaymentResponse | null>(null);
   const [showPaymentQR, setShowPaymentQR] = useState(false);
+  const [thirtyDayCheckoutImage, setThirtyDayCheckoutImage] = useState<string | null>(null);
 
+  useEffect(() => {
+    const hasThirtyDayCourse = items.some((item) => item.slug === 'thu-thach-30-ngay');
+    if (!hasThirtyDayCourse) return;
+
+    let isMounted = true;
+
+    const loadThirtyDayImage = async () => {
+      const courseDetail = await getCourseDetailBySlug('thu-thach-30-ngay');
+      const image = courseDetail?.program?.image?.trim();
+      if (isMounted && image) {
+        setThirtyDayCheckoutImage(image);
+      }
+    };
+
+    loadThirtyDayImage();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [items]);
 
   const subtotal = getTotalPrice();
   const discountAmount = discountType === 'percentage'
@@ -249,10 +271,15 @@ export default function CheckoutPage() {
                     {t("checkout.selected_courses")}
                   </h2>
                   <div className="space-y-6">
-                    {items.map((item) => (
+                    {items.map((item) => {
+                      const itemImage = item.slug === 'thu-thach-30-ngay'
+                        ? (thirtyDayCheckoutImage || 'data:image/gif;base64,R0lGODlhAQABAAAAACw=')
+                        : item.heroImage;
+
+                      return (
                       <div key={item.id} className="flex flex-col md:flex-row gap-4 pb-6 border-b last:border-b-0 border-gray-100">
                         <img
-                          src={item.heroImage}
+                          src={itemImage}
                           alt={t(item.title)}
                           className="w-full md:w-[150px] h-[100px] object-cover rounded-ios-lg shadow-sm"
                         />
@@ -273,7 +300,8 @@ export default function CheckoutPage() {
                           </div>
                         </div>
                       </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
 
