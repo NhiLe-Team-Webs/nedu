@@ -590,10 +590,21 @@ const ThirtyDayPage = () => {
                   <p className="text-4xl font-black tracking-[-0.05em] text-slate-900 md:text-5xl">
                     {formatCurrency(monthlyPrice)}
                   </p>
+                  <span className="inline-block ml-0.5 text-2xl md:text-3xl text-slate-900 font-bold leading-none">
+                    <span className="relative">
+                      đ
+                      <span className="absolute left-0 -bottom-0.5 w-full h-[1px] bg-current" />
+                    </span>
+                  </span>
                   <span className="pb-1 text-base font-medium text-slate-400">
                     {t("thirty_day_challenge.pricing.monthly.per_month")}
                   </span>
                 </div>
+                </div>
+                <div className="space-y-3 mb-6">
+                  <p className="text-[10px] font-bold text-slate-300 uppercase tracking-[0.3em]">
+                    Đặc quyền dành riêng cho bạn
+                  </p>
                 </div>
                 <ul className="space-y-3 text-sm mb-6">
                   {monthlyPlanFeatures.map((feature, index) => (
@@ -704,7 +715,7 @@ const ThirtyDayPage = () => {
                   </div>
                   <div className="flex-grow" />
                   {/* CTA button */}
-                  <div className="relative w-full group/button">
+                  <div className="relative w-full mt-6 group/button">
                       <div className="absolute -inset-x-0.5 inset-y-0 rounded-[1.1rem] bg-gradient-to-r from-[#F6B917] to-yellow-300 opacity-5 blur-sm transition duration-500 group-hover/button:opacity-10" />
                     <Button
                       onClick={() => handleDirectCheckout("membership")}
@@ -713,9 +724,7 @@ const ThirtyDayPage = () => {
                       <span className="font-[950]">Đăng ký nhận ưu đãi ngay</span>
                     </Button>
                   </div>
-                  <p className="text-center text-[10px] text-slate-400 mt-3 font-medium leading-snug">
-                    * Ưu đãi tặng 2 tháng và giảm giá trực tiếp chỉ áp dụng cho lượt đăng ký hôm nay.
-                  </p>
+                  <div className="mt-3 min-h-[1.75rem]" aria-hidden="true" />
                 </div>
               </div>
             </div>
