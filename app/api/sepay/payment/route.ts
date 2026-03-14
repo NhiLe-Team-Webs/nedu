@@ -169,7 +169,15 @@ export async function POST(request: NextRequest) {
 
     // Save to Google Sheet as backup
     try {
-      console.log('[Payment] Saving order to Google Sheet...');
+      console.log('[Payment] Calling appendToSheet with payload:', {
+        orderCode,
+        status: 'Chờ thanh toán',
+        fullName: body.fullName,
+        email: body.email,
+        phone: body.phone,
+        amount: body.amount,
+      });
+
       await appendToSheet({
         name: body.fullName,
         email: body.email,
@@ -185,9 +193,9 @@ export async function POST(request: NextRequest) {
         orderCode,
         status: 'Chờ thanh toán',
       });
-      console.log('[Payment] ✅ Order saved to Google Sheet');
+      console.log(`[Payment] appendToSheet success for orderCode=${orderCode}`);
     } catch (sheetError) {
-      console.error('[Payment] ❌ Failed to save order to sheet:', sheetError);
+      console.error(`[Payment] appendToSheet failed for orderCode=${orderCode}:`, sheetError);
       // Continue flow, don't fail payment creation just because sheet failed
     }
 

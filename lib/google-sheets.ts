@@ -7,6 +7,51 @@ const GOOGLE_SERVICE_ACCOUNT_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
 const GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'); // Handle newline characters
 const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID || '198NMupt0ouMMo8M7Kyn2sRddjaduPL3tYbCFfAGV0nU'; // Default from user screenshot if not set
 
+const formatBirthdayToDateOnly = (value: string): string => {
+    if (!value) return '';
+
+    const trimmed = value.trim();
+    const directDateMatch = trimmed.match(/^(\d{4}-\d{2}-\d{2})/);
+    if (directDateMatch) {
+        return directDateMatch[1];
+    }
+
+    const parsedDate = new Date(trimmed);
+    if (!Number.isNaN(parsedDate.getTime())) {
+        return parsedDate.toISOString().split('T')[0];
+    }
+
+    return '';
+};
+
+const PAYMENT_TIME_HEADER = 'Payment Time';
+
+const normalizeOrderCode = (value?: string): string => (value || '').trim().toUpperCase();
+
+const normalizeStatus = (value: string): string =>
+    value
+        .trim()
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
+
+const isPaidStatus = (status: string): boolean => {
+    const normalized = normalizeStatus(status);
+    return ['da thanh toan', 'paid', 'completed', 'success'].includes(normalized);
+};
+
+const getPaymentTimeNow = (): string =>
+    new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
+
+const ensurePaymentTimeHeader = async (sheet: any) => {
+    await sheet.loadHeaderRow();
+    if (!sheet.headerValues.includes(PAYMENT_TIME_HEADER)) {
+        await sheet.setHeaderRow([...sheet.headerValues, PAYMENT_TIME_HEADER]);
+        await sheet.loadHeaderRow();
+        console.log('[Sheet] Added missing Payment Time header');
+    }
+};
+
 export const appendToSheet = async (data: {
     name: string;
     email: string;
@@ -63,9 +108,14 @@ export const appendToSheet = async (data: {
                 'Coupon Code',
                 'Amount',
                 'Order Code',
-                'Status'
+                'Status',
+                PAYMENT_TIME_HEADER
             ]);
         }
+
+        await ensurePaymentTimeHeader(sheet);
+
+        const normalizedOrderCode = normalizeOrderCode(data.orderCode);
 
         await sheet.addRow({
             Timestamp: new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' }),
@@ -73,15 +123,16 @@ export const appendToSheet = async (data: {
             Email: data.email,
             Phone: data.phone,
             Telegram: data.telegram,
-            Birthday: data.dob,
+            Birthday: formatBirthdayToDateOnly(data.dob),
             Gender: data.gender,
             Address: data.address || '',
             Note: data.note || '',
             'Course Name': data.courseName || '',
             'Coupon Code': data.couponCode || '',
             Amount: data.amount,
-            'Order Code': data.orderCode,
+            'Order Code': normalizedOrderCode,
             Status: data.status,
+            [PAYMENT_TIME_HEADER]: '',
         });
 
         return true;
@@ -108,20 +159,31 @@ export const updateSheetStatus = async (orderCode: string, newStatus: string, am
         await doc.loadInfo();
         const sheet = doc.sheetsByTitle['RAW_FORM_DATA'] || doc.sheetsByIndex[0];
 
+        await ensurePaymentTimeHeader(sheet);
+
         const rows = await sheet.getRows();
+        const normalizedOrderCode = normalizeOrderCode(orderCode);
         // Find row with matching Order Code
-        const row = rows.find(r => r.get('Order Code') === orderCode);
+        const row = rows.find(r => normalizeOrderCode(r.get('Order Code')) === normalizedOrderCode);
 
         if (row) {
-            row.assign({ Status: newStatus });
+            const updateData: Record<string, string> = {
+                Status: newStatus,
+            };
+
+            if (isPaidStatus(newStatus)) {
+                updateData[PAYMENT_TIME_HEADER] = getPaymentTimeNow();
+            }
+
+            row.assign(updateData);
             if (amountReceived) {
                 // Optionally update or verify amount, or add a note?
             }
             await row.save();
-            console.log(`Updated status for ${orderCode} to ${newStatus}`);
+            console.log(`Updated status for ${normalizedOrderCode} to ${newStatus}`);
             return true;
         } else {
-            console.warn(`Order code ${orderCode} not found in sheet`);
+            console.warn(`Order code ${normalizedOrderCode} not found in sheet`);
             return false;
         }
     } catch (error) {

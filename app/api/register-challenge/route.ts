@@ -41,6 +41,15 @@ export async function POST(request: Request) {
 
         // 1. Save to Google Sheet
         try {
+            console.log('[RegisterChallenge] Calling appendToSheet with payload:', {
+                orderCode,
+                status: 'Chờ thanh toán',
+                name,
+                email,
+                phone,
+                amount,
+            });
+
             await appendToSheet({
                 name,
                 email,
@@ -56,8 +65,10 @@ export async function POST(request: Request) {
                 orderCode,
                 status: 'Chờ thanh toán', // Pending Payment
             });
+
+            console.log(`[RegisterChallenge] appendToSheet success for orderCode=${orderCode}`);
         } catch (sheetError) {
-            console.error("Failed to save to sheet", sheetError);
+            console.error(`[RegisterChallenge] appendToSheet failed for orderCode=${orderCode}:`, sheetError);
             // We might still want to return success so they can pay, but admin won't see it on sheet.
             // Better error out or alert admin? 
             // For now, allow flow to continue but log payload? 

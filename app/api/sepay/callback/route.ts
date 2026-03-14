@@ -9,6 +9,13 @@ export async function GET(request: NextRequest) {
     const transactionId = searchParams.get('transactionId');
     const amount = searchParams.get('amount');
 
+    console.log('[Callback] request params:', {
+      orderCode,
+      status,
+      transactionId,
+      amount,
+    });
+
     // Build redirect URL with parameters
     const appUrl = SEPAY_CONFIG.APP_URL;
     const redirectUrl = new URL('/payment-success', appUrl);
@@ -25,6 +32,8 @@ export async function GET(request: NextRequest) {
       status === 'completed' ||
       status === '00' ||
       status === 'SUCCESS';
+
+    console.log('[Callback] mapped success status:', { isSuccess, rawStatus: status });
 
     redirectUrl.searchParams.set('paymentMethod', 'sepay');
 
