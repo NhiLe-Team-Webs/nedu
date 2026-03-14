@@ -16,7 +16,7 @@ import {
 } from '@/lib/sepay-utils';
 import { getAccountForProgram } from '@/lib/sepay-config';
 import { OrderStore } from '@/lib/order-store';
-import { appendToSheet, findOrderInSheet } from '@/lib/google-sheets';
+import { appendToSheet, findOrderInSheet, updateSheetStatus } from '@/lib/google-sheets';
 import { isSupabaseConfigured } from '@/lib/db';
 import { OrderRepository, TransactionRepository } from '@/lib/repositories';
 import { OrderStatus, TransactionStatus } from '@/lib/db-types';
@@ -320,6 +320,14 @@ export async function GET(request: NextRequest) {
         }
       }
 
+      // Also update Google Sheets
+      try {
+        await updateSheetStatus(orderCode, 'Đã thanh toán', true);
+        console.log('[Payment] Order status updated in Google Sheets (Simulate Success):', orderCode);
+      } catch (sheetError) {
+        console.error('Error updating Google Sheets (Simulate Success):', sheetError);
+      }
+
       console.log('Order status manually simulated to success:', orderCode);
     }
 
@@ -388,6 +396,16 @@ export async function PATCH(request: NextRequest) {
     order.status = status;
     order.updatedAt = new Date();
     orderStore.set(orderCode, order);
+
+    // Update Google Sheets
+    try {
+      const sheetStatus = status === 'success' ? 'Đã thanh toán' : status;
+      const includeTime = status === 'success';
+      await updateSheetStatus(orderCode, sheetStatus, includeTime);
+      console.log(`[Payment] Order status manually updated in Google Sheets: ${orderCode} -> ${sheetStatus} (includeTime: ${includeTime})`);
+    } catch (sheetError) {
+      console.error('Error updating Google Sheets (PATCH):', sheetError);
+    }
 
     console.log('Order status manually updated:', { orderCode, status });
 

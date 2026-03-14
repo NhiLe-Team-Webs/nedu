@@ -24,31 +24,71 @@ const formatBirthdayToDateOnly = (value: string): string => {
     return '';
 };
 
-const PAYMENT_TIME_HEADER = 'Payment Time';
+
 
 const normalizeOrderCode = (value?: string): string => (value || '').trim().toUpperCase();
 
-const normalizeStatus = (value: string): string =>
-    value
-        .trim()
-        .toLowerCase()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '');
 
-const isPaidStatus = (status: string): boolean => {
-    const normalized = normalizeStatus(status);
-    return ['da thanh toan', 'paid', 'completed', 'success'].includes(normalized);
+
+const getVietnameseTimestamp = (): string => {
+    const now = new Date();
+    const formatter = new Intl.DateTimeFormat('vi-VN', {
+        timeZone: 'Asia/Ho_Chi_Minh',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour12: false
+    });
+    
+    const parts = formatter.formatToParts(now);
+    const getPart = (type: string) => parts.find(p => p.type === type)?.value || '';
+    
+    // Format: HH:mm:ss DD/MM/YYYY
+    return `${getPart('hour')}:${getPart('minute')}:${getPart('second')} ${getPart('day')}/${getPart('month')}/${getPart('year')}`;
 };
 
-const getPaymentTimeNow = (): string =>
-    new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
+const getPaymentTimeNow = (): string => getVietnameseTimestamp();
 
-const ensurePaymentTimeHeader = async (sheet: any) => {
+const ensureHeaders = async (sheet: any) => {
     await sheet.loadHeaderRow();
-    if (!sheet.headerValues.includes(PAYMENT_TIME_HEADER)) {
-        await sheet.setHeaderRow([...sheet.headerValues, PAYMENT_TIME_HEADER]);
-        await sheet.loadHeaderRow();
-        console.log('[Sheet] Added missing Payment Time header');
+    const requiredHeaders = [
+        'Timestamp',
+        'Name',
+        'Email',
+        'Phone',
+        'Telegram',
+        'Birthday',
+        'Gender',
+        'Address',
+        'Note',
+        'Course Name',
+        'Coupon Code',
+        'Amount',
+        'Order Code',
+        'Status',
+        'Sent Emails',
+        'Payment Time'
+    ];
+
+    let headersChanged = false;
+    for (const h of requiredHeaders) {
+        if (!sheet.headerValues.includes(h)) {
+            headersChanged = true;
+            break;
+        }
+    }
+
+    if (headersChanged || sheet.headerValues.length < requiredHeaders.length) {
+        console.log(`[Sheet] Headers mismatch. Current: ${JSON.stringify(sheet.headerValues)}, Required: ${JSON.stringify(requiredHeaders)}`);
+        // Find existing headers and merge or just enforce order if it's the raw data sheet
+        await sheet.setHeaderRow(requiredHeaders);
+        await sheet.loadHeaderRow(); // Reload after setting
+        console.log('[Sheet] Updated headers for alignment and reloaded');
+    } else {
+        console.log(`[Sheet] Headers are correct: ${JSON.stringify(sheet.headerValues)}`);
     }
 };
 
@@ -94,31 +134,16 @@ export const appendToSheet = async (data: {
         // For now, we assume the user might have some headers or we append. 
         // If sheet is empty (like in screenshot), we should set headers first.
         if (sheet.rowCount === 0 || sheet.headerValues.length === 0) {
-            await sheet.setHeaderRow([
-                'Timestamp',
-                'Name',
-                'Email',
-                'Phone',
-                'Telegram',
-                'Birthday',
-                'Gender',
-                'Address',
-                'Note',
-                'Course Name',
-                'Coupon Code',
-                'Amount',
-                'Order Code',
-                'Status',
-                PAYMENT_TIME_HEADER
-            ]);
+            await ensureHeaders(sheet);
         }
 
-        await ensurePaymentTimeHeader(sheet);
+        await ensureHeaders(sheet);
 
+        console.log(`[Sheet] Appending row for Order Code: ${data.orderCode}`);
         const normalizedOrderCode = normalizeOrderCode(data.orderCode);
 
         await sheet.addRow({
-            Timestamp: new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' }),
+            Timestamp: getVietnameseTimestamp(),
             Name: data.name,
             Email: data.email,
             Phone: data.phone,
@@ -132,9 +157,11 @@ export const appendToSheet = async (data: {
             Amount: data.amount,
             'Order Code': normalizedOrderCode,
             Status: data.status,
-            [PAYMENT_TIME_HEADER]: '',
+            'Sent Emails': '',
+            'Payment Time': '',
         });
 
+        console.log(`[Sheet] Successfully appended row for ${normalizedOrderCode}`);
         return true;
     } catch (error) {
         console.error('Error appending to Google Sheet:', error);
@@ -142,7 +169,7 @@ export const appendToSheet = async (data: {
     }
 };
 
-export const updateSheetStatus = async (orderCode: string, newStatus: string, amountReceived?: number) => {
+export const updateSheetStatus = async (orderCode: string, newStatus: string, includeTime: boolean = false, amountReceived?: number) => {
     if (!GOOGLE_SERVICE_ACCOUNT_EMAIL || !GOOGLE_PRIVATE_KEY) {
         console.error('Google Sheets credentials missing');
         return false;
@@ -159,31 +186,43 @@ export const updateSheetStatus = async (orderCode: string, newStatus: string, am
         await doc.loadInfo();
         const sheet = doc.sheetsByTitle['RAW_FORM_DATA'] || doc.sheetsByIndex[0];
 
-        await ensurePaymentTimeHeader(sheet);
+        await ensureHeaders(sheet);
 
         const rows = await sheet.getRows();
         const normalizedOrderCode = normalizeOrderCode(orderCode);
+        console.log(`[Sheet] Searching for Order Code: "${normalizedOrderCode}" in ${rows.length} rows`);
+        
         // Find row with matching Order Code
-        const row = rows.find(r => normalizeOrderCode(r.get('Order Code')) === normalizedOrderCode);
+        const row = rows.find(r => {
+            const sheetCode = normalizeOrderCode(r.get('Order Code'));
+            const isMatch = sheetCode === normalizedOrderCode;
+            if (isMatch) console.log(`[Sheet] Found matching row for code ${normalizedOrderCode}`);
+            return isMatch;
+        });
 
         if (row) {
+            console.log(`[Sheet] Current row status: "${row.get('Status')}", updating to: "${newStatus}"`);
             const updateData: Record<string, string> = {
                 Status: newStatus,
             };
 
-            if (isPaidStatus(newStatus)) {
-                updateData[PAYMENT_TIME_HEADER] = getPaymentTimeNow();
+            if (includeTime) {
+                const payTime = getVietnameseTimestamp();
+                console.log(`[Sheet] Explicitly setting Payment Time to: ${payTime}`);
+                updateData['Payment Time'] = payTime;
             }
 
-            row.assign(updateData);
-            if (amountReceived) {
-                // Optionally update or verify amount, or add a note?
-            }
+            console.log('[Sheet] Applying update data:', updateData);
+            // setValues is the most reliable way to update multiple columns in v4
+            row.setValues(updateData);
+            
             await row.save();
-            console.log(`Updated status for ${normalizedOrderCode} to ${newStatus}`);
+            console.log(`[Sheet] Successfully updated row for ${normalizedOrderCode}`);
             return true;
         } else {
-            console.warn(`Order code ${normalizedOrderCode} not found in sheet`);
+            console.warn(`[Sheet] Order code "${normalizedOrderCode}" NOT found in sheet rows`);
+            const allCodes = rows.map(r => r.get('Order Code')).filter(Boolean);
+            console.log(`[Sheet] Available Order Codes in sheet: ${JSON.stringify(allCodes)}`);
             return false;
         }
     } catch (error) {

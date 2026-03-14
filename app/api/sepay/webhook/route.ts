@@ -232,6 +232,7 @@ export async function POST(request: NextRequest) {
       const sheetUpdated = await updateSheetStatus(
         orderCode,
         'Đã thanh toán',
+        true, // includeTime
         body.transferAmount
       );
       console.log(`[Webhook] updateSheetStatus success result for orderCode=${orderCode}: ${sheetUpdated}`);
