@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "@/lib/cart-context";
 import { useRouter } from "next/navigation";
 import { courses } from "@/data/courses";
+import { getCourseDetailBySlug } from "@/lib/services/courseService";
 
 // Import Swiper styles
 import 'swiper/css';
@@ -104,10 +105,31 @@ const Courses: React.FC = () => {
   const { t } = useLanguage();
   const swiperRef = React.useRef<SwiperType | null>(null);
   const [isMounted, setIsMounted] = React.useState(false);
+  const [thirtyDayPreview, setThirtyDayPreview] = React.useState<{ desktop?: string; mobile?: string }>({});
 
   React.useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  React.useEffect(() => {
+    async function fetchThirtyDayPreview() {
+      try {
+        const dynamicData = await getCourseDetailBySlug("thu-thach-30-ngay");
+        if (dynamicData?.program) {
+          setThirtyDayPreview({
+            desktop: dynamicData.program.image || undefined,
+            mobile: dynamicData.program.banner || dynamicData.program.image || undefined,
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching 30-day preview:", error);
+      }
+    }
+
+    fetchThirtyDayPreview();
+  }, []);
+
+  const thirtyDayCourse = React.useMemo(() => courses.find(c => c.slug === "thu-thach-30-ngay"), []);
 
   const slides: CourseSlide[] = React.useMemo(() => [
     {
@@ -157,15 +179,15 @@ const Courses: React.FC = () => {
     {
       id: 8,
       slug: "thu-thach-30-ngay",
-      image: "/picture/thuthach30day_desktop.png",
-      imageMobile: "/picture/thuthach30day_mobile.png",
+      image: thirtyDayPreview.desktop || thirtyDayCourse?.heroImage || "/picture/thuthach30day_desktop.png",
+      imageMobile: thirtyDayPreview.mobile || thirtyDayCourse?.mobileImage || "/picture/thuthach30day_mobile.png",
       date: "28/12/2025 – 28/01/2026",
       title: t("courses.slides.tt30n.title"),
       label: t("courses.online"),
       content: t("courses.slides.tt30n.content"),
       type: "Membership"
     }
-  ], [t]);
+  ], [t, thirtyDayCourse, thirtyDayPreview.desktop, thirtyDayPreview.mobile]);
 
   if (!isMounted) return null;
 

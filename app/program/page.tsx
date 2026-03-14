@@ -314,49 +314,27 @@ export default function ProgramPage() {
                         }
                       </p>
                       <div className="flex flex-col items-center justify-center gap-3 mt-auto w-full px-2">
-                        {course.slug !== 'thu-thach-30-ngay' ? (
-                          <div className="flex items-center justify-center gap-2 w-full">
-                            <button
-                              onClick={() => handleAddToCart(course)}
-                              title={t("program_page.card.register")}
-                              className="h-10 inline-flex items-center justify-center gap-2 rounded-lg bg-[#ffeeee] text-[#d0011b] border border-[#d0011b] transition-all hover:bg-[#ffdada] active:scale-95 px-3 w-fit"
-                            >
-                              <ShoppingCart className="w-4 h-4 flex-shrink-0" />
-                              <span className="font-bold text-xs sm:text-sm whitespace-nowrap">
-                                {t("program_page.card.register")}
-                              </span>
-                            </button>
-                            <button
-                              onClick={() => {
-                                buyNow(course);
-                                router.push("/checkout");
-                              }}
-                              className="inline-flex items-center justify-center h-10 rounded-lg bg-[#d0011b] text-white transition-all hover:bg-[#b00118] active:scale-95 shadow-md font-bold text-sm px-3 w-fit"
-                            >
-                              {t("program_page.card.learn_more")}
-                            </button>
-                          </div>
-                        ) : (
-                          <div
-                            className="flex items-center justify-center gap-2 w-full opacity-60 cursor-not-allowed"
-                            title={t("program_page.card.ended_registration")}
+                        <div className="flex items-center justify-center gap-2 w-full">
+                          <button
+                            onClick={() => handleAddToCart(course)}
+                            title={t("program_page.card.register")}
+                            className="h-10 inline-flex items-center justify-center gap-2 rounded-lg bg-[#ffeeee] text-[#d0011b] border border-[#d0011b] transition-all hover:bg-[#ffdada] active:scale-95 px-3 w-fit"
                           >
-                            <button
-                              disabled
-                              className="h-10 inline-flex items-center justify-center gap-2 rounded-lg bg-[#ffeeee] text-[#d0011b] border border-[#d0011b] px-3 w-fit pointer-events-none"
-                            >
-                              <ShoppingCart className="w-4 h-4 flex-shrink-0" />
-                              <span className="font-bold text-xs sm:text-sm whitespace-nowrap">
-                                {t("program_page.card.register")}
-                              </span>
-                            </button>
-                            <div
-                              className="inline-flex items-center justify-center h-10 rounded-lg bg-[#d0011b] text-white shadow-md font-bold text-sm px-3 w-fit pointer-events-none"
-                            >
-                              {t("program_page.card.learn_more")}
-                            </div>
-                          </div>
-                        )}
+                            <ShoppingCart className="w-4 h-4 flex-shrink-0" />
+                            <span className="font-bold text-xs sm:text-sm whitespace-nowrap">
+                              {t("program_page.card.register")}
+                            </span>
+                          </button>
+                          <button
+                            onClick={() => {
+                              buyNow(course);
+                              router.push("/checkout");
+                            }}
+                            className="inline-flex items-center justify-center h-10 rounded-lg bg-[#d0011b] text-white transition-all hover:bg-[#b00118] active:scale-95 shadow-md font-bold text-sm px-3 w-fit"
+                          >
+                            {t("program_page.card.learn_more")}
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </motion.div>

@@ -16,6 +16,8 @@ import {
   X,
   ChevronDown,
   HelpCircle,
+  Sparkles,
+  Gift,
 } from "lucide-react";
 import { useLanguage } from "@/lib/LanguageContext";
 import { useCart } from "@/lib/cart-context";
@@ -29,9 +31,6 @@ const Skeleton = ({ className }: { className?: string }) => (
   <div className={cn("animate-pulse bg-gray-200 rounded", className)} />
 );
 
-
-const challengePosterDesktop = "/picture/thuthach30day_desktop.png";
-const challengePosterMobile = "/picture/thuthach30day_mobile.png";
 
 // Find the 30 day challenge course
 const thirtyDayCourse = courses.find((c) => c.slug === "thu-thach-30-ngay");
@@ -69,6 +68,11 @@ const ThirtyDayPage = () => {
     }
     fetchData();
   }, []);
+
+  // Determine which images to use (prioritize dynamic DB data over static data)
+  // These values will be calculated using the current state of courseData
+  const challengePosterDesktop = courseData?.program?.image || thirtyDayCourse?.heroImage || "/picture/thuthach30day_desktop.png";
+  const challengePosterMobile = courseData?.program?.image || thirtyDayCourse?.mobileImage || "/picture/thuthach30day_mobile.png";
 
   // Sync some data from DB to local variables if available
   const dbInfo = courseData?.description?.information || {};
@@ -238,10 +242,14 @@ const ThirtyDayPage = () => {
     : 396000);
 
   const membershipPrice = courseData?.challengeDetail?.membership_price ?? 3960000; // Fallback to 3.960.000
+  const membershipSavings = Math.max(monthlyPrice * 12 - membershipPrice, 0);
+  const membershipBonusMonths = monthlyPrice > 0
+    ? Math.max(Math.floor(membershipSavings / monthlyPrice), 0)
+    : 0;
 
   return (
-    <div className="min-h-screen bg-[#F2F2F7] pb-20 override-header-spacing font-sans text-gray-900">
-      <main className="ios-safe-padding-bottom">
+    <div className="min-h-screen bg-[#F2F2F7] override-header-spacing font-sans text-gray-900">
+      <main>
         {/* HERO SECTION - Responsive images for desktop/mobile */}
         <section className="relative w-full -mt-14 sm:-mt-16 md:-mt-20 pt-14 sm:pt-16 md:pt-20">
           {/* Desktop Image */}
@@ -270,6 +278,55 @@ const ThirtyDayPage = () => {
               priority
             />
           )}
+        </section>
+
+        {/* Course Summary Cards - directly under hero */}
+        <section className="bg-[#F2F2F7] pb-10 md:pb-12">
+          <div className="container mx-auto px-4 sm:px-6">
+            <div className="relative md:-mt-10 lg:-mt-12 z-10">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 md:gap-5">
+                <div className="rounded-2xl bg-gradient-to-br from-slate-50 to-white border border-slate-200/80 px-5 py-5 sm:px-6 sm:py-6 shadow-[0_6px_16px_rgba(15,23,42,0.06)] transition-all duration-300 hover:shadow-[0_10px_22px_rgba(15,23,42,0.1)]">
+                  <div className="w-11 h-11 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center">
+                    <Clock className="h-5 w-5 text-slate-600" />
+                  </div>
+                  <p className="text-[11px] sm:text-xs text-slate-500 uppercase tracking-[0.14em] mt-4 font-semibold">
+                    {t("thirty_day_challenge.timeline.time_label")}
+                  </p>
+                  {isLoading ? <Skeleton className="h-8 w-full mt-2" /> : (
+                    <p className="text-xl sm:text-2xl font-extrabold text-slate-900 mt-2 leading-tight">
+                      {displaySchedule}
+                    </p>
+                  )}
+                </div>
+
+                <div className="rounded-2xl bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 border border-slate-700/80 px-5 py-5 sm:px-6 sm:py-6 text-white shadow-[0_10px_22px_rgba(15,23,42,0.2)] transition-all duration-300 hover:shadow-[0_14px_28px_rgba(15,23,42,0.26)]">
+                  <div className="w-11 h-11 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center">
+                    <Users className="h-5 w-5 text-yellow-300" />
+                  </div>
+                  <p className="text-[11px] sm:text-xs text-slate-200 uppercase tracking-[0.14em] mt-4 font-semibold">
+                    {t("thirty_day_challenge.timeline.students_label")}
+                  </p>
+                  {isLoading ? <Skeleton className="h-8 w-24 mt-2 bg-slate-600" /> : (
+                    <p className="text-xl sm:text-2xl font-extrabold text-white mt-2 leading-tight">{displayStudentCount}</p>
+                  )}
+                </div>
+
+                <div className="rounded-2xl bg-gradient-to-br from-slate-50 to-white border border-slate-200/80 px-5 py-5 sm:px-6 sm:py-6 shadow-[0_6px_16px_rgba(15,23,42,0.06)] transition-all duration-300 hover:shadow-[0_10px_22px_rgba(15,23,42,0.1)]">
+                  <div className="w-11 h-11 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center">
+                    <MapPin className="h-5 w-5 text-slate-600" />
+                  </div>
+                  <p className="text-[11px] sm:text-xs text-slate-500 uppercase tracking-[0.14em] mt-4 font-semibold">
+                    {t("thirty_day_challenge.timeline.location_label")}
+                  </p>
+                  {isLoading ? <Skeleton className="h-8 w-full mt-2" /> : (
+                    <p className="text-xl sm:text-2xl font-extrabold text-slate-900 mt-2 leading-tight">
+                      {displayLocation}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
 
 
@@ -413,42 +470,6 @@ const ThirtyDayPage = () => {
                 })}
               </div>
 
-              {/* Info Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-gray-100 rounded-2xl p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                  <Clock className="h-7 w-7 text-gray-500" />
-                  <p className="text-xs text-gray-500 uppercase tracking-wider mt-4">
-                    {t("thirty_day_challenge.timeline.time_label")}
-                  </p>
-                  {isLoading ? <Skeleton className="h-8 w-full mt-1" /> : (
-                    <p className="text-xl md:text-2xl font-bold text-gray-900 mt-1">
-                      {displaySchedule}
-                    </p>
-                  )}
-                </div>
-
-                <div className="bg-gradient-to-br from-gray-700 to-gray-900 rounded-2xl p-6 text-white transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                  <Users className="h-7 w-7 text-yellow-400" />
-                  <p className="text-xs text-white uppercase tracking-wider mt-4">
-                    {t("thirty_day_challenge.timeline.students_label")}
-                  </p>
-                  {isLoading ? <Skeleton className="h-8 w-24 mt-1 bg-gray-600" /> : (
-                    <p className="text-xl md:text-2xl font-bold text-white mt-1">{displayStudentCount}</p>
-                  )}
-                </div>
-
-                <div className="bg-gray-100 rounded-2xl p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                  <MapPin className="h-7 w-7 text-gray-500" />
-                  <p className="text-xs text-gray-500 uppercase tracking-wider mt-4">
-                    {t("thirty_day_challenge.timeline.location_label")}
-                  </p>
-                  {isLoading ? <Skeleton className="h-8 w-full mt-1" /> : (
-                    <p className="text-xl md:text-2xl font-bold text-gray-900 mt-1">
-                      {displayLocation}
-                    </p>
-                  )}
-                </div>
-              </div>
             </div>
           </div>
         </section>
@@ -570,27 +591,46 @@ const ThirtyDayPage = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Monthly Plan Card */}
-              <div className="bg-white rounded-2xl p-8 h-full flex flex-col shadow-lg">
-                <p className="text-sm font-semibold text-gray-500">
-                  {t("thirty_day_challenge.pricing.monthly.label")}
-                </p>
-                <p className="text-4xl font-bold text-primary my-6">
-                  {formatCurrency(monthlyPrice)}
-                  <span className="text-lg font-medium text-gray-500">
-                    {" "}
+              <div className="h-full rounded-[2rem] bg-white p-7 flex flex-col shadow-[0_20px_48px_rgba(15,23,42,0.08)] border border-slate-200/70 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_56px_rgba(15,23,42,0.12)]">
+                <div className="mb-4">
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="h-1 w-8 rounded-full bg-primary flex-shrink-0" />
+                    <p className="text-sm font-extrabold uppercase tracking-[0.22em] text-primary">
+                      {t("thirty_day_challenge.pricing.monthly.label")}
+                    </p>
+                  </div>
+                <div className="flex flex-wrap items-end gap-2">
+                  <p className="text-4xl font-black tracking-[-0.05em] text-slate-900 md:text-5xl">
+                    {formatCurrency(monthlyPrice)}
+                  </p>
+                  <span className="inline-block ml-0.5 text-2xl md:text-3xl text-slate-900 font-bold leading-none">
+                    <span className="relative">
+                      đ
+                      <span className="absolute left-0 -bottom-0.5 w-full h-[1px] bg-current" />
+                    </span>
+                  </span>
+                  <span className="pb-1 text-base font-medium text-slate-400">
                     {t("thirty_day_challenge.pricing.monthly.per_month")}
                   </span>
-                </p>
+                </div>
+                </div>
+                <div className="space-y-3 mb-6">
+                  <p className="text-[10px] font-bold text-slate-300 uppercase tracking-[0.3em]">
+                    Đặc quyền dành riêng cho bạn
+                  </p>
+                </div>
                 <ul className="space-y-3 text-sm mb-6">
                   {monthlyPlanFeatures.map((feature, index) => (
-                    <li key={index} className="flex items-start gap-3">
+                    <li key={index} className="group flex items-start gap-3">
                       {feature.included ? (
-                        <Check className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                        <div className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-green-50 text-green-600 border border-green-100 transition-all duration-300 group-hover:bg-primary group-hover:text-white group-hover:border-primary shadow-sm">
+                          <Check className="h-3.5 w-3.5" strokeWidth={4} />
+                        </div>
                       ) : (
                         <X className="h-5 w-5 text-red-500 flex-shrink-0 mt-0.5" />
                       )}
                       <span
-                        className={cn(!feature.included && "text-gray-400")}
+                        className={cn("leading-6 text-sm", feature.included ? "font-semibold text-slate-700" : "text-gray-400")}
                       >
                         {feature.text}
                       </span>
@@ -598,51 +638,106 @@ const ThirtyDayPage = () => {
                   ))}
                 </ul>
                 <div className="flex-grow" />
-                <div className="w-full mt-8">
+                <div className="relative w-full mt-6 group/button">
+                  <div className="absolute -inset-x-0.5 inset-y-0 rounded-[1.1rem] bg-gradient-to-r from-[#F6B917] to-yellow-300 opacity-5 blur-sm transition duration-500 group-hover/button:opacity-10" />
                   <Button
                     onClick={() => handleDirectCheckout("monthly")}
-                    className="w-full"
+                    className="relative h-11 w-full rounded-[0.95rem] border border-black/[0.04] bg-[#F6B917] px-5 text-sm font-black uppercase tracking-[0.15em] text-slate-900 shadow-[0_2px_6px_rgba(15,23,42,0.06)] transition-all duration-300 hover:scale-100 hover:bg-slate-900 hover:text-[#F6B917] hover:shadow-[0_3px_8px_rgba(15,23,42,0.08)] active:scale-[0.99]"
                   >
-                    <span className="flex items-center justify-center gap-2">
+                    <span className="flex items-center justify-center gap-2 text-sm font-[950] uppercase tracking-[0.15em]">
                       {t("thirty_day_challenge.pricing.monthly.button")}
                     </span>
                   </Button>
                 </div>
+                <div className="mt-3 min-h-[1.75rem]" aria-hidden="true" />
               </div>
 
               {/* Membership Plan Card */}
-              <div className="bg-white rounded-2xl p-8 border-2 border-primary h-full flex flex-col relative overflow-hidden shadow-lg">
-                <div className="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-4 py-1 rounded-bl-lg">
+              <div className="relative h-full overflow-hidden rounded-[2rem] border-2 border-primary bg-white p-7 shadow-[0_20px_48px_rgba(15,23,42,0.1)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_28px_68px_rgba(15,23,42,0.15)]">
+                <div className="absolute top-0 right-0 rounded-bl-[1.25rem] bg-primary px-5 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.22em] text-slate-900 shadow-lg">
                   {t("thirty_day_challenge.pricing.membership.badge")}
                 </div>
-                <p className="text-sm font-semibold text-primary mt-4">
-                  {t("thirty_day_challenge.pricing.membership.label")}
-                </p>
-                <p className="text-4xl font-bold text-primary my-6">
-                  {formatCurrency(membershipPrice)}
-                  <span className="text-lg font-medium text-gray-500">
-                    {" "}
-                    {t("thirty_day_challenge.pricing.membership.per_year")}
-                  </span>
-                </p>
-                <ul className="space-y-3 text-sm mb-6">
-                  {membershipPlanFeatures.map((feature, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <Check className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                      <span>{feature.text}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="flex-grow" />
-                <div className="w-full mt-8">
-                  <Button
-                    onClick={() => handleDirectCheckout("membership")}
-                    className="w-full"
-                  >
-                    <span className="flex items-center justify-center gap-2">
-                      {t("thirty_day_challenge.pricing.membership.button")}
-                    </span>
-                  </Button>
+                <div className="relative flex h-full flex-col">
+                  <div className="mb-4">
+                    {/* Title */}
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="h-1 w-8 rounded-full bg-primary flex-shrink-0" />
+                      <p className="text-sm font-extrabold uppercase tracking-[0.22em] text-primary">
+                        {t("thirty_day_challenge.pricing.membership.label")}
+                      </p>
+                    </div>
+                    {/* Pricing */}
+                    <div className="flex flex-col gap-1">
+                      {/* Original price – red strikethrough */}
+                      {monthlyPrice > 0 && (
+                        <div className="flex items-center gap-2 text-red-600 font-bold">
+                          <span className="text-base line-through decoration-red-600 decoration-2">
+                            {formatCurrency(monthlyPrice * 12)}
+                          </span>
+                          <span className="inline-block ml-0.5 text-sm">
+                            <span className="relative">
+                              đ
+                              <span className="absolute left-0 -bottom-0.5 w-full h-[1px] bg-current" />
+                            </span>
+                          </span>
+                          <span className="text-[10px] font-black uppercase tracking-wider bg-red-50 px-2 py-0.5 rounded border border-red-100 ml-1">
+                            Giá gốc
+                          </span>
+                        </div>
+                      )}
+                      {/* Discounted price + gift badge */}
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+                        <div className="flex items-baseline gap-1">
+                          <span className="text-4xl md:text-5xl font-black tracking-[-0.05em] text-slate-900 leading-none">
+                            {formatCurrency(membershipPrice)}
+                          </span>
+                          <span className="inline-block ml-0.5 text-2xl md:text-3xl text-slate-900 font-bold">
+                            <span className="relative">
+                              đ
+                              <span className="absolute left-0 -bottom-0.5 w-full h-[1px] bg-current" />
+                            </span>
+                          </span>
+                          <span className="pb-1 text-base font-medium text-slate-400 ml-1">
+                            {t("thirty_day_challenge.pricing.membership.per_year")}
+                          </span>
+                        </div>
+                        {membershipBonusMonths > 0 && (
+                          <div className="flex items-center gap-1.5 bg-[#E11D48] text-white px-3 py-1.5 rounded-full shadow-lg shadow-rose-200 animate-pulse-gentle">
+                            <Gift className="h-3.5 w-3.5 text-white flex-shrink-0" strokeWidth={2.5} />
+                            <span className="font-bold text-[11px] tracking-wide uppercase whitespace-nowrap">
+                              Tặng {membershipBonusMonths} tháng
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  {/* Benefits list */}
+                  <div className="space-y-3 mb-6">
+                    <p className="text-[10px] font-bold text-slate-300 uppercase tracking-[0.3em]">
+                      Đặc quyền dành riêng cho bạn
+                    </p>
+                    {membershipPlanFeatures.map((feature, index) => (
+                      <div key={index} className="group flex items-start gap-3">
+                        <div className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-green-50 text-green-600 border border-green-100 transition-all duration-300 group-hover:bg-primary group-hover:text-white group-hover:border-primary shadow-sm">
+                          <Check className="h-3.5 w-3.5" strokeWidth={4} />
+                        </div>
+                        <span className="leading-6 text-slate-700 text-sm font-semibold">{feature.text}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex-grow" />
+                  {/* CTA button */}
+                  <div className="relative w-full mt-6 group/button">
+                      <div className="absolute -inset-x-0.5 inset-y-0 rounded-[1.1rem] bg-gradient-to-r from-[#F6B917] to-yellow-300 opacity-5 blur-sm transition duration-500 group-hover/button:opacity-10" />
+                    <Button
+                      onClick={() => handleDirectCheckout("membership")}
+                        className="relative h-11 w-full rounded-[0.95rem] border border-black/[0.04] bg-[#F6B917] px-5 text-sm font-black uppercase tracking-[0.15em] text-slate-900 shadow-[0_2px_6px_rgba(15,23,42,0.06)] transition-all duration-300 hover:scale-100 hover:bg-slate-900 hover:text-[#F6B917] hover:shadow-[0_3px_8px_rgba(15,23,42,0.08)] active:scale-[0.99]"
+                    >
+                      <span className="font-[950]">Đăng ký nhận ưu đãi ngay</span>
+                    </Button>
+                  </div>
+                  <div className="mt-3 min-h-[1.75rem]" aria-hidden="true" />
                 </div>
               </div>
             </div>
