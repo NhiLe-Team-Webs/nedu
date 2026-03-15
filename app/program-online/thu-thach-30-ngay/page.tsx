@@ -82,9 +82,7 @@ const ThirtyDayPage = () => {
   // Logic mapping fields FROM YOUR DATABASE LOG
   const displaySchedule = courseData?.program?.total_sessions || t("thirty_day_challenge.timeline.time_value");
 
-  const displayStudentCount = (courseData?.program as any)?.course
-    ? `${(courseData?.program as any).course} người`
-    : (dbInfo.student_count || t("thirty_day_challenge.timeline.students_count"));
+  const displayStudentCount = t("thirty_day_challenge.timeline.students_count");
 
   const displayLocation = courseData?.program?.link_payment || t("thirty_day_challenge.timeline.location_value");
 
