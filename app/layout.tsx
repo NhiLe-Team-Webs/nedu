@@ -143,7 +143,7 @@ export default function RootLayout({
               }}
             />
             <Header />
-            <div className="h-14 sm:h-16 md:h-20" />
+            <div className="h-[3.25rem] sm:h-[3.75rem] md:h-[4.5rem]" />
             <main className="pb-32">{children}</main>
 
             <Footer />

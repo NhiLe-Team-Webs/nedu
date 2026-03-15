@@ -629,7 +629,7 @@ textarea:focus-visible {
 /* Smooth scroll behaviors and parallax effects */
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 80px;
+  scroll-padding-top: 72px;
   /* Account for fixed header */
 }
 
@@ -666,7 +666,7 @@ html {
 /* Enhanced smooth scrolling for anchor links */
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 80px;
+  scroll-padding-top: 72px;
 }
 
 /* Smooth scroll for mobile */
