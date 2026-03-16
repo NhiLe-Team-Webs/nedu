@@ -132,6 +132,15 @@ export async function POST(request: NextRequest) {
 
         // Save to Google Sheet as backup
         try {
+            console.log('[Orders] Calling appendToSheet with payload:', {
+                orderCode,
+                status: 'Chờ thanh toán',
+                fullName: body.fullName,
+                email: body.email,
+                phone: body.phone,
+                amount: body.amount,
+            });
+
             await appendToSheet({
                 name: body.fullName,
                 email: body.email,
@@ -147,8 +156,10 @@ export async function POST(request: NextRequest) {
                 orderCode: orderCode,
                 status: 'Chờ thanh toán',
             });
+
+            console.log(`[Orders] appendToSheet success for orderCode=${orderCode}`);
         } catch (sheetError) {
-            console.error('Failed to save to Google Sheet:', sheetError);
+            console.error(`[Orders] appendToSheet failed for orderCode=${orderCode}:`, sheetError);
             // Continue - sheet is just backup
         }
 

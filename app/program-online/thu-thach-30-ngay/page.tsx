@@ -302,10 +302,10 @@ const ThirtyDayPage = () => {
                     <Users className="h-5 w-5 text-yellow-500" />
                   </div>
                   <p className="text-[11px] sm:text-xs text-slate-500 uppercase tracking-[0.14em] mt-4 font-semibold">
-                    {t("thirty_day_challenge.timeline.students_label")}
+                    30 video bài tập
                   </p>
-                  {isLoading ? <Skeleton className="h-8 w-24 mt-2" /> : (
-                    <p className="text-xl sm:text-2xl font-extrabold text-slate-900 mt-2 leading-tight">{displayStudentCount}</p>
+                  {isLoading ? <Skeleton className="h-8 w-40 mt-2" /> : (
+                    <p className="text-xl sm:text-2xl font-extrabold text-slate-900 mt-2 leading-tight">Mỗi ngày thực hành 1 bài tập</p>
                   )}
                 </div>
 

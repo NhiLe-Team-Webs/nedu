@@ -16,7 +16,7 @@ import {
 } from '@/lib/sepay-utils';
 import { getAccountForProgram } from '@/lib/sepay-config';
 import { OrderStore } from '@/lib/order-store';
-import { appendToSheet, findOrderInSheet } from '@/lib/google-sheets';
+import { appendToSheet, findOrderInSheet, updateSheetStatus } from '@/lib/google-sheets';
 import { isSupabaseConfigured } from '@/lib/db';
 import { OrderRepository, TransactionRepository } from '@/lib/repositories';
 import { OrderStatus, TransactionStatus } from '@/lib/db-types';
@@ -169,7 +169,15 @@ export async function POST(request: NextRequest) {
 
     // Save to Google Sheet as backup
     try {
-      console.log('[Payment] Saving order to Google Sheet...');
+      console.log('[Payment] Calling appendToSheet with payload:', {
+        orderCode,
+        status: 'Chờ thanh toán',
+        fullName: body.fullName,
+        email: body.email,
+        phone: body.phone,
+        amount: body.amount,
+      });
+
       await appendToSheet({
         name: body.fullName,
         email: body.email,
@@ -185,9 +193,9 @@ export async function POST(request: NextRequest) {
         orderCode,
         status: 'Chờ thanh toán',
       });
-      console.log('[Payment] ✅ Order saved to Google Sheet');
+      console.log(`[Payment] appendToSheet success for orderCode=${orderCode}`);
     } catch (sheetError) {
-      console.error('[Payment] ❌ Failed to save order to sheet:', sheetError);
+      console.error(`[Payment] appendToSheet failed for orderCode=${orderCode}:`, sheetError);
       // Continue flow, don't fail payment creation just because sheet failed
     }
 
@@ -312,6 +320,14 @@ export async function GET(request: NextRequest) {
         }
       }
 
+      // Also update Google Sheets
+      try {
+        await updateSheetStatus(orderCode, 'Đã thanh toán', true);
+        console.log('[Payment] Order status updated in Google Sheets (Simulate Success):', orderCode);
+      } catch (sheetError) {
+        console.error('Error updating Google Sheets (Simulate Success):', sheetError);
+      }
+
       console.log('Order status manually simulated to success:', orderCode);
     }
 
@@ -370,20 +386,31 @@ export async function PATCH(request: NextRequest) {
 
     // Update in-memory store
     const order = orderStore.get(orderCode);
-    if (!order) {
-      return NextResponse.json(
-        { success: false, error: 'Order not found' },
-        { status: 404 }
-      );
+    if (order) {
+      order.status = status;
+      order.updatedAt = new Date();
+      orderStore.set(orderCode, order);
+    } else {
+      console.warn(`[Payment] Order ${orderCode} not found in memory cache, proceeding with DB/Sheet update only`);
     }
 
-    order.status = status;
-    order.updatedAt = new Date();
-    orderStore.set(orderCode, order);
+    // Update Google Sheets
+    try {
+      const sheetStatus = status === 'success' ? 'Đã thanh toán' : status;
+      const includeTime = status === 'success';
+      await updateSheetStatus(orderCode, sheetStatus, includeTime);
+      console.log(`[Payment] Order status manually updated in Google Sheets: ${orderCode} -> ${sheetStatus} (includeTime: ${includeTime})`);
+    } catch (sheetError) {
+      console.error('Error updating Google Sheets (PATCH):', sheetError);
+    }
 
     console.log('Order status manually updated:', { orderCode, status });
 
-    return NextResponse.json({ success: true, order });
+    return NextResponse.json({
+      success: true,
+      order: order || null,
+      warning: order ? undefined : 'Order not found in memory cache; updated database/sheet only',
+    });
   } catch (error) {
     console.error('Error updating order status:', error);
     return NextResponse.json(

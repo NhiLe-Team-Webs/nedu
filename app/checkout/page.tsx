@@ -198,7 +198,21 @@ export default function CheckoutPage() {
   const handlePaymentComplete = () => {
     // Clear cart and redirect to success page
     clearCart();
-    router.push('/payment-success?status=success&paymentMethod=sepay');
+
+    const params = new URLSearchParams({
+      status: 'success',
+      paymentMethod: 'sepay',
+    });
+
+    if (sepayPaymentData?.orderCode) {
+      params.set('orderCode', sepayPaymentData.orderCode);
+    }
+
+    if (typeof sepayPaymentData?.amount === 'number') {
+      params.set('amount', String(sepayPaymentData.amount));
+    }
+
+    router.push(`/payment-success?${params.toString()}`);
   };
 
   const handlePaymentFailed = () => {

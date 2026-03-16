@@ -43,6 +43,16 @@ export async function POST(request: NextRequest) {
     }
 
     const body: SePayWebhookPayload = await request.json();
+    console.log('[Webhook] request body summary:', {
+      orderCode: body.orderCode,
+      code: body.code,
+      status: body.status,
+      transferType: body.transferType,
+      transferAmount: body.transferAmount,
+      transactionDate: body.transactionDate,
+      transactionId: body.transactionId,
+      referenceCode: body.referenceCode,
+    });
     logSePayDebug('Webhook received', body);
 
     // Get source IP for audit
@@ -104,6 +114,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    orderCode = orderCode.trim();
+    console.log(`[Webhook] Received orderCode=${orderCode}`);
+
     // Determine payment status
     let paymentStatus: 'pending' | 'success' | 'failed' = 'pending';
 
@@ -120,6 +133,7 @@ export async function POST(request: NextRequest) {
     }
 
     logSePayDebug('Payment status determined', { orderCode, paymentStatus, transferAmount: body.transferAmount });
+    console.log(`[Webhook] extracted orderCode=${orderCode}, mapped paymentStatus=${paymentStatus}, raw status=${body.status || ''}`);
 
     // Update database if configured
     let dbOrderId: number | null = null;
@@ -214,9 +228,20 @@ export async function POST(request: NextRequest) {
 
     // Update Google Sheet
     if (paymentStatus === 'success') {
-      await updateSheetStatus(orderCode, 'Đã thanh toán', body.transferAmount);
+      console.log(`[Webhook] calling updateSheetStatus for success, orderCode=${orderCode}`);
+      const sheetUpdated = await updateSheetStatus(
+        orderCode,
+        'Đã thanh toán',
+        true, // includeTime
+        body.transferAmount
+      );
+      console.log(`[Webhook] updateSheetStatus success result for orderCode=${orderCode}: ${sheetUpdated}`);
     } else if (paymentStatus === 'failed') {
-      await updateSheetStatus(orderCode, 'Thanh toán thất bại');
+      console.log(`[Webhook] calling updateSheetStatus for failed, orderCode=${orderCode}`);
+      const sheetUpdated = await updateSheetStatus(orderCode, 'Thanh toán thất bại');
+      console.log(`[Webhook] updateSheetStatus failed result for orderCode=${orderCode}: ${sheetUpdated}`);
+    } else {
+      console.log(`[Webhook] skipped updateSheetStatus because paymentStatus=${paymentStatus}, orderCode=${orderCode}`);
     }
 
     // Update in-memory store
