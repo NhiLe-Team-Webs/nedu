@@ -731,8 +731,8 @@ export const vi = {
                 content: "Sau 30 ngày, bạn hình thành được thói quen quản lý tiền rõ ràng và thực tế, đủ để duy trì lâu dài. Tiền bạc trở nên gọn gàng hơn, áp lực tài chính giảm đi, và bạn chủ động hơn trong các quyết định chi tiêu hàng ngày."
             },
             time_label: "THỜI GIAN DIỄN RA",
-            students_label: "SỐ LƯỢNG HỌC VIÊN",
-            students_count: "99 người",
+            students_label: "30 VIDEO BÀI TẬP",
+            students_count: "Mỗi ngày thực hành 1 bài tập",
             location_label: "ĐỊA ĐIỂM",
             location_value: "Online qua Zoom"
         },

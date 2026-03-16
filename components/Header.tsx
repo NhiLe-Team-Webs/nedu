@@ -48,7 +48,7 @@ const Header = () => {
 
   return (
     <header className="fixed inset-x-0 top-0 z-[100] backdrop-blur-sm">
-      <div className="w-full flex justify-between gap-2 sm:gap-4 px-2.5 sm:px-4 items-center h-10 sm:h-12 md:h-14 bg-white/95 shadow-lg transition-all duration-300">
+      <div className="w-full flex justify-between gap-2 sm:gap-3 px-3 sm:px-6 items-center h-[3.25rem] sm:h-[3.75rem] md:h-[4.5rem] bg-white/95 shadow-lg transition-all duration-300">
         {/* Logo */}
         <div className="flex items-center">
           <Link href="/" className="flex items-center transform transition-all duration-200 hover:scale-105 active:scale-95">
@@ -57,18 +57,18 @@ const Header = () => {
               alt="N-Edu Logo"
               width={227}
               height={57}
-              className="w-14 sm:w-20 md:w-24 h-4 sm:h-6 md:h-7 object-contain cursor-pointer transition-all duration-200 hover:drop-shadow-lg"
+              className="w-20 sm:w-24 md:w-32 h-6 sm:h-7 md:h-9 object-contain cursor-pointer transition-all duration-200 hover:drop-shadow-lg"
             />
           </Link>
         </div>
 
         {/* center column: nav centered by grid */}
-        <nav className="hidden md:flex justify-center items-center gap-4 lg:gap-8 flex-1 font-semibold">
+        <nav className="hidden md:flex justify-center items-center gap-5 lg:gap-9 flex-1 font-semibold">
           <Link
             href="/"
             className={`relative transition-all duration-200 transform hover:scale-105 active:scale-95 ${isActive("/")
-                ? "text-amber-400 font-semibold uppercase tracking-wide text-xs lg:text-sm"
-                : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-xs lg:text-sm"
+                ? "text-amber-400 font-semibold uppercase tracking-wide text-[13px] lg:text-[15px]"
+                : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-[13px] lg:text-[15px]"
               }`}
           >
             {t("header.home")}
@@ -81,7 +81,7 @@ const Header = () => {
             href="https://nhi.sg"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-600 hover:text-amber-400 uppercase tracking-wide text-xs lg:text-sm transition-all duration-200 transform hover:scale-105 active:scale-95 relative"
+            className="text-gray-600 hover:text-amber-400 uppercase tracking-wide text-[13px] lg:text-[15px] transition-all duration-200 transform hover:scale-105 active:scale-95 relative"
           >
             {t("header.about")}
             <span className="absolute bottom-0 left-0 w-full h-0.5 bg-amber-400 transform scale-x-0 transition-transform duration-200 hover:scale-x-100"></span>
@@ -90,8 +90,8 @@ const Header = () => {
           <Link
             href="/program"
             className={`relative transition-all duration-200 transform hover:scale-105 active:scale-95 ${isActive("/program")
-                ? "text-amber-400 font-semibold uppercase tracking-wide text-xs lg:text-sm"
-                : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-xs lg:text-sm"
+                ? "text-amber-400 font-semibold uppercase tracking-wide text-[13px] lg:text-[15px]"
+                : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-[13px] lg:text-[15px]"
               }`}
           >
             {t("header.courses")}
@@ -105,8 +105,8 @@ const Header = () => {
           <a
             href="/contact"
             className={`relative transition-all duration-200 transform hover:scale-105 active:scale-95 ${isActive("/contact")
-                ? "text-amber-400 font-semibold uppercase tracking-wide text-xs lg:text-sm"
-                : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-xs lg:text-sm"
+                ? "text-amber-400 font-semibold uppercase tracking-wide text-[13px] lg:text-[15px]"
+                : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-[13px] lg:text-[15px]"
               }`}
           >
             {t("header.contact")}
@@ -118,7 +118,7 @@ const Header = () => {
         </nav>
 
         {/* right column: actions aligned to the end */}
-        <div className="flex items-center justify-end gap-1.5 sm:gap-3">
+        <div className="flex items-center justify-end gap-1 sm:gap-3">
           <div className="hidden md:block">
             <LanguageToggle />
           </div>
@@ -214,7 +214,7 @@ const Header = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="fixed inset-0 bg-black/25 backdrop-blur-md z-[100] h-screen"
-              style={{ top: '80px' }}
+              style={{ top: '72px' }}
               onClick={() => setIsCartOpen(false)}
             />
             {/* Cart Dropdown */}
