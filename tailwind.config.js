@@ -25,8 +25,8 @@ module.exports = {
         'text-tertiary': '#9CA3AF',
         'border-color': '#E5E7EB',
         'background-primary': '#FFFFFF',
-        'background-secondary': '#F9FAFB',
-        'background-tertiary': '#F3F4F6',
+        'background-secondary': '#FFFFFF',
+        'background-tertiary': '#FFFFFF',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],

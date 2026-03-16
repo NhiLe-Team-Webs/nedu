@@ -21,7 +21,7 @@ const Partners = () => {
   const { t } = useLanguage();
 
   return (
-    <section id="partner" className="relative min-h-screen flex items-center justify-center bg-gradient-to-b from-background to-secondary/20">
+    <section id="partner" className="relative min-h-screen flex items-center justify-center bg-white">
       <div className="ww-section ww-section-d339226d-c645-44c1-b466-0081e70467c7" style={{ height: 'auto', zIndex: 'unset', minHeight: 'unset', maxHeight: 'unset', display: 'flex', background: 'none' }}>
         <div className="hash-anchor" id="partner"></div>
         <div className="ww-layout section-base ww-section-element" style={{ display: 'flex', flexFlow: 'column', alignItems: 'flex-start', width: '100%', maxWidth: '1280px', minWidth: 'unset', minHeight: 'unset', maxHeight: 'unset' }}>
@@ -125,7 +125,7 @@ const Partners = () => {
                     height: 'auto',
                     maxHeight: '100px',
                     minHeight: 'unset',
-                    background: 'rgba(255, 255, 255, 0.4)', // Slightly more opaque for better contrast on mobile
+                    background: 'white', // Pure white for logo containers
                     boxShadow: 'var(--shadow-ios-sm)',
                     borderRadius: 'var(--radius-ios-md)',
                     backdropFilter: 'blur(10px)',
@@ -212,7 +212,7 @@ const Partners = () => {
                     height: 'auto',
                     maxHeight: '100px',
                     minHeight: 'unset',
-                    background: 'rgba(255, 255, 255, 0.4)',
+                    background: 'white',
                     boxShadow: 'var(--shadow-ios-sm)',
                     borderRadius: 'var(--radius-ios-md)',
                     backdropFilter: 'blur(10px)',

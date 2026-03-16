@@ -194,7 +194,7 @@ const Courses: React.FC = () => {
   return (
     <section
       id="courses-section"
-      className="relative py-16 lg:py-24 bg-[#F3F4F6] overflow-x-hidden"
+      className="relative py-16 lg:py-24 bg-white overflow-x-hidden"
     >
       <div className="container px-4 mx-auto">
         {/* Header Section */}
