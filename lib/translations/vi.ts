@@ -99,11 +99,11 @@ export const vi = {
     organizers: {
         heading: "Đơn vị tổ chức và vận hành"
     },
-    // support: {
-    //     heading: "Bạn đang cần tư vấn thêm gì?",
-    //     subheading: "HÃY ĐỂ N-EDU HỖ TRỢ CHO BẠN",
-    //     placeholder: "Nhập email của bạn..."
-    // },
+    support: {
+        heading: "Bạn đang cần tư vấn thêm gì?",
+        subheading: "HÃY ĐỂ N-EDU HỖ TRỢ CHO BẠN",
+        placeholder: "Nhập email của bạn..."
+    },
     connection: {
         heading: "KẾT NỐI CÙNG N-EDU",
         subheading: "ĐỂ CẬP NHẬT THÔNG TIN MỚI NHẤT TỪ CÁC KHÓA HỌC"

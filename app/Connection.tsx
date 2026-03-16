@@ -15,7 +15,7 @@ const Connection = () => {
   const { t } = useLanguage();
 
   return (
-    <section className="py-12 bg-white" id="connection">
+    <section className="py-12 bg-background" id="connection">
       <div className="max-w-[1280px] mx-auto px-[32px]">
 
         <h3 className="z-10 text-2xl md:text-[36px] font-bold text-center text-[#F7B50C] mb-5">
@@ -29,7 +29,7 @@ const Connection = () => {
           {images.map((img, i) => (
             <div
               key={i}
-              className={`${img.cls} overflow-hidden rounded-ios-lg relative bg-white shadow-ios-sm transition-all duration-300 hover:shadow-ios-md`}
+              className={`${img.cls} overflow-hidden rounded-ios-lg relative bg-white/30 shadow-ios-sm transition-all duration-300 hover:shadow-ios-md`}
             >
               <Image
                 src={img.src}
