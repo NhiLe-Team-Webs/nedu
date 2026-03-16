@@ -37,7 +37,7 @@ const BottomTabBar = () => {
         {
             label: t("bottom_tab.cart"),
             icon: ShoppingCart,
-            href: "/cart",
+            href: "/checkout",
             badge: totalItems > 0 ? totalItems : null,
         },
     ];

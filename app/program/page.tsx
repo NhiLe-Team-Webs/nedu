@@ -150,13 +150,21 @@ export default function ProgramPage() {
 
     // Add to cart
     addToCart(course);
-    toast.success(`${t(course.title)} ${t("program_page.toast.added_to_cart")}`, {
+    toast.success(
+      <div className="flex items-center min-h-[20px]">
+        <p className="text-sm font-semibold text-gray-900 leading-none m-0">
+          Nhấn vào đây để thanh toán
+        </p>
+      </div>,
+      {
       position: "bottom-right",
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
+      onClick: () => router.push('/checkout'),
+      className: "!cursor-pointer"
     });
   };
 
@@ -221,7 +229,7 @@ export default function ProgramPage() {
         pauseOnHover
         closeButton={false}
         className="!bottom-4 !right-4 md:!bottom-8 md:!right-8"
-        toastClassName="!w-[calc(100vw-2rem)] md:!w-auto !max-w-md !mx-4 md:!mx-0 !rounded-xl overflow-hidden"
+        toastClassName="!w-[calc(100vw-2rem)] md:!w-auto !max-w-md !mx-4 md:!mx-0 !rounded-xl overflow-hidden [&_.Toastify__toast-body]:!items-center [&_.Toastify__toast-icon]:!self-center"
       />
       <section className="bg-background overflow-hidden">
         <div className="container max-w-7xl mx-auto px-4">
