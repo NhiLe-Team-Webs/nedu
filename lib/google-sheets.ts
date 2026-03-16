@@ -202,19 +202,25 @@ export const updateSheetStatus = async (orderCode: string, newStatus: string, in
 
         if (row) {
             console.log(`[Sheet] Current row status: "${row.get('Status')}", updating to: "${newStatus}"`);
-            const updateData: Record<string, string> = {
-                Status: newStatus,
-            };
+            row.set('Status', newStatus);
 
-            if (includeTime) {
-                const payTime = getVietnameseTimestamp();
-                console.log(`[Sheet] Explicitly setting Payment Time to: ${payTime}`);
-                updateData['Payment Time'] = payTime;
+            const normalizedStatus = (newStatus || '').trim().toLowerCase();
+            const shouldSetPaymentTime =
+                includeTime ||
+                normalizedStatus === 'đã thanh toán' ||
+                normalizedStatus === 'da thanh toan' ||
+                normalizedStatus === 'success' ||
+                normalizedStatus === 'completed';
+
+            if (shouldSetPaymentTime) {
+                const payTime = getPaymentTimeNow();
+                console.log(`[Sheet] Setting Payment Time to: ${payTime}`);
+                row.set('Payment Time', payTime);
             }
 
-            console.log('[Sheet] Applying update data:', updateData);
-            // setValues is the most reliable way to update multiple columns in v4
-            row.setValues(updateData);
+            if (typeof amountReceived === 'number' && Number.isFinite(amountReceived) && amountReceived > 0) {
+                row.set('Amount', String(amountReceived));
+            }
             
             await row.save();
             console.log(`[Sheet] Successfully updated row for ${normalizedOrderCode}`);

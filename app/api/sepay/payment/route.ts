@@ -386,16 +386,13 @@ export async function PATCH(request: NextRequest) {
 
     // Update in-memory store
     const order = orderStore.get(orderCode);
-    if (!order) {
-      return NextResponse.json(
-        { success: false, error: 'Order not found' },
-        { status: 404 }
-      );
+    if (order) {
+      order.status = status;
+      order.updatedAt = new Date();
+      orderStore.set(orderCode, order);
+    } else {
+      console.warn(`[Payment] Order ${orderCode} not found in memory cache, proceeding with DB/Sheet update only`);
     }
-
-    order.status = status;
-    order.updatedAt = new Date();
-    orderStore.set(orderCode, order);
 
     // Update Google Sheets
     try {
@@ -409,7 +406,11 @@ export async function PATCH(request: NextRequest) {
 
     console.log('Order status manually updated:', { orderCode, status });
 
-    return NextResponse.json({ success: true, order });
+    return NextResponse.json({
+      success: true,
+      order: order || null,
+      warning: order ? undefined : 'Order not found in memory cache; updated database/sheet only',
+    });
   } catch (error) {
     console.error('Error updating order status:', error);
     return NextResponse.json(

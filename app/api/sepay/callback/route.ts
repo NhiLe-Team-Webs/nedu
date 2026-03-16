@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { SEPAY_CONFIG } from '@/lib/sepay-config';
+import { updateSheetStatus } from '@/lib/google-sheets';
 
 export async function GET(request: NextRequest) {
   try {
@@ -34,6 +35,21 @@ export async function GET(request: NextRequest) {
       status === 'SUCCESS';
 
     console.log('[Callback] mapped success status:', { isSuccess, rawStatus: status });
+
+    // Fallback: when webhook is delayed/unreachable, still update sheet from callback data.
+    if (isSuccess && orderCode) {
+      const parsedAmount = amount ? Number(amount) : undefined;
+      const safeAmount = typeof parsedAmount === 'number' && Number.isFinite(parsedAmount) && parsedAmount > 0
+        ? parsedAmount
+        : undefined;
+
+      try {
+        const sheetUpdated = await updateSheetStatus(orderCode, 'Đã thanh toán', true, safeAmount);
+        console.log('[Callback] updateSheetStatus result:', { orderCode, sheetUpdated });
+      } catch (sheetError) {
+        console.error('[Callback] Failed to update sheet status:', sheetError);
+      }
+    }
 
     redirectUrl.searchParams.set('paymentMethod', 'sepay');
 

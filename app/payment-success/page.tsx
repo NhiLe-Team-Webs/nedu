@@ -82,6 +82,23 @@ function PaymentSuccessContent() {
 
     const checkPaymentStatus = async () => {
       try {
+        const markOrderPaid = async (orderCode: string) => {
+          try {
+            await fetch('/api/sepay/payment', {
+              method: 'PATCH',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                orderCode,
+                status: 'success',
+              }),
+            })
+          } catch (error) {
+            console.error('Error marking order as paid:', error)
+          }
+        }
+
         // Get payment method (SePay or VNPay)
         const paymentMethod = searchParams.get('paymentMethod')
         const programId = searchParams.get('programId')
@@ -120,6 +137,9 @@ function PaymentSuccessContent() {
                   processedRef.current = true
                   setStatus('success')
                   setMessage('Cảm ơn bạn đã đăng ký khóa học.')
+                  if (orderCode) {
+                    await markOrderPaid(orderCode)
+                  }
                   // Optional: Verify amount matches if 'amount' param is present
                   if (amount) {
                     const expectedAmount = parseFloat(amount.toString());
@@ -159,6 +179,9 @@ function PaymentSuccessContent() {
             processedRef.current = true
             setStatus('success')
             setMessage('Cảm ơn bạn đã đăng ký khóa học.')
+            if (orderCode) {
+              await markOrderPaid(orderCode)
+            }
 
             // Clear the cart after successful payment
             clearCart()
