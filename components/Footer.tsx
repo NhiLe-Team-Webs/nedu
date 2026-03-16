@@ -9,7 +9,7 @@ const Footer = () => {
   const { t } = useLanguage();
 
   return (
-    <footer className="bg-[#4F4F4F] text-white rounded-t-[32px] mt-10 pb-32 sm:pb-12 ios-safe-padding-bottom overflow-hidden relative z-0">
+    <footer className="bg-[#4F4F4F] text-white mt-10 pb-32 sm:pb-12 ios-safe-padding-bottom overflow-hidden relative z-0">
       <div className="container mx-auto px-6 lg:px-16 pt-12 pb-8">
         {/* Upper Footer */}
         <div className="flex flex-col lg:flex-row justify-between items-start gap-10 lg:gap-12">
@@ -69,16 +69,6 @@ const Footer = () => {
             <Link href="/guide-payment" className="hover:text-primary transition-colors">{t("footer.payment_guide")}</Link>
             <Link href="/policy" className="hover:text-primary transition-colors">{t("footer.privacy_policy")}</Link>
             <Link href="/terms" className="hover:text-primary transition-colors">{t("footer.terms_of_use")}</Link>
-          </div>
-          <div className="flex items-center gap-3 px-4 py-2 bg-white/5 rounded-full border border-white/10">
-            <Image
-              src="/sepay.png"
-              alt="Sepay"
-              width={24}
-              height={24}
-              className="w-6 h-6 object-contain"
-            />
-            <span className="font-medium text-gray-300 text-xs">{t("footer.payment_partner")}</span>
           </div>
         </div>
       </div>

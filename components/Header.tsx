@@ -127,7 +127,7 @@ const Header = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden inline-flex items-center justify-center h-10 w-10 text-text-secondary hover:text-primary relative transition-all duration-200 transform hover:scale-110 active:scale-95 overflow-visible"
+            className="md:hidden inline-flex items-center justify-center h-9 w-9 text-text-secondary hover:text-primary relative transition-all duration-200 transform hover:scale-110 active:scale-95 overflow-visible"
             onClick={() => setShowNotification(true)}
             aria-label="Thông báo"
           >
@@ -137,14 +137,14 @@ const Header = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="inline-flex items-center justify-center gap-2 h-10 w-10 sm:h-10 sm:w-10 text-text-secondary hover:text-primary relative transition-all duration-200 transform hover:scale-110 active:scale-95 overflow-visible"
+            className="inline-flex items-center justify-center gap-2 h-9 w-9 sm:h-9 sm:w-9 text-text-secondary hover:text-primary relative transition-all duration-200 transform hover:scale-110 active:scale-95 overflow-visible"
             onClick={() => router.push('/checkout')}
             aria-label="Giỏ hàng"
             data-cart-trigger
           >
             <ShoppingCart className="h-5 w-5 sm:h-5 sm:w-5 transition-all duration-200" />
             {totalItems > 0 && (
-              <span className="absolute -top-1 -right-1 bg-warning text-white text-xs rounded-full h-4 w-4 sm:h-5 sm:w-5 flex items-center justify-center font-bold animate-pulse">
+              <span className="absolute -top-1 -right-1 bg-warning text-white text-[10px] rounded-full h-5 w-5 sm:h-5 sm:w-5 flex items-center justify-center font-bold animate-pulse">
                 {totalItems}
               </span>
             )}
@@ -153,7 +153,7 @@ const Header = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden inline-flex items-center justify-center h-10 w-10 text-text-secondary hover:text-primary transition-all duration-200"
+            className="md:hidden inline-flex items-center justify-center h-9 w-9 text-text-secondary hover:text-primary transition-all duration-200"
             onClick={() => setIsMobileMenuOpen(true)}
             aria-label="Menu"
           >

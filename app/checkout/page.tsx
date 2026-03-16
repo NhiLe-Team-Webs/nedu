@@ -217,17 +217,19 @@ export default function CheckoutPage() {
 
   if (items.length === 0) {
     return (
-      <div className="min-h-screen bg-background-secondary py-12">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <div className="text-center py-16">
-            <h1 className="text-3xl font-bold mb-4 text-text-primary">{t("cart.empty_title")}</h1>
-            <Link
-              href="/program"
-              className="btn-primary"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              {t("cart.continue_browsing")}
-            </Link>
+      <div className="override-header-spacing">
+        <div className="min-h-screen bg-background-secondary py-12">
+          <div className="container mx-auto px-4 max-w-4xl">
+            <div className="text-center py-16">
+              <h1 className="text-3xl font-bold mb-4 text-text-primary">{t("cart.empty_title")}</h1>
+              <Link
+                href="/program"
+                className="btn-primary"
+              >
+                <ArrowLeft className="w-5 h-5" />
+                {t("cart.continue_browsing")}
+              </Link>
+            </div>
           </div>
         </div>
       </div>
@@ -235,8 +237,9 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F2F2F7] py-8 sm:py-12 ios-safe-padding-bottom">
-      <div className="container mx-auto px-3 sm:px-4 max-w-6xl">
+    <div className="override-header-spacing">
+      <div className="min-h-screen bg-[#F2F2F7] pt-8 sm:pt-12 pb-8 sm:pb-12">
+        <div className="container mx-auto px-3 sm:px-4 max-w-6xl">
         <div className="mb-6 sm:mb-8">
           <Link
             href="/cart"
@@ -290,7 +293,7 @@ export default function CheckoutPage() {
                             <button
                               type="button"
                               onClick={() => removeFromCart(item.id)}
-                              className="h-8 w-8 rounded-full flex items-center justify-center text-text-secondary hover:text-red-500 hover:bg-red-50 transition-colors shrink-0"
+                              className="h-8 w-8 rounded-full flex items-center justify-center text-red-500 hover:text-red-600 hover:bg-red-50 transition-colors shrink-0"
                               aria-label={`Xóa ${t(item.title)} khỏi giỏ hàng`}
                             >
                               <Trash2 className="w-4 h-4" />
@@ -589,7 +592,8 @@ export default function CheckoutPage() {
           </>
         )
         }
-      </div >
-    </div >
+        </div>
+      </div>
+    </div>
   );
 }
