@@ -48,7 +48,7 @@ const Header = () => {
 
   return (
     <header className="fixed inset-x-0 top-0 z-[100] backdrop-blur-sm">
-      <div className="w-full flex justify-between gap-2 sm:gap-4 px-3 sm:px-6 items-center h-14 sm:h-16 md:h-20 bg-white/95 shadow-lg transition-all duration-300">
+      <div className="w-full flex justify-between gap-2 sm:gap-4 px-2.5 sm:px-4 items-center h-10 sm:h-12 md:h-14 bg-white/95 shadow-lg transition-all duration-300">
         {/* Logo */}
         <div className="flex items-center">
           <Link href="/" className="flex items-center transform transition-all duration-200 hover:scale-105 active:scale-95">
@@ -57,18 +57,18 @@ const Header = () => {
               alt="N-Edu Logo"
               width={227}
               height={57}
-              className="w-20 sm:w-28 md:w-36 h-6 sm:h-8 md:h-10 object-contain cursor-pointer transition-all duration-200 hover:drop-shadow-lg"
+              className="w-14 sm:w-20 md:w-24 h-4 sm:h-6 md:h-7 object-contain cursor-pointer transition-all duration-200 hover:drop-shadow-lg"
             />
           </Link>
         </div>
 
         {/* center column: nav centered by grid */}
-        <nav className="hidden md:flex justify-center items-center gap-6 lg:gap-12 flex-1 font-semibold">
+        <nav className="hidden md:flex justify-center items-center gap-4 lg:gap-8 flex-1 font-semibold">
           <Link
             href="/"
             className={`relative transition-all duration-200 transform hover:scale-105 active:scale-95 ${isActive("/")
-              ? "text-amber-400 font-semibold uppercase tracking-wide text-sm lg:text-base"
-              : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-sm lg:text-base"
+                ? "text-amber-400 font-semibold uppercase tracking-wide text-xs lg:text-sm"
+                : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-xs lg:text-sm"
               }`}
           >
             {t("header.home")}
@@ -81,7 +81,7 @@ const Header = () => {
             href="https://nhi.sg"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-600 hover:text-amber-400 uppercase tracking-wide text-sm lg:text-base transition-all duration-200 transform hover:scale-105 active:scale-95 relative"
+            className="text-gray-600 hover:text-amber-400 uppercase tracking-wide text-xs lg:text-sm transition-all duration-200 transform hover:scale-105 active:scale-95 relative"
           >
             {t("header.about")}
             <span className="absolute bottom-0 left-0 w-full h-0.5 bg-amber-400 transform scale-x-0 transition-transform duration-200 hover:scale-x-100"></span>
@@ -90,8 +90,8 @@ const Header = () => {
           <Link
             href="/program"
             className={`relative transition-all duration-200 transform hover:scale-105 active:scale-95 ${isActive("/program")
-              ? "text-amber-400 font-semibold uppercase tracking-wide text-sm lg:text-base"
-              : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-sm lg:text-base"
+                ? "text-amber-400 font-semibold uppercase tracking-wide text-xs lg:text-sm"
+                : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-xs lg:text-sm"
               }`}
           >
             {t("header.courses")}
@@ -105,8 +105,8 @@ const Header = () => {
           <a
             href="/contact"
             className={`relative transition-all duration-200 transform hover:scale-105 active:scale-95 ${isActive("/contact")
-              ? "text-amber-400 font-semibold uppercase tracking-wide text-sm lg:text-base"
-              : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-sm lg:text-base"
+                ? "text-amber-400 font-semibold uppercase tracking-wide text-xs lg:text-sm"
+                : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-xs lg:text-sm"
               }`}
           >
             {t("header.contact")}
@@ -118,7 +118,7 @@ const Header = () => {
         </nav>
 
         {/* right column: actions aligned to the end */}
-        <div className="flex items-center justify-end gap-1 sm:gap-4">
+        <div className="flex items-center justify-end gap-1.5 sm:gap-3">
           <div className="hidden md:block">
             <LanguageToggle />
           </div>
@@ -127,7 +127,7 @@ const Header = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden inline-flex items-center justify-center h-10 w-10 text-text-secondary hover:text-primary relative transition-all duration-200 transform hover:scale-110 active:scale-95 overflow-visible"
+            className="md:hidden inline-flex items-center justify-center h-9 w-9 text-text-secondary hover:text-primary relative transition-all duration-200 transform hover:scale-110 active:scale-95 overflow-visible"
             onClick={() => setShowNotification(true)}
             aria-label="Thông báo"
           >
@@ -137,14 +137,14 @@ const Header = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="inline-flex items-center justify-center gap-2 h-10 w-10 sm:h-10 sm:w-10 text-text-secondary hover:text-primary relative transition-all duration-200 transform hover:scale-110 active:scale-95 overflow-visible"
+            className="inline-flex items-center justify-center gap-2 h-9 w-9 sm:h-9 sm:w-9 text-text-secondary hover:text-primary relative transition-all duration-200 transform hover:scale-110 active:scale-95 overflow-visible"
             onClick={() => router.push('/checkout')}
             aria-label="Giỏ hàng"
             data-cart-trigger
           >
             <ShoppingCart className="h-5 w-5 sm:h-5 sm:w-5 transition-all duration-200" />
             {totalItems > 0 && (
-              <span className="absolute -top-1 -right-1 bg-warning text-white text-xs rounded-full h-4 w-4 sm:h-5 sm:w-5 flex items-center justify-center font-bold animate-pulse">
+              <span className="absolute -top-1 -right-1 bg-warning text-white text-[10px] rounded-full h-5 w-5 sm:h-5 sm:w-5 flex items-center justify-center font-bold animate-pulse">
                 {totalItems}
               </span>
             )}
@@ -153,7 +153,7 @@ const Header = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden inline-flex items-center justify-center h-10 w-10 text-text-secondary hover:text-primary transition-all duration-200"
+            className="md:hidden inline-flex items-center justify-center h-9 w-9 text-text-secondary hover:text-primary transition-all duration-200"
             onClick={() => setIsMobileMenuOpen(true)}
             aria-label="Menu"
           >
