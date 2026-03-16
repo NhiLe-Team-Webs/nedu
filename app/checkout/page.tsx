@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Tag, ShoppingCart } from 'lucide-react';
+import { ArrowLeft, Tag, ShoppingCart, Minus, Plus, Trash2 } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
 import { useRouter } from 'next/navigation';
 import { preparePaymentData, sendPaymentRequest, handlePaymentResponse, currencyFormatter, sendSePayPaymentRequest, prepareSePayPaymentData } from '@/lib/payment-utils';
@@ -15,7 +15,7 @@ import { getCourseDetailBySlug } from '@/lib/services/courseService';
 export default function CheckoutPage() {
   const { t } = useLanguage();
   const router = useRouter();
-  const { items, getTotalPrice, clearCart } = useCart();
+  const { items, getTotalPrice, clearCart, removeFromCart, updateQuantity } = useCart();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -285,11 +285,39 @@ export default function CheckoutPage() {
                         />
 
                         <div className="flex-1 flex flex-col justify-center">
-                          <h3 className="text-lg font-bold mb-1 text-text-primary">{t(item.title)}</h3>
+                          <div className="flex items-start justify-between gap-3 mb-1">
+                            <h3 className="text-lg font-bold text-text-primary">{t(item.title)}</h3>
+                            <button
+                              type="button"
+                              onClick={() => removeFromCart(item.id)}
+                              className="h-8 w-8 rounded-full flex items-center justify-center text-text-secondary hover:text-red-500 hover:bg-red-50 transition-colors shrink-0"
+                              aria-label={`Xóa ${t(item.title)} khỏi giỏ hàng`}
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
                           <p className="text-text-secondary mb-2 text-sm">{item.category.map(c => t(c)).join(', ')}</p>
                           <div className="flex items-center justify-between mt-auto">
-                            <div>
-                              <span className="text-text-secondary text-sm font-medium bg-gray-100 px-2 py-1 rounded-md">x{item.quantity}</span>
+                            <div className="inline-flex items-center rounded-lg border border-gray-200 bg-white overflow-hidden h-9">
+                              <button
+                                type="button"
+                                onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                className="h-full w-9 flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-gray-50 transition-colors"
+                                aria-label={`Giảm số lượng ${t(item.title)}`}
+                              >
+                                <Minus className="w-3.5 h-3.5" />
+                              </button>
+                              <span className="h-full min-w-[2.25rem] px-2 flex items-center justify-center text-sm font-semibold text-text-primary border-x border-gray-200">
+                                {item.quantity}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                className="h-full w-9 flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-gray-50 transition-colors"
+                                aria-label={`Tăng số lượng ${t(item.title)}`}
+                              >
+                                <Plus className="w-3.5 h-3.5" />
+                              </button>
                             </div>
                             <div className="price text-lg font-bold text-primary">
                               {item.price.currency === 'VNĐ'

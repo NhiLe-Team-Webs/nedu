@@ -138,7 +138,7 @@ const Header = () => {
             variant="ghost"
             size="icon"
             className="inline-flex items-center justify-center gap-2 h-10 w-10 sm:h-10 sm:w-10 text-text-secondary hover:text-primary relative transition-all duration-200 transform hover:scale-110 active:scale-95 overflow-visible"
-            onClick={() => setIsCartOpen(!isCartOpen)}
+            onClick={() => router.push('/checkout')}
             aria-label="Giỏ hàng"
             data-cart-trigger
           >
@@ -234,7 +234,7 @@ const Header = () => {
                         <div className="flex justify-between items-center mb-6">
                           <h3 className="text-2xl font-semibold">{t("cart.title")}</h3>
                           <Link
-                            href="/cart"
+                            href="/checkout"
                             className="inline-flex items-center justify-center whitespace-nowrap ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 bg-primary hover:bg-primary-dark !text-white transition-all rounded-full px-4 py-2 text-sm font-semibold"
                             onClick={() => setIsCartOpen(false)}
                           >
