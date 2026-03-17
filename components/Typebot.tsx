@@ -87,7 +87,7 @@ export default function Typebot() {
             {/* Floating Button */}
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                    className="fixed bottom-0 right-0 md:bottom-0 md:right-0 translate-x-[12%] translate-y-[12%] w-[9rem] h-[10rem] md:w-[15rem] md:h-[15rem] bg-transparent hover:scale-105 active:scale-95 transition-transform z-[9999] flex items-center justify-center overflow-visible"
+                    className="fixed bottom-0 right-0 md:bottom-0 md:right-0 translate-x-[12%] translate-y-[12%] w-[9rem] h-[10rem] md:w-[12rem] md:h-[12rem] bg-transparent hover:scale-105 active:scale-95 transition-transform z-[9999] flex items-center justify-center overflow-visible"
                 aria-label={isOpen ? 'Close chat' : 'Open chat'}
             >
                 {/* Layer 1: Mascot image */}
@@ -197,7 +197,7 @@ export default function Typebot() {
                                 boxShadow: 'inset 0 10px 14px rgba(0,0,0,0.4), 0 6px 10px -3px rgba(0,0,0,0.2)',
                                 transformOrigin: 'center',
                                 opacity: isOpen ? 1 : 0,
-                                transform: isOpen ? 'scaleY(1) scaleX(1)' : 'scaleY(0.1) scaleX(0.5)',
+                                transform: isOpen ? 'scaleY(0.82) scaleX(0.86)' : 'scaleY(0.1) scaleX(0.5)',
                                 transition: isOpen
                                     ? 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)'
                                     : 'all 0.25s ease-out',
@@ -207,8 +207,8 @@ export default function Typebot() {
                             <div
                                 className="absolute left-1/2 -translate-x-1/2"
                                 style={{
-                                    width: '78%',
-                                    height: '72%',
+                                    width: isOpen ? '68%' : '78%',
+                                    height: isOpen ? '64%' : '72%',
                                     borderRadius: '70px 70px 0 0',
                                     backgroundColor: '#ef4435',
                                     boxShadow: 'inset 0 8px 12px -5px rgba(0,0,0,0.3)',
