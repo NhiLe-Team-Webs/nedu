@@ -4,9 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { MessageCircle, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const BASE_MASCOT_IMAGE_SRC = '/opinion3-base.png';
-const GLASSES_OVERLAY_IMAGE_SRC = '/opinion3-glasses.png';
-const FALLBACK_MASCOT_IMAGE_SRC = '/opinion3.png';
+const MASCOT_IMAGE_SRC = '/opinion3.png';
 
 const EYE_SLOTS = [
     { x: '31.2%', y: '38%' },
@@ -29,9 +27,7 @@ const Z_LAYERS = {
 
 export default function Typebot() {
     const [isOpen, setIsOpen] = useState(false);
-    const [baseImageError, setBaseImageError] = useState(false);
-    const [fallbackImageError, setFallbackImageError] = useState(false);
-    const [frameImageError, setFrameImageError] = useState(false);
+    const [imageError, setImageError] = useState(false);
     const eyeRefs = useRef<Array<HTMLDivElement | null>>([]);
     const pupilRefs = useRef<Array<HTMLDivElement | null>>([]);
 
@@ -69,33 +65,20 @@ export default function Typebot() {
             });
         };
 
-        const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
-        if (isCoarsePointer) {
-            resetPupils();
-            return;
-        }
-
-        const handleMouseMove = (event: MouseEvent) => {
+        const handlePointerMove = (event: PointerEvent) => {
             updatePupils(event.clientX, event.clientY);
         };
 
-        const handleTouchMove = (event: TouchEvent) => {
-            if (event.touches.length < 1) return;
-            updatePupils(event.touches[0].clientX, event.touches[0].clientY);
-        };
-
-        const handleMouseLeaveWindow = () => {
+        const handlePointerLeave = () => {
             resetPupils();
         };
 
-        window.addEventListener('mousemove', handleMouseMove, { passive: true });
-        window.addEventListener('touchmove', handleTouchMove, { passive: true });
-        document.addEventListener('mouseleave', handleMouseLeaveWindow);
+        window.addEventListener('pointermove', handlePointerMove, { passive: true });
+        document.addEventListener('pointerleave', handlePointerLeave);
 
         return () => {
-            window.removeEventListener('mousemove', handleMouseMove);
-            window.removeEventListener('touchmove', handleTouchMove);
-            document.removeEventListener('mouseleave', handleMouseLeaveWindow);
+            window.removeEventListener('pointermove', handlePointerMove);
+            document.removeEventListener('pointerleave', handlePointerLeave);
         };
     }, []);
 
@@ -107,20 +90,13 @@ export default function Typebot() {
                     className="fixed bottom-0 right-0 md:bottom-0 md:right-0 translate-x-[12%] translate-y-[12%] w-[9rem] h-[10rem] md:w-[15rem] md:h-[15rem] bg-transparent hover:scale-105 active:scale-95 transition-transform z-[9999] flex items-center justify-center overflow-visible"
                 aria-label={isOpen ? 'Close chat' : 'Open chat'}
             >
-                {/* Layer 1: Base mascot (should be exported without old eyes/glasses) */}
-                {!baseImageError ? (
+                {/* Layer 1: Mascot image */}
+                {!imageError ? (
                     <img
-                        src={BASE_MASCOT_IMAGE_SRC}
+                        src={MASCOT_IMAGE_SRC}
                         alt="Chat mascot"
                         className={`absolute inset-0 ${Z_LAYERS.base} w-full h-full object-contain drop-shadow-[0_6px_10px_rgba(0,0,0,0.14)]`}
-                        onError={() => setBaseImageError(true)}
-                    />
-                ) : !fallbackImageError ? (
-                    <img
-                        src={FALLBACK_MASCOT_IMAGE_SRC}
-                        alt="Chat mascot"
-                        className={`absolute inset-0 ${Z_LAYERS.base} w-full h-full object-contain drop-shadow-[0_6px_10px_rgba(0,0,0,0.14)]`}
-                        onError={() => setFallbackImageError(true)}
+                        onError={() => setImageError(true)}
                     />
                 ) : (
                     <span className={`absolute inset-0 ${Z_LAYERS.base} w-full h-full bg-[#FDB913] text-white flex items-center justify-center`}>
@@ -173,14 +149,6 @@ export default function Typebot() {
                 </div>
 
                 {/* Layer 3: Glasses/frame overlay (exported transparent PNG of frame only) */}
-                {!frameImageError && (
-                    <img
-                        src={GLASSES_OVERLAY_IMAGE_SRC}
-                        aria-hidden="true"
-                        className={`absolute inset-0 ${Z_LAYERS.frame} w-full h-full object-contain pointer-events-none select-none`}
-                        onError={() => setFrameImageError(true)}
-                    />
-                )}
 
                 {/* Mouth overlay */}
                 <div className={`absolute inset-0 ${Z_LAYERS.mouth} pointer-events-none`}>
