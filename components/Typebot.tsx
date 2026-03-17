@@ -28,6 +28,7 @@ const Z_LAYERS = {
 export default function Typebot() {
     const [isOpen, setIsOpen] = useState(false);
     const [imageError, setImageError] = useState(false);
+    const [showHintBubble, setShowHintBubble] = useState(false);
     const eyeRefs = useRef<Array<HTMLDivElement | null>>([]);
     const pupilRefs = useRef<Array<HTMLDivElement | null>>([]);
 
@@ -82,8 +83,44 @@ export default function Typebot() {
         };
     }, []);
 
+    useEffect(() => {
+        const showBubble = () => {
+            setShowHintBubble(true);
+            window.setTimeout(() => {
+                setShowHintBubble(false);
+            }, 3000);
+        };
+
+        const intervalId = window.setInterval(() => {
+            if (!isOpen) {
+                showBubble();
+            }
+        }, 7000);
+
+        return () => {
+            window.clearInterval(intervalId);
+        };
+    }, [isOpen]);
+
     return (
         <>
+            <AnimatePresence>
+                {showHintBubble && !isOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 10, scale: 0.96 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 8, scale: 0.96 }}
+                        transition={{ duration: 0.24, ease: 'easeOut' }}
+                        className="fixed bottom-[2.1rem] right-[6.9rem] md:bottom-[2.5rem] md:right-[8.4rem] w-[10.5rem] md:w-[11rem] rounded-[18px] bg-white/95 px-3 py-3.5 text-[12px] md:text-[13px] font-bold leading-snug text-[#3b2a1a] shadow-[0_8px_32px_rgba(0,0,0,0.45),0_2px_8px_rgba(0,0,0,0.28)] border border-[#f1e2cb] z-[10001] pointer-events-none whitespace-normal [text-shadow:0_1px_2px_rgba(0,0,0,0.15)]"
+                        role="status"
+                        aria-live="polite"
+                    >
+                        Hãy hỏi mình nếu như bạn cần hỗ trợ nhé!
+                        <span className="absolute right-[-0.45rem] top-1/2 h-4 w-4 -translate-y-1/2 rotate-45 bg-white/95 border-t border-r border-[#f1e2cb]" />
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
             {/* Floating Button */}
             <button
                 onClick={() => setIsOpen(!isOpen)}
@@ -236,7 +273,7 @@ export default function Typebot() {
                         initial={{ opacity: 0, y: 50, scale: 0.9 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 50, scale: 0.9 }}
-                        className="fixed bottom-24 right-4 md:right-6 w-[95vw] md:w-[400px] h-[70vh] md:h-[600px] bg-white rounded-2xl shadow-2xl z-[9999] overflow-hidden border border-gray-100"
+                        className="fixed bottom-[6.75rem] right-[4.25rem] md:bottom-24 md:right-[7.5rem] w-[80vw] max-w-[300px] md:w-[360px] h-[56vh] max-h-[460px] md:h-[560px] bg-white rounded-2xl shadow-2xl z-[9998] overflow-hidden border border-gray-100"
                     >
                         <iframe
                             src="https://typebot.io/my-typebot-rz7tx5w"
