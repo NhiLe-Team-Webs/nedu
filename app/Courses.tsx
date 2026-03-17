@@ -171,6 +171,13 @@ const Courses: React.FC = () => {
     }
   ], [t, thirtyDayCourse, thirtyDayPreview.desktop, thirtyDayPreview.mobile]);
 
+  const coursesHeading = t("courses.heading");
+  const secondLineMatch = coursesHeading.match(/,\s*cho người việt/i);
+  const coursesHeadingLine1 = secondLineMatch
+    ? `${coursesHeading.slice(0, secondLineMatch.index).trim()},`
+    : coursesHeading;
+  const coursesHeadingLine2 = secondLineMatch ? secondLineMatch[0].replace(/^,\s*/, "") : "";
+
   if (!isMounted) return null;
 
   return (
@@ -180,9 +187,10 @@ const Courses: React.FC = () => {
     >
       <div className="container px-4 mx-auto">
         {/* Header Section */}
-        <div className="mb-12 text-center max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-5xl font-black tracking-tight text-[#F7B50C] uppercase leading-tight">
-            {t("courses.heading")}
+        <div className="text-center mx-auto">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[68px] font-black text-center text-amber-400 uppercase relative z-10 mb-8 sm:mb-10 md:mb-12">
+            <span className="block whitespace-nowrap">{coursesHeadingLine1}</span>
+            {coursesHeadingLine2 && <span className="block whitespace-nowrap">{coursesHeadingLine2}</span>}
           </h2>
         </div>
 
