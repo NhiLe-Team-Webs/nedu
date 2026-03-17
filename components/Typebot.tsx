@@ -4,17 +4,34 @@ import { useEffect, useRef, useState } from 'react';
 import { MessageCircle, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const MASCOT_IMAGE_SRC = '/onioncm.png'; // file location: public/onion.png
-const EYE_LEFT = { x: '29.5%', y: '42%' };
-const EYE_RIGHT = { x: '51.9%', y: '42%' };
+const BASE_MASCOT_IMAGE_SRC = '/opinion3-base.png';
+const GLASSES_OVERLAY_IMAGE_SRC = '/opinion3-glasses.png';
+const FALLBACK_MASCOT_IMAGE_SRC = '/opinion3.png';
+
+const EYE_SLOTS = [
+    { x: '31.2%', y: '38%' },
+    { x: '50.5%', y: '38%' },
+] as const;
 const EYE_WIDTH = '18.5%';
 const EYE_HEIGHT = '18.5%';
-const MOUTH_WRAPPER = { x: '40.6%', y: '59.8%', w: '18.7%', h: '7%' };
+const SCLERA_SCALE = 0.44;
+const PUPIL_SCALE = 0.8;
+const MAX_PUPIL_TRAVEL_RATIO = 0.36;
+const MOUTH_WRAPPER = { x: '40.6%', y: '54.8%', w: '18.7%', h: '7%' };
+
+const Z_LAYERS = {
+    base: 'z-[1]',
+    eyes: 'z-[2]',
+    frame: 'z-[3]',
+    mouth: 'z-[4]',
+    closeBadge: 'z-[5]',
+} as const;
 
 export default function Typebot() {
     const [isOpen, setIsOpen] = useState(false);
-    const [imageError, setImageError] = useState(false);
-    const buttonRef = useRef<HTMLButtonElement | null>(null);
+    const [baseImageError, setBaseImageError] = useState(false);
+    const [fallbackImageError, setFallbackImageError] = useState(false);
+    const [frameImageError, setFrameImageError] = useState(false);
     const eyeRefs = useRef<Array<HTMLDivElement | null>>([]);
     const pupilRefs = useRef<Array<HTMLDivElement | null>>([]);
 
@@ -39,7 +56,9 @@ export default function Typebot() {
                 const dy = clientY - eyeCenterY;
                 const angle = Math.atan2(dy, dx);
 
-                const maxRadius = (eye.clientWidth / 2) - (pupil.offsetWidth / 2) - 2;
+                const scleraEl = eye.firstElementChild as HTMLElement | null;
+                const scleraRadius = scleraEl ? scleraEl.clientWidth / 2 : eye.clientWidth * 0.28;
+                const maxRadius = scleraRadius * MAX_PUPIL_TRAVEL_RATIO;
                 const distanceToPointer = Math.hypot(dx, dy);
                 const pupilDistance = Math.min(distanceToPointer * 0.15, maxRadius);
 
@@ -84,88 +103,87 @@ export default function Typebot() {
         <>
             {/* Floating Button */}
             <button
-                ref={buttonRef}
                 onClick={() => setIsOpen(!isOpen)}
                     className="fixed bottom-0 right-0 md:bottom-0 md:right-0 translate-x-[12%] translate-y-[12%] w-[13rem] h-[13rem] md:w-[15rem] md:h-[15rem] bg-transparent hover:scale-105 active:scale-95 transition-transform z-[9999] flex items-center justify-center overflow-visible"
                 aria-label={isOpen ? 'Close chat' : 'Open chat'}
             >
-                {!imageError ? (
+                {/* Layer 1: Base mascot (should be exported without old eyes/glasses) */}
+                {!baseImageError ? (
                     <img
-                        src={MASCOT_IMAGE_SRC}
+                        src={BASE_MASCOT_IMAGE_SRC}
                         alt="Chat mascot"
-                        className="absolute inset-0 z-[1] w-full h-full object-contain drop-shadow-[0_6px_10px_rgba(0,0,0,0.14)]"
-                        style={{
-                            // Soft alpha mask to remove square/light panel feeling from non-transparent source.
-                            WebkitMaskImage: 'radial-gradient(circle at 50% 42%, black 56%, transparent 75%)',
-                            maskImage: 'radial-gradient(circle at 50% 42%, black 56%, transparent 75%)',
-                        }}
-                        onError={() => setImageError(true)}
+                        className={`absolute inset-0 ${Z_LAYERS.base} w-full h-full object-contain drop-shadow-[0_6px_10px_rgba(0,0,0,0.14)]`}
+                        onError={() => setBaseImageError(true)}
+                    />
+                ) : !fallbackImageError ? (
+                    <img
+                        src={FALLBACK_MASCOT_IMAGE_SRC}
+                        alt="Chat mascot"
+                        className={`absolute inset-0 ${Z_LAYERS.base} w-full h-full object-contain drop-shadow-[0_6px_10px_rgba(0,0,0,0.14)]`}
+                        onError={() => setFallbackImageError(true)}
                     />
                 ) : (
-                    <span className="absolute inset-0 z-[1] w-full h-full bg-[#FDB913] text-white flex items-center justify-center">
+                    <span className={`absolute inset-0 ${Z_LAYERS.base} w-full h-full bg-[#FDB913] text-white flex items-center justify-center`}>
                         <MessageCircle size={34} />
                     </span>
                 )}
 
-                {/* Eye overlay layer to keep pupils independent from mascot image */}
-                <div className="absolute inset-0 z-[2] pointer-events-none">
-                    <div
-                        ref={(el) => {
-                            eyeRefs.current[0] = el;
-                        }}
-                        className="absolute rounded-full bg-transparent"
-                        style={{
-                            left: EYE_LEFT.x,
-                            top: EYE_LEFT.y,
-                            width: EYE_WIDTH,
-                            height: EYE_HEIGHT,
-                        }}
-                    >
-                        <div className="absolute left-1/2 top-1/2 w-[64%] h-[64%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#fff8ea] shadow-[inset_0_-2px_0_rgba(0,0,0,0.08)] overflow-hidden">
+                {/* Layer 2: Animated eyes */}
+                <div className={`absolute inset-0 ${Z_LAYERS.eyes} pointer-events-none`}>
+                    {EYE_SLOTS.map((eye, index) => (
+                        <div
+                            key={index}
+                            ref={(el) => {
+                                eyeRefs.current[index] = el;
+                            }}
+                            className="absolute rounded-full bg-transparent"
+                            style={{
+                                left: eye.x,
+                                top: eye.y,
+                                width: EYE_WIDTH,
+                                height: EYE_HEIGHT,
+                            }}
+                        >
                             <div
-                                ref={(el) => {
-                                    pupilRefs.current[0] = el;
+                                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#fff8ea] shadow-[inset_0_-2px_0_rgba(0,0,0,0.08)] overflow-hidden"
+                                style={{
+                                    width: `${SCLERA_SCALE * 100}%`,
+                                    height: `${SCLERA_SCALE * 100}%`,
                                 }}
-                                className="absolute left-1/2 top-1/2 w-[80%] h-[80%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_38%_30%,#bf7338_0%,#8b4a23_72%,#6a3518_100%)]"
-                                style={{ transition: 'transform 0.05s linear' }}
                             >
-                                <div className="absolute left-1/2 top-1/2 w-[58%] h-[58%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#1f120c]" />
-                                <div className="absolute top-[13%] left-[17%] w-[36%] h-[36%] rounded-full bg-white/95" />
-                                <div className="absolute bottom-[17%] right-[17%] w-[15%] h-[15%] rounded-full bg-white/75" />
+                                <div
+                                    ref={(el) => {
+                                        pupilRefs.current[index] = el;
+                                    }}
+                                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_38%_30%,#bf7338_0%,#8b4a23_72%,#6a3518_100%)]"
+                                    style={{
+                                        width: `${PUPIL_SCALE * 100}%`,
+                                        height: `${PUPIL_SCALE * 100}%`,
+                                        transition: 'transform 0.08s ease-out',
+                                        willChange: 'transform',
+                                    }}
+                                >
+                                    <div className="absolute left-1/2 top-1/2 w-[58%] h-[58%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#1f120c]" />
+                                    <div className="absolute top-[13%] left-[17%] w-[36%] h-[36%] rounded-full bg-white/95" />
+                                    <div className="absolute bottom-[17%] right-[17%] w-[15%] h-[15%] rounded-full bg-white/75" />
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div
-                        ref={(el) => {
-                            eyeRefs.current[1] = el;
-                        }}
-                        className="absolute rounded-full bg-transparent"
-                        style={{
-                            left: EYE_RIGHT.x,
-                            top: EYE_RIGHT.y,
-                            width: EYE_WIDTH,
-                            height: EYE_HEIGHT,
-                        }}
-                    >
-                        <div className="absolute left-1/2 top-1/2 w-[64%] h-[64%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#fff8ea] shadow-[inset_0_-2px_0_rgba(0,0,0,0.08)] overflow-hidden">
-                            <div
-                                ref={(el) => {
-                                    pupilRefs.current[1] = el;
-                                }}
-                                className="absolute left-1/2 top-1/2 w-[80%] h-[80%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_38%_30%,#bf7338_0%,#8b4a23_72%,#6a3518_100%)]"
-                                style={{ transition: 'transform 0.05s linear' }}
-                            >
-                                <div className="absolute left-1/2 top-1/2 w-[58%] h-[58%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#1f120c]" />
-                                <div className="absolute top-[13%] left-[17%] w-[36%] h-[36%] rounded-full bg-white/95" />
-                                <div className="absolute bottom-[17%] right-[17%] w-[15%] h-[15%] rounded-full bg-white/75" />
-                            </div>
-                        </div>
-                    </div>
+                    ))}
                 </div>
 
+                {/* Layer 3: Glasses/frame overlay (exported transparent PNG of frame only) */}
+                {!frameImageError && (
+                    <img
+                        src={GLASSES_OVERLAY_IMAGE_SRC}
+                        aria-hidden="true"
+                        className={`absolute inset-0 ${Z_LAYERS.frame} w-full h-full object-contain pointer-events-none select-none`}
+                        onError={() => setFrameImageError(true)}
+                    />
+                )}
+
                 {/* Mouth overlay */}
-                <div className="absolute inset-0 z-[3] pointer-events-none">
+                <div className={`absolute inset-0 ${Z_LAYERS.mouth} pointer-events-none`}>
                     <div
                         className="absolute"
                         style={{
@@ -237,7 +255,7 @@ export default function Typebot() {
                 </div>
 
                 {isOpen && (
-                    <span className="absolute -top-1 -right-1 w-7 h-7 rounded-full bg-black/80 text-white flex items-center justify-center shadow-lg">
+                    <span className={`absolute -top-1 -right-1 w-7 h-7 rounded-full bg-black/80 text-white flex items-center justify-center shadow-lg ${Z_LAYERS.closeBadge}`}>
                         <X size={16} />
                     </span>
                 )}
