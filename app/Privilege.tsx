@@ -60,13 +60,13 @@ const Privilege = () => {
           {privileges.map((privilege, index) => (
             <div
               key={index}
-              className="bg-white rounded-ios-lg p-6 sm:p-8 shadow-ios-card border border-gray-100 hover:shadow-ios-float transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-start gap-5 transform h-full"
+              className="bg-white rounded-ios-lg p-6 sm:p-8 shadow-[0_14px_34px_rgba(15,23,42,0.08)] border-2 border-[#f5d98b] hover:border-[#f7b50c] hover:shadow-[0_18px_42px_rgba(247,181,12,0.16)] transition-all duration-300 hover:-translate-y-1 active:translate-y-0 flex items-start gap-5 h-full"
             >
-              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-500 transition-all duration-300 hover:scale-110 hover:bg-yellow-200">
+              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#fff6db] ring-1 ring-[#f3d37a] flex items-center justify-center text-[#e0a300] transition-all duration-300 hover:scale-110 hover:bg-[#ffefba]">
                 {privilege.icon}
               </div>
               <div>
-                <h3 className="font-bold text-lg text-[oklch(55.3% 0.013 58.071)] transition-all duration-200 hover:text-yellow-600">
+                <h3 className="font-bold text-lg text-[oklch(55.3% 0.013 58.071)] transition-all duration-200 hover:text-[#c88a00]">
                   {privilege.title}
                 </h3>
                 <p className="text-gray-600 transition-all duration-200 hover:text-gray-800">{privilege.description}</p>
