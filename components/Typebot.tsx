@@ -124,7 +124,7 @@ export default function Typebot() {
             {/* Floating Button */}
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                    className="fixed bottom-0 right-0 md:bottom-0 md:right-0 translate-x-[12%] translate-y-[12%] w-[9rem] h-[10rem] md:w-[12rem] md:h-[12rem] bg-transparent hover:scale-105 active:scale-95 transition-transform z-[9999] flex items-center justify-center overflow-visible"
+                    className="fixed bottom-0 right-0 md:bottom-0 md:right-0 translate-x-[12%] translate-y-[8%] w-[9rem] h-[10rem] md:w-[12rem] md:h-[12rem] bg-transparent hover:scale-105 active:scale-95 transition-transform z-[9999] flex items-center justify-center overflow-visible"
                 aria-label={isOpen ? 'Close chat' : 'Open chat'}
             >
                 {/* Layer 1: Mascot image */}

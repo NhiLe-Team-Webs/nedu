@@ -23,6 +23,7 @@ import 'swiper/css/navigation';
 interface CourseSlide {
   id: number;
   slug: string;
+  href: string;
   image: string;
   imageMobile?: string;
   date: string;
@@ -47,19 +48,19 @@ const SlideContent = ({ slide }: { slide: CourseSlide }) => {
   };
 
   return (
-    <div className="relative w-full h-full group/slide overflow-hidden">
+    <Link href={slide.href} className="relative w-full h-full overflow-hidden block brightness-100 hover:translate-y-0 translate-y-0">
       {/* Background Images */}
       <Image
         src={slide.image}
         alt={slide.title}
         fill
-        className="object-contain w-full h-full transition-transform duration-700 hidden md:block bg-white"
+        className="object-contain w-full h-full hidden md:block bg-white hover:scale-100"
       />
       <Image
         src={slide.imageMobile || slide.image}
         alt={slide.title}
         fill
-        className="object-contain w-full h-full transition-transform duration-700 md:hidden bg-white"
+        className="object-contain w-full h-full md:hidden bg-white hover:scale-100"
       />
 
       {/* Subtle Bottom Gradient for Readability */}
@@ -86,7 +87,7 @@ const SlideContent = ({ slide }: { slide: CourseSlide }) => {
         <div className="info-bottom slide-bottom flex items-center gap-4">
           <Button
             className="rounded-full bg-white text-black hover:bg-white/90 px-6 py-2.5 text-sm font-bold h-auto shrink-0 shadow-lg"
-            onClick={handleRegister}
+            onClick={(e) => { e.preventDefault(); handleRegister(e); }}
           >
             Đăng ký ngay
           </Button>
@@ -97,7 +98,7 @@ const SlideContent = ({ slide }: { slide: CourseSlide }) => {
           </p>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
@@ -135,6 +136,7 @@ const Courses: React.FC = () => {
     {
       id: 2,
       slug: "la-chinh-minh",
+      href: "/program-offline/la-chinh-minh",
       image: "/picture/la_chinh_minh.jpg",
       imageMobile: "/picture/la_chinh_minh.jpg",
       date: "5/3-8/3/2026",
@@ -144,30 +146,9 @@ const Courses: React.FC = () => {
       type: "Offline"
     },
     {
-      id: 1,
-      slug: "suc-manh-vo-han",
-      image: "/picture/suc_manh_vo_han.jpg",
-      imageMobile: "/picture/suc_manh_vo_han.jpg",
-      date: "01/04/2026",
-      title: t("courses.slides.smvh.title"),
-      label: t("courses.intro"),
-      content: t("courses.slides.smvh.content"),
-      type: "Offline"
-    },
-    {
-      id: 4,
-      slug: "thuong-hieu-cua-ban",
-      image: "/picture/thuong_hieu_cua_ban.png",
-      imageMobile: "/picture/thuong_hieu_cua_ban.png",
-      date: "01/11/2025",
-      title: t("courses.slides.thcb.title"),
-      label: t("courses.online"),
-      content: t("courses.slides.thcb.content"),
-      type: "Online"
-    },
-    {
       id: 5,
       slug: "cuoc-song-cua-ban",
+      href: "/program-online/cuoc-song-cua-ban",
       image: "/picture/cuoc_song_cua_ban.png",
       imageMobile: "/picture/cuoc_song_cua_ban.png",
       date: "01/11/2025",
@@ -179,6 +160,7 @@ const Courses: React.FC = () => {
     {
       id: 8,
       slug: "thu-thach-30-ngay",
+      href: "/program-online/thu-thach-30-ngay",
       image: thirtyDayPreview.desktop || thirtyDayCourse?.heroImage || "/picture/thuthach30day_desktop.png",
       imageMobile: thirtyDayPreview.mobile || thirtyDayCourse?.mobileImage || "/picture/thuthach30day_mobile.png",
       date: "28/12/2025 – 28/01/2026",
@@ -212,20 +194,17 @@ const Courses: React.FC = () => {
             }}
             centeredSlides={true}
             loop={true}
-            speed={800}
+            speed={600}
             autoplay={{
-              delay: 5000,
+              delay: 2500,
               disableOnInteraction: false,
-            }}
-            navigation={{
-              prevEl: '.swiper-btn-prev',
-              nextEl: '.swiper-btn-next',
+              stopOnLastSlide: false,
             }}
             pagination={{
               clickable: true,
               dynamicBullets: true,
             }}
-            modules={[Autoplay, Pagination, Navigation]}
+            modules={[Autoplay, Pagination]}
             className="!overflow-visible"
             breakpoints={{
               320: {
@@ -246,12 +225,12 @@ const Courses: React.FC = () => {
               }
             }}
           >
-            {slides.map((slide) => (
+            {[...slides, ...slides, ...slides].map((slide, index) => (
               <SwiperSlide
-                key={slide.id}
+                key={`${slide.id}-${index}`}
                 className={cn(
                   "overflow-hidden md:aspect-video aspect-[9/16] bg-white",
-                  "cursor-pointer transition-all duration-500"
+                  "cursor-pointer hover:scale-100 active:scale-100"
                 )}
               >
                 <SlideContent slide={slide} />
@@ -260,12 +239,12 @@ const Courses: React.FC = () => {
           </Swiper>
 
           {/* Navigation Buttons - Visible on all devices */}
-          <button className="swiper-btn-prev absolute left-1 md:left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 md:w-16 md:h-16 flex items-center justify-center rounded-full text-[#F7B50C] transition-all duration-300 hover:scale-110 active:scale-95">
+          <button onClick={() => { swiperRef.current?.slidePrev(); swiperRef.current?.autoplay.start(); }} className="swiper-btn-prev absolute left-1 md:left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 md:w-16 md:h-16 flex items-center justify-center rounded-full text-[#F7B50C] transition-all duration-300 hover:scale-110 active:scale-95">
             <svg xmlns="http://www.w3.org/2000/svg" height="40" viewBox="0 -960 960 960" width="40" fill="currentColor" className="rotate-180 scale-75 md:scale-100">
               <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" />
             </svg>
           </button>
-          <button className="swiper-btn-next absolute right-1 md:right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 md:w-16 md:h-16 flex items-center justify-center rounded-full text-[#F7B50C] transition-all duration-300 hover:scale-110 active:scale-95">
+          <button onClick={() => { swiperRef.current?.slideNext(); swiperRef.current?.autoplay.start(); }} className="swiper-btn-next absolute right-1 md:right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 md:w-16 md:h-16 flex items-center justify-center rounded-full text-[#F7B50C] transition-all duration-300 hover:scale-110 active:scale-95">
             <svg xmlns="http://www.w3.org/2000/svg" height="40" viewBox="0 -960 960 960" width="40" fill="currentColor" className="scale-75 md:scale-100">
               <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" />
             </svg>
@@ -288,6 +267,40 @@ const Courses: React.FC = () => {
                     background: #FDB913 !important;
                     width: 24px;
                     border-radius: 4px;
+                }
+                .swiper-slide {
+                    transform: scale(1) !important;
+                }
+                .swiper-slide:hover,
+                .swiper-slide:active {
+                    transform: none !important;
+                    filter: none !important;
+                    brightness: 1 !important;
+                    scale: 1 !important;
+                    translate: 0 !important;
+                }
+                .swiper-slide:hover img,
+                .swiper-slide:active img {
+                    filter: none !important;
+                    brightness: 1 !important;
+                }
+                a.swiper-slide:hover {
+                    filter: none !important;
+                    brightness: 1 !important;
+                    transform: none !important;
+                    translate: 0 !important;
+                    translateY: 0 !important;
+                }
+                .swiper-slide img:hover {
+                    filter: none !important;
+                    brightness: 1 !important;
+                    opacity: 1 !important;
+                    transform: scale(1) !important;
+                    translate: 0 !important;
+                }
+                .swiper-slide img {
+                    transform: scale(1) !important;
+                    translate: 0 !important;
                 }
             `}</style>
     </section>
