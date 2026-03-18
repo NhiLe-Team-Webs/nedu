@@ -5,7 +5,13 @@ import { Order } from '@/lib/order-store';
 // Initialize the sheet - ensure these env vars are set
 const GOOGLE_SERVICE_ACCOUNT_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
 const GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'); // Handle newline characters
-const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID || '198NMupt0ouMMo8M7Kyn2sRddjaduPL3tYbCFfAGV0nU'; // Default from user screenshot if not set
+const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID || '1Ovc2sNrlw42s85ZHK4M8a6-lGTma3MpgqojR0uSzR-Q'; // Default from user sheet link if not set
+const TARGET_SHEET_TITLE = 'GIO_HANG';
+
+const getTargetSheet = (doc: any) =>
+    doc.sheetsByTitle[TARGET_SHEET_TITLE] ||
+    doc.sheetsByTitle['GIO HANG'] ||
+    doc.sheetsByIndex[0];
 
 const formatBirthdayToDateOnly = (value: string): string => {
     if (!value) return '';
@@ -30,7 +36,7 @@ const normalizeOrderCode = (value?: string): string => (value || '').trim().toUp
 
 
 
-const getVietnameseTimestamp = (): string => {
+const getVietnamDateTimeSerialNow = (): number => {
     const now = new Date();
     const formatter = new Intl.DateTimeFormat('vi-VN', {
         timeZone: 'Asia/Ho_Chi_Minh',
@@ -45,12 +51,18 @@ const getVietnameseTimestamp = (): string => {
     
     const parts = formatter.formatToParts(now);
     const getPart = (type: string) => parts.find(p => p.type === type)?.value || '';
-    
-    // Format: HH:mm:ss DD/MM/YYYY
-    return `${getPart('hour')}:${getPart('minute')}:${getPart('second')} ${getPart('day')}/${getPart('month')}/${getPart('year')}`;
-};
 
-const getPaymentTimeNow = (): string => getVietnameseTimestamp();
+    const day = Number(getPart('day'));
+    const month = Number(getPart('month'));
+    const year = Number(getPart('year'));
+    const hour = Number(getPart('hour'));
+    const minute = Number(getPart('minute'));
+    const second = Number(getPart('second'));
+
+    // Convert Vietnam local wall-time directly into Google Sheets serial datetime value.
+    const utcDate = new Date(Date.UTC(year, month - 1, day, hour, minute, second));
+    return utcDate.getTime() / 86400000 + 25569;
+};
 
 const ensureHeaders = async (sheet: any) => {
     await sheet.loadHeaderRow();
@@ -69,21 +81,61 @@ const ensureHeaders = async (sheet: any) => {
         'Amount',
         'Order Code',
         'Status',
+        'Payment Time',
+        'Sent Emails'
+    ];
+
+    const oldHeaderOrder = [
+        'Timestamp',
+        'Name',
+        'Email',
+        'Phone',
+        'Telegram',
+        'Birthday',
+        'Gender',
+        'Address',
+        'Note',
+        'Course Name',
+        'Coupon Code',
+        'Amount',
+        'Order Code',
+        'Status',
         'Sent Emails',
         'Payment Time'
     ];
 
-    let headersChanged = false;
-    for (const h of requiredHeaders) {
-        if (!sheet.headerValues.includes(h)) {
-            headersChanged = true;
-            break;
+    const currentHeaderSignature = sheet.headerValues.join('|');
+    const requiredHeaderSignature = requiredHeaders.join('|');
+    const oldHeaderSignature = oldHeaderOrder.join('|');
+
+    if (currentHeaderSignature === oldHeaderSignature) {
+        // Preserve existing values while swapping header positions so Payment Time moves to column O.
+        const oldRows = await sheet.getRows();
+        const snapshots = oldRows.map((row: any) => ({
+            paymentTime: row.get('Payment Time') || '',
+            sentEmails: row.get('Sent Emails') || '',
+        }));
+
+        await sheet.setHeaderRow(requiredHeaders);
+        await sheet.loadHeaderRow();
+
+        const rowsAfterHeaderSwap = await sheet.getRows();
+        for (let i = 0; i < rowsAfterHeaderSwap.length; i++) {
+            rowsAfterHeaderSwap[i].set('Payment Time', snapshots[i]?.paymentTime || '');
+            rowsAfterHeaderSwap[i].set('Sent Emails', snapshots[i]?.sentEmails || '');
+            await rowsAfterHeaderSwap[i].save();
         }
+
+        console.log('[Sheet] Migrated header order and moved Payment Time data to column O');
+        return;
     }
 
-    if (headersChanged || sheet.headerValues.length < requiredHeaders.length) {
+    const headersMissing = requiredHeaders.some((h) => !sheet.headerValues.includes(h));
+    const headerOrderMismatch = currentHeaderSignature !== requiredHeaderSignature;
+
+    if (headersMissing || headerOrderMismatch || sheet.headerValues.length < requiredHeaders.length) {
         console.log(`[Sheet] Headers mismatch. Current: ${JSON.stringify(sheet.headerValues)}, Required: ${JSON.stringify(requiredHeaders)}`);
-        // Find existing headers and merge or just enforce order if it's the raw data sheet
+        // Enforce exact header order to keep Payment Time fixed at column O.
         await sheet.setHeaderRow(requiredHeaders);
         await sheet.loadHeaderRow(); // Reload after setting
         console.log('[Sheet] Updated headers for alignment and reloaded');
@@ -125,7 +177,7 @@ export const appendToSheet = async (data: {
 
         await doc.loadInfo(); // loads document properties and worksheets
 
-        const sheet = doc.sheetsByTitle['RAW_FORM_DATA']; // Priority to RAW_FORM_DATA tab
+        const sheet = getTargetSheet(doc);
 
         // Check if header row exists, if not set it
         await sheet.loadHeaderRow();
@@ -143,7 +195,7 @@ export const appendToSheet = async (data: {
         const normalizedOrderCode = normalizeOrderCode(data.orderCode);
 
         await sheet.addRow({
-            Timestamp: getVietnameseTimestamp(),
+            Timestamp: getVietnamDateTimeSerialNow(),
             Name: data.name,
             Email: data.email,
             Phone: data.phone,
@@ -157,8 +209,8 @@ export const appendToSheet = async (data: {
             Amount: data.amount,
             'Order Code': normalizedOrderCode,
             Status: data.status,
-            'Sent Emails': '',
             'Payment Time': '',
+            'Sent Emails': '',
         });
 
         console.log(`[Sheet] Successfully appended row for ${normalizedOrderCode}`);
@@ -184,7 +236,7 @@ export const updateSheetStatus = async (orderCode: string, newStatus: string, in
 
         const doc = new GoogleSpreadsheet(GOOGLE_SHEET_ID, serviceAccountAuth);
         await doc.loadInfo();
-        const sheet = doc.sheetsByTitle['RAW_FORM_DATA'] || doc.sheetsByIndex[0];
+        const sheet = getTargetSheet(doc);
 
         await ensureHeaders(sheet);
 
@@ -193,7 +245,7 @@ export const updateSheetStatus = async (orderCode: string, newStatus: string, in
         console.log(`[Sheet] Searching for Order Code: "${normalizedOrderCode}" in ${rows.length} rows`);
         
         // Find row with matching Order Code
-        const row = rows.find(r => {
+        const row = rows.find((r: any) => {
             const sheetCode = normalizeOrderCode(r.get('Order Code'));
             const isMatch = sheetCode === normalizedOrderCode;
             if (isMatch) console.log(`[Sheet] Found matching row for code ${normalizedOrderCode}`);
@@ -213,9 +265,9 @@ export const updateSheetStatus = async (orderCode: string, newStatus: string, in
                 normalizedStatus === 'completed';
 
             if (shouldSetPaymentTime) {
-                const payTime = getPaymentTimeNow();
-                console.log(`[Sheet] Setting Payment Time to: ${payTime}`);
-                row.set('Payment Time', payTime);
+                const payTimeSerial = getVietnamDateTimeSerialNow();
+                console.log(`[Sheet] Setting Payment Time serial to: ${payTimeSerial}`);
+                row.set('Payment Time', payTimeSerial);
             }
 
             if (typeof amountReceived === 'number' && Number.isFinite(amountReceived) && amountReceived > 0) {
@@ -227,7 +279,7 @@ export const updateSheetStatus = async (orderCode: string, newStatus: string, in
             return true;
         } else {
             console.warn(`[Sheet] Order code "${normalizedOrderCode}" NOT found in sheet rows`);
-            const allCodes = rows.map(r => r.get('Order Code')).filter(Boolean);
+            const allCodes = rows.map((r: any) => r.get('Order Code')).filter(Boolean);
             console.log(`[Sheet] Available Order Codes in sheet: ${JSON.stringify(allCodes)}`);
             return false;
         }
@@ -252,10 +304,10 @@ export const findOrderInSheet = async (orderCode: string): Promise<Order | null>
 
         const doc = new GoogleSpreadsheet(GOOGLE_SHEET_ID, serviceAccountAuth);
         await doc.loadInfo();
-        const sheet = doc.sheetsByTitle['RAW_FORM_DATA'] || doc.sheetsByIndex[0];
+        const sheet = getTargetSheet(doc);
 
         const rows = await sheet.getRows();
-        const row = rows.find(r => r.get('Order Code') === orderCode);
+        const row = rows.find((r: any) => r.get('Order Code') === orderCode);
 
         if (row) {
             // Map sheet row to Order object
