@@ -178,7 +178,7 @@ export async function POST(request: NextRequest) {
     await ensurePaymentTimeInColumnO(sheet);
 
     const rows = await sheet.getRows();
-    const row = rows.find((r) => normalizeOrderCode(r.get('Order Code')) === orderCode);
+    const row = rows.find((r: any) => normalizeOrderCode(r.get('Order Code')) === orderCode);
 
     if (!row) {
       return NextResponse.json(
@@ -229,8 +229,8 @@ export async function GET() {
 
     const rows = await sheet.getRows();
     const orderCodes = rows
-      .map((r) => normalizeOrderCode(r.get('Order Code')))
-      .filter((code) => Boolean(code))
+      .map((r: any) => normalizeOrderCode(r.get('Order Code')))
+      .filter((code: string) => Boolean(code))
       .slice(-20)
       .reverse();
 
