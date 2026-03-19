@@ -149,7 +149,11 @@ export default function CheckoutPage() {
       }
 
       // Construct course names string (e.g. "Course A, Course B")
-      const courseName = items.map(item => t(item.title)).join(', ');
+      // Nếu có khoá "thu-thach-30-ngay" thì courseName là "THỬ THÁCH 30 NGÀY"
+      let courseName = items.map(item => t(item.title)).join(', ');
+      if (items.some(item => item.slug === 'thu-thach-30-ngay')) {
+        courseName = 'THỬ THÁCH 30 NGÀY';
+      }
 
       // Determine coupon code used (if any discount applied)
       const appliedCouponCode = discount > 0 ? discountCode : '';
