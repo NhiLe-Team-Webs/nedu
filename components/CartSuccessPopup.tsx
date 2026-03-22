@@ -23,7 +23,7 @@ export default function CartSuccessPopup() {
   if (!showSuccessPopup) return null;
 
   return (
-    <div className="fixed top-20 md:top-24 left-1/2 -translate-x-1/2 z-[102] animate-in slide-in-from-top-2 duration-300">
+    <div className="fixed top-0 left-1/2 -translate-x-1/2 z-[102] animate-in slide-in-from-top-2 duration-300">
       <div className="bg-white/90 backdrop-blur-xl rounded-[16px] shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-white/20 px-4 py-3 flex items-center gap-3 min-w-[320px] max-w-[90vw]">
         {/* Success Icon */}
         <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center shrink-0">

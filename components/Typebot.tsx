@@ -124,7 +124,7 @@ export default function Typebot() {
             {/* Floating Button */}
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                    className="fixed bottom-0 right-0 md:bottom-0 md:right-0 translate-x-[12%] translate-y-[8%] w-[9rem] h-[10rem] md:w-[12rem] md:h-[12rem] bg-transparent hover:scale-105 active:scale-95 transition-transform z-[9999] flex items-center justify-center overflow-visible"
+                className="fixed bottom-0 right-0 md:bottom-0 md:right-0 translate-x-[12%] translate-y-[8%] w-[7rem] h-[8rem] md:w-[10rem] md:h-[10rem] bg-transparent hover:scale-105 active:scale-95 transition-transform z-[9999] flex items-center justify-center overflow-visible"
                 aria-label={isOpen ? 'Close chat' : 'Open chat'}
             >
                 {/* Layer 1: Mascot image */}
@@ -133,11 +133,12 @@ export default function Typebot() {
                         src={MASCOT_IMAGE_SRC}
                         alt="Chat mascot"
                         className={`absolute inset-0 ${Z_LAYERS.base} w-full h-full object-contain drop-shadow-[0_6px_10px_rgba(0,0,0,0.14)]`}
+                        style={{ width: '100%', height: '100%', maxWidth: '100%', maxHeight: '100%' }}
                         onError={() => setImageError(true)}
                     />
                 ) : (
                     <span className={`absolute inset-0 ${Z_LAYERS.base} w-full h-full bg-[#FDB913] text-white flex items-center justify-center`}>
-                        <MessageCircle size={34} />
+                        <MessageCircle size={28} />
                     </span>
                 )}
 
