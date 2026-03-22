@@ -222,7 +222,7 @@ export default function ProgramPage() {
             </span>
             <button
               onClick={() => { setShowPopup(false); router.push('/checkout'); }}
-              className="mt-3 text-[#ff4d4f] hover:text-[#ff7875] text-[15px] font-semibold transition-colors cursor-pointer outline-none border-none bg-transparent block mx-auto"
+              className="mt-3 text-[#ff4d4f] hover:text-[#ff7875] text-[15px] font-semibold transition-colors cursor-pointer outline-none border-none bg-transparent block mx-auto underline"
               style={{ pointerEvents: 'auto' }}
             >
               Thanh toán ngay
