@@ -131,11 +131,13 @@ export default function ProgramPage() {
     router.push(`/program-${mode}/${slug}`);
   };
 
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupCourse, setPopupCourse] = useState<any>(null);
+  const popupTimeout = useRef<NodeJS.Timeout | null>(null);
+
   const handleAddToCart = (course: any) => {
     // Check if course already exists in cart
     const existingItem = items.find(item => item.id === course.id);
-
-    // If item exists and quantity is already 10, show warning
     if (existingItem && existingItem.quantity >= 10) {
       toast.warning(t("program_page.toast.max_quantity_reached"), {
         position: "bottom-right",
@@ -147,25 +149,14 @@ export default function ProgramPage() {
       });
       return;
     }
-
-    // Add to cart
     addToCart(course);
-    toast.success(
-      <div className="flex items-center min-h-[20px]">
-        <p className="text-sm font-semibold text-gray-900 leading-none m-0">
-          Nhấn vào đây để thanh toán
-        </p>
-      </div>,
-      {
-      position: "bottom-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      onClick: () => router.push('/checkout'),
-      className: "!cursor-pointer"
-    });
+    setPopupCourse(course);
+    setShowPopup(true);
+    if (popupTimeout.current) clearTimeout(popupTimeout.current);
+    popupTimeout.current = setTimeout(() => {
+      setShowPopup(false);
+      setPopupCourse(null);
+    }, 3500);
   };
 
   const filteredCourses = useMemo(() => {
@@ -217,20 +208,29 @@ export default function ProgramPage() {
 
   return (
     <>
-      <ToastContainer
-        position="bottom-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        closeButton={false}
-        className="!bottom-4 !right-4 md:!bottom-8 md:!right-8"
-        toastClassName="!w-[calc(100vw-2rem)] md:!w-auto !max-w-md !mx-4 md:!mx-0 !rounded-xl overflow-hidden [&_.Toastify__toast-body]:!items-center [&_.Toastify__toast-icon]:!self-center"
-      />
+      {/* Popup thông báo thêm vào giỏ hàng */}
+      {showPopup && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center pointer-events-none">
+          <div className="bg-[rgba(51,51,51,0.85)] flex flex-col items-center justify-center w-[380px] min-h-[210px] py-5 rounded-md shadow-xl pointer-events-auto animate-fade-in">
+            <div className="bg-[#00bfa5] rounded-full w-14 h-14 flex items-center justify-center mb-4">
+              <svg className="text-white w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <span className="text-white text-base text-center px-4 leading-snug block w-full">
+              Khóa học đã được thêm vào Giỏ hàng
+            </span>
+            <button
+              onClick={() => { setShowPopup(false); router.push('/checkout'); }}
+              className="mt-3 text-[#ff4d4f] hover:text-[#ff7875] text-[15px] font-semibold transition-colors cursor-pointer outline-none border-none bg-transparent block mx-auto underline"
+              style={{ pointerEvents: 'auto' }}
+            >
+              Thanh toán ngay
+            </button>
+          </div>
+        </div>
+      )}
+      {/* End popup */}
       <section className="bg-background overflow-hidden">
         <div className="container max-w-7xl mx-auto px-4">
           <motion.div
