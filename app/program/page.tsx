@@ -152,20 +152,21 @@ export default function ProgramPage() {
     addToCart(course);
     toast.success(
       <div className="flex items-center min-h-[20px]">
-        <p className="text-sm font-semibold text-gray-900 leading-none m-0">
-          Nhấn vào đây để thanh toán
-        </p>
+        <span className="text-sm font-semibold text-gray-900 leading-none m-0  overflow-hidden text-ellipsis">
+          Khóa học "{t(course.title)}" đã được thêm thành công
+        </span>
       </div>,
       {
-      position: "bottom-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      onClick: () => router.push('/checkout'),
-      className: "!cursor-pointer"
-    });
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        onClick: () => router.push('/checkout'),
+        className: "!cursor-pointer"
+      }
+    );
   };
 
   const filteredCourses = useMemo(() => {
@@ -218,7 +219,7 @@ export default function ProgramPage() {
   return (
     <>
       <ToastContainer
-        position="bottom-right"
+        position="top-center"
         autoClose={3000}
         hideProgressBar={false}
         newestOnTop={false}
@@ -228,7 +229,7 @@ export default function ProgramPage() {
         draggable
         pauseOnHover
         closeButton={false}
-        className="!bottom-4 !right-4 md:!bottom-8 md:!right-8"
+        className="!top-[72px] !left-1/2 !-translate-x-1/2 !right-auto !bottom-auto md:!top-[88px]"
         toastClassName="!w-[calc(100vw-2rem)] md:!w-auto !max-w-md !mx-4 md:!mx-0 !rounded-xl overflow-hidden [&_.Toastify__toast-body]:!items-center [&_.Toastify__toast-icon]:!self-center"
       />
       <section className="bg-background overflow-hidden">
