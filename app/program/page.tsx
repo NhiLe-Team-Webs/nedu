@@ -211,7 +211,7 @@ export default function ProgramPage() {
       {/* Popup thông báo thêm vào giỏ hàng */}
       {showPopup && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center pointer-events-none">
-          <div className="bg-[#333333] flex flex-col items-center justify-center w-[380px] min-h-[170px] py-5 rounded-md shadow-xl pointer-events-auto animate-fade-in">
+          <div className="bg-[rgba(51,51,51,0.85)] flex flex-col items-center justify-center w-[380px] min-h-[210px] py-5 rounded-md shadow-xl pointer-events-auto animate-fade-in">
             <div className="bg-[#00bfa5] rounded-full w-14 h-14 flex items-center justify-center mb-4">
               <svg className="text-white w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="20 6 9 17 4 12"></polyline>
