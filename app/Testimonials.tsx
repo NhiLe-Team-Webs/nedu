@@ -20,7 +20,7 @@ const Testimonials = ({
   buttonType = 'link',
   buttonLink = "/program/"
 }: TestimonialsProps) => {
-  const { addToCart } = useCart();
+  const { addToCart, setShowSuccessPopup } = useCart();
   const { t } = useLanguage();
   const [justAdded, setJustAdded] = useState(false);
   const course = courseSlug ? getCourseBySlug(courseSlug) : undefined;
@@ -31,6 +31,7 @@ const Testimonials = ({
   const handleButtonClick = () => {
     if (buttonType === 'cart' && course) {
       addToCart(course);
+      setShowSuccessPopup(true);
       setJustAdded(true);
       setTimeout(() => setJustAdded(false), 3000);
     } else {

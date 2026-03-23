@@ -5,17 +5,19 @@ import { useCart } from '@/lib/cart-context';
 import { useEffect } from 'react';
 import { useLanguage } from '@/lib/LanguageContext';
 
+import { useRouter } from "next/navigation";
+
 export default function CartSuccessPopup() {
   const { showSuccessPopup, setShowSuccessPopup } = useCart();
   const { t } = useLanguage();
+  const router = useRouter();
 
   useEffect(() => {
     if (showSuccessPopup) {
-      // Auto dismiss after 3 seconds
+      // Auto dismiss after 3.5 seconds
       const timer = setTimeout(() => {
         setShowSuccessPopup(false);
-      }, 3000);
-
+      }, 3500);
       return () => clearTimeout(timer);
     }
   }, [showSuccessPopup, setShowSuccessPopup]);
@@ -23,27 +25,24 @@ export default function CartSuccessPopup() {
   if (!showSuccessPopup) return null;
 
   return (
-    <div className="fixed top-0 left-1/2 -translate-x-1/2 z-[102] animate-in slide-in-from-top-2 duration-300">
-      <div className="bg-white/90 backdrop-blur-xl rounded-[16px] shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-white/20 px-4 py-3 flex items-center gap-3 min-w-[320px] max-w-[90vw]">
-        {/* Success Icon */}
-        <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center shrink-0">
-          <CheckCircle className="w-5 h-5 text-white" strokeWidth={2.5} />
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center pointer-events-none">
+      <div className="bg-[rgba(51,51,51,0.85)] flex flex-col items-center justify-center w-[380px] min-h-[210px] py-5 rounded-md shadow-xl pointer-events-auto animate-fade-in">
+        <div className="flex items-center justify-center mb-4">
+          <svg className="w-20 h-20" viewBox="0 0 80 80" fill="none">
+            <circle cx="40" cy="40" r="40" fill="#00bfa5" />
+            <polyline points="56 28 36 50 24 40" fill="none" stroke="#fff" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
         </div>
-
-        {/* Message */}
-        <div className="flex-1 min-w-0">
-          <p className="text-[15px] font-semibold text-gray-900 leading-tight">
-            {t("cart_popup.added")}
-          </p>
-          <p className="text-[13px] text-gray-600 leading-snug">
-            {t("cart_popup.success")}
-          </p>
-        </div>
-
-        {/* Cart Icon Badge */}
-        <div className="w-8 h-8 rounded-full bg-[#F8B516]/10 flex items-center justify-center shrink-0">
-          <ShoppingCart className="w-4 h-4 text-[#F8B516]" strokeWidth={2} />
-        </div>
+        <span className="text-white text-lg text-center px-4 leading-snug block w-full font-semibold">
+          Khóa học đã được thêm vào Giỏ hàng
+        </span>
+        <button
+          onClick={() => { setShowSuccessPopup(false); router.push('/checkout'); }}
+          className="mt-3 text-[#ff4d4f] hover:text-[#ff7875] text-[15px] font-semibold transition-colors cursor-pointer outline-none border-none bg-transparent block mx-auto underline"
+          style={{ pointerEvents: 'auto' }}
+        >
+          Thanh toán ngay
+        </button>
       </div>
     </div>
   );
