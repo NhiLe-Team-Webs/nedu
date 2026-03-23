@@ -138,8 +138,10 @@ export default function LaChinhMinhPage() {
 
   // Hàm xử lý thêm vào giỏ hàng và hiện popup
   const handleAddToCart = () => {
-    addToCart(course);
-    setShowSuccessPopup(true);
+    if (course) {
+      addToCart(course);
+      setShowSuccessPopup(true);
+    }
   };
 
   return (
