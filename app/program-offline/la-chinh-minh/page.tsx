@@ -14,6 +14,7 @@ import Organizers from "@/components/Organizers";
 import { getCourseBySlug } from "@/data/courses";
 import { getInstructorsByIds } from "@/data/instructors";
 import { useLanguage } from "@/lib/LanguageContext";
+import { useCart } from "@/lib/cart-context";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
@@ -21,6 +22,7 @@ export default function LaChinhMinhPage() {
   const course = getCourseBySlug('la-chinh-minh');
   const { t } = useLanguage();
   const router = useRouter();
+  const { addToCart, setShowSuccessPopup } = useCart();
   const [activeDay, setActiveDay] = useState<number>(0);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
 
@@ -134,6 +136,12 @@ export default function LaChinhMinhPage() {
     }
   ];
 
+  // Hàm xử lý thêm vào giỏ hàng và hiện popup
+  const handleAddToCart = () => {
+    addToCart(course);
+    setShowSuccessPopup(true);
+  };
+
   return (
     <div className="min-h-screen bg-[#F2F2F7] pb-20 override-header-spacing">
       <CourseHeader
@@ -148,6 +156,13 @@ export default function LaChinhMinhPage() {
       />
 
       <div className="ios-safe-padding-bottom">
+        {/* Nút thêm vào giỏ hàng giữ nguyên UI, chỉ thêm hiệu ứng popup */}
+        <button
+          onClick={handleAddToCart}
+          className="h-10 px-4 bg-orange-500 text-white rounded-lg mt-4"
+        >
+          {t("program_detail.common.add_to_cart")}
+        </button>
         <CourseInfo
           title={t("program_detail.info.title")}
           details={[

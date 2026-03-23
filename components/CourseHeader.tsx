@@ -36,7 +36,7 @@ const CourseHeader: React.FC<CourseHeaderProps> = ({
   dep_currency = "VND",
   courseSlug,
 }) => {
-  const { addToCart, items } = useCart();
+  const { addToCart, items, setShowSuccessPopup } = useCart();
   const { t } = useLanguage();
   const [justAdded, setJustAdded] = useState(false);
 
@@ -48,9 +48,8 @@ const CourseHeader: React.FC<CourseHeaderProps> = ({
       const course = getCourseBySlug(courseSlug);
       if (course) {
         addToCart(course);
+        setShowSuccessPopup(true);
         setJustAdded(true);
-
-        // Reset after 3 seconds
         setTimeout(() => {
           setJustAdded(false);
         }, 3000);
