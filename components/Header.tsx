@@ -67,8 +67,8 @@ const Header = () => {
           <Link
             href="/"
             className={`relative transition-all duration-200 transform hover:scale-105 active:scale-95 ${isActive("/")
-                ? "text-amber-400 font-semibold uppercase tracking-wide text-[12px] lg:text-[14px]"
-                : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-[12px] lg:text-[14px]"
+                ? "text-amber-400 font-semibold uppercase tracking-wide text-[12px] lg:text-[14px] leading-[1.35] py-1"
+                : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-[12px] lg:text-[14px] leading-[1.35] py-1"
               }`}
           >
             {t("header.home")}
@@ -81,7 +81,7 @@ const Header = () => {
             href="https://nhi.sg"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-600 hover:text-amber-400 uppercase tracking-wide text-[12px] lg:text-[14px] transition-all duration-200 transform hover:scale-105 active:scale-95 relative"
+            className="text-gray-600 hover:text-amber-400 uppercase tracking-wide text-[12px] lg:text-[14px] leading-[1.35] py-1 transition-all duration-200 transform hover:scale-105 active:scale-95 relative"
           >
             {t("header.about")}
             <span className="absolute bottom-0 left-0 w-full h-0.5 bg-amber-400 transform scale-x-0 transition-transform duration-200 hover:scale-x-100"></span>
@@ -90,8 +90,8 @@ const Header = () => {
           <Link
             href="/program"
             className={`relative transition-all duration-200 transform hover:scale-105 active:scale-95 ${isActive("/program")
-                ? "text-amber-400 font-semibold uppercase tracking-wide text-[12px] lg:text-[14px]"
-                : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-[12px] lg:text-[14px]"
+                ? "text-amber-400 font-semibold uppercase tracking-wide text-[12px] lg:text-[14px] leading-[1.35] py-1"
+                : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-[12px] lg:text-[14px] leading-[1.35] py-1"
               }`}
           >
             {t("header.courses")}
@@ -105,8 +105,8 @@ const Header = () => {
           <a
             href="/contact"
             className={`relative transition-all duration-200 transform hover:scale-105 active:scale-95 ${isActive("/contact")
-                ? "text-amber-400 font-semibold uppercase tracking-wide text-[12px] lg:text-[14px]"
-                : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-[12px] lg:text-[14px]"
+                ? "text-amber-400 font-semibold uppercase tracking-wide text-[12px] lg:text-[14px] leading-[1.35] py-1"
+                : "text-gray-600 hover:text-amber-400 uppercase tracking-wide text-[12px] lg:text-[14px] leading-[1.35] py-1"
               }`}
           >
             {t("header.contact")}

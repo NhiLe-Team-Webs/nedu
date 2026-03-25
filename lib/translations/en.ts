@@ -56,6 +56,10 @@ export const en = {
         upcoming: "Upcoming Courses",
         intro: "Introduction",
         online: "Online Courses",
+        buttons: {
+            learn_more: "Learn more",
+            register_now: "Register now"
+        },
         slides: {
             lcm: {
                 title: "Be Yourself 04",
