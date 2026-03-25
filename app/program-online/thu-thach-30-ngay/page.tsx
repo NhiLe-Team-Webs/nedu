@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -80,7 +80,7 @@ const ThirtyDayPage = () => {
   const dbMentor = courseData?.mentors?.[0];
 
   // Logic mapping fields FROM YOUR DATABASE LOG
-  const displaySchedule = courseData?.program?.total_sessions || t("thirty_day_challenge.timeline.time_value");
+  const displaySchedule = courseData?.program?.total_sessions || t("28/03/2026 - 28/04/2026");
 
   const displayStudentCount = t("thirty_day_challenge.timeline.students_count");
 
@@ -261,6 +261,10 @@ const ThirtyDayPage = () => {
               height={1080}
               className="hidden md:block w-full h-auto object-contain hover:transform-none"
               priority
+              unoptimized
+              onError={(e) => {
+                console.error('Desktop image failed to load:', challengePosterDesktop);
+              }}
             />
           )}
           {/* Mobile Image */}
@@ -274,6 +278,10 @@ const ThirtyDayPage = () => {
               height={1334}
               className="block md:hidden w-full h-auto object-contain hover:transform-none"
               priority
+              unoptimized
+              onError={(e) => {
+                console.error('Mobile image failed to load:', challengePosterMobile);
+              }}
             />
           )}
         </section>
