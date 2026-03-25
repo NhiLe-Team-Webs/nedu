@@ -55,10 +55,10 @@ const SlideContent = ({ slide }: { slide: CourseSlide }) => {
 
   const mobileButtonLabel = isThirtyDayChallengeClosed
     ? t("program_page.card.ended_registration")
-    : "Tim hieu them";
+    : t("courses.buttons.learn_more");
   const desktopButtonLabel = isThirtyDayChallengeClosed
     ? t("program_page.card.ended_registration")
-    : "Dang ky ngay";
+    : t("courses.buttons.register_now");
 
   return (
     <Link href={slide.href} className="relative block h-full w-full overflow-hidden brightness-100 hover:translate-y-0">
@@ -79,14 +79,14 @@ const SlideContent = ({ slide }: { slide: CourseSlide }) => {
 
       <div className="absolute inset-0 flex flex-col items-center justify-end p-6 pb-12 text-center text-white md:hidden">
         <div className="w-full max-w-sm space-y-4">
-          <h3 className="text-2xl font-black tracking-tight text-white drop-shadow-lg">{slide.type}</h3>
+          <h3 className="text-2xl font-black leading-[1.2] tracking-tight text-white drop-shadow-lg">{slide.type}</h3>
           <p className="line-clamp-2 px-4 text-sm font-medium text-white/90 drop-shadow-md">
             {slide.content}
           </p>
           <Button
             aria-disabled={isThirtyDayChallengeClosed}
             disabled={isThirtyDayChallengeClosed}
-            className="rounded-full bg-white px-10 py-6 text-base font-black text-black shadow-2xl transition-all duration-300 hover:bg-[#F7B50C] hover:text-white active:scale-95 disabled:pointer-events-none disabled:bg-white/80 disabled:text-gray-400 disabled:shadow-none"
+            className="rounded-full bg-white px-10 py-6 text-base font-black leading-[1.35] text-black shadow-2xl transition-all duration-300 hover:bg-[#F7B50C] hover:text-white active:scale-95 disabled:pointer-events-none disabled:bg-white/80 disabled:text-gray-400 disabled:shadow-none"
             onClick={handleRegister}
           >
             {mobileButtonLabel}
@@ -99,7 +99,7 @@ const SlideContent = ({ slide }: { slide: CourseSlide }) => {
           <Button
             aria-disabled={isThirtyDayChallengeClosed}
             disabled={isThirtyDayChallengeClosed}
-            className="h-auto shrink-0 rounded-full bg-white px-6 py-2.5 text-sm font-bold text-black shadow-lg hover:bg-white/90 disabled:pointer-events-none disabled:bg-white/80 disabled:text-gray-400 disabled:shadow-none"
+            className="h-auto shrink-0 rounded-full bg-white px-6 py-2.5 text-sm font-bold leading-[1.35] text-black shadow-lg hover:bg-white/90 disabled:pointer-events-none disabled:bg-white/80 disabled:text-gray-400 disabled:shadow-none"
             onClick={(e) => {
               e.preventDefault();
               handleRegister(e);
@@ -203,7 +203,7 @@ const Courses: React.FC = () => {
     <section id="courses-section" className="relative overflow-x-hidden bg-white py-16 lg:py-24">
       <div className="container mx-auto px-4">
         <div className="mx-auto text-center">
-          <h2 className="relative z-10 mb-8 text-center text-2xl font-black uppercase text-amber-400 sm:mb-10 sm:text-3xl md:mb-12 md:text-4xl lg:text-5xl xl:text-[68px]">
+          <h2 className="relative z-10 mb-8 pt-[0.08em] text-center text-2xl font-black uppercase leading-[1.15] text-amber-400 sm:mb-10 sm:text-3xl md:mb-12 md:text-4xl lg:text-5xl xl:text-[68px]">
             <span className="block whitespace-nowrap">{coursesHeadingLine1}</span>
             {coursesHeadingLine2 && <span className="block whitespace-nowrap">{coursesHeadingLine2}</span>}
           </h2>
