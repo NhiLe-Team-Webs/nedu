@@ -55,10 +55,10 @@ const SlideContent = ({ slide }: { slide: CourseSlide }) => {
 
   const mobileButtonLabel = isThirtyDayChallengeClosed
     ? t("program_page.card.ended_registration")
-    : "Tim hieu them";
+    : t("courses.buttons.learn_more");
   const desktopButtonLabel = isThirtyDayChallengeClosed
     ? t("program_page.card.ended_registration")
-    : "Dang ky ngay";
+    : t("courses.buttons.register_now");
 
   return (
     <Link href={slide.href} className="relative block h-full w-full overflow-hidden brightness-100 hover:translate-y-0">

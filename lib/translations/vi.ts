@@ -56,6 +56,10 @@ export const vi = {
         upcoming: "Khóa học sắp diễn ra",
         intro: "Giới thiệu",
         online: "Các khóa học Online",
+        buttons: {
+            learn_more: "Tìm hiểu thêm",
+            register_now: "Đăng ký ngay"
+        },
         slides: {
             lcm: {
                 title: "Là Chính Mình 05",
