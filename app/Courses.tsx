@@ -69,12 +69,12 @@ const SlideContent = ({ slide }: { slide: CourseSlide }) => {
       {/* Mobile Layout (Centered & Bottom-Aligned) */}
       <div className="absolute inset-0 p-6 flex flex-col justify-end items-center text-white text-center md:hidden pb-12">
         <div className="space-y-4 w-full max-w-sm">
-          <h3 className="text-2xl font-black tracking-tight drop-shadow-lg text-white">{slide.type}</h3>
+          <h3 className="text-2xl font-black leading-[1.2] tracking-tight drop-shadow-lg text-white">{slide.type}</h3>
           <p className="text-sm font-medium text-white/90 line-clamp-2 px-4 drop-shadow-md">
             {slide.content}
           </p>
           <Button
-            className="rounded-full bg-white text-black hover:bg-[#F7B50C] hover:text-white px-10 py-6 text-base font-black transition-all duration-300 shadow-2xl active:scale-95"
+            className="rounded-full bg-white text-black hover:bg-[#F7B50C] hover:text-white px-10 py-6 text-base font-black leading-[1.35] transition-all duration-300 shadow-2xl active:scale-95"
             onClick={handleRegister}
           >
             Tìm hiểu thêm
@@ -86,7 +86,7 @@ const SlideContent = ({ slide }: { slide: CourseSlide }) => {
       <div className="absolute inset-x-0 bottom-0 px-8 py-6 hidden md:flex flex-col justify-end text-white">
         <div className="info-bottom slide-bottom flex items-center gap-4">
           <Button
-            className="rounded-full bg-white text-black hover:bg-white/90 px-6 py-2.5 text-sm font-bold h-auto shrink-0 shadow-lg"
+            className="rounded-full bg-white text-black hover:bg-white/90 px-6 py-2.5 text-sm font-bold leading-[1.35] h-auto shrink-0 shadow-lg"
             onClick={(e) => { e.preventDefault(); handleRegister(e); }}
           >
             Đăng ký ngay
@@ -188,7 +188,7 @@ const Courses: React.FC = () => {
       <div className="container px-4 mx-auto">
         {/* Header Section */}
         <div className="text-center mx-auto">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[68px] font-black text-center text-amber-400 uppercase relative z-10 mb-8 sm:mb-10 md:mb-12">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[68px] font-black leading-[1.15] text-center text-amber-400 uppercase relative z-10 mb-8 sm:mb-10 md:mb-12 pt-[0.08em]">
             <span className="block whitespace-nowrap">{coursesHeadingLine1}</span>
             {coursesHeadingLine2 && <span className="block whitespace-nowrap">{coursesHeadingLine2}</span>}
           </h2>
