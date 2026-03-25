@@ -159,6 +159,21 @@ export default function ProgramPage() {
     }, 3500);
   };
 
+  const isThirtyDayChallengeClosed = (slug: string) => slug === "thu-thach-30-ngay";
+  const getCourseActionState = (slug: string) => {
+    const isDisabled = isThirtyDayChallengeClosed(slug);
+
+    return {
+      isDisabled,
+      label: isDisabled
+        ? "Đã đóng đăng ký"
+        : t("program_page.card.register"),
+      secondaryLabel: isDisabled
+        ? " Ngừng thanh toán"
+        : t("program_page.card.learn_more"),
+    };
+  };
+
   const filteredCourses = useMemo(() => {
     if (filter === "all") return courses;
     if (filter === "offline") return courses.filter((c) => c.mode === "offline");
@@ -283,7 +298,10 @@ export default function ProgramPage() {
             <div className="flex gap-4 md:gap-6 pl-4 xl:pl-[calc((100vw-1280px)/2+1rem)] pr-4 md:pr-6">
               {isLoading
                 ? Array(4).fill(0).map((_, i) => <CourseCardSkeleton key={i} />)
-                : filteredCourses.map((course) => (
+                : filteredCourses.map((course) => {
+                  const actionState = getCourseActionState(course.slug);
+
+                  return (
                   <motion.div
                     key={course.id}
                     variants={cardVariants}
@@ -325,12 +343,14 @@ export default function ProgramPage() {
                         <div className="flex items-center justify-center gap-2 w-full">
                           <button
                             onClick={() => handleAddToCart(course)}
-                            title={t("program_page.card.register")}
-                            className="h-10 inline-flex items-center justify-center gap-2 rounded-lg bg-[#ffeeee] text-[#d0011b] border border-[#d0011b] transition-all hover:bg-[#ffdada] active:scale-95 px-3 w-fit"
+                            title={actionState.label}
+                            aria-disabled={actionState.isDisabled}
+                            disabled={actionState.isDisabled}
+                            className="h-10 inline-flex items-center justify-center gap-2 rounded-lg bg-[#ffeeee] text-[#d0011b] border border-[#d0011b] transition-all hover:bg-[#ffdada] active:scale-95 px-3 w-fit disabled:pointer-events-none disabled:cursor-not-allowed disabled:border-gray-300 disabled:bg-gray-100 disabled:text-gray-400 disabled:hover:bg-gray-100 disabled:active:scale-100"
                           >
                             <ShoppingCart className="w-4 h-4 flex-shrink-0" />
                             <span className="font-bold text-xs sm:text-sm whitespace-nowrap">
-                              {t("program_page.card.register")}
+                              {actionState.label}
                             </span>
                           </button>
                           <button
@@ -338,15 +358,17 @@ export default function ProgramPage() {
                               buyNow(course);
                               router.push("/checkout");
                             }}
-                            className="inline-flex items-center justify-center h-10 rounded-lg bg-[#d0011b] text-white transition-all hover:bg-[#b00118] active:scale-95 shadow-md font-bold text-sm px-3 w-fit"
+                            aria-disabled={actionState.isDisabled}
+                            disabled={actionState.isDisabled}
+                            className="inline-flex items-center justify-center h-10 rounded-lg bg-[#d0011b] text-white transition-all hover:bg-[#b00118] active:scale-95 shadow-md font-bold text-sm px-3 w-fit disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500 disabled:hover:bg-gray-300 disabled:active:scale-100"
                           >
-                            {t("program_page.card.learn_more")}
+                            {actionState.secondaryLabel}
                           </button>
                         </div>
                       </div>
                     </div>
                   </motion.div>
-                ))}
+                )})}
             </div>
           </div>
           <div className="container max-w-7xl mx-auto px-4 mt-4 flex justify-end gap-2">
