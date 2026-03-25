@@ -2,9 +2,7 @@
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import {
-  ArrowRight,
   Clock,
   Users,
   MapPin,
@@ -14,13 +12,13 @@ import {
   UserPlus,
   Check,
   X,
+  ArrowRight,
   ChevronDown,
   HelpCircle,
   Sparkles,
   Gift,
 } from "lucide-react";
 import { useLanguage } from "@/lib/LanguageContext";
-import { useCart } from "@/lib/cart-context";
 import { courses } from "@/data/courses";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -44,18 +42,13 @@ const formatCurrency = (value: number | undefined) => {
 
 const ThirtyDayPage = () => {
   const { t } = useLanguage();
-  const { addToCart, buyNow } = useCart();
-  const router = useRouter();
+  const isChallengeEnrollmentClosed = true;
 
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
   const [showAllFaq, setShowAllFaq] = useState(false);
   const [courseData, setCourseData] = useState<CourseDetail | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [activeBlock, setActiveBlock] = useState("1");
-  const [addedToCart, setAddedToCart] = useState<{
-    monthly: boolean;
-    membership: boolean;
-  }>({ monthly: false, membership: false });
 
   useEffect(() => {
     async function fetchData() {
@@ -181,58 +174,6 @@ const ThirtyDayPage = () => {
       }, 500); // Delay to ensure page is fully loaded
     }
   }, []);
-
-  const handleAddToCart = (planType: "monthly" | "membership") => {
-    if (!thirtyDayCourse) return;
-
-    const formattedMonthlyPrice = new Intl.NumberFormat("vi-VN").format(monthlyPrice);
-    const formattedMembershipPrice = new Intl.NumberFormat("vi-VN").format(membershipPrice);
-
-    // Create a modified course with the appropriate price based on plan type
-    const courseToAdd =
-      planType === "membership"
-        ? {
-          ...thirtyDayCourse,
-          id: thirtyDayCourse.id + 1000, // Different ID for membership
-          price: { ...thirtyDayCourse.price, amount: formattedMembershipPrice },
-          title: "thirty_day_challenge.title_membership",
-        }
-        : {
-          ...thirtyDayCourse,
-          price: { ...thirtyDayCourse.price, amount: formattedMonthlyPrice }
-        };
-
-    addToCart(courseToAdd);
-    setAddedToCart((prev) => ({ ...prev, [planType]: true }));
-
-    // Reset after 2 seconds
-    setTimeout(() => {
-      setAddedToCart((prev) => ({ ...prev, [planType]: false }));
-    }, 2000);
-  };
-
-  const handleDirectCheckout = (planType: "monthly" | "membership") => {
-    if (!thirtyDayCourse) return;
-
-    const formattedMonthlyPrice = new Intl.NumberFormat("vi-VN").format(monthlyPrice);
-    const formattedMembershipPrice = new Intl.NumberFormat("vi-VN").format(membershipPrice);
-
-    const courseToAdd =
-      planType === "membership"
-        ? {
-          ...thirtyDayCourse,
-          id: thirtyDayCourse.id + 1000,
-          price: { ...thirtyDayCourse.price, amount: formattedMembershipPrice },
-          title: "thirty_day_challenge.title_membership",
-        }
-        : {
-          ...thirtyDayCourse,
-          price: { ...thirtyDayCourse.price, amount: formattedMonthlyPrice }
-        };
-
-    buyNow(courseToAdd);
-    router.push("/checkout");
-  };
 
   // Parse the price from the course - Prioritize data from program_30day_challenge table
   const monthlyPrice = courseData?.challengeDetail?.monthly_price ?? (thirtyDayCourse
@@ -644,14 +585,14 @@ const ThirtyDayPage = () => {
                   ))}
                 </ul>
                 <div className="flex-grow" />
-                <div className="relative w-full mt-6 group/button">
-                  <div className="absolute -inset-x-0.5 inset-y-0 rounded-[1.1rem] bg-gradient-to-r from-[#F6B917] to-yellow-300 opacity-5 blur-sm transition duration-500 group-hover/button:opacity-10" />
+                <div className="relative w-full mt-6 pointer-events-none">
                   <Button
-                    onClick={() => handleDirectCheckout("monthly")}
-                    className="relative h-11 w-full rounded-[0.95rem] border border-black/[0.04] bg-[#F6B917] px-5 text-sm font-black uppercase tracking-[0.15em] text-slate-900 shadow-[0_2px_6px_rgba(15,23,42,0.06)] transition-all duration-300 hover:scale-100 hover:bg-slate-900 hover:text-[#F6B917] hover:shadow-[0_3px_8px_rgba(15,23,42,0.08)] active:scale-[0.99]"
+                    aria-disabled={isChallengeEnrollmentClosed}
+                    disabled={isChallengeEnrollmentClosed}
+                    className="relative h-11 w-full rounded-[0.95rem] border border-gray-200 bg-gray-100 px-5 text-sm font-black uppercase tracking-[0.15em] text-gray-400 shadow-none opacity-100 cursor-not-allowed pointer-events-none hover:bg-gray-100 hover:text-gray-400"
                   >
                     <span className="flex items-center justify-center gap-2 text-sm font-[950] uppercase tracking-[0.15em]">
-                      {t("thirty_day_challenge.pricing.monthly.button")}
+                      {t("program_page.card.ended_registration")}
                     </span>
                   </Button>
                 </div>
@@ -734,13 +675,13 @@ const ThirtyDayPage = () => {
                   </div>
                   <div className="flex-grow" />
                   {/* CTA button */}
-                  <div className="relative w-full mt-6 group/button">
-                      <div className="absolute -inset-x-0.5 inset-y-0 rounded-[1.1rem] bg-gradient-to-r from-[#F6B917] to-yellow-300 opacity-5 blur-sm transition duration-500 group-hover/button:opacity-10" />
+                  <div className="relative w-full mt-6 pointer-events-none">
                     <Button
-                      onClick={() => handleDirectCheckout("membership")}
-                        className="relative h-11 w-full rounded-[0.95rem] border border-black/[0.04] bg-[#F6B917] px-5 text-sm font-black uppercase tracking-[0.15em] text-slate-900 shadow-[0_2px_6px_rgba(15,23,42,0.06)] transition-all duration-300 hover:scale-100 hover:bg-slate-900 hover:text-[#F6B917] hover:shadow-[0_3px_8px_rgba(15,23,42,0.08)] active:scale-[0.99]"
+                      aria-disabled={isChallengeEnrollmentClosed}
+                      disabled={isChallengeEnrollmentClosed}
+                        className="relative h-11 w-full rounded-[0.95rem] border border-gray-200 bg-gray-100 px-5 text-sm font-black uppercase tracking-[0.15em] text-gray-400 shadow-none opacity-100 cursor-not-allowed pointer-events-none hover:bg-gray-100 hover:text-gray-400"
                     >
-                      <span className="font-[950]">Đăng ký nhận ưu đãi ngay</span>
+                      <span className="font-[950]">{t("program_page.card.ended_registration")}</span>
                     </Button>
                   </div>
                   <div className="mt-3 min-h-[1.75rem]" aria-hidden="true" />
@@ -766,12 +707,12 @@ const ThirtyDayPage = () => {
                   <p className="text-gray-500 text-lg mb-8 leading-relaxed">
                     {t("thirty_day_challenge.faq.description")}
                   </p>
-                  <Button
-                    onClick={() => router.push('/contact')}
-                    className="bg-gray-900 text-white hover:bg-gray-800 px-8 py-6 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                  <a
+                    href="/contact"
+                    className="inline-flex items-center justify-center bg-gray-900 text-white hover:bg-gray-800 px-8 py-6 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
                   >
                     {t("thirty_day_challenge.faq.contact_button")}
-                  </Button>
+                  </a>
                 </div>
               </div>
 
