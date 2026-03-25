@@ -339,7 +339,7 @@ export const vi = {
                 title: "Là Chính Mình 05",
                 mission_desc: "Là Chính Mình - Hành trình 3.5 ngày đánh thức sức mạnh nội tại, giúp bạn gỡ bỏ những rào cản tâm lý để sống một cuộc đời rực rỡ và trọn vẹn nhất.",
                 topic: "Phát triển bản thân và khám phá nội tâm",
-                schedule: "Tháng 6 / 2026",
+                schedule: "27 - 30 tháng 8 / 2026",
                 instructor: "NhiLe x Guest Instructors",
                 sessions: "3,5 ngày",
                 location: "Đà Nẵng",

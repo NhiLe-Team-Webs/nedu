@@ -41,6 +41,23 @@ export const currencyFormatter = new Intl.NumberFormat('vi-VN', {
   minimumFractionDigits: 0,
 });
 
+function formatBirthdayToDateOnly(value?: string): string | undefined {
+  if (!value) return undefined;
+
+  const trimmed = value.trim();
+  const directDateMatch = trimmed.match(/^(\d{4}-\d{2}-\d{2})/);
+  if (directDateMatch) {
+    return directDateMatch[1];
+  }
+
+  const parsedDate = new Date(trimmed);
+  if (!Number.isNaN(parsedDate.getTime())) {
+    return parsedDate.toISOString().split('T')[0];
+  }
+
+  return undefined;
+}
+
 /**
  * Gửi yêu cầu thanh toán đến API VNPAY
  * @param data Thông tin thanh toán
@@ -100,12 +117,14 @@ export function preparePaymentData(
   programId: string,
   includeReturnUrl: boolean = true
 ): PaymentFormData {
+  const formattedBirthday = formatBirthdayToDateOnly(formData.birthdate);
+
   const paymentData: PaymentFormData = {
     fullName: formData.name,
     email: formData.email,
     phone: formData.phone,
     telegram: formData.telegram,
-    birthday: formData.birthdate ? new Date(formData.birthdate).toISOString() : '',
+    birthday: formattedBirthday || '',
     gender: formData.gender,
     address: formData.address || '',
     note: formData.note || '',
@@ -217,12 +236,14 @@ export function prepareSePayPaymentData(
   courseName?: string,
   couponCode?: string
 ): SePayPaymentFormData {
+  const formattedBirthday = formatBirthdayToDateOnly(formData.birthdate);
+
   const paymentData: SePayPaymentFormData = {
     fullName: formData.name,
     email: formData.email,
     phone: formData.phone,
     telegram: formData.telegram,
-    birthday: formData.birthdate ? new Date(formData.birthdate).toISOString() : undefined,
+    birthday: formattedBirthday,
     gender: formData.gender,
     address: formData.address || undefined,
     note: formData.note || undefined,

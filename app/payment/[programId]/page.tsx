@@ -199,7 +199,21 @@ export default function PaymentPage() {
 
   const handlePaymentComplete = () => {
     // Redirect to success page
-    router.push(`/payment-success?status=success&paymentMethod=sepay&programId=${programId}`)
+    const params = new URLSearchParams({
+      status: 'success',
+      paymentMethod: 'sepay',
+      programId,
+    });
+
+    if (sepayPaymentData?.orderCode) {
+      params.set('orderCode', sepayPaymentData.orderCode);
+    }
+
+    if (typeof sepayPaymentData?.amount === 'number') {
+      params.set('amount', String(sepayPaymentData.amount));
+    }
+
+    router.push(`/payment-success?${params.toString()}`)
   }
 
   const handlePaymentFailed = () => {

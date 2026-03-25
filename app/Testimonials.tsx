@@ -45,12 +45,6 @@ const Testimonials = ({
     "https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fneducation.sg%2Fvideos%2F778445208105529%2F&show_text=false",
   ];
 
-  const captions = [
-    t("testimonials.captions.0"),
-    t("testimonials.captions.1"),
-    t("testimonials.captions.2"),
-  ];
-
   return (
     <section className="relative flex flex-col items-center py-12 sm:py-16 lg:py-20 bg-white" id="testimonials">
       {/* large faded background label */}
@@ -78,7 +72,6 @@ const Testimonials = ({
                   </div>
                 </div>
 
-                <p className="mt-3 sm:mt-4 text-center text-sm sm:text-base lg:text-lg text-gray-600 transition-all duration-200 hover:text-gray-800 px-2">{captions[i]}</p>
               </div>
             );
           })}
@@ -94,7 +87,7 @@ const Testimonials = ({
               : "!bg-amber-400 hover:!bg-amber-500 !border-none !shadow-lg"
               }`}
           >
-            <span className={`inline-flex items-center uppercase text-sm sm:text-base font-bold ${justAdded ? "text-green-500" : "text-black"}`}>
+            <span className={`inline-flex items-center uppercase text-sm sm:text-base font-bold ${justAdded ? "text-green-500" : "text-white"}`}>
               {justAdded ? (
                 <>
                   {t("cart_popup.added")}

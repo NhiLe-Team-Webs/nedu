@@ -149,7 +149,11 @@ export default function CheckoutPage() {
       }
 
       // Construct course names string (e.g. "Course A, Course B")
-      const courseName = items.map(item => t(item.title)).join(', ');
+      // Nếu có khoá "thu-thach-30-ngay" thì courseName là "THỬ THÁCH 30 NGÀY"
+      let courseName = items.map(item => t(item.title)).join(', ');
+      if (items.some(item => item.slug === 'thu-thach-30-ngay')) {
+        courseName = 'THỬ THÁCH 30 NGÀY';
+      }
 
       // Determine coupon code used (if any discount applied)
       const appliedCouponCode = discount > 0 ? discountCode : '';
@@ -198,7 +202,21 @@ export default function CheckoutPage() {
   const handlePaymentComplete = () => {
     // Clear cart and redirect to success page
     clearCart();
-    router.push('/payment-success?status=success&paymentMethod=sepay');
+
+    const params = new URLSearchParams({
+      status: 'success',
+      paymentMethod: 'sepay',
+    });
+
+    if (sepayPaymentData?.orderCode) {
+      params.set('orderCode', sepayPaymentData.orderCode);
+    }
+
+    if (typeof sepayPaymentData?.amount === 'number') {
+      params.set('amount', String(sepayPaymentData.amount));
+    }
+
+    router.push(`/payment-success?${params.toString()}`);
   };
 
   const handlePaymentFailed = () => {
