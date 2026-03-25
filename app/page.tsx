@@ -47,7 +47,7 @@ export default function Home() {
             <div className="relative pb-[75%] md:pb-[56.25%] h-0 overflow-hidden rounded-[24px] md:rounded-lg shadow-ios-md md:shadow-none transition-all duration-300">
               <div className="absolute top-0 left-0 w-full h-full">
                 <video
-                  src="/videos/La%20chinh%20minh%20NhiLe%20Team%20_%20Final.mp4"
+                  src="/videos/IMG_6784.MP4"
                   className="w-full h-full object-cover"
                   autoPlay
                   loop
