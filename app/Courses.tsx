@@ -37,9 +37,15 @@ const SlideContent = ({ slide }: { slide: CourseSlide }) => {
   const { t } = useLanguage();
   const { buyNow } = useCart();
   const router = useRouter();
+  const isThirtyDayChallenge = slide.slug === "thu-thach-30-ngay";
 
   const handleRegister = (e: React.MouseEvent) => {
+    e.preventDefault();
     e.stopPropagation();
+    if (isThirtyDayChallenge) {
+      router.push(slide.href);
+      return;
+    }
     const courseData = courses.find(c => c.slug === slide.slug);
     if (courseData) {
       buyNow(courseData);
@@ -87,7 +93,7 @@ const SlideContent = ({ slide }: { slide: CourseSlide }) => {
         <div className="info-bottom slide-bottom flex items-center gap-4">
           <Button
             className="rounded-full bg-white text-black hover:bg-white/90 px-6 py-2.5 text-sm font-bold leading-[1.35] h-auto shrink-0 shadow-lg"
-            onClick={(e) => { e.preventDefault(); handleRegister(e); }}
+            onClick={handleRegister}
           >
             Đăng ký ngay
           </Button>
