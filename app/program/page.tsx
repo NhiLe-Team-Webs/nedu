@@ -159,9 +159,8 @@ export default function ProgramPage() {
     }, 3500);
   };
 
-  const isThirtyDayChallengeClosed = (slug: string) => slug === "thu-thach-30-ngay";
   const getCourseActionState = (slug: string) => {
-    const isDisabled = isThirtyDayChallengeClosed(slug);
+    const isDisabled = false;
 
     return {
       isDisabled,
