@@ -36,14 +36,14 @@ const SlideContent = ({ slide }: { slide: CourseSlide }) => {
   const { t } = useLanguage();
   const { buyNow } = useCart();
   const router = useRouter();
-  const isThirtyDayChallengeClosed = slide.slug === "thu-thach-30-ngay";
+  const isThirtyDayChallenge = slide.slug === "thu-thach-30-ngay";
 
   const handleRegister = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
-    if (isThirtyDayChallengeClosed) {
-      e.preventDefault();
+    if (isThirtyDayChallenge) {
+      router.push(slide.href);
       return;
     }
 
@@ -54,12 +54,8 @@ const SlideContent = ({ slide }: { slide: CourseSlide }) => {
     }
   };
 
-  const mobileButtonLabel = isThirtyDayChallengeClosed
-    ? t("program_page.card.ended_registration")
-    : t("courses.buttons.learn_more");
-  const desktopButtonLabel = isThirtyDayChallengeClosed
-    ? t("program_page.card.ended_registration")
-    : t("courses.buttons.register_now");
+  const mobileButtonLabel = t("courses.buttons.learn_more");
+  const desktopButtonLabel = isThirtyDayChallenge ? t("courses.buttons.learn_more") : t("courses.buttons.register_now");
 
   return (
     <Link href={slide.href} className="relative block h-full w-full overflow-hidden brightness-100 hover:translate-y-0">
@@ -85,9 +81,7 @@ const SlideContent = ({ slide }: { slide: CourseSlide }) => {
             {slide.content}
           </p>
           <Button
-            aria-disabled={isThirtyDayChallengeClosed}
-            disabled={isThirtyDayChallengeClosed}
-            className="rounded-full bg-white px-10 py-6 text-base font-black leading-[1.35] text-black shadow-2xl transition-all duration-300 hover:bg-[#F7B50C] hover:text-white active:scale-95 disabled:pointer-events-none disabled:bg-white/80 disabled:text-gray-400 disabled:shadow-none"
+            className="rounded-full bg-white px-10 py-6 text-base font-black leading-[1.35] text-black shadow-2xl transition-all duration-300 hover:bg-[#F7B50C] hover:text-white active:scale-95"
             onClick={handleRegister}
           >
             {mobileButtonLabel}
@@ -98,9 +92,7 @@ const SlideContent = ({ slide }: { slide: CourseSlide }) => {
       <div className="absolute inset-x-0 bottom-0 hidden flex-col justify-end px-8 py-6 text-white md:flex">
         <div className="info-bottom slide-bottom flex items-center gap-4">
           <Button
-            aria-disabled={isThirtyDayChallengeClosed}
-            disabled={isThirtyDayChallengeClosed}
-            className="h-auto shrink-0 rounded-full bg-white px-6 py-2.5 text-sm font-bold leading-[1.35] text-black shadow-lg hover:bg-white/90 disabled:pointer-events-none disabled:bg-white/80 disabled:text-gray-400 disabled:shadow-none"
+            className="h-auto shrink-0 rounded-full bg-white px-6 py-2.5 text-sm font-bold leading-[1.35] text-black shadow-lg hover:bg-white/90"
             onClick={(e) => {
               e.preventDefault();
               handleRegister(e);
