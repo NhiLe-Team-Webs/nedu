@@ -39,6 +39,7 @@ const SlideContent = ({ slide }: { slide: CourseSlide }) => {
   const isThirtyDayChallengeClosed = slide.slug === "thu-thach-30-ngay";
 
   const handleRegister = (e: React.MouseEvent) => {
+    e.preventDefault();
     e.stopPropagation();
 
     if (isThirtyDayChallengeClosed) {

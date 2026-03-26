@@ -46,14 +46,13 @@ export default function Home() {
             {/* Mobile: Taller aspect ratio + iOS styling */}
             <div className="relative pb-[75%] md:pb-[56.25%] h-0 overflow-hidden rounded-[24px] md:rounded-lg shadow-ios-md md:shadow-none transition-all duration-300">
               <div className="absolute top-0 left-0 w-full h-full">
-                <video
-                  src="/videos/IMG_6784.MP4"
-                  className="w-full h-full object-cover"
-                  autoPlay
-                  loop
-                  playsInline
-                  controls
-                  muted
+                <iframe
+                  src="https://www.youtube.com/embed/7QJKkxXCpGY?autoplay=1&mute=1&loop=1&playlist=7QJKkxXCpGY&controls=1&playsinline=1&rel=0"
+                  title="N-EDU introduction video"
+                  className="w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
                 />
               </div>
             </div>
