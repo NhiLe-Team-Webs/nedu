@@ -75,18 +75,18 @@ const SlideContent = ({ slide }: { slide: CourseSlide }) => {
   };
 
   return (
-    <Link href={slide.href} className="relative block h-full w-full overflow-hidden brightness-100 hover:translate-y-0">
+    <Link href={slide.href} className="relative block h-full w-full overflow-hidden brightness-100">
       <Image
         src={slide.image}
         alt={slide.title}
         fill
-        className="hidden h-full w-full object-contain bg-white hover:scale-100 md:block"
+        className="hidden h-full w-full object-contain bg-white md:block"
       />
       <Image
         src={slide.imageMobile || slide.image}
         alt={slide.title}
         fill
-        className="h-full w-full object-contain bg-white hover:scale-100 md:hidden"
+        className="h-full w-full object-contain bg-white md:hidden"
       />
 
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
@@ -161,8 +161,8 @@ const Courses: React.FC = () => {
         id: 2,
         slug: "la-chinh-minh",
         href: "/program-offline/la-chinh-minh",
-        image: "/picture/la_chinh_minh.jpg",
-        imageMobile: "/picture/la_chinh_minh.jpg",
+        image: "/picture/lachinhminh_desktop.svg",
+        imageMobile: "/picture/lachinhminh_mobile.svg",
         date: "5/3-8/3/2026",
         title: t("courses.slides.lcm.title"),
         label: t("courses.upcoming"),
@@ -174,7 +174,7 @@ const Courses: React.FC = () => {
         slug: "cuoc-song-cua-ban",
         href: "/program-online/cuoc-song-cua-ban",
         image: "/picture/cuoc_song_cua_ban.png",
-        imageMobile: "/picture/cuoc_song_cua_ban.png",
+        imageMobile: "/picture/cuocsongcuaban_mobile.svg",
         date: "01/11/2025",
         title: t("courses.slides.cscb.title"),
         label: t("courses.online"),
@@ -192,6 +192,18 @@ const Courses: React.FC = () => {
         label: t("courses.online"),
         content: t("courses.slides.tt30n.content"),
         type: "Membership",
+      },
+      {
+        id: 9,
+        slug: "thuong-hieu-cua-ban",
+        href: "/program-online/thuong-hieu-cua-ban",
+        image: "/picture/thuong_hieu_cua_ban.png",
+        imageMobile: "/picture/thuonghieucuaban_mobile.svg",
+        date: "15/04/2026",
+        title: t("courses.slides.thcb.title"),
+        label: t("courses.online"),
+        content: t("courses.slides.thcb.content"),
+        type: "Online",
       },
     ],
     [t, thirtyDayCourse, thirtyDayPreview.desktop, thirtyDayPreview.mobile],
@@ -211,7 +223,7 @@ const Courses: React.FC = () => {
   if (!isMounted) return null;
 
   return (
-    <section id="courses-section" className="relative overflow-x-hidden bg-white py-16 lg:py-24">
+      <section id="courses-section" className="relative overflow-x-hidden bg-white py-16 lg:py-24">
       <div className="container mx-auto px-4">
         <div className="mx-auto text-center">
           <h2 className="relative z-10 mb-8 pt-[0.08em] text-center text-2xl font-black uppercase leading-[1.15] text-amber-400 sm:mb-10 sm:text-3xl md:mb-12 md:text-4xl lg:text-5xl xl:text-[68px]">
