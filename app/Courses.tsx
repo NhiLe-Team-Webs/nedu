@@ -195,22 +195,24 @@ const Courses: React.FC = () => {
     [t, thirtyDayCourse, thirtyDayPreview.desktop, thirtyDayPreview.mobile],
   );
 
-  const coursesHeading = t("courses.heading");
-  const secondLineMatch = coursesHeading.match(/,\s*cho ng/i);
-  const coursesHeadingLine1 = secondLineMatch
-    ? `${coursesHeading.slice(0, secondLineMatch.index).trim()},`
-    : coursesHeading;
-  const coursesHeadingLine2 = secondLineMatch ? secondLineMatch[0].replace(/^,\s*/, "") : "";
-
-  if (!isMounted) return null;
+    const coursesHeading = t("courses.heading");
+    const regex = /,\s*cho ng/i;
+     const match = regex.exec(coursesHeading);
+     const hasSecondLine = !!match;
+     const coursesHeadingLine1 = hasSecondLine
+       ? coursesHeading.slice(0, match.index + 1).trim()
+       : coursesHeading;
+     const coursesHeadingLine2 = hasSecondLine
+       ? coursesHeading.slice(match.index + 1).trim()
+       : "";
 
   return (
-    <section id="courses-section" className="relative overflow-x-hidden bg-white py-16 lg:py-24">
+      <section id="courses-section" className="relative overflow-x-hidden bg-white py-16 lg:py-24">
       <div className="container mx-auto px-4">
         <div className="mx-auto text-center">
           <h2 className="relative z-10 mb-8 pt-[0.08em] text-center text-2xl font-black uppercase leading-[1.15] text-amber-400 sm:mb-10 sm:text-3xl md:mb-12 md:text-4xl lg:text-5xl xl:text-[68px]">
-            <span className="block whitespace-nowrap">{coursesHeadingLine1}</span>
-            {coursesHeadingLine2 && <span className="block whitespace-nowrap">{coursesHeadingLine2}</span>}
+            <span className="block">{coursesHeadingLine1}</span>
+            {coursesHeadingLine2 && <span className="block">{coursesHeadingLine2}</span>}
           </h2>
         </div>
 
