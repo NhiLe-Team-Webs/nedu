@@ -208,9 +208,9 @@ const Courses: React.FC = () => {
     <section id="courses-section" className="relative overflow-x-hidden bg-white py-16 lg:py-24">
       <div className="container mx-auto px-4">
         <div className="mx-auto text-center">
-          <h2 className="relative z-10 mb-8 pt-[0.08em] text-center text-2xl font-black uppercase leading-[1.15] text-amber-400 sm:mb-10 sm:text-3xl md:mb-12 md:text-4xl lg:text-5xl xl:text-[68px]">
-            <span className="block whitespace-nowrap">{coursesHeadingLine1}</span>
-            {coursesHeadingLine2 && <span className="block whitespace-nowrap">{coursesHeadingLine2}</span>}
+          <h2 className="relative z-10 mb-8 pt-[0.08em] text-center text-2xl font-black uppercase leading-[1.15] text-amber-400 sm:mb-10 sm:text-3xl md:mb-12 md:text-4xl lg:text-5xl xl:text-[68px] break-words max-w-full">
+            <span className="block whitespace-normal break-words max-w-full">{coursesHeadingLine1}</span>
+            {coursesHeadingLine2 && <span className="block whitespace-normal break-words max-w-full">{coursesHeadingLine2}</span>}
           </h2>
         </div>
 
