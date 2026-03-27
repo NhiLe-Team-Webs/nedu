@@ -54,8 +54,9 @@ const SlideContent = ({ slide }: { slide: CourseSlide }) => {
     }
   };
 
+  // Button label logic: desktop always 'Đăng ký ngay' for 30-day challenge, mobile always 'Tìm hiểu thêm'
   const mobileButtonLabel = t("courses.buttons.learn_more");
-  const desktopButtonLabel = isThirtyDayChallenge ? t("courses.buttons.learn_more") : t("courses.buttons.register_now");
+  const desktopButtonLabel = isThirtyDayChallenge ? t("courses.buttons.register_now") : t("courses.buttons.register_now");
 
   return (
     <Link href={slide.href} className="relative block h-full w-full overflow-hidden brightness-100 hover:translate-y-0">
@@ -186,9 +187,11 @@ const Courses: React.FC = () => {
   const coursesHeading = t("courses.heading");
   const secondLineMatch = coursesHeading.match(/,\s*cho ng/i);
   const coursesHeadingLine1 = secondLineMatch
-    ? `${coursesHeading.slice(0, secondLineMatch.index).trim()},`
+    ? coursesHeading.slice(0, secondLineMatch.index + 1).trim()
     : coursesHeading;
-  const coursesHeadingLine2 = secondLineMatch ? secondLineMatch[0].replace(/^,\s*/, "") : "";
+  const coursesHeadingLine2 = secondLineMatch
+    ? coursesHeading.slice(secondLineMatch.index + 1).trim()
+    : "";
 
   if (!isMounted) return null;
 
@@ -197,8 +200,8 @@ const Courses: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="mx-auto text-center">
           <h2 className="relative z-10 mb-8 pt-[0.08em] text-center text-2xl font-black uppercase leading-[1.15] text-amber-400 sm:mb-10 sm:text-3xl md:mb-12 md:text-4xl lg:text-5xl xl:text-[68px]">
-            <span className="block whitespace-nowrap">{coursesHeadingLine1}</span>
-            {coursesHeadingLine2 && <span className="block whitespace-nowrap">{coursesHeadingLine2}</span>}
+            <span className="block">{coursesHeadingLine1}</span>
+            {coursesHeadingLine2 && <span className="block">{coursesHeadingLine2}</span>}
           </h2>
         </div>
 
