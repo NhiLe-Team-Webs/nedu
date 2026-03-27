@@ -294,8 +294,8 @@ export default function CheckoutPage() {
                   <div className="space-y-6">
                     {items.map((item) => {
                       const itemImage = item.slug === 'thu-thach-30-ngay'
-                        ? (thirtyDayCheckoutImage || 'data:image/gif;base64,R0lGODlhAQABAAAAACw=')
-                        : item.heroImage;
+                        ? (thirtyDayCheckoutImage && thirtyDayCheckoutImage !== '' ? thirtyDayCheckoutImage : '/picture/thuthach30day_desktop.png')
+                        : (item.heroImage || '/picture/thuthach30day_desktop.png');
 
                       return (
                       <div key={item.id} className="flex flex-col md:flex-row gap-4 pb-6 border-b last:border-b-0 border-gray-100">
@@ -303,6 +303,7 @@ export default function CheckoutPage() {
                           src={itemImage}
                           alt={t(item.title)}
                           className="w-full md:w-[150px] h-[100px] object-cover rounded-ios-lg shadow-sm"
+                          onError={e => { e.currentTarget.src = '/picture/thuthach30day_desktop.png'; }}
                         />
 
                         <div className="flex-1 flex flex-col justify-center">
