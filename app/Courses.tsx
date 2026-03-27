@@ -54,9 +54,25 @@ const SlideContent = ({ slide }: { slide: CourseSlide }) => {
     }
   };
 
-  // Button label logic: desktop always 'Đăng ký ngay' for 30-day challenge, mobile always 'Tìm hiểu thêm'
+  // Button label: desktop for 30-day challenge is 'Đăng ký ngay', mobile is 'Tìm hiểu thêm'
   const mobileButtonLabel = t("courses.buttons.learn_more");
   const desktopButtonLabel = isThirtyDayChallenge ? t("courses.buttons.register_now") : t("courses.buttons.register_now");
+
+  // Custom desktop button handler for 30-day challenge
+  const handleDesktopRegister = (e: React.MouseEvent, slide: CourseSlide) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (slide.slug === "thu-thach-30-ngay") {
+      // Go to checkout directly
+      const courseData = courses.find((c) => c.slug === slide.slug);
+      if (courseData) {
+        buyNow(courseData);
+        router.push("/checkout");
+      }
+    } else {
+      handleRegister(e);
+    }
+  };
 
   return (
     <Link href={slide.href} className="relative block h-full w-full overflow-hidden brightness-100 hover:translate-y-0">
@@ -94,10 +110,7 @@ const SlideContent = ({ slide }: { slide: CourseSlide }) => {
         <div className="info-bottom slide-bottom flex items-center gap-4">
           <Button
             className="h-auto shrink-0 rounded-full bg-white px-6 py-2.5 text-sm font-bold leading-[1.35] text-black shadow-lg hover:bg-white/90"
-            onClick={(e) => {
-              e.preventDefault();
-              handleRegister(e);
-            }}
+            onClick={(e) => handleDesktopRegister(e, slide)}
           >
             {desktopButtonLabel}
           </Button>
@@ -185,13 +198,15 @@ const Courses: React.FC = () => {
   );
 
   const coursesHeading = t("courses.heading");
-  const secondLineMatch = coursesHeading.match(/,\s*cho ng/i);
-  const coursesHeadingLine1 = secondLineMatch
-    ? coursesHeading.slice(0, secondLineMatch.index + 1).trim()
-    : coursesHeading;
-  const coursesHeadingLine2 = secondLineMatch
-    ? coursesHeading.slice(secondLineMatch.index + 1).trim()
-    : "";
+  const regex = /,\s*cho ng/i;
+     const match = regex.exec(coursesHeading);
+     const hasSecondLine = !!match;
+     const coursesHeadingLine1 = hasSecondLine
+       ? coursesHeading.slice(0, match.index + 1).trim()
+       : coursesHeading;
+     const coursesHeadingLine2 = hasSecondLine
+       ? coursesHeading.slice(match.index + 1).trim()
+       : "";
 
   if (!isMounted) return null;
 
