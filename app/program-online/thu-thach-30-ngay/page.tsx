@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import {
   Clock,
   Users,
@@ -20,6 +21,7 @@ import {
 } from "lucide-react";
 import { useLanguage } from "@/lib/LanguageContext";
 import { courses } from "@/data/courses";
+import { useCart } from "@/lib/cart-context";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { getCourseDetailBySlug } from "@/lib/services/courseService";
@@ -42,7 +44,8 @@ const formatCurrency = (value: number | undefined) => {
 
 const ThirtyDayPage = () => {
   const { t } = useLanguage();
-  const isChallengeEnrollmentClosed = true;
+  const { buyNow } = useCart();
+  const router = useRouter();
 
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
   const [showAllFaq, setShowAllFaq] = useState(false);
@@ -185,6 +188,29 @@ const ThirtyDayPage = () => {
   const membershipBonusMonths = monthlyPrice > 0
     ? Math.max(Math.floor(membershipSavings / monthlyPrice), 0)
     : 0;
+
+  const handleDirectCheckout = (planType: "monthly" | "membership") => {
+    if (!thirtyDayCourse) return;
+
+    const formattedMonthlyPrice = new Intl.NumberFormat("vi-VN").format(monthlyPrice);
+    const formattedMembershipPrice = new Intl.NumberFormat("vi-VN").format(membershipPrice);
+
+    const courseToAdd =
+      planType === "membership"
+        ? {
+            ...thirtyDayCourse,
+            id: thirtyDayCourse.id + 1000,
+            price: { ...thirtyDayCourse.price, amount: formattedMembershipPrice },
+            title: "thirty_day_challenge.title_membership",
+          }
+        : {
+            ...thirtyDayCourse,
+            price: { ...thirtyDayCourse.price, amount: formattedMonthlyPrice },
+          };
+
+    buyNow(courseToAdd);
+    router.push("/checkout");
+  };
 
   return (
     <div className="min-h-screen bg-[#F2F2F7] override-header-spacing font-sans text-gray-900">
@@ -585,14 +611,13 @@ const ThirtyDayPage = () => {
                   ))}
                 </ul>
                 <div className="flex-grow" />
-                <div className="relative w-full mt-6 pointer-events-none">
+                <div className="relative w-full mt-6">
                   <Button
-                    aria-disabled={isChallengeEnrollmentClosed}
-                    disabled={isChallengeEnrollmentClosed}
-                    className="relative h-11 w-full rounded-[0.95rem] border border-gray-200 bg-gray-100 px-5 text-sm font-black uppercase tracking-[0.15em] text-gray-400 shadow-none opacity-100 cursor-not-allowed pointer-events-none hover:bg-gray-100 hover:text-gray-400"
+                    onClick={() => handleDirectCheckout("monthly")}
+                    className="relative h-11 w-full rounded-[0.95rem] border border-black/[0.04] bg-[#F6B917] px-5 text-sm font-black uppercase tracking-[0.15em] text-slate-900 shadow-[0_2px_6px_rgba(15,23,42,0.06)] transition-all duration-300 hover:scale-100 hover:bg-slate-900 hover:text-[#F6B917] hover:shadow-[0_3px_8px_rgba(15,23,42,0.08)] active:scale-[0.99]"
                   >
                     <span className="flex items-center justify-center gap-2 text-sm font-[950] uppercase tracking-[0.15em]">
-                      {t("program_page.card.ended_registration")}
+                      {t("thirty_day_challenge.pricing.monthly.button")}
                     </span>
                   </Button>
                 </div>
@@ -675,13 +700,12 @@ const ThirtyDayPage = () => {
                   </div>
                   <div className="flex-grow" />
                   {/* CTA button */}
-                  <div className="relative w-full mt-6 pointer-events-none">
+                  <div className="relative w-full mt-6">
                     <Button
-                      aria-disabled={isChallengeEnrollmentClosed}
-                      disabled={isChallengeEnrollmentClosed}
-                        className="relative h-11 w-full rounded-[0.95rem] border border-gray-200 bg-gray-100 px-5 text-sm font-black uppercase tracking-[0.15em] text-gray-400 shadow-none opacity-100 cursor-not-allowed pointer-events-none hover:bg-gray-100 hover:text-gray-400"
+                      onClick={() => handleDirectCheckout("membership")}
+                      className="relative h-11 w-full rounded-[0.95rem] border border-black/[0.04] bg-[#F6B917] px-5 text-sm font-black uppercase tracking-[0.15em] text-slate-900 shadow-[0_2px_6px_rgba(15,23,42,0.06)] transition-all duration-300 hover:scale-100 hover:bg-slate-900 hover:text-[#F6B917] hover:shadow-[0_3px_8px_rgba(15,23,42,0.08)] active:scale-[0.99]"
                     >
-                      <span className="font-[950]">{t("program_page.card.ended_registration")}</span>
+                      <span className="font-[950]">{t("thirty_day_challenge.pricing.membership.button")}</span>
                     </Button>
                   </div>
                   <div className="mt-3 min-h-[1.75rem]" aria-hidden="true" />
