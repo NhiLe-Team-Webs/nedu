@@ -52,7 +52,7 @@ export const vi = {
         hero_subtitle_end: "...cùng N-Education\""
     },
     courses: {
-        heading: "Người Việt, làm hàng Việt, cho người Việt",
+        heading: "Người Việt, làm hàng Việt,\ncho người Việt",
         upcoming: "Khóa học sắp diễn ra",
         intro: "Giới thiệu",
         online: "Các khóa học Online",
@@ -63,7 +63,7 @@ export const vi = {
         slides: {
             lcm: {
                 title: "Là Chính Mình 05",
-                content: "Người Việt, làm hàng Việt, cho người Việt."
+                content: "Là chính mình, hành trình khám phá, thấu hiểu và yêu thương bản thân"
             },
             smvh: {
                 title: "Sức Mạnh Vô Hạn",
@@ -71,11 +71,11 @@ export const vi = {
             },
             thcb: {
                 title: "Thương Hiệu Của Bạn",
-                content: "Bắt đầu sự nghiệp với AI từ con số 0."
+                content: "Xây dựng thương hiệu cá nhân và doanh nghiệp"
             },
             cscb: {
                 title: "Cuộc Sống Của Bạn",
-                content: "Xây dựng thương hiệu cá nhân và doanh nghiệp."
+                content: "Tìm hiểu cảm xúc, khám phá những khía cạnh thịnh vượng"
             },
             ai_biz: {
                 title: "AI For Business Communication",
