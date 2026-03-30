@@ -63,7 +63,7 @@ export const vi = {
         slides: {
             lcm: {
                 title: "Là Chính Mình 05",
-                content: "Là chính mình, hành trình khám phá, thấu hiểu và yêu thương bản thân"
+                content: "Hành trình khám phá, thấu hiểu và yêu thương bản thân"
             },
             smvh: {
                 title: "Sức Mạnh Vô Hạn",
