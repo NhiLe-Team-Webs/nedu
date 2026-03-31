@@ -54,8 +54,25 @@ const SlideContent = ({ slide }: { slide: CourseSlide }) => {
     }
   };
 
-  const mobileButtonLabel = t("courses.buttons.learn_more");
-  const desktopButtonLabel = isThirtyDayChallenge ? t("courses.buttons.learn_more") : t("courses.buttons.register_now");
+  // Button labels: both desktop and mobile are 'Đăng ký ngay'
+  const mobileButtonLabel = t("courses.buttons.register_now");
+  const desktopButtonLabel = t("courses.buttons.register_now");
+
+  // Custom desktop button handler for 30-day challenge
+  const handleDesktopRegister = (e: React.MouseEvent, slide: CourseSlide) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (slide.slug === "thu-thach-30-ngay") {
+      // Go to checkout directly
+      const courseData = courses.find((c) => c.slug === slide.slug);
+      if (courseData) {
+        buyNow(courseData);
+        router.push("/checkout");
+      }
+    } else {
+      handleRegister(e);
+    }
+  };
 
   return (
     <Link href={slide.href} className="relative block h-full w-full overflow-hidden brightness-100">
@@ -81,7 +98,7 @@ const SlideContent = ({ slide }: { slide: CourseSlide }) => {
             {slide.content}
           </p>
           <Button
-            className="rounded-full bg-white px-10 py-6 text-base font-black leading-[1.35] text-black shadow-2xl transition-all duration-300 hover:bg-[#F7B50C] hover:text-white active:scale-95"
+            className="rounded-full !bg-[#d0011b] px-10 py-6 text-base font-black leading-[1.35] !text-white shadow-2xl transition-all duration-300 hover:!bg-[#d0011b]/90 active:scale-95"
             onClick={handleRegister}
           >
             {mobileButtonLabel}
@@ -92,11 +109,8 @@ const SlideContent = ({ slide }: { slide: CourseSlide }) => {
       <div className="absolute inset-x-0 bottom-0 hidden flex-col justify-end px-8 py-6 text-white md:flex">
         <div className="info-bottom slide-bottom flex items-center gap-4">
           <Button
-            className="h-auto shrink-0 rounded-full bg-white px-6 py-2.5 text-sm font-bold leading-[1.35] text-black shadow-lg hover:bg-white/90"
-            onClick={(e) => {
-              e.preventDefault();
-              handleRegister(e);
-            }}
+            className="h-auto shrink-0 rounded-full !bg-[#d0011b] px-6 py-2.5 text-sm font-bold leading-[1.35] !text-white shadow-lg hover:!bg-[#d0011b]/90"
+            onClick={(e) => handleDesktopRegister(e, slide)}
           >
             {desktopButtonLabel}
           </Button>
@@ -195,22 +209,18 @@ const Courses: React.FC = () => {
     [t, thirtyDayCourse, thirtyDayPreview.desktop, thirtyDayPreview.mobile],
   );
 
-    const coursesHeading = t("courses.heading");
-    const regex = /,\s*cho ng/i;
-     const match = regex.exec(coursesHeading);
-     const hasSecondLine = !!match;
-     const coursesHeadingLine1 = hasSecondLine
-       ? coursesHeading.slice(0, match.index + 1).trim()
-       : coursesHeading;
-     const coursesHeadingLine2 = hasSecondLine
-       ? coursesHeading.slice(match.index + 1).trim()
-       : "";
+  const coursesHeading = t("courses.heading");
+  const headingParts = coursesHeading.split('\n');
+  const coursesHeadingLine1 = headingParts[0];
+  const coursesHeadingLine2 = headingParts[1] || "";
+
+  if (!isMounted) return null;
 
   return (
-      <section id="courses-section" className="relative overflow-x-hidden bg-white py-16 lg:py-24">
+    <section id="courses-section" className="relative overflow-x-hidden bg-white py-16 lg:py-24">
       <div className="container mx-auto px-4">
         <div className="mx-auto text-center">
-          <h2 className="relative z-10 mb-8 pt-[0.08em] text-center text-2xl font-black uppercase leading-[1.15] text-amber-400 sm:mb-10 sm:text-3xl md:mb-12 md:text-4xl lg:text-5xl xl:text-[68px]">
+          <h2 className="relative z-10 mb-8 pt-[0.08em] text-center text-2xl font-black uppercase tracking-tight leading-[1.15] text-amber-400 sm:mb-10 sm:text-3xl md:mb-12 md:text-4xl lg:text-5xl xl:text-[68px]">
             <span className="block">{coursesHeadingLine1}</span>
             {coursesHeadingLine2 && <span className="block">{coursesHeadingLine2}</span>}
           </h2>

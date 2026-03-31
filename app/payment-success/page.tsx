@@ -300,11 +300,9 @@ function PaymentSuccessContent() {
                   {message}
                 </p>
                 <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
-                  Bạn vui lòng kiểm tra{' '}
-                  <a href="https://gmail.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-semibold">
-                    Gmail
-                  </a>{' '}
-                  ngay để nhận thông tin nhé.
+                  Mail xác nhận đang trên đường tới, bạn nhớ kiểm tra kỹ cả mục{' '}
+                  <span className="text-primary font-semibold">Thư rác (Spam)</span>{' '}
+                  <span className="font-bold">TRƯỚC KHI LIÊN HỆ ADMIN HỖ TRỢ</span> nhé!
                 </p>
                 <div className="mt-8 space-y-3 sm:space-y-4">
                   <Link

@@ -70,7 +70,7 @@ export default function Home() {
               </p>
               <div className="my-4 md:my-6 min-h-[4rem] md:min-h-[7rem] lg:min-h-[9rem] flex items-center justify-center relative">
                 <h1
-                  className={`text-3xl sm:text-4xl md:text-7xl lg:text-8xl font-extrabold text-[#FFA500] uppercase tracking-wide leading-tight transition-all duration-500 ease-in-out ${isTransitioning
+                  className={`text-3xl sm:text-4xl md:text-7xl lg:text-8xl font-extrabold text-[#fbbf24] uppercase tracking-wide leading-tight transition-all duration-500 ease-in-out ${isTransitioning
                     ? "opacity-0 translate-y-8 md:translate-y-12"
                     : "opacity-100 translate-y-0"
                     }`}
