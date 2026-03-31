@@ -14,9 +14,31 @@ export default function ContactPage() {
   const [status, setStatus] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus("success");
+    setStatus("");
+    try {
+      const res = await fetch("/api/contact-to-sheet", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          hoVaTen: formData.name,
+          soDienThoai: formData.phone,
+          email: formData.email,
+          noiDung: formData.message,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setStatus("success");
+      } else {
+        setStatus("error");
+        console.error("API error:", data.error, data.details);
+      }
+    } catch (err) {
+      setStatus("error");
+      console.error("Network/API error:", err);
+    }
     setTimeout(() => setStatus(""), 3000);
   };
 
