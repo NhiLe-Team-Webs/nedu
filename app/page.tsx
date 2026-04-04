@@ -40,7 +40,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section with Google Drive Video */}
-      <section className="bg-white pt-2 md:pt-0 pb-8 md:pb-0">
+      <section className="bg-white pt-0 pb-8 md:pb-0">
         <div className="container mx-auto px-4 md:px-6">
           <div className="w-full">
             {/* Mobile: Taller aspect ratio + iOS styling */}
