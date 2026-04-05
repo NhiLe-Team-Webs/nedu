@@ -60,7 +60,8 @@ export const courses: Course[] = [
     mode: 'offline',
     title: 'program_detail.courses.suc_manh_vo_han.title',
     category: ['categories.entrepreneur', 'categories.business'],
-    heroImage: '/picture/suc_manh_vo_han.jpg',
+    heroImage: '/picture/suc_manh_vo_han.jpg', // Primary image used in listings
+    mobileImage: '/picture/suc_manh_vo_han.jpg',  // Mobile optimized image for the course page
     price: {
       amount: '180.000.000',
       currency: 'VNĐ',
@@ -123,7 +124,8 @@ export const courses: Course[] = [
     mode: 'offline',
     title: 'program_detail.courses.la_chinh_minh.title',
     category: ['categories.personal_development', 'categories.be_yourself'],
-    heroImage: '/picture/la_chinh_minh.jpg',
+    heroImage: '/picture/la_chinh_minh.jpg', // Primary image used in listings
+    mobileImage: '/picture/la_chinh_minh.jpg',  // Mobile optimized image for the course page
     price: {
       amount: '68.690.000',
       currency: 'VNĐ'
@@ -174,7 +176,8 @@ export const courses: Course[] = [
       mode: 'online',
       title: 'program_detail.courses.gen_ai_101.title',
       category: ['categories.ai'],
-      heroImage: '/picture/thum_yt_1.png',
+      heroImage: '/picture/thum_yt_1.png', // Primary image used in listings
+      mobileImage: '/picture/thum_yt_1.png',  // Mobile optimized image for the course page
       price: {
         amount: '13.069.000',
         currency: 'VNĐ'
@@ -215,7 +218,8 @@ export const courses: Course[] = [
     mode: 'online',
     title: 'program_detail.courses.thuong_hieu_cua_ban.title',
     category: ['categories.branding'],
-    heroImage: '/picture/thuong_hieu_cua_ban.png',
+    heroImage: '/course/thuonghieucuaban_desktop.svg', // Primary image used in listings
+    mobileImage: '/course/thuonghieucuaban_mobile.svg',  // Mobile optimized image for the course page
     price: {
       amount: '18.960.000',
       currency: 'VNĐ'
@@ -255,7 +259,8 @@ export const courses: Course[] = [
     mode: 'online',
     title: 'program_detail.courses.cuoc_song_cua_ban.title',
     category: ['categories.personal_development'],
-    heroImage: '/picture/cuoc_song_cua_ban.png',
+    heroImage: '/course/cuocsongcuaban_desktop.svg', // Primary image used in listings
+    mobileImage: '/course/cuocsongcuaban_mobile.svg',  // Mobile optimized image for the course page
     price: {
       amount: '18.960.000',
       currency: 'VNĐ'
@@ -296,7 +301,8 @@ export const courses: Course[] = [
       mode: 'online',
       title: 'program_detail.courses.ai_for_business_communication.title',
       category: ['categories.applied_ai'],
-      heroImage: '/picture/thum_yt_2.png',
+      heroImage: '/picture/thum_yt_2.png', // Primary image used in listings
+      mobileImage: '/picture/thum_yt_2.png',  // Mobile optimized image for the course page
       price: {
         amount: '23.609.000',
         currency: 'VNĐ'
@@ -338,7 +344,8 @@ export const courses: Course[] = [
       mode: 'online',
       title: 'program_detail.courses.ai_in_marketing.title',
       category: ['categories.digital_marketing'],
-      heroImage: '/picture/thum_yt_3.png',
+      heroImage: '/picture/thum_yt_3.png', // Primary image used in listings
+      mobileImage: '/picture/thum_yt_3.png',  // Mobile optimized image for the course page
       price: {
         amount: '28.985.000',
         currency: 'VNĐ'
