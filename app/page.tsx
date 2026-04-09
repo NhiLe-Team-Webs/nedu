@@ -11,6 +11,7 @@ import Testimonials from "./Testimonials";
 import Partners from "./Partners";
 import Connection from "./Connection";
 import Privilege from "./Privilege";
+import YouTube from "react-youtube";
 
 import { useLanguage } from "@/lib/LanguageContext";
 
@@ -18,6 +19,21 @@ export default function Home() {
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const { t } = useLanguage();
+
+  const youtubeOptions = {
+    height: "100%",
+    width: "100%",
+    playerVars: {
+      autoplay: 1,
+      mute: 1,
+      controls: 1,
+      rel: 0,
+      showinfo: 0,
+      modestbranding: 1,
+      loop: 1,
+      playlist: "oWAvYRk_uH0",
+    },
+  };
 
   const texts = [
     t("home.hero_text_1"),
@@ -46,14 +62,11 @@ export default function Home() {
             {/* Mobile: Taller aspect ratio + iOS styling */}
             <div className="relative pb-[75%] md:pb-[56.25%] h-0 overflow-hidden rounded-[24px] md:rounded-lg shadow-ios-md md:shadow-none transition-all duration-300">
               <div className="absolute top-0 left-0 w-full h-full">
-                <video
-                  src="/videos/IMG_6784.MP4"
-                  className="w-full h-full object-cover"
-                  autoPlay
-                  loop
-                  playsInline
-                  controls
-                  muted
+                <YouTube
+                  videoId="oWAvYRk_uH0"
+                  opts={youtubeOptions}
+                  className="w-full h-full"
+                  iframeClassName="w-full h-full object-cover border-0"
                 />
               </div>
             </div>
