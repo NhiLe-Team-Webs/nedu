@@ -1,20 +1,20 @@
 'use client';
 
-import Link from "next/link";
 import CourseHeader from "@/components/CourseHeader";
 import Instructor from "@/components/Instructor";
 import Whom from "@/components/Whom";
-import Testimonials from "@/app/Testimonials";
+import Testimonials from "@/components/Testimonial";
 import CourseInfo from "@/components/CourseInfo";
 import Organizers from "@/components/Organizers";
-import { useCart } from "@/lib/cart-context";
 import { getInstructorsByIds } from "@/data/instructors";
 import { useLanguage } from "@/lib/LanguageContext";
+import { getCourseBySlug } from "@/data/courses";
 
 export default function ThuongHieuCuaBanPage() {
-  const { addToCart } = useCart();
   const { t } = useLanguage();
+  const course = getCourseBySlug('thuong-hieu-cua-ban');
   const instructors = getInstructorsByIds(["nhi-le"]);
+  
   const whomItems = [
     {
       icon: "Sprout" as const,
@@ -32,6 +32,7 @@ export default function ThuongHieuCuaBanPage() {
       description: t("program_detail.whom.ai_beginner.description"),
     },
   ];
+  
   const testimonials = {
     videos: [
       "https://www.youtube.com/embed/PFWDwSf5EGc",
@@ -46,12 +47,14 @@ export default function ThuongHieuCuaBanPage() {
     title: t("program_detail.common.testimonials_title"),
     subtitle: t("program_detail.common.testimonials_subtitle"),
     buttonText: t("program_detail.common.add_to_cart"),
-    buttonLink: "/testimonials",
+    buttonType: "cart" as const,
+    course: course,
   };
+
   return (
-    <div className="min-h-screen bg-[#F2F2F7] pb-20 override-header-spacing">
+    <div className="min-h-screen bg-white pb-20 override-header-spacing">
       <CourseHeader
-        imageUrl="/picture/thuong_hieu_cua_ban.png"
+        imageUrl="/course/thuonghieucuaban_desktop.svg"
         altText={t("program_detail.courses.thuong_hieu_cua_ban.title")}
         time={t("program_detail.common.online_course")}
         tags={[t("categories.branding")]}
@@ -62,15 +65,6 @@ export default function ThuongHieuCuaBanPage() {
         courseSlug="thuong-hieu-cua-ban"
       />
       <div className="ios-safe-padding-bottom">
-        <Instructor instructors={instructors} />
-        <div className="py-4">
-          <Whom title={t("program_detail.common.who_should_join")} items={whomItems} />
-        </div>
-        <Testimonials
-          courseSlug="thuong-hieu-cua-ban"
-          buttonText={t("program_detail.common.add_to_cart")}
-          buttonType="cart"
-        />
         <CourseInfo
           title={t("program_detail.info.title")}
           details={[
@@ -79,21 +73,38 @@ export default function ThuongHieuCuaBanPage() {
               label: t("program_detail.info.topic"),
               value: t("program_detail.courses.thuong_hieu_cua_ban.topic"),
             },
-            { icon: "Clock" as const, label: t("program_detail.info.schedule"), value: t("program_detail.courses.thuong_hieu_cua_ban.schedule") },
+            { 
+              icon: "Clock" as const, 
+              label: t("program_detail.info.schedule"), 
+              value: t("program_detail.courses.thuong_hieu_cua_ban.schedule") 
+            },
             {
               icon: "MapPin" as const,
               label: t("program_detail.info.instructor"),
               value: t("program_detail.courses.thuong_hieu_cua_ban.instructor"),
             },
-            { icon: "Calendar" as const, label: t("program_detail.info.sessions"), value: t("program_detail.courses.thuong_hieu_cua_ban.sessions") },
+            { 
+              icon: "Calendar" as const, 
+              label: t("program_detail.info.sessions"), 
+              value: t("program_detail.courses.thuong_hieu_cua_ban.sessions") 
+            },
             {
               icon: "House" as const,
               label: t("program_detail.info.location"),
               value: t("program_detail.courses.thuong_hieu_cua_ban.location"),
             },
-            { icon: "Users" as const, label: t("program_detail.info.capacity"), value: t("program_detail.courses.thuong_hieu_cua_ban.capacity") },
+            { 
+              icon: "Users" as const, 
+              label: t("program_detail.info.capacity"), 
+              value: t("program_detail.courses.thuong_hieu_cua_ban.capacity") 
+            },
           ]}
         />
+        <Instructor instructors={instructors} />
+        <div className="py-4">
+          <Whom title={t("program_detail.common.who_should_join")} items={whomItems} />
+        </div>
+        <Testimonials {...testimonials} />
         <Organizers />
       </div>
     </div>
