@@ -58,7 +58,7 @@ const Instructor: React.FC<{ instructors: InstructorProps[] }> = ({
           <CarouselContent>
             {instructors.map((instructor, index) => (
               <CarouselItem key={index}>
-                <div className="bg-white border border-gray-200 rounded-ios-xl p-6 sm:p-8 lg:p-10 shadow-ios-card">
+                <div className="bg-white border-2 border-gray-400 rounded-ios-xl p-6 sm:p-8 lg:p-10 shadow-ios-card">
                   <div className="grid gap-8 lg:gap-12 lg:grid-cols-[minmax(0,2.3fr)_minmax(0,1fr)] items-start">
                     <div>
                       <p className="text-base sm:text-lg lg:text-xl text-gray-600 leading-relaxed mb-6 sm:mb-8">
@@ -121,7 +121,7 @@ const Instructor: React.FC<{ instructors: InstructorProps[] }> = ({
                       </div>
                     </div>
 
-                    <aside className="bg-white border border-gray-200 rounded-ios-lg p-6 sm:p-8 shadow-ios-card">
+                    <aside className="bg-white border-2 border-gray-400 rounded-ios-lg p-6 sm:p-8 shadow-ios-card">
                       <div className="text-center">
                         <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">
                           {instructor.name}
