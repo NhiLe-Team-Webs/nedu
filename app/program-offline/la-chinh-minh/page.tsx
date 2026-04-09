@@ -135,15 +135,16 @@ export default function LaChinhMinhPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#F2F2F7] pb-20 override-header-spacing">
+    <div className="min-h-screen bg-white pb-20 override-header-spacing">
       <CourseHeader
-        bannerUrl="/lachinhminh.jpg"
+        imageUrl="/lachinhminh.jpg"
         altText={t("program_detail.courses.la_chinh_minh.title")}
         time={t("program_detail.common.offline_course")}
         tags={[t("categories.personal_development"), t("categories.be_yourself")]}
         title={t("program_detail.courses.la_chinh_minh.title")}
         cost={course?.price.amount || "68.690.000"}
         paymentLink="/payment/57"
+        description={t("program_detail.courses.la_chinh_minh.mission_desc")}
         courseSlug="la-chinh-minh"
       />
 
@@ -368,7 +369,7 @@ export default function LaChinhMinhPage() {
           </div>
         </section>
 
-        <section className="bg-[#F2F2F7] md:pb-20">
+        <section className="bg-white md:pb-20">
           <div className="container mx-auto px-4 md:px-8 pt-16 md:pt-24">
             <div className="mb-12 md:mb-16 max-w-5xl mx-auto px-2 text-center md:text-left">
               <h2 className="text-4xl md:text-7xl font-bold tracking-tight text-gray-900 mb-6 leading-none">
@@ -383,7 +384,7 @@ export default function LaChinhMinhPage() {
               {whyCards.map((card, idx) => (
                 <div
                   key={idx}
-                  className="bg-white rounded-ios-xl p-8 transition-all duration-300 hover:shadow-ios-card-hover border border-white/50 group"
+                  className="bg-white rounded-ios-xl p-8 transition-all duration-300 hover:shadow-ios-card-hover border-2 border-gray-400 group"
                 >
                   <div className="w-14 h-14 bg-[#F2F2F7] text-gray-900 rounded-ios-full flex items-center justify-center mb-6 group-hover:text-primary group-hover:scale-110 transition-all duration-300">
                     {card.icon}

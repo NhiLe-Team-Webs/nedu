@@ -134,10 +134,11 @@ const CourseHeader: React.FC<CourseHeaderProps> = ({
               src={imageUrl}
               alt={altText}
               loading="lazy"
-              className="w-auto h-full rounded-ios-lg shadow-ios-md"
+              className="w-auto h-full"
+              style={{ filter: 'none', transform: 'none', transition: 'none' }}
             />
           )}
-          <div className="absolute inset-0"></div>
+
           <p className="text-center text-gray-600 font-medium text-sm sm:text-base max-w-[90%] mx-auto px-4">
             {description}
           </p>
