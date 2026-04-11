@@ -12,12 +12,16 @@ import Partners from "./Partners";
 import Connection from "./Connection";
 import Privilege from "./Privilege";
 import YouTube from "react-youtube";
+import OfferPopup from "@/components/OfferPopup";
+import GiftButton from "@/components/GiftButton";
 
 import { useLanguage } from "@/lib/LanguageContext";
 
 export default function Home() {
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isOfferPopupOpen, setIsOfferPopupOpen] = useState(false);
+  const [hasPopupBeenShown, setHasPopupBeenShown] = useState(false);
   const { t } = useLanguage();
 
   const youtubeOptions = {
@@ -52,6 +56,18 @@ export default function Home() {
 
     return () => clearInterval(interval);
   }, [texts.length]);
+
+  useEffect(() => {
+    if (hasPopupBeenShown) return;
+
+    // Tự động hiển thị popup sau 3 giây khi vào trang
+    const timeout = setTimeout(() => {
+      setIsOfferPopupOpen(true);
+      setHasPopupBeenShown(true);
+    }, 3000);
+
+    return () => clearTimeout(timeout);
+  }, [hasPopupBeenShown]);
 
   return (
     <div className="min-h-screen bg-white">
@@ -107,6 +123,22 @@ export default function Home() {
       <Privilege />
       <Partners />
       <Connection />
+      
+      {/* Gift Floating Button */}
+      <GiftButton 
+        isVisible={!isOfferPopupOpen} 
+        onClick={() => setIsOfferPopupOpen(true)}
+      />
+
+      {/* Auto Triggering Offer Popup Mockup */}
+      <OfferPopup 
+        isOpen={isOfferPopupOpen} 
+        onClose={() => setIsOfferPopupOpen(false)} 
+        onAccept={() => {
+           // Go to La Chinh Minh checkout or page
+           window.location.href = '/program-offline/la-chinh-minh';
+        }} 
+      />
     </div>
   );
 }
