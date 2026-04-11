@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Tag, ShoppingCart, Minus, Plus, Trash2 } from 'lucide-react';
+import { ArrowLeft, Tag, ShoppingCart, Minus, Plus, Trash2, Gift } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
+import { courses } from '@/data/courses';
 import { useRouter } from 'next/navigation';
 import { preparePaymentData, sendPaymentRequest, handlePaymentResponse, currencyFormatter, sendSePayPaymentRequest, prepareSePayPaymentData } from '@/lib/payment-utils';
 import SePayPaymentQR from '@/components/SePayPaymentQR';
@@ -14,6 +15,10 @@ import { getCourseDetailBySlug } from '@/lib/services/courseService';
 
 export default function CheckoutPage() {
   const { t } = useLanguage();
+  
+  // Feature flag for the promotional "Buy La Chinh Minh get Thuong Hieu Cua Ban free"
+  const ENABLE_PROMO_THUONG_HIEU_CUA_BAN = true;
+  const promoCourse = courses.find(c => c.slug === 'thuong-hieu-cua-ban');
   const router = useRouter();
   const { items, getTotalPrice, clearCart, removeFromCart, updateQuantity } = useCart();
   const [formData, setFormData] = useState({
@@ -298,57 +303,88 @@ export default function CheckoutPage() {
                         : (item.heroImage || '/picture/thuthach30day_desktop.png');
 
                       return (
-                      <div key={item.id} className="flex flex-col md:flex-row gap-4 pb-6 border-b last:border-b-0 border-gray-100">
-                        <img
-                          src={itemImage}
-                          alt={t(item.title)}
-                          className="w-full md:w-[150px] h-[100px] object-cover rounded-ios-lg shadow-sm"
-                          onError={e => { e.currentTarget.src = '/picture/thuthach30day_desktop.png'; }}
-                        />
+                      <div key={item.id} className="pb-6 border-b last:border-b-0 border-gray-100 flex flex-col gap-4">
+                        <div className="flex flex-col md:flex-row gap-4">
+                          <img
+                            src={itemImage}
+                            alt={t(item.title)}
+                            className="w-full md:w-[150px] h-[100px] object-cover rounded-ios-lg shadow-sm"
+                            onError={e => { e.currentTarget.src = '/picture/thuthach30day_desktop.png'; }}
+                          />
 
-                        <div className="flex-1 flex flex-col justify-center">
-                          <div className="flex items-start justify-between gap-3 mb-1">
-                            <h3 className="text-lg font-bold text-text-primary">{t(item.title)}</h3>
-                            <button
-                              type="button"
-                              onClick={() => removeFromCart(item.id)}
-                              className="h-8 w-8 rounded-full flex items-center justify-center text-red-500 hover:text-red-600 hover:bg-red-50 transition-colors shrink-0"
-                              aria-label={`Xóa ${t(item.title)} khỏi giỏ hàng`}
-                            >
-                              <Trash2 className="w-4 h-4" />
-                            </button>
-                          </div>
-                          <p className="text-text-secondary mb-2 text-sm">{item.category.map(c => t(c)).join(', ')}</p>
-                          <div className="flex items-center justify-between mt-auto">
-                            <div className="inline-flex items-center rounded-lg border border-gray-200 bg-white overflow-hidden h-9">
+                          <div className="flex-1 flex flex-col justify-center">
+                            <div className="flex items-start justify-between gap-3 mb-1">
+                              <h3 className="text-lg font-bold text-text-primary">{t(item.title)}</h3>
                               <button
                                 type="button"
-                                onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                                className="h-full w-9 flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-gray-50 transition-colors"
-                                aria-label={`Giảm số lượng ${t(item.title)}`}
+                                onClick={() => removeFromCart(item.id)}
+                                className="h-8 w-8 rounded-full flex items-center justify-center text-red-500 hover:text-red-600 hover:bg-red-50 transition-colors shrink-0"
+                                aria-label={`Xóa ${t(item.title)} khỏi giỏ hàng`}
                               >
-                                <Minus className="w-3.5 h-3.5" />
-                              </button>
-                              <span className="h-full min-w-[2.25rem] px-2 flex items-center justify-center text-sm font-semibold text-text-primary border-x border-gray-200">
-                                {item.quantity}
-                              </span>
-                              <button
-                                type="button"
-                                onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                className="h-full w-9 flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-gray-50 transition-colors"
-                                aria-label={`Tăng số lượng ${t(item.title)}`}
-                              >
-                                <Plus className="w-3.5 h-3.5" />
+                                <Trash2 className="w-4 h-4" />
                               </button>
                             </div>
-                            <div className="price text-lg font-bold text-primary">
-                              {item.price.currency === 'VNĐ'
-                                ? currencyFormatter.format(parseInt(item.price.amount.replace(/\./g, '')) * item.quantity)
-                                : `${item.price.currency} ${item.price.amount}`
-                              }
+                            <p className="text-text-secondary mb-2 text-sm">{item.category.map(c => t(c)).join(', ')}</p>
+                            <div className="flex items-center justify-between mt-auto">
+                              <div className="inline-flex items-center rounded-lg border border-gray-200 bg-white overflow-hidden h-9">
+                                <button
+                                  type="button"
+                                  onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                  className="h-full w-9 flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-gray-50 transition-colors"
+                                  aria-label={`Giảm số lượng ${t(item.title)}`}
+                                >
+                                  <Minus className="w-3.5 h-3.5" />
+                                </button>
+                                <span className="h-full min-w-[2.25rem] px-2 flex items-center justify-center text-sm font-semibold text-text-primary border-x border-gray-200">
+                                  {item.quantity}
+                                </span>
+                                <button
+                                  type="button"
+                                  onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                  className="h-full w-9 flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-gray-50 transition-colors"
+                                  aria-label={`Tăng số lượng ${t(item.title)}`}
+                                >
+                                  <Plus className="w-3.5 h-3.5" />
+                                </button>
+                              </div>
+                              <div className="price text-lg font-bold text-primary">
+                                {item.price.currency === 'VNĐ'
+                                  ? currencyFormatter.format(parseInt(item.price.amount.replace(/\./g, '')) * item.quantity)
+                                  : `${item.price.currency} ${item.price.amount}`
+                                }
+                              </div>
                             </div>
                           </div>
                         </div>
+
+                        {/* Promo Course attached to this item if applicable */}
+                        {ENABLE_PROMO_THUONG_HIEU_CUA_BAN && t(item.title).toLowerCase().includes('là chính mình') && promoCourse && (
+                          <div className="flex relative pl-[30px] mt-2">
+                             <div className="absolute left-[8px] top-4 bottom-4 w-[2px] bg-gray-300"></div>
+                             <div className="flex flex-col md:flex-row gap-4 py-2 w-full relative">
+                               <img 
+                                 src={promoCourse.heroImage || "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&auto=format&fit=crop&q=60"}
+                                 alt={t(promoCourse.title)}
+                                 className="w-full md:w-[120px] h-[80px] object-cover rounded-lg shadow-sm"
+                               />
+                               <div className="flex-1 flex justify-between">
+                                  <div>
+                                    <h4 className="font-bold text-base text-text-primary">{t(promoCourse.title)}</h4>
+                                    <p className="text-text-secondary text-sm mb-2">{promoCourse.category.map(c => t(c)).join(', ')}</p>
+                                    <span className="px-2 py-0.5 bg-gray-100 rounded text-xs font-semibold text-gray-500">x{item.quantity}</span>
+                                  </div>
+                                  <div className="flex items-end flex-col justify-end">
+                                      <span className="text-gray-400 line-through text-sm font-normal">
+                                        {promoCourse.price.currency === 'VNĐ'
+                                          ? currencyFormatter.format(parseInt(promoCourse.price.amount.replace(/\./g, '')) * item.quantity)
+                                          : `${promoCourse.price.currency} ${parseFloat(promoCourse.price.amount) * item.quantity}`
+                                        }
+                                      </span>
+                                  </div>
+                               </div>
+                             </div>
+                          </div>
+                        )}
                       </div>
                       );
                     })}

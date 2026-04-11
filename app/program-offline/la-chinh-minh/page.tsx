@@ -11,6 +11,8 @@ import Testimonials from "@/components/Testimonial";
 import Instructor from "@/components/Instructor";
 import Privilege from "@/app/Privilege";
 import Organizers from "@/components/Organizers";
+import OfferPopup from "@/components/OfferPopup";
+import GiftButton from "@/components/GiftButton";
 import { getCourseBySlug } from "@/data/courses";
 import { getInstructorsByIds } from "@/data/instructors";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -23,6 +25,7 @@ export default function LaChinhMinhPage() {
   const router = useRouter();
   const [activeDay, setActiveDay] = useState<number>(0);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
+  const [isOfferPopupOpen, setIsOfferPopupOpen] = useState(false);
 
 
   const toggleFaq = (index: number) => {
@@ -33,6 +36,7 @@ export default function LaChinhMinhPage() {
   useEffect(() => {
     setActiveDay(0);
   }, []);
+
 
   const daysData = [
     {
@@ -496,6 +500,29 @@ export default function LaChinhMinhPage() {
         </section>
 
       </div>
+      
+      {/* Gift Floating Button */}
+      <GiftButton 
+        isVisible={!isOfferPopupOpen} 
+        onClick={() => setIsOfferPopupOpen(true)}
+      />
+
+      {/* Auto Triggering Offer Popup Mockup */}
+      <OfferPopup 
+        isOpen={isOfferPopupOpen} 
+        onClose={() => setIsOfferPopupOpen(false)} 
+        onAccept={() => {
+          // Additional logic when user clicks "Nhận Ưu Đãi Ngay"
+          // They might want to scroll to payment section or open cart
+          const paymentSection = document.getElementById('payment-section');
+          if (paymentSection) {
+            paymentSection.scrollIntoView({ behavior: 'smooth' });
+          } else {
+             // Fallback
+             router.push('/checkout');
+          }
+        }} 
+      />
     </div>
   );
 }

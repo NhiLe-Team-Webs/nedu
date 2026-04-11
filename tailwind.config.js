@@ -61,6 +61,7 @@ module.exports = {
         'ios-fade-in': 'iosFadeIn 0.4s ease-out forwards',
         'ios-scale-in': 'iosScaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
         'bounce-x': 'bounce-x 1s ease-in-out infinite',
+        'float': 'float 3s ease-in-out infinite',
       },
       keyframes: {
         iosSlideUp: {
@@ -78,6 +79,10 @@ module.exports = {
         'bounce-x': {
           '0%, 100%': { transform: 'translateX(0)' },
           '50%': { transform: 'translateX(3px)' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-8px)' },
         },
       },
     },
