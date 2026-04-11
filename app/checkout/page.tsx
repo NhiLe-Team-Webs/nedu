@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Tag, ShoppingCart, Minus, Plus, Trash2, Gift } from 'lucide-react';
+import { ArrowLeft, Tag, ShoppingCart, Minus, Plus, Trash2 } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
 import { courses } from '@/data/courses';
 import { useRouter } from 'next/navigation';

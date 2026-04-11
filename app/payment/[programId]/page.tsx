@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { Tag } from 'lucide-react'
 import { useRouter, useParams } from 'next/navigation'
 import { courses } from '@/data/courses'
 import { useLanguage } from '@/lib/LanguageContext'
