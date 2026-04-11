@@ -16,6 +16,9 @@ import OfferPopup from "@/components/OfferPopup";
 import GiftButton from "@/components/GiftButton";
 
 import { useLanguage } from "@/lib/LanguageContext";
+import { useCart } from "@/lib/cart-context";
+import { useRouter } from "next/navigation";
+import { getCourseBySlug } from "@/data/courses";
 
 export default function Home() {
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
@@ -23,6 +26,8 @@ export default function Home() {
   const [isOfferPopupOpen, setIsOfferPopupOpen] = useState(false);
   const [hasPopupBeenShown, setHasPopupBeenShown] = useState(false);
   const { t } = useLanguage();
+  const { addToCart } = useCart();
+  const router = useRouter();
 
   const youtubeOptions = {
     height: "100%",
@@ -135,8 +140,11 @@ export default function Home() {
         isOpen={isOfferPopupOpen} 
         onClose={() => setIsOfferPopupOpen(false)} 
         onAccept={() => {
-           // Go to La Chinh Minh checkout or page
-           window.location.href = '/program-offline/la-chinh-minh';
+           const course = getCourseBySlug('la-chinh-minh');
+           if (course) {
+             addToCart(course);
+             router.push('/checkout');
+           }
         }} 
       />
     </div>
