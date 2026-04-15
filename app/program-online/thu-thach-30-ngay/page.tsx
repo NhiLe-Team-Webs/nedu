@@ -67,7 +67,7 @@ const ThirtyDayPage = () => {
 
   // Determine which images to use (prioritize dynamic DB data over static data)
   // These values will be calculated using the current state of courseData
-  const challengePosterDesktop = courseData?.program?.image || thirtyDayCourse?.heroImage || "/picture/thuthach30day_desktop.png";
+  const challengePosterDesktop = courseData?.program?.image || thirtyDayCourse?.heroImage || "/course/30days_desktop.svg";
   const challengePosterMobile = courseData?.program?.image || thirtyDayCourse?.mobileImage || "/picture/thuthach30day_mobile.png";
 
   // Sync some data from DB to local variables if available
@@ -198,15 +198,15 @@ const ThirtyDayPage = () => {
     const courseToAdd =
       planType === "membership"
         ? {
-            ...thirtyDayCourse,
-            id: thirtyDayCourse.id + 1000,
-            price: { ...thirtyDayCourse.price, amount: formattedMembershipPrice },
-            title: "thirty_day_challenge.title_membership",
-          }
+          ...thirtyDayCourse,
+          id: thirtyDayCourse.id + 1000,
+          price: { ...thirtyDayCourse.price, amount: formattedMembershipPrice },
+          title: "thirty_day_challenge.title_membership",
+        }
         : {
-            ...thirtyDayCourse,
-            price: { ...thirtyDayCourse.price, amount: formattedMonthlyPrice },
-          };
+          ...thirtyDayCourse,
+          price: { ...thirtyDayCourse.price, amount: formattedMonthlyPrice },
+        };
 
     buyNow(courseToAdd);
     router.push("/checkout");
@@ -569,20 +569,20 @@ const ThirtyDayPage = () => {
                       {t("thirty_day_challenge.pricing.monthly.label")}
                     </p>
                   </div>
-                <div className="flex items-baseline gap-1">
-                  <span className="text-4xl font-black tracking-[-0.05em] text-slate-900 md:text-5xl leading-none">
-                    {formatCurrency(monthlyPrice)}
-                  </span>
-                  <span className="text-2xl md:text-3xl text-slate-900 font-bold leading-none">
-                    <span className="relative">
-                      đ
-                      <span className="absolute left-0 -bottom-0.5 w-full h-[1px] bg-current" />
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-4xl font-black tracking-[-0.05em] text-slate-900 md:text-5xl leading-none">
+                      {formatCurrency(monthlyPrice)}
                     </span>
-                  </span>
-                  <span className="text-base font-medium text-slate-400 leading-none">
-                    {t("thirty_day_challenge.pricing.monthly.per_month")}
-                  </span>
-                </div>
+                    <span className="text-2xl md:text-3xl text-slate-900 font-bold leading-none">
+                      <span className="relative">
+                        đ
+                        <span className="absolute left-0 -bottom-0.5 w-full h-[1px] bg-current" />
+                      </span>
+                    </span>
+                    <span className="text-base font-medium text-slate-400 leading-none">
+                      {t("thirty_day_challenge.pricing.monthly.per_month")}
+                    </span>
+                  </div>
                 </div>
                 <div className="space-y-3 mb-6">
                   <p className="text-[10px] font-bold text-slate-300 uppercase tracking-[0.3em]">
