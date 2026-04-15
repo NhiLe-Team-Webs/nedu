@@ -44,7 +44,7 @@ const Footer = () => {
             <div className="flex justify-start">
               <div className="relative w-40 h-12">
                 <Image
-                  src="/nedu-white.svg"
+                  src="/images/brand/nedu-white.svg"
                   alt="N Education"
                   fill
                   className="object-contain object-left"

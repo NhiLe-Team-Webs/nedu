@@ -3,12 +3,12 @@ import Image from "next/image";
 import { useLanguage } from "@/lib/LanguageContext";
 
 const images = [
-  { src: '/picture/p2.jpg', alt: "post-1", cls: "col-span-1 row-span-1" },
-  { src: '/picture/nhile.jpg', alt: "post-2", cls: "col-span-1 row-span-1 md:row-span-2" },
-  { src: '/picture/mel.jpg', alt: "post-3", cls: "col-span-2 row-span-1 md:col-span-1 md:row-span-1" },
-  { src: '/picture/pauline.jpg', alt: "post-4", cls: "col-span-1 row-span-2" },
-  { src: '/picture/p1.jpg', alt: "post-5", cls: "col-span-1 row-span-1" },
-  { src: '/picture/p3.jpg', alt: "post-6", cls: "col-span-1 row-span-1" }
+  { src: '/images/gallery/p2.jpg', alt: "post-1", cls: "col-span-1 row-span-1" },
+  { src: '/images/people/nhile.jpg', alt: "post-2", cls: "col-span-1 row-span-1 md:row-span-2" },
+  { src: '/images/people/mel.jpg', alt: "post-3", cls: "col-span-2 row-span-1 md:col-span-1 md:row-span-1" },
+  { src: '/images/gallery/pauline.jpg', alt: "post-4", cls: "col-span-1 row-span-2" },
+  { src: '/images/gallery/p1.jpg', alt: "post-5", cls: "col-span-1 row-span-1" },
+  { src: '/images/gallery/p3.jpg', alt: "post-6", cls: "col-span-1 row-span-1" }
 ];
 
 const Connection = () => {
@@ -46,7 +46,7 @@ const Connection = () => {
         <div className="flex justify-center gap-4 mt-8">
           <a className="inline-flex items-center gap-3 px-6 py-2 rounded-full border border-amber-400 text-amber-400 hover:bg-amber-400/10 transition" href="https://www.facebook.com/neducation.sg?locale=vi_VN" target="_blank">
             <Image
-              src="/picture/facebook.svg"
+              src="/images/social/facebook.svg"
               alt="Facebook"
               width={24}
               height={24}

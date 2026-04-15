@@ -141,7 +141,7 @@ export default function LaChinhMinhPage() {
   return (
     <div className="min-h-screen bg-white pb-20 override-header-spacing">
       <CourseHeader
-        imageUrl="/lachinhminh.jpg"
+        bannerUrl="/images/programs/la-chinh-minh.jpg"
         altText={t("program_detail.courses.la_chinh_minh.title")}
         time={t("program_detail.common.offline_course")}
         tags={[t("categories.personal_development"), t("categories.be_yourself")]}
@@ -180,7 +180,7 @@ export default function LaChinhMinhPage() {
           title={t("mission.title")}
           subtitle={t("mission.subtitle")}
           description={t("program_detail.courses.la_chinh_minh.mission_desc")}
-          imgUrl="/lachinhminh.jpg"
+          imgUrl="/images/programs/la-chinh-minh.jpg"
         />
 
         <section className="bg-white py-12 md:py-20 rounded-t-ios-2xl border-t border-white/20 -mt-6 z-10 relative shadow-ios-card-hover">

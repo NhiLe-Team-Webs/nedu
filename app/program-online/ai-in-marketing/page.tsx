@@ -72,7 +72,7 @@ export default function AIInMarketingPage() {
   return (
     <div className="min-h-screen bg-[#F2F2F7] pb-20 override-header-spacing">
       <CourseHeader
-        imageUrl="/picture/ai_in_mkt.png"
+        imageUrl="/images/programs/ai-in-mkt.png"
         altText={t("program_detail.courses.ai_in_marketing.title")}
         time={t("program_detail.common.online_course")}
         tags={[t("categories.ai"), "Marketing"]}

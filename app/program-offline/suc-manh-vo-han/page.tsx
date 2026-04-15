@@ -53,7 +53,7 @@ export default function SucManhVoHanPage() {
   return (
     <div className="min-h-screen bg-[#F2F2F7] pb-20 override-header-spacing">
       <CourseHeader
-        bannerUrl="/sucmanhvohan.jpg"
+        bannerUrl="/images/programs/suc-manh-vo-han.jpg"
         altText={t("program_detail.courses.suc_manh_vo_han.title")}
         time={t("program_detail.common.offline_course")}
         tags={[t("categories.entrepreneur"), t("categories.business")]}

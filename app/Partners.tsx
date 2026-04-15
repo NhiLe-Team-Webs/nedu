@@ -4,17 +4,17 @@ import Image from 'next/image';
 import { useLanguage } from "@/lib/LanguageContext";
 
 const partners = [
-  { name: "NLF", logo: '/picture/nlf.png' },
-  { name: "Family Cloud", logo: '/picture/familycloud.jpg' },
-  { name: "S&W", logo: '/picture/S&W_avatar-1.jpg' },
-  { name: "Nhi's House", logo: '/picture/photo_6073197126956990329_y.jpg' },
-  { name: "This is home", logo: '/picture/thisishome.jpg' },
-  { name: "Factor Method", logo: '/picture/XFactor_Method_Logo_-_Blue.png' },
-  { name: "Nhile Team", logo: '/picture/nlt.png' },
-  { name: "Soniche", logo: '/picture/Soniche.png' },
-  { name: "Hush", logo: '/picture/hush.jpg' },
-  { name: "MsNhi", logo: '/picture/MsNhi_Logo.png' },
-  { name: "Meta", logo: '/picture/meta.jpg' }
+  { name: "NLF", logo: '/images/brand/nlf.png' },
+  { name: "Family Cloud", logo: '/images/partners/familycloud.jpg' },
+  { name: "S&W", logo: '/images/partners/sw-avatar.jpg' },
+  { name: "Nhi's House", logo: '/images/partners/nhis-house.jpg' },
+  { name: "This is home", logo: '/images/partners/thisishome.jpg' },
+  { name: "Factor Method", logo: '/images/partners/xfactor-method.png' },
+  { name: "Nhile Team", logo: '/images/brand/nlt.png' },
+  { name: "Soniche", logo: '/images/partners/soniche.png' },
+  { name: "Hush", logo: '/images/partners/hush.jpg' },
+  { name: "MsNhi", logo: '/images/partners/msnhi-logo.png' },
+  { name: "Meta", logo: '/images/partners/meta.jpg' }
 ];
 
 const Partners = () => {

@@ -8,7 +8,7 @@ export const testingCourses: Course[] = [
         mode: 'offline',
         title: 'Khóa học Test 1 (2k)',
         category: ['Testing', 'Offline'],
-        heroImage: '/picture/suc_manh_vo_han.jpg',
+        heroImage: '/images/programs/suc-manh-vo-han.jpg',
         price: {
             amount: '2.000',
             currency: 'VNĐ'
@@ -34,7 +34,7 @@ export const testingCourses: Course[] = [
         mode: 'online',
         title: 'Khóa học Test 2 (3k)',
         category: ['Testing', 'Online'],
-        heroImage: '/picture/la_chinh_minh.jpg',
+        heroImage: '/images/programs/la-chinh-minh.jpg',
         price: {
             amount: '3.000',
             currency: 'VNĐ'
@@ -60,7 +60,7 @@ export const testingCourses: Course[] = [
         mode: 'offline',
         title: 'Khóa học Test 3 (4k)',
         category: ['Testing', 'Offline'],
-        heroImage: '/picture/thuong_hieu_cua_ban.png',
+        heroImage: '/images/programs/thuong-hieu-cua-ban.png',
         price: {
             amount: '4.000',
             currency: 'VNĐ'
@@ -86,7 +86,7 @@ export const testingCourses: Course[] = [
         mode: 'online',
         title: 'Khóa học Test 4 (5k)',
         category: ['Testing', 'Online'],
-        heroImage: '/picture/cuoc_song_cua_ban.png',
+        heroImage: '/images/programs/cuoc-song-cua-ban.png',
         price: {
             amount: '5.000',
             currency: 'VNĐ'

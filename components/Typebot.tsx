@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { MessageCircle, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const MASCOT_IMAGE_SRC = '/picture/maskcode.svg';
+const MASCOT_IMAGE_SRC = '/images/brand/maskcode.svg';
 
 const Z_LAYERS = {
     base: 'z-[1]',

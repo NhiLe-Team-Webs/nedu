@@ -23,7 +23,7 @@ export default function GuidePaymentPage() {
             </h2>
             <div className="relative group">
               <img
-                src="/picture/register.jpg"
+                src="/images/guide/register.jpg"
                 alt={t("payment_guide.steps.step1")}
                 className="w-full rounded-ios-xl shadow-ios-card transition-all duration-500 hover:shadow-ios-card-hover"
               />
@@ -36,7 +36,7 @@ export default function GuidePaymentPage() {
             </h2>
             <div className="relative group">
               <img
-                src="/picture/b2.jpg"
+                src="/images/guide/step-2.jpg"
                 alt={t("payment_guide.steps.step2")}
                 className="w-full rounded-ios-xl shadow-ios-card transition-all duration-500 hover:shadow-ios-card-hover"
               />
@@ -49,7 +49,7 @@ export default function GuidePaymentPage() {
             </h2>
             <div className="relative group">
               <img
-                src="/picture/b3.jpg"
+                src="/images/guide/step-3.jpg"
                 alt={t("payment_guide.steps.step3")}
                 className="w-full rounded-ios-xl shadow-ios-card transition-all duration-500 hover:shadow-ios-card-hover"
               />
@@ -62,7 +62,7 @@ export default function GuidePaymentPage() {
             </h2>
             <div className="relative group">
               <img
-                src="/picture/b4.jpg"
+                src="/images/guide/step-4.jpg"
                 alt={t("payment_guide.steps.step4")}
                 className="w-full rounded-ios-xl shadow-ios-card transition-all duration-500 hover:shadow-ios-card-hover"
               />
@@ -75,7 +75,7 @@ export default function GuidePaymentPage() {
             </h2>
             <div className="relative group">
               <img
-                src="/picture/b5.png"
+                src="/images/guide/step-5.png"
                 alt={t("payment_guide.steps.step5")}
                 className="w-full rounded-ios-xl shadow-ios-card transition-all duration-500 hover:shadow-ios-card-hover"
               />
