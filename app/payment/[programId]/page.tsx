@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Tag } from 'lucide-react'
 import { useRouter, useParams } from 'next/navigation'
 import { courses } from '@/data/courses'
+import { useLanguage } from '@/lib/LanguageContext'
 import ErrorHandler from '@/components/ErrorHandler'
 import { preparePaymentData, sendPaymentRequest, handlePaymentResponse, currencyFormatter, sendSePayPaymentRequest, prepareSePayPaymentData } from '@/lib/payment-utils'
 import SePayPaymentQR from '@/components/SePayPaymentQR'
@@ -14,6 +15,7 @@ export default function PaymentPage() {
   const router = useRouter()
   const params = useParams()
   const programId = params.programId as string
+  const { t } = useLanguage()
 
   useEffect(() => {
     // Define timer globally if it's not already defined
@@ -50,6 +52,10 @@ export default function PaymentPage() {
 
   // Find the course based on programId (which is the paymentId)
   const course = courses.find(c => c.paymentId.toString() === programId)
+
+  // Feature flag for the promotional "Buy La Chinh Minh get Thuong Hieu Cua Ban free"
+  const ENABLE_PROMO_THUONG_HIEU_CUA_BAN = true;
+  const promoCourse = courses.find(c => c.slug === 'thuong-hieu-cua-ban');
 
   const [currentStep, setCurrentStep] = useState(1) // 1: Information, 2: Confirmation
   const [formData, setFormData] = useState({
@@ -270,23 +276,59 @@ export default function PaymentPage() {
               {course && (
                 <div className="bg-gray-50 rounded-xl p-6 mb-6">
                   <h3 className="font-bold text-lg mb-4 text-text-primary">Khóa học đã chọn</h3>
-                  <div className="flex flex-col md:flex-row gap-4">
+                  
+                  {/* Main Course */}
+                  <div className="flex flex-col md:flex-row gap-4 relative z-10 bg-white p-4 rounded-xl shadow-sm border border-gray-100">
                     <img
                       src={course.heroImage}
-                      alt={course.title}
+                      alt={t(course.title)}
                       className="w-full md:w-24 h-24 object-cover rounded-xl"
                     />
-                    <div className="flex-1">
-                      <h4 className="font-bold text-lg text-text-primary">{course.title}</h4>
-                      <p className="text-text-secondary mb-2">{course.category.join(', ')}</p>
-                      <div className="price">
-                        {course.price.currency === 'VNĐ'
-                          ? currencyFormatter.format(parseInt(course.price.amount.replace(/\./g, '')))
-                          : `${course.price.currency} ${course.price.amount}`
-                        }
+                    <div className="flex-1 flex justify-between">
+                      <div>
+                        <h4 className="font-bold text-lg text-text-primary">{t(course.title)}</h4>
+                        <p className="text-text-secondary mb-3">{course.category.map(c => t(c)).join(', ')}</p>
+                        <span className="px-2 py-1 bg-gray-100 rounded-md text-xs font-semibold text-gray-500">x1</span>
+                      </div>
+                      <div className="flex items-end">
+                        <div className="price font-bold text-primary text-xl">
+                          {course.price.currency === 'VNĐ'
+                            ? currencyFormatter.format(parseInt(course.price.amount.replace(/\./g, '')))
+                            : `${course.price.currency} ${course.price.amount}`
+                          }
+                        </div>
                       </div>
                     </div>
                   </div>
+
+                  {/* Promo Course */}
+                  {ENABLE_PROMO_THUONG_HIEU_CUA_BAN && t(course.title).toLowerCase().includes('là chính mình') && promoCourse && (
+                    <div className="mt-4 flex relative pl-8">
+                       <div className="absolute left-[20px] top-4 bottom-4 w-[2px] bg-gray-300"></div>
+                       <div className="flex flex-col md:flex-row gap-4 py-2 w-full relative">
+                         <img 
+                           src={promoCourse.heroImage || "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&auto=format&fit=crop&q=60"}
+                           alt={t(promoCourse.title)}
+                           className="w-full md:w-24 h-24 object-cover rounded-xl"
+                         />
+                         <div className="flex-1 flex justify-between">
+                            <div>
+                              <h4 className="font-bold text-lg text-text-primary">{t(promoCourse.title)}</h4>
+                              <p className="text-text-secondary mb-3">{promoCourse.category.map(c => t(c)).join(', ')}</p>
+                              <span className="px-2 py-1 bg-gray-100 rounded-md text-xs font-semibold text-gray-500">x1</span>
+                            </div>
+                            <div className="flex items-end">
+                                <span className="text-gray-400 line-through text-base font-normal">
+                                  {promoCourse.price.currency === 'VNĐ'
+                                    ? currencyFormatter.format(parseInt(promoCourse.price.amount.replace(/\./g, '')))
+                                    : `${promoCourse.price.currency} ${promoCourse.price.amount}`
+                                  }
+                                </span>
+                            </div>
+                         </div>
+                       </div>
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -544,19 +586,37 @@ export default function PaymentPage() {
                 <div>
                   <h3 className="font-semibold text-lg mb-4 text-text-primary">Khóa học đã chọn</h3>
                   {course && (
-                    <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                      <div>
-                        <h4 className="font-semibold text-text-primary">{course.title}</h4>
-                        <p className="text-sm text-text-secondary">{course.category.join(', ')}</p>
-                      </div>
-                      <div className="text-right">
-                        <div className="font-semibold price">
-                          {course.price.currency === 'VNĐ'
-                            ? currencyFormatter.format(parseInt(course.price.amount.replace(/\./g, '')))
-                            : `${course.price.currency} ${course.price.amount}`
-                          }
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center p-3 bg-gray-50 border border-gray-100 rounded-lg">
+                        <div>
+                          <h4 className="font-semibold text-text-primary">{t(course.title)} <span className="text-xs text-gray-500 ml-2 font-normal bg-white px-2 py-0.5 rounded border border-gray-200">x1</span></h4>
+                          <p className="text-sm text-text-secondary">{course.category.map(c => t(c)).join(', ')}</p>
+                        </div>
+                        <div className="text-right">
+                          <div className="font-semibold price text-primary">
+                            {course.price.currency === 'VNĐ'
+                              ? currencyFormatter.format(parseInt(course.price.amount.replace(/\./g, '')))
+                              : `${course.price.currency} ${course.price.amount}`
+                            }
+                          </div>
                         </div>
                       </div>
+
+                      {ENABLE_PROMO_THUONG_HIEU_CUA_BAN && t(course.title).toLowerCase().includes('là chính mình') && promoCourse && (
+                        <div className="flex justify-between items-center p-3 border-l-2 border-gray-300 ml-4 relative">
+                          <div className="pl-2">
+                            <h4 className="font-semibold text-text-primary">{t(promoCourse.title)} <span className="text-xs text-gray-500 ml-2 font-normal bg-gray-100 px-2 py-0.5 rounded border border-gray-200">x1</span></h4>
+                          </div>
+                          <div className="text-right">
+                            <div className="text-gray-400 line-through text-xs font-normal">
+                              {promoCourse.price.currency === 'VNĐ'
+                                ? currencyFormatter.format(parseInt(promoCourse.price.amount.replace(/\./g, '')))
+                                : `${promoCourse.price.currency} ${promoCourse.price.amount}`
+                              }
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>

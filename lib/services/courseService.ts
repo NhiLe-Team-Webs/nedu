@@ -13,7 +13,7 @@ export async function getCourseDetailBySlug(slug: string, langId: number = 1): P
             .maybeSingle();
 
         if (programError || !programData) {
-            console.error('[DEBUG] Program ID 82 NOT FOUND or Error:', programError);
+            console.warn('[DEBUG] Program ID 82 NOT FOUND or Error:', programError);
             return null;
         }
 
@@ -29,7 +29,7 @@ export async function getCourseDetailBySlug(slug: string, langId: number = 1): P
             .maybeSingle();
 
         if (descriptionError) {
-            console.error('[DEBUG] Description Fetch Error:', descriptionError);
+            console.warn('[DEBUG] Description Fetch Error:', descriptionError);
         }
 
         console.log('[DEBUG] STEP 2: Description Data from DB:', descriptionData);
@@ -44,7 +44,7 @@ export async function getCourseDetailBySlug(slug: string, langId: number = 1): P
             .eq('program_id', 82);
 
         if (mentorError) {
-            console.error('[DEBUG] Mentor Fetch Error:', mentorError);
+            console.warn('[DEBUG] Mentor Fetch Error:', mentorError);
         }
 
         const mentors = (mentorData?.map((m: any) => m.mentor) || []) as Mentor[];
@@ -71,7 +71,7 @@ export async function getCourseDetailBySlug(slug: string, langId: number = 1): P
             challengeDetail
         };
     } catch (error) {
-        console.error('Unexpected error in getCourseDetailBySlug:', error);
+        console.warn('Unexpected error in getCourseDetailBySlug:', error);
         return null;
     }
 }

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Tag, ShoppingCart, Minus, Plus, Trash2 } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
+import { courses } from '@/data/courses';
 import { useRouter } from 'next/navigation';
 import { preparePaymentData, sendPaymentRequest, handlePaymentResponse, currencyFormatter, sendSePayPaymentRequest, prepareSePayPaymentData } from '@/lib/payment-utils';
 import SePayPaymentQR from '@/components/SePayPaymentQR';
@@ -14,6 +15,10 @@ import { getCourseDetailBySlug } from '@/lib/services/courseService';
 
 export default function CheckoutPage() {
   const { t } = useLanguage();
+
+  // Feature flag for the promotional "Buy La Chinh Minh get Thuong Hieu Cua Ban free"
+  const ENABLE_PROMO_THUONG_HIEU_CUA_BAN = true;
+  const promoCourse = courses.find(c => c.slug === 'thuong-hieu-cua-ban');
   const router = useRouter();
   const { items, getTotalPrice, clearCart, removeFromCart, updateQuantity } = useCart();
   const [formData, setFormData] = useState({
@@ -700,6 +705,13 @@ export default function CheckoutPage() {
                             </div>
                           </div>
                         </div>
+                        <button
+                          type="button"
+                          onClick={handleApplyDiscount}
+                          className="px-4 bg-gray-800 text-white rounded-ios-md hover:bg-black transition-all duration-300 h-[44px] font-bold text-sm shadow-sm ios-haptic-active"
+                        >
+                          {t("checkout.apply_btn")}
+                        </button>
                       </div>
 
                       <div>

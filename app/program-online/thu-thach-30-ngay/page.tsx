@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -65,10 +65,9 @@ const ThirtyDayPage = () => {
     fetchData();
   }, []);
 
-  // Determine which images to use (prioritize dynamic DB data over static data)
-  // These values will be calculated using the current state of courseData
-  const challengePosterDesktop = courseData?.program?.image || thirtyDayCourse?.heroImage || "/picture/thuthach30day_desktop.png";
-  const challengePosterMobile = courseData?.program?.image || thirtyDayCourse?.mobileImage || "/picture/thuthach30day_mobile.png";
+  // Hero images: always use local SVG files (desktop / mobile)
+  const challengePosterDesktop = "/course/30days_desktop.svg";
+  const challengePosterMobile = "/course/30days_mobile.svg";
 
   // Sync some data from DB to local variables if available
   const dbInfo = courseData?.description?.information || {};
@@ -76,7 +75,7 @@ const ThirtyDayPage = () => {
   const dbMentor = courseData?.mentors?.[0];
 
   // Logic mapping fields FROM YOUR DATABASE LOG
-  const displaySchedule = courseData?.program?.total_sessions || t("28/03/2026 - 28/04/2026");
+  const displaySchedule = courseData?.program?.total_sessions || t("28/04/2026 - 28/05/2026");
 
   const displayStudentCount = t("thirty_day_challenge.timeline.students_count");
 
@@ -198,15 +197,15 @@ const ThirtyDayPage = () => {
     const courseToAdd =
       planType === "membership"
         ? {
-            ...thirtyDayCourse,
-            id: thirtyDayCourse.id + 1000,
-            price: { ...thirtyDayCourse.price, amount: formattedMembershipPrice },
-            title: "thirty_day_challenge.title_membership",
-          }
+          ...thirtyDayCourse,
+          id: thirtyDayCourse.id + 1000,
+          price: { ...thirtyDayCourse.price, amount: formattedMembershipPrice },
+          title: "thirty_day_challenge.title_membership",
+        }
         : {
-            ...thirtyDayCourse,
-            price: { ...thirtyDayCourse.price, amount: formattedMonthlyPrice },
-          };
+          ...thirtyDayCourse,
+          price: { ...thirtyDayCourse.price, amount: formattedMonthlyPrice },
+        };
 
     buyNow(courseToAdd);
     router.push("/checkout");
@@ -216,7 +215,7 @@ const ThirtyDayPage = () => {
     <div className="min-h-screen bg-[#F2F2F7] override-header-spacing font-sans text-gray-900">
       <main>
         {/* HERO SECTION - Responsive images for desktop/mobile */}
-        <section className="relative w-full -mt-14 sm:-mt-16 md:-mt-20 pt-14 sm:pt-16 md:pt-20">
+        <section className="relative w-full">
           {/* Desktop Image */}
           {isLoading ? (
             <Skeleton className="hidden md:block w-full aspect-[16/9]" />
@@ -313,16 +312,13 @@ const ThirtyDayPage = () => {
             </div>
             <div className="max-w-4xl mx-auto text-center text-gray-600 text-base md:text-lg leading-relaxed">
               <p className="mb-4">
-                Nhi đây, có ai học kiến thức của Nhi xong bỏ vô góc trì hoãn không làm không?
+                Bạn đã học, đã note, đã gật đầu. Nhưng tuần sau vẫn y chang tuần trước?
               </p>
               <p className="mb-4">
-                Nhi tin rằng nhiều người không thiếu kiến thức, chỉ thiếu một không gian để bắt đầu làm từng việc nhỏ mỗi ngày và trở thành một phiên bản tốt hơn của chính mình...
+                Nhiều người trong chúng ta không thiếu hiểu biết, chúng ta chỉ thiếu một môi trường đủ động lực để bắt đầu chuyển hóa những điều đã học thành kết quả thực tế.
               </p>
               <p className="mb-4">
-                Nhi quyết định tạo ra Thử Thách 30 Ngày để đồng hành cùng các bạn bắt đầu tạo thói quen tốt.
-              </p>
-              <p>
-                Năm 2026, Nhi muốn gần hơn với khán giả của Nhi, cùng các bạn và các em tạo ra nhiều thứ tốt đẹp hơn cho cuộc sống!
+                Đó là lý do Thử Thách 30 Ngày ra đời… Không phải để dạy thêm cho bạn những lý thuyết xa lạ, mà để cùng bạn đặt những viên gạch đầu tiên cho một phiên bản tốt hơn của chính mình qua từng hành động nhỏ nhất mỗi ngày.
               </p>
             </div>
           </div>
@@ -572,20 +568,20 @@ const ThirtyDayPage = () => {
                       {t("thirty_day_challenge.pricing.monthly.label")}
                     </p>
                   </div>
-                <div className="flex flex-wrap items-end gap-2">
-                  <p className="text-4xl font-black tracking-[-0.05em] text-slate-900 md:text-5xl">
-                    {formatCurrency(monthlyPrice)}
-                  </p>
-                  <span className="inline-block ml-0.5 text-2xl md:text-3xl text-slate-900 font-bold leading-none">
-                    <span className="relative">
-                      đ
-                      <span className="absolute left-0 -bottom-0.5 w-full h-[1px] bg-current" />
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-4xl font-black tracking-[-0.05em] text-slate-900 md:text-5xl leading-none">
+                      {formatCurrency(monthlyPrice)}
                     </span>
-                  </span>
-                  <span className="pb-1 text-base font-medium text-slate-400">
-                    {t("thirty_day_challenge.pricing.monthly.per_month")}
-                  </span>
-                </div>
+                    <span className="text-2xl md:text-3xl text-slate-900 font-bold leading-none">
+                      <span className="relative">
+                        đ
+                        <span className="absolute left-0 -bottom-0.5 w-full h-[1px] bg-current" />
+                      </span>
+                    </span>
+                    <span className="text-base font-medium text-slate-400 leading-none">
+                      {t("thirty_day_challenge.pricing.monthly.per_month")}
+                    </span>
+                  </div>
                 </div>
                 <div className="space-y-3 mb-6">
                   <p className="text-[10px] font-bold text-slate-300 uppercase tracking-[0.3em]">
@@ -640,10 +636,10 @@ const ThirtyDayPage = () => {
                     </div>
                     {/* Pricing */}
                     <div className="flex flex-col gap-1">
-                      {/* Original price – red strikethrough */}
+                      {/* Original price – slate strikethrough */}
                       {monthlyPrice > 0 && (
-                        <div className="flex items-center gap-2 text-red-600 font-bold">
-                          <span className="text-base line-through decoration-red-600 decoration-2">
+                        <div className="flex items-center gap-2 text-slate-900 font-bold">
+                          <span className="text-base line-through decoration-slate-900 decoration-2">
                             {formatCurrency(monthlyPrice * 12)}
                           </span>
                           <span className="inline-block ml-0.5 text-sm">
@@ -652,7 +648,7 @@ const ThirtyDayPage = () => {
                               <span className="absolute left-0 -bottom-0.5 w-full h-[1px] bg-current" />
                             </span>
                           </span>
-                          <span className="text-[10px] font-black uppercase tracking-wider bg-red-50 px-2 py-0.5 rounded border border-red-100 ml-1">
+                          <span className="text-[10px] font-black uppercase tracking-wider bg-slate-50 px-2 py-0.5 rounded border border-slate-100 ml-1">
                             Giá gốc
                           </span>
                         </div>
@@ -660,16 +656,16 @@ const ThirtyDayPage = () => {
                       {/* Discounted price + gift badge */}
                       <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
                         <div className="flex items-baseline gap-1">
-                          <span className="text-4xl md:text-5xl font-black tracking-[-0.05em] text-slate-900 leading-none">
+                          <span className="text-4xl md:text-5xl font-black tracking-[-0.05em] text-red-600 leading-none">
                             {formatCurrency(membershipPrice)}
                           </span>
-                          <span className="inline-block ml-0.5 text-2xl md:text-3xl text-slate-900 font-bold">
+                          <span className="text-2xl md:text-3xl text-red-600 font-bold leading-none">
                             <span className="relative">
                               đ
                               <span className="absolute left-0 -bottom-0.5 w-full h-[1px] bg-current" />
                             </span>
                           </span>
-                          <span className="pb-1 text-base font-medium text-slate-400 ml-1">
+                          <span className="text-base font-medium text-slate-400 leading-none">
                             {t("thirty_day_challenge.pricing.membership.per_year")}
                           </span>
                         </div>

@@ -62,9 +62,9 @@ export default function CuocSongCuaBanPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F2F2F7] pb-20 override-header-spacing">
+    <div className="min-h-screen bg-white pb-20 override-header-spacing">
       <CourseHeader
-        imageUrl="/picture/cuoc_song_cua_ban.png"
+        imageUrl="/course/cuocsongcuaban_desktop.svg"
         altText={t("program_detail.courses.cuoc_song_cua_ban.title")}
         time={t("program_detail.common.online_course")}
         tags={[t("categories.personal_development")]}
@@ -75,11 +75,6 @@ export default function CuocSongCuaBanPage() {
         courseSlug="cuoc-song-cua-ban"
       />
       <div className="ios-safe-padding-bottom">
-        <Instructor instructors={instructors} />
-        <div className="py-4">
-          <Whom title={t("program_detail.common.who_should_join")} items={whomItems} />
-        </div>
-        <Testimonials {...testimonials} />
         <CourseInfo
           title={t("program_detail.info.title")}
           details={[
@@ -103,6 +98,11 @@ export default function CuocSongCuaBanPage() {
             { icon: "Users" as const, label: t("program_detail.info.capacity"), value: t("program_detail.courses.cuoc_song_cua_ban.capacity") },
           ]}
         />
+        <Instructor instructors={instructors} />
+        <div className="py-4">
+          <Whom title={t("program_detail.common.who_should_join")} items={whomItems} />
+        </div>
+        <Testimonials {...testimonials} />
         <Organizers />
       </div>
     </div>
