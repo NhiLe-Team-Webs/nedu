@@ -58,22 +58,40 @@ export default function CheckoutPage() {
     const hasThirtyDayCourse = items.some((item) => item.slug === 'thu-thach-30-ngay');
     if (!hasThirtyDayCourse) return;
 
-    let isMounted = true;
-
-    const loadThirtyDayImage = async () => {
-      const courseDetail = await getCourseDetailBySlug('thu-thach-30-ngay');
-      const image = courseDetail?.program?.image?.trim();
-      if (isMounted && image) {
-        setThirtyDayCheckoutImage(image);
+    const fetchCourseData = async () => {
+      const detail = await getCourseDetailBySlug('thu-thach-30-ngay');
+      if (detail && detail.program?.image) {
+        setThirtyDayCheckoutImage(detail.program.image);
       }
     };
+    fetchCourseData();
+  }, [items]);
 
-    loadThirtyDayImage();
+  // Prevent leaving page during card payment
+  useEffect(() => {
+    if (!showVisaQR) return;
+
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = ''; // Required for some browsers
+      return '';
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    // Trap back button
+    window.history.pushState(null, '', window.location.href);
+    const handlePopState = () => {
+      window.history.pushState(null, '', window.location.href);
+    };
+    
+    window.addEventListener('popstate', handlePopState);
 
     return () => {
-      isMounted = false;
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener('popstate', handlePopState);
     };
-  }, [items]);
+  }, [showVisaQR]);
 
   const subtotal = getTotalPrice();
   const discountAmount = discountType === 'percentage'
@@ -320,10 +338,9 @@ export default function CheckoutPage() {
       <div className="min-h-screen bg-[#F2F2F7] pt-8 sm:pt-12 pb-8 sm:pb-12">
         <div className="container mx-auto px-3 sm:px-4 max-w-6xl">
           <div className="mb-6 sm:mb-8">
-            {showVisaQR || showPaymentQR ? (
+            {showVisaQR ? null : showPaymentQR ? (
               <button
                 onClick={() => {
-                  setShowVisaQR(false);
                   setShowPaymentQR(false);
                   setCheckoutStep('payment');
                 }}
@@ -353,23 +370,25 @@ export default function CheckoutPage() {
 
           {/* Visa QR Code Payment */}
           {showVisaQR ? (
-            <div className="mb-8 max-w-2xl mx-auto flex flex-col items-center animate-in fade-in zoom-in duration-300">
-              <div className="bg-white rounded-ios-xl shadow-ios-card p-5 sm:p-8 border border-white/40 w-full text-center">
-                <h2 className="text-2xl font-bold mb-4 text-text-primary">Quét để thanh toán bằng thẻ tín dụng</h2>
-                <div className="flex flex-col items-center justify-center mb-8 space-y-6">
-                  <img src="/qr-code-visa.jpg" alt="Visa QR" className="max-w-[250px] w-full rounded-2xl shadow-sm border border-gray-100" />
+            <div className="fixed inset-0 z-[9999] bg-[#F2F2F7] flex flex-col items-center justify-center p-4 min-h-screen overflow-y-auto animate-in fade-in zoom-in duration-300">
+              <div className="w-full max-w-2xl">
+                <div className="bg-white rounded-ios-xl shadow-ios-card p-5 sm:p-8 border border-white/40 w-full text-center">
+                  <h2 className="text-2xl font-bold mb-4 text-text-primary">Quét để thanh toán bằng thẻ tín dụng</h2>
+                  <div className="flex flex-col items-center justify-center mb-8 space-y-6">
+                    <img src="/qr-code-visa.jpg" alt="Visa QR" className="max-w-[250px] w-full rounded-2xl shadow-sm border border-gray-100" />
 
-                  <div className="w-full max-w-xl pt-6 border-t border-gray-100">
-                    <img src="/available-bank-code.jpg" alt="Available Banks" className="w-full rounded-lg border border-gray-100 object-contain max-h-[250px]" />
+                    <div className="w-full max-w-xl pt-6 border-t border-gray-100">
+                      <img src="/available-bank-code.jpg" alt="Available Banks" className="w-full rounded-lg border border-gray-100 object-contain max-h-[250px]" />
+                    </div>
                   </div>
-                </div>
 
-                <button
-                  onClick={handlePaymentComplete}
-                  className="w-full sm:w-auto px-8 flex items-center justify-center bg-primary text-white font-bold py-3.5 rounded-full shadow-ios-md hover:shadow-ios-lg transition-all mx-auto active:scale-95"
-                >
-                  Đã hoàn tất thanh toán
-                </button>
+                  <button
+                    onClick={handlePaymentComplete}
+                    className="w-full sm:w-auto px-8 flex items-center justify-center bg-primary text-white font-bold py-3.5 rounded-full shadow-ios-md hover:shadow-ios-lg transition-all mx-auto active:scale-95"
+                  >
+                    Đã hoàn tất thanh toán
+                  </button>
+                </div>
               </div>
             </div>
           ) : showPaymentQR && sepayPaymentData ? (
