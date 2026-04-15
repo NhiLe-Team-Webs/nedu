@@ -40,6 +40,8 @@ export default function CheckoutPage() {
   const [sepayPaymentData, setSepayPaymentData] = useState<SePayPaymentResponse | null>(null);
   const [showPaymentQR, setShowPaymentQR] = useState(false);
   const [showVisaQR, setShowVisaQR] = useState(false);
+  const [showLeaveConfirm, setShowLeaveConfirm] = useState(false);
+  const [pendingUrl, setPendingUrl] = useState<string | null>(null);
   // Checkout steps
   const [checkoutStep, setCheckoutStep] = useState<'info' | 'payment'>('info');
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<'qr' | 'card' | null>(null);
@@ -67,31 +69,33 @@ export default function CheckoutPage() {
     fetchCourseData();
   }, [items]);
 
-  // Prevent leaving page during card payment
+  // Prevent leaving page during payment process
   useEffect(() => {
-    if (!showVisaQR) return;
+    if (!showVisaQR && !showPaymentQR) return;
 
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       e.preventDefault();
-      e.returnValue = ''; // Required for some browsers
+      e.returnValue = '';
       return '';
     };
 
     window.addEventListener('beforeunload', handleBeforeUnload);
 
-    // Trap back button
+    // Trap back button and show custom modal
     window.history.pushState(null, '', window.location.href);
     const handlePopState = () => {
+      setPendingUrl(null);
+      setShowLeaveConfirm(true);
       window.history.pushState(null, '', window.location.href);
     };
-    
+
     window.addEventListener('popstate', handlePopState);
 
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
       window.removeEventListener('popstate', handlePopState);
     };
-  }, [showVisaQR]);
+  }, [showVisaQR, showPaymentQR]);
 
   const subtotal = getTotalPrice();
   const discountAmount = discountType === 'percentage'
@@ -284,7 +288,7 @@ export default function CheckoutPage() {
 
     const params = new URLSearchParams({
       status: 'success',
-      paymentMethod: 'sepay',
+      paymentMethod: selectedPaymentMethod || 'sepay',
     });
 
     if (sepayPaymentData?.orderCode) {
@@ -338,11 +342,22 @@ export default function CheckoutPage() {
       <div className="min-h-screen bg-[#F2F2F7] pt-8 sm:pt-12 pb-8 sm:pb-12">
         <div className="container mx-auto px-3 sm:px-4 max-w-6xl">
           <div className="mb-6 sm:mb-8">
-            {showVisaQR ? null : showPaymentQR ? (
+            {showVisaQR ? (
               <button
                 onClick={() => {
-                  setShowPaymentQR(false);
-                  setCheckoutStep('payment');
+                  setPendingUrl(null);
+                  setShowLeaveConfirm(true);
+                }}
+                className="inline-flex items-center gap-2 text-primary hover:text-primary-dark font-semibold transition text-sm sm:text-base group"
+              >
+                <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:-translate-x-1" />
+                Hủy thanh toán và quay lại
+              </button>
+            ) : showPaymentQR ? (
+              <button
+                onClick={() => {
+                  setPendingUrl(null);
+                  setShowLeaveConfirm(true);
                 }}
                 className="inline-flex items-center gap-2 text-primary hover:text-primary-dark font-semibold transition text-sm sm:text-base group"
               >
@@ -376,23 +391,6 @@ export default function CheckoutPage() {
                   <h2 className="text-2xl font-bold mb-4 text-text-primary">Quét để thanh toán bằng thẻ tín dụng</h2>
                   <div className="flex flex-col items-center justify-center mb-8 space-y-6">
                     <img src="/qr-code-visa.jpg" alt="Visa QR" className="max-w-[250px] w-full rounded-2xl shadow-sm border border-gray-100" />
-
-                    <div className="bg-[#FFF9E6] p-4 sm:p-5 rounded-2xl border border-[#FFE082] text-left w-full max-w-sm shadow-sm">
-                      <p className="text-[15px] leading-relaxed text-yellow-800 mb-3 flex items-start gap-2">
-                        <span className="text-lg leading-none mt-0.5">⚠️</span>
-                        <span>Mã QR không tự động điền số tiền. Quý khách vui lòng <strong className="font-semibold">nhập thủ công</strong> chính xác thông tin bên dưới:</span>
-                      </p>
-                      <div className="space-y-0 bg-white rounded-xl border border-yellow-200 overflow-hidden">
-                        <div className="flex justify-between items-center p-3.5 border-b border-gray-100 bg-gray-50/50">
-                          <span className="text-gray-500 font-medium text-sm">Số tiền cần chuyển:</span>
-                          <span className="text-xl font-bold text-primary">{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(total)}</span>
-                        </div>
-                        <div className="flex justify-between items-center p-3.5">
-                          <span className="text-gray-500 font-medium text-sm">Nội dung thanh toán:</span>
-                          <span className="text-lg font-bold text-gray-800 tracking-wide">{formData.phone}</span>
-                        </div>
-                      </div>
-                    </div>
 
                     <div className="w-full max-w-xl pt-6 border-t border-gray-100">
                       <img src="/available-bank-code.jpg" alt="Available Banks" className="w-full rounded-lg border border-gray-100 object-contain max-h-[250px]" />
@@ -945,6 +943,47 @@ export default function CheckoutPage() {
                 className="px-8 py-2.5 bg-[#F78D2B] text-white rounded-full font-bold hover:brightness-105 transition-all shadow-md active:scale-95"
               >
                 Đã hiểu
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Leave Confirmation Modal */}
+      {showLeaveConfirm && (
+        <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-sm overflow-hidden flex flex-col animate-in zoom-in-95 duration-200">
+            <div className="p-6 pt-8 text-center">
+              <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-text-primary mb-2">Xác nhận rời khỏi trang?</h3>
+              <p className="text-text-secondary text-sm">
+                Những thay đổi bạn vừa thực hiện có thể không được lưu lại.
+              </p>
+            </div>
+
+            <div className="flex border-t border-gray-100 italic">
+              <button
+                onClick={() => setShowLeaveConfirm(false)}
+                className="flex-1 py-4 text-text-primary font-semibold hover:bg-gray-50 transition-colors border-r border-gray-100"
+              >
+                Ở lại
+              </button>
+              <button
+                onClick={() => {
+                  setShowLeaveConfirm(false);
+                  if (pendingUrl) {
+                    router.push(pendingUrl);
+                  } else {
+                    if (showVisaQR) setShowVisaQR(false);
+                    if (showPaymentQR) setShowPaymentQR(false);
+                  }
+                }}
+                className="flex-1 py-4 text-red-600 font-bold hover:bg-red-50 transition-colors"
+              >
+                Rời khỏi
               </button>
             </div>
           </div>
