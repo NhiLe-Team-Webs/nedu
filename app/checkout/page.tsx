@@ -39,6 +39,19 @@ export default function CheckoutPage() {
   const [errors, setErrors] = useState<string[]>([]);
   const [sepayPaymentData, setSepayPaymentData] = useState<SePayPaymentResponse | null>(null);
   const [showPaymentQR, setShowPaymentQR] = useState(false);
+  const [showVisaQR, setShowVisaQR] = useState(false);
+  // Checkout steps
+  const [checkoutStep, setCheckoutStep] = useState<'info' | 'payment'>('info');
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<'qr' | 'card' | null>(null);
+  // VAT invoice
+  const [wantVatInvoice, setWantVatInvoice] = useState(false);
+  const [vatData, setVatData] = useState({
+    companyName: '',
+    taxCode: '',
+    companyAddress: '',
+    companyEmail: '',
+  });
+  const [showVatTerms, setShowVatTerms] = useState(false);
   const [thirtyDayCheckoutImage, setThirtyDayCheckoutImage] = useState<string | null>(null);
 
   useEffect(() => {
@@ -66,7 +79,9 @@ export default function CheckoutPage() {
   const discountAmount = discountType === 'percentage'
     ? subtotal * (discount / 100)
     : discount;
-  const total = subtotal - discountAmount;
+  const afterDiscount = subtotal - discountAmount;
+  const vatAmount = Math.round(afterDiscount * 0.08);
+  const total = afterDiscount + vatAmount;
 
   const handleApplyDiscount = () => {
     const code = discountCode.trim().toUpperCase();
@@ -128,17 +143,53 @@ export default function CheckoutPage() {
       return;
     }
 
+    // Move to payment step
+    setCheckoutStep('payment');
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  };
+
+  const handleFinalPayment = async () => {
+    // Validate VAT if checked
+    if (wantVatInvoice) {
+      const vatErrors: string[] = [];
+      if (!vatData.companyName.trim()) vatErrors.push('Vui lòng nhập tên doanh nghiệp');
+      if (!vatData.taxCode.trim()) vatErrors.push('Vui lòng nhập mã số thuế');
+      if (!vatData.companyAddress.trim()) vatErrors.push('Vui lòng nhập địa chỉ doanh nghiệp');
+      if (!vatData.companyEmail.trim()) vatErrors.push('Vui lòng nhập email nhận hoá đơn');
+      if (vatErrors.length > 0) {
+        setErrors(vatErrors);
+        return;
+      }
+    }
+
+    if (!selectedPaymentMethod) {
+      setErrors(['Vui lòng chọn phương thức thanh toán']);
+      return;
+    }
+
+    setErrors([]);
     setIsLoading(true);
     setShowPaymentQR(false);
+    setShowVisaQR(false);
     setSepayPaymentData(null);
 
+    if (selectedPaymentMethod === 'card') {
+      setTimeout(() => {
+        setIsLoading(false);
+        setShowVisaQR(true);
+        setCheckoutStep('info'); // Reset step behind the QR if needed
+        setTimeout(() => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 100);
+      }, 500);
+      return;
+    }
+
     try {
-      // Calculate total amount for all items in cart (after discount)
-      const totalAmount = getTotalPrice();
-      const discountAmount = discountType === 'percentage'
-        ? totalAmount * (discount / 100)
-        : discount;
-      const finalAmount = totalAmount - discountAmount;
+      // Calculate total amount for all items in cart (after discount + VAT)
+      const finalAmount = total;
 
       // Get all program IDs from cart items
       const programIds = items.map(item => (item.paymentId || item.id).toString());
@@ -164,6 +215,10 @@ export default function CheckoutPage() {
       const appliedCouponCode = discount > 0 ? discountCode : '';
 
       // Prepare SePay payment data with processed telegram
+      let telegram = formData.telegram.trim();
+      if (telegram && !telegram.startsWith('@')) {
+        telegram = `@${telegram}`;
+      }
       const sepayData = prepareSePayPaymentData(
         { ...formData, telegram },
         finalAmount,
@@ -186,6 +241,7 @@ export default function CheckoutPage() {
         // Show QR code payment UI
         setSepayPaymentData(paymentResponse);
         setShowPaymentQR(true);
+        setCheckoutStep('info'); // Reset step behind QR
         // Scroll to QR code
         setTimeout(() => {
           window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -264,27 +320,215 @@ export default function CheckoutPage() {
       <div className="min-h-screen bg-[#F2F2F7] pt-8 sm:pt-12 pb-8 sm:pb-12">
         <div className="container mx-auto px-3 sm:px-4 max-w-6xl">
           <div className="mb-6 sm:mb-8">
-            <Link
-              href="/cart"
-              className="inline-flex items-center gap-2 text-primary hover:text-primary-dark font-semibold transition text-sm sm:text-base group"
-            >
-              <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:-translate-x-1" />
-              {t("cart.back_to_cart")}
-            </Link>
+            {showVisaQR || showPaymentQR ? (
+              <button
+                onClick={() => {
+                  setShowVisaQR(false);
+                  setShowPaymentQR(false);
+                  setCheckoutStep('payment');
+                }}
+                className="inline-flex items-center gap-2 text-primary hover:text-primary-dark font-semibold transition text-sm sm:text-base group"
+              >
+                <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:-translate-x-1" />
+                Quay lại chọn phương thức thanh toán
+              </button>
+            ) : checkoutStep === 'payment' ? (
+              <button
+                onClick={() => setCheckoutStep('info')}
+                className="inline-flex items-center gap-2 text-primary hover:text-primary-dark font-semibold transition text-sm sm:text-base group"
+              >
+                <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:-translate-x-1" />
+                Quay lại phần điền thông tin
+              </button>
+            ) : (
+              <Link
+                href="/cart"
+                className="inline-flex items-center gap-2 text-primary hover:text-primary-dark font-semibold transition text-sm sm:text-base group"
+              >
+                <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:-translate-x-1" />
+                {t("cart.back_to_cart")}
+              </Link>
+            )}
           </div>
 
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-text-primary text-center sm:text-left">{t("checkout.title")}</h1>
+          {/* Visa QR Code Payment */}
+          {showVisaQR ? (
+            <div className="mb-8 max-w-2xl mx-auto flex flex-col items-center animate-in fade-in zoom-in duration-300">
+              <div className="bg-white rounded-ios-xl shadow-ios-card p-5 sm:p-8 border border-white/40 w-full text-center">
+                <h2 className="text-2xl font-bold mb-4 text-text-primary">Quét để thanh toán bằng thẻ tín dụng</h2>
+                <div className="flex flex-col items-center justify-center mb-8 space-y-6">
+                  <img src="/qr-code-visa.jpg" alt="Visa QR" className="max-w-[250px] w-full rounded-2xl shadow-sm border border-gray-100" />
 
-          {/* SePay QR Code Payment - Show full screen when QR is ready */}
-          {showPaymentQR && sepayPaymentData ? (
-            <div className="mb-8 max-w-2xl mx-auto">
+                  <div className="w-full max-w-xl pt-6 border-t border-gray-100">
+                    <img src="/available-bank-code.jpg" alt="Available Banks" className="w-full rounded-lg border border-gray-100 object-contain max-h-[250px]" />
+                  </div>
+                </div>
+
+                <button
+                  onClick={handlePaymentComplete}
+                  className="w-full sm:w-auto px-8 flex items-center justify-center bg-primary text-white font-bold py-3.5 rounded-full shadow-ios-md hover:shadow-ios-lg transition-all mx-auto active:scale-95"
+                >
+                  Đã hoàn tất thanh toán
+                </button>
+              </div>
+            </div>
+          ) : showPaymentQR && sepayPaymentData ? (
+            <div className="mb-8 max-w-2xl mx-auto animate-in fade-in zoom-in duration-300">
               <SePayPaymentQR
                 paymentData={sepayPaymentData}
                 onPaymentComplete={handlePaymentComplete}
                 onPaymentFailed={handlePaymentFailed}
               />
             </div>
-          ) : (
+          ) : checkoutStep === 'payment' ? (() => {
+            const isVatFilled = vatData.companyName.trim() && vatData.taxCode.trim() && vatData.companyAddress.trim() && vatData.companyEmail.trim();
+            return (
+              <div className="mb-8 max-w-2xl mx-auto animate-in fade-in zoom-in duration-300 w-full">
+                <div className="bg-white rounded-ios-xl shadow-ios-card p-5 sm:p-8 border border-white/40">
+                  <div className="flex justify-center mb-8 border-b border-gray-100 pb-4">
+                    <h2 className="text-xl sm:text-2xl font-bold text-text-primary text-center">Thanh toán & Hoá đơn</h2>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="space-y-3">
+                      {/* QR Payment Option */}
+                      <div
+                        className={`flex items-center gap-3 p-4 rounded-ios-lg border-2 cursor-pointer transition-all duration-200 ${selectedPaymentMethod === 'qr'
+                          ? 'border-primary bg-primary/5 shadow-sm'
+                          : 'border-gray-200 hover:bg-gray-50'
+                          }`}
+                        onClick={() => setSelectedPaymentMethod('qr')}
+                      >
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          checked={selectedPaymentMethod === 'qr'}
+                          onChange={() => setSelectedPaymentMethod('qr')}
+                          className="w-5 h-5 text-primary focus:ring-primary border-gray-300"
+                        />
+                        <div>
+                          <span className="text-base font-semibold text-text-primary">Thanh toán QR (Chuyển khoản)</span>
+                        </div>
+                      </div>
+
+                      {/* Card Payment Option */}
+                      <div
+                        className={`flex items-center gap-3 p-4 rounded-ios-lg border-2 cursor-pointer transition-all duration-200 ${selectedPaymentMethod === 'card'
+                          ? 'border-primary bg-primary/5 shadow-sm'
+                          : 'border-gray-200 hover:bg-gray-50'
+                          }`}
+                        onClick={() => setSelectedPaymentMethod('card')}
+                      >
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          checked={selectedPaymentMethod === 'card'}
+                          onChange={() => setSelectedPaymentMethod('card')}
+                          className="w-5 h-5 text-primary focus:ring-primary border-gray-300"
+                        />
+                        <div>
+                          <span className="text-base font-semibold text-text-primary">Thanh toán thẻ tín dụng</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-8 pt-6 border-t border-gray-100">
+                      <div className="flex flex-col">
+                        <label className="flex items-start cursor-pointer hover:bg-gray-50 p-2 -ml-2 rounded-lg transition-colors w-max">
+                          <input
+                            type="checkbox"
+                            checked={wantVatInvoice}
+                            onChange={(e) => setWantVatInvoice(e.target.checked)}
+                            className="mt-1 mr-3 w-5 h-5 text-primary rounded focus:ring-primary border-gray-300 cursor-pointer"
+                          />
+                          <span className="text-base font-semibold text-text-primary">Xuất hoá đơn GTGT (VAT)</span>
+                        </label>
+                        <p className="text-sm text-text-secondary ml-8">
+                          Vui lòng xem <button type="button" onClick={() => setShowVatTerms(true)} className="text-primary hover:underline font-medium cursor-pointer">điều khoản xuất hóa đơn</button>
+                        </p>
+                      </div>
+
+                      {/* VAT Invoice Fields */}
+                      {wantVatInvoice && (
+                        <div className="mt-4 space-y-4 p-5 bg-gray-50 rounded-ios-lg border border-gray-200 animate-in fade-in slide-in-from-top-2 duration-200">
+                          <div>
+                            <label className="block text-text-primary font-semibold mb-1.5 text-sm ml-1">
+                              Tên doanh nghiệp <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                              type="text"
+                              placeholder="VD: Công ty TNHH ABC"
+                              value={vatData.companyName}
+                              onChange={(e) => setVatData(prev => ({ ...prev, companyName: e.target.value }))}
+                              className="w-full bg-white border border-gray-200 rounded-ios-md px-3 py-2.5 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-text-primary font-semibold mb-1.5 text-sm ml-1">
+                              Mã số thuế <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                              type="text"
+                              placeholder="VD: 0123456789"
+                              value={vatData.taxCode}
+                              onChange={(e) => setVatData(prev => ({ ...prev, taxCode: e.target.value }))}
+                              className="w-full bg-white border border-gray-200 rounded-ios-md px-3 py-2.5 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-text-primary font-semibold mb-1.5 text-sm ml-1">
+                              Địa chỉ doanh nghiệp <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                              type="text"
+                              placeholder="VD: 123 Nguyễn Huệ, Q1, TP.HCM"
+                              value={vatData.companyAddress}
+                              onChange={(e) => setVatData(prev => ({ ...prev, companyAddress: e.target.value }))}
+                              className="w-full bg-white border border-gray-200 rounded-ios-md px-3 py-2.5 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-text-primary font-semibold mb-1.5 text-sm ml-1">
+                              Email nhận hoá đơn <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                              type="email"
+                              placeholder="VD: ketoan@abc.vn"
+                              value={vatData.companyEmail}
+                              onChange={(e) => setVatData(prev => ({ ...prev, companyEmail: e.target.value }))}
+                              className="w-full bg-white border border-gray-200 rounded-ios-md px-3 py-2.5 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm"
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Proceed Button */}
+                    <div className="mt-8 pt-6 border-t border-gray-100 flex justify-end">
+                      <button
+                        type="button"
+                        onClick={handleFinalPayment}
+                        disabled={isLoading || !selectedPaymentMethod || (wantVatInvoice && !isVatFilled)}
+                        className="w-full sm:w-auto min-w-[200px] flex items-center justify-center bg-primary text-white font-bold py-3.5 px-6 rounded-full shadow-ios-md hover:shadow-ios-lg hover:brightness-105 disabled:bg-gray-300 disabled:shadow-none disabled:cursor-not-allowed active:scale-[0.98] transition-all duration-300 text-base ios-haptic-active"
+                      >
+                        {isLoading ? (
+                          <div className="flex items-center justify-center">
+                            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            {t("checkout.processing")}
+                          </div>
+                        ) : (
+                          'Thanh toán'
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })() : (
             <>
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
                 <div className="lg:col-span-2">
@@ -299,102 +543,61 @@ export default function CheckoutPage() {
                     <div className="space-y-6">
                       {items.map((item) => {
                         const itemImage = item.slug === 'thu-thach-30-ngay'
-                          ? (thirtyDayCheckoutImage && thirtyDayCheckoutImage !== '' ? thirtyDayCheckoutImage : '/course/30days_desktop.svg')
-                          : (item.heroImage || '/course/30days_desktop.svg');
+                          ? (thirtyDayCheckoutImage && thirtyDayCheckoutImage !== '' ? thirtyDayCheckoutImage : '/picture/thuthach30day_desktop.png')
+                          : (item.heroImage || '/picture/thuthach30day_desktop.png');
 
                         return (
-                          <div key={item.id} className="pb-6 border-b last:border-b-0 border-gray-100 flex flex-col gap-4">
-                            <div className="flex flex-col md:flex-row gap-4">
-                              {/* Image wrapper: full-width 16:9 on mobile, fixed 200px width 16:9 on desktop */}
-                              <div className="w-full md:w-[200px] md:shrink-0">
-                                <div className="relative w-full" style={{ aspectRatio: '16/9' }}>
-                                  <img
-                                    src={itemImage}
-                                    alt={t(item.title)}
-                                    className="absolute inset-0 w-full h-full object-cover rounded-ios-lg shadow-sm"
-                                    onError={e => { e.currentTarget.src = '/course/30days_desktop.svg'; }}
-                                  />
-                                </div>
-                              </div>
+                          <div key={item.id} className="flex flex-col md:flex-row gap-4 pb-6 border-b last:border-b-0 border-gray-100">
+                            <img
+                              src={itemImage}
+                              alt={t(item.title)}
+                              className="w-full md:w-[150px] h-[100px] object-cover rounded-ios-lg shadow-sm"
+                              onError={e => { e.currentTarget.src = '/picture/thuthach30day_desktop.png'; }}
+                            />
 
-                              <div className="flex-1 flex flex-col justify-center">
-                                <div className="flex items-start justify-between gap-3 mb-1">
-                                  <h3 className="text-lg font-bold text-text-primary">{t(item.title)}</h3>
+                            <div className="flex-1 flex flex-col justify-center">
+                              <div className="flex items-start justify-between gap-3 mb-1">
+                                <h3 className="text-lg font-bold text-text-primary">{t(item.title)}</h3>
+                                <button
+                                  type="button"
+                                  onClick={() => removeFromCart(item.id)}
+                                  className="h-8 w-8 rounded-full flex items-center justify-center text-red-500 hover:text-red-600 hover:bg-red-50 transition-colors shrink-0"
+                                  aria-label={`Xóa ${t(item.title)} khỏi giỏ hàng`}
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </button>
+                              </div>
+                              <p className="text-text-secondary mb-2 text-sm">{item.category.map(c => t(c)).join(', ')}</p>
+                              <div className="flex items-center justify-between mt-auto">
+                                <div className="inline-flex items-center rounded-lg border border-gray-200 bg-white overflow-hidden h-9">
                                   <button
                                     type="button"
-                                    onClick={() => removeFromCart(item.id)}
-                                    className="h-8 w-8 rounded-full flex items-center justify-center text-red-500 hover:text-red-600 hover:bg-red-50 transition-colors shrink-0"
-                                    aria-label={`Xóa ${t(item.title)} khỏi giỏ hàng`}
+                                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                    className="h-full w-9 flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-gray-50 transition-colors"
+                                    aria-label={`Giảm số lượng ${t(item.title)}`}
                                   >
-                                    <Trash2 className="w-4 h-4" />
+                                    <Minus className="w-3.5 h-3.5" />
+                                  </button>
+                                  <span className="h-full min-w-[2.25rem] px-2 flex items-center justify-center text-sm font-semibold text-text-primary border-x border-gray-200">
+                                    {item.quantity}
+                                  </span>
+                                  <button
+                                    type="button"
+                                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                    className="h-full w-9 flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-gray-50 transition-colors"
+                                    aria-label={`Tăng số lượng ${t(item.title)}`}
+                                  >
+                                    <Plus className="w-3.5 h-3.5" />
                                   </button>
                                 </div>
-                                <p className="text-text-secondary mb-2 text-sm">{item.category.map(c => t(c)).join(', ')}</p>
-                                <div className="flex items-center justify-between mt-auto">
-                                  <div className="inline-flex items-center rounded-lg border border-gray-200 bg-white overflow-hidden h-9">
-                                    <button
-                                      type="button"
-                                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                                      className="h-full w-9 flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-gray-50 transition-colors"
-                                      aria-label={`Giảm số lượng ${t(item.title)}`}
-                                    >
-                                      <Minus className="w-3.5 h-3.5" />
-                                    </button>
-                                    <span className="h-full min-w-[2.25rem] px-2 flex items-center justify-center text-sm font-semibold text-text-primary border-x border-gray-200">
-                                      {item.quantity}
-                                    </span>
-                                    <button
-                                      type="button"
-                                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                      className="h-full w-9 flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-gray-50 transition-colors"
-                                      aria-label={`Tăng số lượng ${t(item.title)}`}
-                                    >
-                                      <Plus className="w-3.5 h-3.5" />
-                                    </button>
-                                  </div>
-                                  <div className="price text-lg font-bold text-primary">
-                                    {item.price.currency === 'VNĐ'
-                                      ? currencyFormatter.format(parseInt(item.price.amount.replace(/\./g, '')) * item.quantity)
-                                      : `${item.price.currency} ${item.price.amount}`
-                                    }
-                                  </div>
+                                <div className="price text-lg font-bold text-primary">
+                                  {item.price.currency === 'VNĐ'
+                                    ? currencyFormatter.format(parseInt(item.price.amount.replace(/\./g, '')) * item.quantity)
+                                    : `${item.price.currency} ${item.price.amount}`
+                                  }
                                 </div>
                               </div>
                             </div>
-
-                            {/* Promo Course attached to this item if applicable */}
-                            {ENABLE_PROMO_THUONG_HIEU_CUA_BAN && t(item.title).toLowerCase().includes('là chính mình') && promoCourse && (
-                              <div className="flex relative pl-[30px] mt-2">
-                                <div className="absolute left-[8px] top-4 bottom-4 w-[2px] bg-gray-300"></div>
-                                <div className="flex flex-col md:flex-row gap-4 py-2 w-full relative">
-                                  {/* Promo image: full-width 16:9 on mobile, 160px width 16:9 on desktop */}
-                                  <div className="w-full md:w-[160px] md:shrink-0">
-                                    <div className="relative w-full" style={{ aspectRatio: '16/9' }}>
-                                      <img
-                                        src={promoCourse.heroImage || "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&auto=format&fit=crop&q=60"}
-                                        alt={t(promoCourse.title)}
-                                        className="absolute inset-0 w-full h-full object-cover rounded-lg shadow-sm"
-                                      />
-                                    </div>
-                                  </div>
-                                  <div className="flex-1 flex justify-between">
-                                    <div>
-                                      <h4 className="font-bold text-base text-text-primary">{t(promoCourse.title)}</h4>
-                                      <p className="text-text-secondary text-sm mb-2">{promoCourse.category.map(c => t(c)).join(', ')}</p>
-                                      <span className="px-2 py-0.5 bg-gray-100 rounded text-xs font-semibold text-gray-500">x{item.quantity}</span>
-                                    </div>
-                                    <div className="flex items-end flex-col justify-end">
-                                      <span className="text-gray-400 line-through text-sm font-normal">
-                                        {promoCourse.price.currency === 'VNĐ'
-                                          ? currencyFormatter.format(parseInt(promoCourse.price.amount.replace(/\./g, '')) * item.quantity)
-                                          : `${promoCourse.price.currency} ${parseFloat(promoCourse.price.amount) * item.quantity}`
-                                        }
-                                      </span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            )}
                           </div>
                         );
                       })}
@@ -502,6 +705,13 @@ export default function CheckoutPage() {
                             </div>
                           </div>
                         </div>
+                        <button
+                          type="button"
+                          onClick={handleApplyDiscount}
+                          className="px-4 bg-gray-800 text-white rounded-ios-md hover:bg-black transition-all duration-300 h-[44px] font-bold text-sm shadow-sm ios-haptic-active"
+                        >
+                          {t("checkout.apply_btn")}
+                        </button>
                       </div>
 
                       <div>
@@ -537,7 +747,7 @@ export default function CheckoutPage() {
                           required
                           checked={agreed}
                           onChange={(e) => setAgreed(e.target.checked)}
-                          className="mt-1 mr-3 w-5 h-5 text-primary rounded focus:ring-primary border-gray-300"
+                          className="mt-1 mr-3 w-5 h-5 text-primary rounded focus:ring-primary border-gray-300 cursor-pointer"
                         />
                         <label htmlFor="terms" className="text-sm text-text-primary leading-relaxed">
                           {t("checkout.terms_agreement")}{' '}
@@ -620,30 +830,28 @@ export default function CheckoutPage() {
                           <span className="font-bold text-success">-{currencyFormatter.format(discountAmount)}</span>
                         </div>
                       )}
+                      <div className="flex justify-between text-sm sm:text-base">
+                        <span className="text-text-secondary">Thuế GTGT (8%)</span>
+                        <span className="font-semibold">{currencyFormatter.format(vatAmount)}</span>
+                      </div>
                       <div className="border-t border-gray-200 pt-3 flex justify-between text-base sm:text-lg font-bold items-center">
                         <span>{t("checkout.total")}</span>
                         <span className="price text-primary text-xl">{currencyFormatter.format(total)}</span>
                       </div>
                     </div>
 
-                    <button
-                      form="checkout-form"
-                      type="submit"
-                      disabled={isLoading || !agreed}
-                      className="w-full flex items-center justify-center bg-primary text-white font-bold py-3.5 rounded-full shadow-ios-md hover:shadow-ios-lg hover:brightness-105 disabled:bg-gray-300 disabled:shadow-none disabled:cursor-not-allowed active:scale-[0.98] transition-all duration-300 text-base ios-haptic-active"
-                    >
-                      {isLoading ? (
-                        <div className="flex items-center justify-center">
-                          <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                          </svg>
-                          {t("checkout.processing")}
-                        </div>
-                      ) : (
-                        t("checkout.confirm_pay_btn")
-                      )}
-                    </button>
+
+                    {/* Confirm Button - only show before vat selection */}
+                    {checkoutStep === 'info' && (
+                      <button
+                        form="checkout-form"
+                        type="submit"
+                        disabled={isLoading || !agreed}
+                        className="w-full flex items-center justify-center bg-primary text-white font-bold py-3.5 rounded-full shadow-ios-md hover:shadow-ios-lg hover:brightness-105 disabled:bg-gray-300 disabled:shadow-none disabled:cursor-not-allowed active:scale-[0.98] transition-all duration-300 text-base ios-haptic-active"
+                      >
+                        Chọn phương thức thanh toán
+                      </button>
+                    )}
 
                     <Link
                       href="/cart"
@@ -659,6 +867,43 @@ export default function CheckoutPage() {
           }
         </div>
       </div>
+
+      {/* VAT Terms Modal */}
+      {showVatTerms && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col animate-in zoom-in-95 duration-200">
+            <div className="flex justify-between items-center p-6 border-b border-gray-100">
+              <h3 className="text-xl font-bold text-text-primary text-center w-full">Lưu ý về Hóa đơn điện tử/Hóa đơn VAT</h3>
+              <button
+                onClick={() => setShowVatTerms(false)}
+                className="text-gray-400 hover:text-gray-600 transition-colors p-2 rounded-full hover:bg-gray-100 absolute right-4 top-4"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <div className="p-6 overflow-y-auto text-text-primary text-base space-y-4">
+              <p>
+                1. Trường hợp Khách hàng không chọn yêu cầu xuất hóa đơn hoặc chưa điền thông tin khi tiến hành thanh toán khoá học, N-Education sẽ mặc định xuất hóa đơn với thông tin người mua là "Khách lẻ không lấy hóa đơn".
+              </p>
+              <p>
+                2. N-Education chỉ hỗ trợ xuất hóa đơn 01 (một) lần duy nhất. Khách hàng vui lòng kiểm tra kỹ và không thể thay đổi thông tin hóa đơn sau khi đã hoàn tất "Thanh toán".
+              </p>
+            </div>
+
+            <div className="p-6 pb-8 flex justify-center">
+              <button
+                onClick={() => setShowVatTerms(false)}
+                className="px-8 py-2.5 bg-[#F78D2B] text-white rounded-full font-bold hover:brightness-105 transition-all shadow-md active:scale-95"
+              >
+                Đã hiểu
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
