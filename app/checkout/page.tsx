@@ -34,6 +34,8 @@ export default function CheckoutPage() {
   const [errors, setErrors] = useState<string[]>([]);
   const [sepayPaymentData, setSepayPaymentData] = useState<SePayPaymentResponse | null>(null);
   const [showPaymentQR, setShowPaymentQR] = useState(false);
+  const [isVisaPayment, setIsVisaPayment] = useState(false);
+  const [showVisaQR, setShowVisaQR] = useState(false);
   const [thirtyDayCheckoutImage, setThirtyDayCheckoutImage] = useState<string | null>(null);
 
   useEffect(() => {
@@ -125,7 +127,19 @@ export default function CheckoutPage() {
 
     setIsLoading(true);
     setShowPaymentQR(false);
+    setShowVisaQR(false);
     setSepayPaymentData(null);
+
+    if (isVisaPayment) {
+      setTimeout(() => {
+        setIsLoading(false);
+        setShowVisaQR(true);
+        setTimeout(() => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 100);
+      }, 500);
+      return;
+    }
 
     try {
       // Calculate total amount for all items in cart (after discount)
@@ -270,9 +284,31 @@ export default function CheckoutPage() {
 
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-text-primary text-center sm:text-left">{t("checkout.title")}</h1>
 
-        {/* SePay QR Code Payment - Show full screen when QR is ready */}
-        {showPaymentQR && sepayPaymentData ? (
-          <div className="mb-8 max-w-2xl mx-auto">
+        {/* Visa QR Code Payment Mock */}
+        {showVisaQR ? (
+          <div className="mb-8 max-w-2xl mx-auto flex flex-col items-center animate-in fade-in zoom-in duration-300">
+            <div className="bg-white rounded-ios-xl shadow-ios-card p-5 sm:p-8 border border-white/40 w-full text-center">
+              <h2 className="text-2xl font-bold mb-4 text-text-primary">Thanh toán bằng thẻ Visa</h2>
+              <p className="mb-6 text-text-secondary">Vui lòng quét mã QR hoặc nhập thông tin thẻ qua cổng thanh toán dưới đây.</p>
+              
+              <div className="flex flex-col items-center justify-center mb-8 space-y-6">
+                <img src="/picture/mock-visa-qr.png" alt="Visa QR" className="max-w-[250px] w-full rounded-2xl shadow-sm border border-gray-100" />
+                
+                <div className="w-full max-w-md pt-4 border-t border-gray-100">
+                  <img src="/available-bank-code.jpg" alt="Available Banks" className="w-full rounded-lg border border-gray-100 object-contain max-h-[150px]" />
+                </div>
+              </div>
+
+              <button
+                onClick={handlePaymentComplete}
+                className="w-full sm:w-auto px-8 flex items-center justify-center bg-primary text-white font-bold py-3.5 rounded-full shadow-ios-md hover:shadow-ios-lg transition-all mx-auto active:scale-95"
+              >
+                Đã hoàn tất thanh toán
+              </button>
+            </div>
+          </div>
+        ) : showPaymentQR && sepayPaymentData ? (
+          <div className="mb-8 max-w-2xl mx-auto animate-in fade-in zoom-in duration-300">
             <SePayPaymentQR
               paymentData={sepayPaymentData}
               onPaymentComplete={handlePaymentComplete}
@@ -491,7 +527,7 @@ export default function CheckoutPage() {
                         required
                         checked={agreed}
                         onChange={(e) => setAgreed(e.target.checked)}
-                        className="mt-1 mr-3 w-5 h-5 text-primary rounded focus:ring-primary border-gray-300"
+                        className="mt-1 mr-3 w-5 h-5 text-primary rounded focus:ring-primary border-gray-300 cursor-pointer"
                       />
                       <label htmlFor="terms" className="text-sm text-text-primary leading-relaxed">
                         {t("checkout.terms_agreement")}{' '}
@@ -578,6 +614,23 @@ export default function CheckoutPage() {
                       <span>{t("checkout.total")}</span>
                       <span className="price text-primary text-xl">{currencyFormatter.format(total)}</span>
                     </div>
+                  </div>
+
+                  {/* Payment Method Option */}
+                  <div className="flex items-center gap-3 p-4 rounded-ios-lg border border-gray-200 mb-6 cursor-pointer hover:bg-gray-50 transition-colors" onClick={() => setIsVisaPayment(!isVisaPayment)}>
+                    <input
+                      type="checkbox"
+                      id="visaPayment"
+                      checked={isVisaPayment}
+                      onChange={(e) => {
+                        e.stopPropagation();
+                        setIsVisaPayment(e.target.checked);
+                      }}
+                      className="w-5 h-5 text-primary rounded focus:ring-primary border-gray-300"
+                    />
+                    <label htmlFor="visaPayment" className="text-base font-semibold text-text-primary select-none cursor-pointer">
+                      Thanh toán bằng thẻ Visa
+                    </label>
                   </div>
 
                   <button
