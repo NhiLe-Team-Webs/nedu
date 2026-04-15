@@ -28,7 +28,7 @@ const Mission = () => {
               <div className="flex-shrink-0" aria-hidden>
                 {/* quote icon responsive */}
                 <Image
-                  src="/picture/quote.svg"
+                  src="/images/misc/quote.svg"
                   alt="Quote icon"
                   width={40}
                   height={40}
@@ -60,7 +60,7 @@ const Mission = () => {
           <div className="flex flex-col items-center lg:items-start w-full sm:w-auto">
             <div className="mb-6 w-40 h-40 sm:w-48 sm:h-48 lg:w-64 lg:h-64 relative shadow-ios-float rounded-full">
               <Image
-                src="/picture/nhile.png"
+                src="/images/people/nhile.png"
                 alt="Nhi Le"
                 fill
                 className="object-cover rounded-full"

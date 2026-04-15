@@ -71,7 +71,7 @@ export default function AIBusinessCommunicationPage() {
   return (
     <div className="min-h-screen bg-[#F2F2F7] pb-20 override-header-spacing">
       <CourseHeader
-        imageUrl="/picture/ai_for_business.png"
+        imageUrl="/images/programs/ai-for-business.png"
         altText={t("program_detail.courses.ai_for_business_communication.title")}
         time={t("program_detail.common.online_course")}
         tags={[t("categories.ai"), "Business Communication"]}

@@ -65,9 +65,10 @@ const ThirtyDayPage = () => {
     fetchData();
   }, []);
 
-  // Hero images: always use local SVG files (desktop / mobile)
-  const challengePosterDesktop = "/course/30days_desktop.svg";
-  const challengePosterMobile = "/course/30days_mobile.svg";
+  // Determine which images to use (prioritize dynamic DB data over static data)
+  // These values will be calculated using the current state of courseData
+  const challengePosterDesktop = courseData?.program?.image || thirtyDayCourse?.heroImage || "/images/programs/thu-thach-30-ngay-desktop.png";
+  const challengePosterMobile = courseData?.program?.image || thirtyDayCourse?.mobileImage || "/images/programs/thu-thach-30-ngay-mobile.png";
 
   // Sync some data from DB to local variables if available
   const dbInfo = courseData?.description?.information || {};
@@ -524,7 +525,7 @@ const ThirtyDayPage = () => {
                     <div className="bg-primary rounded-ios-lg aspect-square max-w-[220px] mx-auto flex items-center justify-center mb-6 overflow-hidden">
                       {isLoading ? <Skeleton className="w-full h-full" /> : (
                         <img
-                          src={dbMentor?.avatar_url || "/picture/nhile_new.jpg"}
+                          src={dbMentor?.avatar_url || "/images/people/nhile-new.jpg"}
                           alt={dbMentor?.name || "NhiLe avatar"}
                           loading="lazy"
                           className="object-cover w-full h-full rounded-ios-lg shadow-sm"

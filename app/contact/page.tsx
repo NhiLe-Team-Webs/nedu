@@ -49,7 +49,7 @@ export default function ContactPage() {
           <div className="overflow-hidden rounded-ios-xl sm:rounded-ios-2xl bg-white shadow-ios-card md:flex">
             <div className="bg-[#F7B50C] text-white px-6 sm:px-8 py-8 sm:py-10 md:w-1/3 flex flex-col justify-center items-stretch rounded-ios-xl sm:rounded-l-ios-2xl relative">
               <img
-                src="/nedu-white.svg"
+                src="/images/brand/nedu-white.svg"
                 alt="N-Edu Contact"
                 className="mx-auto mb-4 sm:mb-6 w-full max-w-[140px] sm:max-w-[180px] md:max-w-[220px] object-contain"
               />

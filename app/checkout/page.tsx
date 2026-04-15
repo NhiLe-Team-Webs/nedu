@@ -357,10 +357,10 @@ export default function CheckoutPage() {
               <div className="bg-white rounded-ios-xl shadow-ios-card p-5 sm:p-8 border border-white/40 w-full text-center">
                 <h2 className="text-2xl font-bold mb-4 text-text-primary">Quét để thanh toán bằng thẻ tín dụng</h2>
                 <div className="flex flex-col items-center justify-center mb-8 space-y-6">
-                  <img src="/qr-code-visa.jpg" alt="Visa QR" className="max-w-[250px] w-full rounded-2xl shadow-sm border border-gray-100" />
+                  <img src="/images/payment/qr-code-visa.jpg" alt="Visa QR" className="max-w-[250px] w-full rounded-2xl shadow-sm border border-gray-100" />
 
                   <div className="w-full max-w-xl pt-6 border-t border-gray-100">
-                    <img src="/available-bank-code.jpg" alt="Available Banks" className="w-full rounded-lg border border-gray-100 object-contain max-h-[250px]" />
+                    <img src="/images/payment/available-bank-code.jpg" alt="Available Banks" className="w-full rounded-lg border border-gray-100 object-contain max-h-[250px]" />
                   </div>
                 </div>
 
@@ -560,8 +560,8 @@ export default function CheckoutPage() {
                     <div className="space-y-6">
                       {items.map((item) => {
                         const itemImage = item.slug === 'thu-thach-30-ngay'
-                          ? (thirtyDayCheckoutImage && thirtyDayCheckoutImage !== '' ? thirtyDayCheckoutImage : '/picture/thuthach30day_desktop.png')
-                          : (item.heroImage || '/picture/thuthach30day_desktop.png');
+                          ? (thirtyDayCheckoutImage && thirtyDayCheckoutImage !== '' ? thirtyDayCheckoutImage : '/images/programs/thu-thach-30-ngay-desktop.png')
+                          : (item.heroImage || '/images/programs/thu-thach-30-ngay-desktop.png');
 
                         return (
                           <div key={item.id} className="flex flex-col md:flex-row gap-4 pb-6 border-b last:border-b-0 border-gray-100">
@@ -569,7 +569,7 @@ export default function CheckoutPage() {
                               src={itemImage}
                               alt={t(item.title)}
                               className="w-full md:w-[150px] h-[100px] object-cover rounded-ios-lg shadow-sm"
-                              onError={e => { e.currentTarget.src = '/picture/thuthach30day_desktop.png'; }}
+                              onError={e => { e.currentTarget.src = '/images/programs/thu-thach-30-ngay-desktop.png'; }}
                             />
 
                             <div className="flex-1 flex flex-col justify-center">
