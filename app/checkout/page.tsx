@@ -377,6 +377,23 @@ export default function CheckoutPage() {
                   <div className="flex flex-col items-center justify-center mb-8 space-y-6">
                     <img src="/qr-code-visa.jpg" alt="Visa QR" className="max-w-[250px] w-full rounded-2xl shadow-sm border border-gray-100" />
 
+                    <div className="bg-[#FFF9E6] p-4 sm:p-5 rounded-2xl border border-[#FFE082] text-left w-full max-w-sm shadow-sm">
+                      <p className="text-[15px] leading-relaxed text-yellow-800 mb-3 flex items-start gap-2">
+                        <span className="text-lg leading-none mt-0.5">⚠️</span>
+                        <span>Mã QR không tự động điền số tiền. Quý khách vui lòng <strong className="font-semibold">nhập thủ công</strong> chính xác thông tin bên dưới:</span>
+                      </p>
+                      <div className="space-y-0 bg-white rounded-xl border border-yellow-200 overflow-hidden">
+                        <div className="flex justify-between items-center p-3.5 border-b border-gray-100 bg-gray-50/50">
+                          <span className="text-gray-500 font-medium text-sm">Số tiền cần chuyển:</span>
+                          <span className="text-xl font-bold text-primary">{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(total)}</span>
+                        </div>
+                        <div className="flex justify-between items-center p-3.5">
+                          <span className="text-gray-500 font-medium text-sm">Nội dung thanh toán:</span>
+                          <span className="text-lg font-bold text-gray-800 tracking-wide">{formData.phone}</span>
+                        </div>
+                      </div>
+                    </div>
+
                     <div className="w-full max-w-xl pt-6 border-t border-gray-100">
                       <img src="/available-bank-code.jpg" alt="Available Banks" className="w-full rounded-lg border border-gray-100 object-contain max-h-[250px]" />
                     </div>
