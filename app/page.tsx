@@ -11,13 +11,38 @@ import Testimonials from "./Testimonials";
 import Partners from "./Partners";
 import Connection from "./Connection";
 import Privilege from "./Privilege";
+import YouTube from "react-youtube";
+import OfferPopup from "@/components/OfferPopup";
+import GiftButton from "@/components/GiftButton";
 
 import { useLanguage } from "@/lib/LanguageContext";
+import { useCart } from "@/lib/cart-context";
+import { useRouter } from "next/navigation";
+import { getCourseBySlug } from "@/data/courses";
 
 export default function Home() {
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isOfferPopupOpen, setIsOfferPopupOpen] = useState(false);
+  const [hasPopupBeenShown, setHasPopupBeenShown] = useState(false);
   const { t } = useLanguage();
+  const { addToCart } = useCart();
+  const router = useRouter();
+
+  const youtubeOptions = {
+    height: "100%",
+    width: "100%",
+    playerVars: {
+      autoplay: 1,
+      mute: 1,
+      controls: 1,
+      rel: 0,
+      showinfo: 0,
+      modestbranding: 1,
+      loop: 1,
+      playlist: "oWAvYRk_uH0",
+    },
+  };
 
   const texts = [
     t("home.hero_text_1"),
@@ -37,10 +62,22 @@ export default function Home() {
     return () => clearInterval(interval);
   }, [texts.length]);
 
+  useEffect(() => {
+    if (hasPopupBeenShown) return;
+
+    // Tự động hiển thị popup sau 3 giây khi vào trang
+    const timeout = setTimeout(() => {
+      setIsOfferPopupOpen(true);
+      setHasPopupBeenShown(true);
+    }, 3000);
+
+    return () => clearTimeout(timeout);
+  }, [hasPopupBeenShown]);
+
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section with Google Drive Video */}
-      <section className="bg-white pt-2 md:pt-0 pb-8 md:pb-0">
+      <section className="bg-white pt-0 pb-8 md:pb-0">
         <div className="container mx-auto px-4 md:px-6">
           <div className="w-full">
             {/* Mobile: Taller aspect ratio + iOS styling */}
@@ -93,6 +130,25 @@ export default function Home() {
       <Privilege />
       <Partners />
       <Connection />
+      
+      {/* Gift Floating Button */}
+      <GiftButton 
+        isVisible={!isOfferPopupOpen} 
+        onClick={() => setIsOfferPopupOpen(true)}
+      />
+
+      {/* Auto Triggering Offer Popup Mockup */}
+      <OfferPopup 
+        isOpen={isOfferPopupOpen} 
+        onClose={() => setIsOfferPopupOpen(false)} 
+        onAccept={() => {
+           const course = getCourseBySlug('la-chinh-minh');
+           if (course) {
+             addToCart(course);
+             router.push('/checkout');
+           }
+        }} 
+      />
     </div>
   );
 }

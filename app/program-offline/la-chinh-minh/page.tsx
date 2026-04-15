@@ -11,6 +11,8 @@ import Testimonials from "@/components/Testimonial";
 import Instructor from "@/components/Instructor";
 import Privilege from "@/app/Privilege";
 import Organizers from "@/components/Organizers";
+import OfferPopup from "@/components/OfferPopup";
+import GiftButton from "@/components/GiftButton";
 import { getCourseBySlug } from "@/data/courses";
 import { getInstructorsByIds } from "@/data/instructors";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -23,6 +25,7 @@ export default function LaChinhMinhPage() {
   const router = useRouter();
   const [activeDay, setActiveDay] = useState<number>(0);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
+  const [isOfferPopupOpen, setIsOfferPopupOpen] = useState(false);
 
 
   const toggleFaq = (index: number) => {
@@ -33,6 +36,7 @@ export default function LaChinhMinhPage() {
   useEffect(() => {
     setActiveDay(0);
   }, []);
+
 
   const daysData = [
     {
@@ -135,7 +139,7 @@ export default function LaChinhMinhPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#F2F2F7] pb-20 override-header-spacing">
+    <div className="min-h-screen bg-white pb-20 override-header-spacing">
       <CourseHeader
         bannerUrl="/images/programs/la-chinh-minh.jpg"
         altText={t("program_detail.courses.la_chinh_minh.title")}
@@ -144,6 +148,7 @@ export default function LaChinhMinhPage() {
         title={t("program_detail.courses.la_chinh_minh.title")}
         cost={course?.price.amount || "68.690.000"}
         paymentLink="/payment/57"
+        description={t("program_detail.courses.la_chinh_minh.mission_desc")}
         courseSlug="la-chinh-minh"
       />
 
@@ -368,7 +373,7 @@ export default function LaChinhMinhPage() {
           </div>
         </section>
 
-        <section className="bg-[#F2F2F7] md:pb-20">
+        <section className="bg-white md:pb-20">
           <div className="container mx-auto px-4 md:px-8 pt-16 md:pt-24">
             <div className="mb-12 md:mb-16 max-w-5xl mx-auto px-2 text-center md:text-left">
               <h2 className="text-4xl md:text-7xl font-bold tracking-tight text-gray-900 mb-6 leading-none">
@@ -383,7 +388,7 @@ export default function LaChinhMinhPage() {
               {whyCards.map((card, idx) => (
                 <div
                   key={idx}
-                  className="bg-white rounded-ios-xl p-8 transition-all duration-300 hover:shadow-ios-card-hover border border-white/50 group"
+                  className="bg-white rounded-ios-xl p-8 transition-all duration-300 hover:shadow-ios-card-hover border-2 border-gray-400 group"
                 >
                   <div className="w-14 h-14 bg-[#F2F2F7] text-gray-900 rounded-ios-full flex items-center justify-center mb-6 group-hover:text-primary group-hover:scale-110 transition-all duration-300">
                     {card.icon}
@@ -495,6 +500,29 @@ export default function LaChinhMinhPage() {
         </section>
 
       </div>
+      
+      {/* Gift Floating Button */}
+      <GiftButton 
+        isVisible={!isOfferPopupOpen} 
+        onClick={() => setIsOfferPopupOpen(true)}
+      />
+
+      {/* Auto Triggering Offer Popup Mockup */}
+      <OfferPopup 
+        isOpen={isOfferPopupOpen} 
+        onClose={() => setIsOfferPopupOpen(false)} 
+        onAccept={() => {
+          // Additional logic when user clicks "Nhận Ưu Đãi Ngay"
+          // They might want to scroll to payment section or open cart
+          const paymentSection = document.getElementById('payment-section');
+          if (paymentSection) {
+            paymentSection.scrollIntoView({ behavior: 'smooth' });
+          } else {
+             // Fallback
+             router.push('/checkout');
+          }
+        }} 
+      />
     </div>
   );
 }

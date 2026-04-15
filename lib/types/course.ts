@@ -1,7 +1,9 @@
 export interface Program {
     id: number;
     created_at: string;
-    image: string | null;
+    image: string | null; // Desktop image (legacy field, use image_desktop for new implementations)
+    image_desktop?: string | null; // Desktop-optimized image (recommended)
+    image_mobile?: string | null; // Mobile-optimized image (recommended)
     program_price: number | null;
     instructor: string | null;
     hashtag: string | null;
