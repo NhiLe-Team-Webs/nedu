@@ -51,7 +51,7 @@ export default function ThuongHieuCuaBanPage() {
   return (
     <div className="min-h-screen bg-[#F2F2F7] pb-20 override-header-spacing">
       <CourseHeader
-        imageUrl="/picture/thuong_hieu_cua_ban.png"
+        imageUrl="/images/programs/thuong-hieu-cua-ban.png"
         altText={t("program_detail.courses.thuong_hieu_cua_ban.title")}
         time={t("program_detail.common.online_course")}
         tags={[t("categories.branding")]}

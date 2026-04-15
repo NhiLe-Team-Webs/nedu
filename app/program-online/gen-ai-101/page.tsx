@@ -77,7 +77,7 @@ export default function GenAI101Page() {
   return (
     <div className="min-h-screen bg-[#F2F2F7] pb-20 override-header-spacing">
       <CourseHeader
-        imageUrl="/picture/gen_ai.png"
+        imageUrl="/images/programs/gen-ai.png"
         altText={t("program_detail.courses.gen_ai_101.title")}
         time={t("program_detail.common.online_course")}
         tags={[t("categories.ai")]}

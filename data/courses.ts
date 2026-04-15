@@ -60,7 +60,7 @@ export const courses: Course[] = [
     mode: 'offline',
     title: 'program_detail.courses.suc_manh_vo_han.title',
     category: ['categories.entrepreneur', 'categories.business'],
-    heroImage: '/picture/suc_manh_vo_han.jpg',
+    heroImage: '/images/programs/suc-manh-vo-han.jpg',
     price: {
       amount: '180.000.000',
       currency: 'VNĐ',
@@ -77,12 +77,12 @@ export const courses: Course[] = [
     },
     mission: 'program_detail.courses.suc_manh_vo_han.mission_desc',
     testimonials: ['Dm6gg-LHGqs', 'qEBZwBE449o', 'RDKjAQLf5w0'],
-    curriculum: '/picture/lachinhminh.jpg',
+    curriculum: '/images/programs/la-chinh-minh.jpg',
     instructors: [
       {
         name: 'NhiLe',
         title: 'Doanh nhân',
-        avatar: '/picture/nhile.jpg',
+        avatar: '/images/people/nhile.jpg',
         bio: [
           '15 năm kinh nghiệm trên thương trường tại Singapore và Việt Nam',
           'Là một Doanh nhân | Nhà Tâm lý học | Người lãnh đạo cộng đồng',
@@ -104,7 +104,7 @@ export const courses: Course[] = [
       {
         name: 'Mel',
         title: 'Chuyên gia Marketing',
-        avatar: '/picture/mel.jpg',
+        avatar: '/images/people/mel.jpg',
         bio: [
           'Melvin Soh, chuyên gia marketing hàng đầu châu Á, nổi tiếng với hơn 15 năm kinh nghiệm thực chiến trong xây dựng thương hiệu và thu hút khách hàng. Anh đã giúp hàng trăm doanh nghiệp tạo dựng lòng trung thành và tăng trưởng bền vững.'
         ],
@@ -123,7 +123,7 @@ export const courses: Course[] = [
     mode: 'offline',
     title: 'program_detail.courses.la_chinh_minh.title',
     category: ['categories.personal_development', 'categories.be_yourself'],
-    heroImage: '/picture/la_chinh_minh.jpg',
+    heroImage: '/images/programs/la-chinh-minh.jpg',
     price: {
       amount: '68.690.000',
       currency: 'VNĐ'
@@ -139,12 +139,12 @@ export const courses: Course[] = [
     },
     mission: 'program_detail.courses.la_chinh_minh.mission_desc',
     testimonials: ['PFWDwSf5EGc', 'RAaXaJxFXpE', '8qq6WDQFFQk'],
-    curriculum: '/picture/lachinhminh.jpg',
+    curriculum: '/images/programs/la-chinh-minh.jpg',
     instructors: [
       {
         name: 'NhiLe',
         title: 'Doanh nhân',
-        avatar: '/picture/nhile.jpg',
+        avatar: '/images/people/nhile.jpg',
         bio: [
           '15 năm kinh nghiệm trên thương trường tại Singapore và Việt Nam',
           'Là một Doanh nhân | Nhà Tâm lý học | Người lãnh đạo cộng đồng',
@@ -174,7 +174,7 @@ export const courses: Course[] = [
       mode: 'online',
       title: 'program_detail.courses.gen_ai_101.title',
       category: ['categories.ai'],
-      heroImage: '/picture/thum_yt_1.png',
+      heroImage: '/images/thumbnails/yt-1.png',
       price: {
         amount: '13.069.000',
         currency: 'VNĐ'
@@ -194,7 +194,7 @@ export const courses: Course[] = [
         {
           name: 'Linda Hui-Isaac',
           title: 'Doanh nhân',
-          avatar: '/picture/linda.jpg',
+          avatar: '/images/people/linda.jpg',
           bio: [
             'Với hơn 20 năm kinh nghiệm quốc tế trong chiến lược thương hiệu và tiếp thị số, Linda Hui-Isaac là chuyên gia hàng đầu về AI Marketing và Digital Transformation. Bà từng đảm nhiệm vai trò cố vấn cho các doanh nghiệp lớn, SMEs, tổ chức chính phủ, cũng như tập đoàn đa quốc gia – bao gồm các công ty niêm yết SGX và thương hiệu xa xỉ châu Âu.'
           ],
@@ -215,7 +215,7 @@ export const courses: Course[] = [
     mode: 'online',
     title: 'program_detail.courses.thuong_hieu_cua_ban.title',
     category: ['categories.branding'],
-    heroImage: '/picture/thuong_hieu_cua_ban.png',
+    heroImage: '/images/programs/thuong-hieu-cua-ban.png',
     price: {
       amount: '18.960.000',
       currency: 'VNĐ'
@@ -235,7 +235,7 @@ export const courses: Course[] = [
       {
         name: 'NhiLe',
         title: 'Doanh nhân',
-        avatar: '/picture/nhile.jpg',
+        avatar: '/images/people/nhile.jpg',
         bio: [
           'Tốt nghiệp chuyên ngành Tâm lý học tại Kaplan Professional, Singapore. Nhi Le có nhiều năm kinh nghiệm hỗ trợ khách hàng tại Singapore và Việt Nam, giúp họ vượt qua thách thức cuộc sống và làm chủ cuộc đời họ.'
         ],
@@ -255,7 +255,7 @@ export const courses: Course[] = [
     mode: 'online',
     title: 'program_detail.courses.cuoc_song_cua_ban.title',
     category: ['categories.personal_development'],
-    heroImage: '/picture/cuoc_song_cua_ban.png',
+    heroImage: '/images/programs/cuoc-song-cua-ban.png',
     price: {
       amount: '18.960.000',
       currency: 'VNĐ'
@@ -275,7 +275,7 @@ export const courses: Course[] = [
       {
         name: 'NhiLe',
         title: 'Doanh nhân',
-        avatar: '/picture/nhile.jpg',
+        avatar: '/images/people/nhile.jpg',
         bio: [
           'Tốt nghiệp chuyên ngành Tâm lý học tại Kaplan Professional, Singapore. Nhi Le có nhiều năm kinh nghiệm hỗ trợ khách hàng tại Singapore và Việt Nam, giúp họ vượt qua thách thức cuộc sống và làm chủ cuộc đời họ.'
         ],
@@ -296,7 +296,7 @@ export const courses: Course[] = [
       mode: 'online',
       title: 'program_detail.courses.ai_for_business_communication.title',
       category: ['categories.applied_ai'],
-      heroImage: '/picture/thum_yt_2.png',
+      heroImage: '/images/thumbnails/yt-2.png',
       price: {
         amount: '23.609.000',
         currency: 'VNĐ'
@@ -316,7 +316,7 @@ export const courses: Course[] = [
         {
           name: 'Linda Hui-Isaac',
           title: 'Chuyên gia chiến lược AI & Cố vấn Marketing',
-          avatar: '/picture/linda.jpg',
+          avatar: '/images/people/linda.jpg',
           bio: [
             'Với hơn 20 năm kinh nghiệm quốc tế trong chiến lược thương hiệu và tiếp thị số, Linda Hui-Isaac là chuyên gia hàng đầu về AI Marketing và Digital Transformation. Bà từng đảm nhiệm vai trò cố vấn cho các doanh nghiệp lớn, SMEs, tổ chức chính phủ, cũng như tập đoàn đa quốc gia – bao gồm các công ty niêm yết SGX và thương hiệu xa xỉ châu Âu.'
           ],
@@ -338,7 +338,7 @@ export const courses: Course[] = [
       mode: 'online',
       title: 'program_detail.courses.ai_in_marketing.title',
       category: ['categories.digital_marketing'],
-      heroImage: '/picture/thum_yt_3.png',
+      heroImage: '/images/thumbnails/yt-3.png',
       price: {
         amount: '28.985.000',
         currency: 'VNĐ'
@@ -358,7 +358,7 @@ export const courses: Course[] = [
         {
           name: 'Linda Hui-Isaac',
           title: 'Chuyên gia chiến lược AI & Cố vấn Marketing',
-          avatar: '/picture/linda.jpg',
+          avatar: '/images/people/linda.jpg',
           bio: [
             'Với hơn 20 năm kinh nghiệm quốc tế trong chiến lược thương hiệu và tiếp thị số, Linda Hui-Isaac là chuyên gia hàng đầu về AI Marketing và Digital Transformation. Bà từng đảm nhiệm vai trò cố vấn cho các doanh nghiệp lớn, SMEs, tổ chức chính phủ, cũng như tập đoàn đa quốc gia – bao gồm các công ty niêm yết SGX và thương hiệu xa xỉ châu Âu.'
           ],
@@ -379,7 +379,7 @@ export const courses: Course[] = [
     mode: 'online',
     title: 'thirty_day_challenge.title',
     category: ['categories.personal_development'],
-    heroImage: '/picture/thuthach30day_desktop.png', // Primary image used in listings
+    heroImage: '/images/programs/thu-thach-30-ngay-desktop.png', // Primary image used in listings
     price: {
       amount: '396.000',
       currency: 'VNĐ'
@@ -399,7 +399,7 @@ export const courses: Course[] = [
       {
         name: 'Denise',
         title: 'thirty_day_challenge.mentor.role',
-        avatar: '/picture/denise.jpg',
+        avatar: '/images/people/denise.jpg',
         bio: ['thirty_day_challenge.mentor.desc_1', 'thirty_day_challenge.mentor.desc_2'],
         social: {}
       }
@@ -407,7 +407,7 @@ export const courses: Course[] = [
     audience: [],
     privileges: [],
     // Add mobileImage property to explicitly handle responsive images
-    mobileImage: '/picture/thuthach30day_mobile.png'  // Mobile optimized image for the course page
+    mobileImage: '/images/programs/thu-thach-30-ngay-mobile.png'  // Mobile optimized image for the course page
   }
 ]
 

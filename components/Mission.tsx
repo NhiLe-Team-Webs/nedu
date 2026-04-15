@@ -8,7 +8,7 @@ interface MissionProps {
 }
 
 const Mission: React.FC<MissionProps> = ({ title, subtitle, description, imgUrl }) => {
-  const background = imgUrl || "/picture/suc_manh_vo_han.jpg";
+  const background = imgUrl || "/images/programs/suc-manh-vo-han.jpg";
 
   return (
     <div

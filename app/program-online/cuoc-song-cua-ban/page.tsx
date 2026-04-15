@@ -64,7 +64,7 @@ export default function CuocSongCuaBanPage() {
   return (
     <div className="min-h-screen bg-[#F2F2F7] pb-20 override-header-spacing">
       <CourseHeader
-        imageUrl="/picture/cuoc_song_cua_ban.png"
+        imageUrl="/images/programs/cuoc-song-cua-ban.png"
         altText={t("program_detail.courses.cuoc_song_cua_ban.title")}
         time={t("program_detail.common.online_course")}
         tags={[t("categories.personal_development")]}

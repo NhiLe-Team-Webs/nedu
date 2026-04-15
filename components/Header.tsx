@@ -53,7 +53,7 @@ const Header = () => {
         <div className="flex items-center">
           <Link href="/" className="flex items-center transform transition-all duration-200 hover:scale-105 active:scale-95">
             <Image
-              src="/picture/nedu.svg"
+              src="/images/brand/nedu.svg"
               alt="N-Edu Logo"
               width={227}
               height={57}
