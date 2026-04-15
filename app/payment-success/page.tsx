@@ -36,6 +36,7 @@ function PaymentSuccessContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { clearCart } = useCart()
+  const paymentMethod = searchParams.get('paymentMethod')
   const [status, setStatus] = useState<'loading' | 'success' | 'failed'>('loading')
   const [message, setMessage] = useState('Đang kiểm tra trạng thái thanh toán...')
   // Receipt feature temporarily disabled
@@ -99,8 +100,6 @@ function PaymentSuccessContent() {
           }
         }
 
-        // Get payment method (SePay or VNPay)
-        const paymentMethod = searchParams.get('paymentMethod')
         const programId = searchParams.get('programId')
 
         // Handle SePay payment callback
@@ -218,6 +217,12 @@ function PaymentSuccessContent() {
             console.error('SePay Payment failed or pending with status:', status)
           }
         }
+        // Handle Credit Card (Visa QR) payment callback
+        else if (paymentMethod === 'card') {
+          processedRef.current = true
+          setStatus('success')
+          return
+        }
         // Handle VNPay payment callback (legacy support)
         else {
           const vnp_ResponseCode = searchParams.get('vnp_ResponseCode')
@@ -294,15 +299,25 @@ function PaymentSuccessContent() {
                   </div>
                 </div>
                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-green-600 mb-3 sm:mb-4">
-                  Thanh toán thành công!
+                  {paymentMethod === 'card' || paymentMethod === 'sepay' || paymentMethod === 'qr' ? 'Đăng ký thành công!' : 'Thanh toán thành công!'}
                 </h1>
                 <p className="text-base sm:text-lg text-gray-600 mb-2 max-w-2xl mx-auto px-4">
-                  {message}
+                  {paymentMethod === 'card' || paymentMethod === 'sepay' || paymentMethod === 'qr' ? 'Cảm ơn bạn, giao dịch của bạn đang được xử lý.' : message}
                 </p>
                 <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
-                  Mail xác nhận đang trên đường tới, bạn nhớ kiểm tra kỹ cả mục{' '}
-                  <span className="text-primary font-semibold">Thư rác (Spam)</span>{' '}
-                  <span className="font-bold">TRƯỚC KHI LIÊN HỆ ADMIN HỖ TRỢ</span> nhé!
+                  {paymentMethod === 'card' || paymentMethod === 'sepay' || paymentMethod === 'qr' ? (
+                    <>
+                      Vui lòng đợi email xác nhận chính thức sẽ được gửi đến bạn trong vòng 24h - 48h tới.
+                      <br />
+                      (Lưu ý kiểm tra kỹ mục <span className="text-primary font-semibold">Thư rác</span> trước khi liên hệ hỗ trợ).
+                    </>
+                  ) : (
+                    <>
+                      Mail xác nhận đang trên đường tới, bạn nhớ kiểm tra kỹ cả mục{' '}
+                      <span className="text-primary font-semibold">Thư rác (Spam)</span>{' '}
+                      <span className="font-bold">TRƯỚC KHI LIÊN HỆ ADMIN HỖ TRỢ</span> nhé!
+                    </>
+                  )}
                 </p>
                 <div className="mt-8 space-y-3 sm:space-y-4">
                   <Link
