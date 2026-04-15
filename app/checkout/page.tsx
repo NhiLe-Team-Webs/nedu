@@ -315,7 +315,19 @@ export default function CheckoutPage() {
       <div className="min-h-screen bg-[#F2F2F7] pt-8 sm:pt-12 pb-8 sm:pb-12">
         <div className="container mx-auto px-3 sm:px-4 max-w-6xl">
           <div className="mb-6 sm:mb-8">
-            {checkoutStep === 'payment' ? (
+            {showVisaQR || showPaymentQR ? (
+              <button
+                onClick={() => {
+                  setShowVisaQR(false);
+                  setShowPaymentQR(false);
+                  setCheckoutStep('payment');
+                }}
+                className="inline-flex items-center gap-2 text-primary hover:text-primary-dark font-semibold transition text-sm sm:text-base group"
+              >
+                <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:-translate-x-1" />
+                Quay lại chọn phương thức thanh toán
+              </button>
+            ) : checkoutStep === 'payment' ? (
               <button
                 onClick={() => setCheckoutStep('info')}
                 className="inline-flex items-center gap-2 text-primary hover:text-primary-dark font-semibold transition text-sm sm:text-base group"
@@ -424,7 +436,7 @@ export default function CheckoutPage() {
                             onChange={(e) => setWantVatInvoice(e.target.checked)}
                             className="mt-1 mr-3 w-5 h-5 text-primary rounded focus:ring-primary border-gray-300 cursor-pointer"
                           />
-                          <span className="text-base font-semibold text-text-primary">Xuất hoá đơn GTGT (V)</span>
+                          <span className="text-base font-semibold text-text-primary">Xuất hoá đơn GTGT (VAT)</span>
                         </label>
                         <p className="text-sm text-text-secondary ml-8">
                           Vui lòng xem <button type="button" onClick={() => setShowVatTerms(true)} className="text-primary hover:underline font-medium cursor-pointer">điều khoản xuất hóa đơn</button>
