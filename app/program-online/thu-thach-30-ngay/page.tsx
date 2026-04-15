@@ -68,7 +68,7 @@ const ThirtyDayPage = () => {
   // Determine which images to use (prioritize dynamic DB data over static data)
   // These values will be calculated using the current state of courseData
   const challengePosterDesktop = courseData?.program?.image || thirtyDayCourse?.heroImage || "/course/30days_desktop.svg";
-  const challengePosterMobile = courseData?.program?.image || thirtyDayCourse?.mobileImage || "/picture/thuthach30day_mobile.png";
+  const challengePosterMobile = courseData?.program?.image || thirtyDayCourse?.mobileImage || "/course/30days_mobile.svg";
 
   // Sync some data from DB to local variables if available
   const dbInfo = courseData?.description?.information || {};
