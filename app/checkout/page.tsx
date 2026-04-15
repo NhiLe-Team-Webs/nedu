@@ -15,7 +15,7 @@ import { getCourseDetailBySlug } from '@/lib/services/courseService';
 
 export default function CheckoutPage() {
   const { t } = useLanguage();
-  
+
   // Feature flag for the promotional "Buy La Chinh Minh get Thuong Hieu Cua Ban free"
   const ENABLE_PROMO_THUONG_HIEU_CUA_BAN = true;
   const promoCourse = courses.find(c => c.slug === 'thuong-hieu-cua-ban');
@@ -263,390 +263,400 @@ export default function CheckoutPage() {
     <div className="override-header-spacing">
       <div className="min-h-screen bg-[#F2F2F7] pt-8 sm:pt-12 pb-8 sm:pb-12">
         <div className="container mx-auto px-3 sm:px-4 max-w-6xl">
-        <div className="mb-6 sm:mb-8">
-          <Link
-            href="/cart"
-            className="inline-flex items-center gap-2 text-primary hover:text-primary-dark font-semibold transition text-sm sm:text-base group"
-          >
-            <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:-translate-x-1" />
-            {t("cart.back_to_cart")}
-          </Link>
-        </div>
-
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-text-primary text-center sm:text-left">{t("checkout.title")}</h1>
-
-        {/* SePay QR Code Payment - Show full screen when QR is ready */}
-        {showPaymentQR && sepayPaymentData ? (
-          <div className="mb-8 max-w-2xl mx-auto">
-            <SePayPaymentQR
-              paymentData={sepayPaymentData}
-              onPaymentComplete={handlePaymentComplete}
-              onPaymentFailed={handlePaymentFailed}
-            />
+          <div className="mb-6 sm:mb-8">
+            <Link
+              href="/cart"
+              className="inline-flex items-center gap-2 text-primary hover:text-primary-dark font-semibold transition text-sm sm:text-base group"
+            >
+              <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:-translate-x-1" />
+              {t("cart.back_to_cart")}
+            </Link>
           </div>
-        ) : (
-          <>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
-              <div className="lg:col-span-2">
-                {/* Cart Items Summary - Integrated from Step 2 style but simplified */}
-                <div className="bg-white rounded-ios-xl shadow-ios-card p-5 sm:p-8 mb-6 border border-white/40">
-                  <h2 className="text-xl font-bold mb-6 text-text-primary flex items-center gap-2">
-                    <span className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary text-sm">
-                      <ShoppingCart size={16} />
-                    </span>
-                    {t("checkout.selected_courses")}
-                  </h2>
-                  <div className="space-y-6">
-                    {items.map((item) => {
-                      const itemImage = item.slug === 'thu-thach-30-ngay'
-                        ? (thirtyDayCheckoutImage && thirtyDayCheckoutImage !== '' ? thirtyDayCheckoutImage : '/picture/thuthach30day_desktop.png')
-                        : (item.heroImage || '/picture/thuthach30day_desktop.png');
 
-                      return (
-                      <div key={item.id} className="pb-6 border-b last:border-b-0 border-gray-100 flex flex-col gap-4">
-                        <div className="flex flex-col md:flex-row gap-4">
-                          <img
-                            src={itemImage}
-                            alt={t(item.title)}
-                            className="w-full md:w-[150px] h-[100px] object-cover rounded-ios-lg shadow-sm"
-                            onError={e => { e.currentTarget.src = '/picture/thuthach30day_desktop.png'; }}
-                          />
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-text-primary text-center sm:text-left">{t("checkout.title")}</h1>
 
-                          <div className="flex-1 flex flex-col justify-center">
-                            <div className="flex items-start justify-between gap-3 mb-1">
-                              <h3 className="text-lg font-bold text-text-primary">{t(item.title)}</h3>
-                              <button
-                                type="button"
-                                onClick={() => removeFromCart(item.id)}
-                                className="h-8 w-8 rounded-full flex items-center justify-center text-red-500 hover:text-red-600 hover:bg-red-50 transition-colors shrink-0"
-                                aria-label={`Xóa ${t(item.title)} khỏi giỏ hàng`}
-                              >
-                                <Trash2 className="w-4 h-4" />
-                              </button>
-                            </div>
-                            <p className="text-text-secondary mb-2 text-sm">{item.category.map(c => t(c)).join(', ')}</p>
-                            <div className="flex items-center justify-between mt-auto">
-                              <div className="inline-flex items-center rounded-lg border border-gray-200 bg-white overflow-hidden h-9">
-                                <button
-                                  type="button"
-                                  onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                                  className="h-full w-9 flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-gray-50 transition-colors"
-                                  aria-label={`Giảm số lượng ${t(item.title)}`}
-                                >
-                                  <Minus className="w-3.5 h-3.5" />
-                                </button>
-                                <span className="h-full min-w-[2.25rem] px-2 flex items-center justify-center text-sm font-semibold text-text-primary border-x border-gray-200">
-                                  {item.quantity}
-                                </span>
-                                <button
-                                  type="button"
-                                  onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                  className="h-full w-9 flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-gray-50 transition-colors"
-                                  aria-label={`Tăng số lượng ${t(item.title)}`}
-                                >
-                                  <Plus className="w-3.5 h-3.5" />
-                                </button>
+          {/* SePay QR Code Payment - Show full screen when QR is ready */}
+          {showPaymentQR && sepayPaymentData ? (
+            <div className="mb-8 max-w-2xl mx-auto">
+              <SePayPaymentQR
+                paymentData={sepayPaymentData}
+                onPaymentComplete={handlePaymentComplete}
+                onPaymentFailed={handlePaymentFailed}
+              />
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+                <div className="lg:col-span-2">
+                  {/* Cart Items Summary - Integrated from Step 2 style but simplified */}
+                  <div className="bg-white rounded-ios-xl shadow-ios-card p-5 sm:p-8 mb-6 border border-white/40">
+                    <h2 className="text-xl font-bold mb-6 text-text-primary flex items-center gap-2">
+                      <span className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary text-sm">
+                        <ShoppingCart size={16} />
+                      </span>
+                      {t("checkout.selected_courses")}
+                    </h2>
+                    <div className="space-y-6">
+                      {items.map((item) => {
+                        const itemImage = item.slug === 'thu-thach-30-ngay'
+                          ? (thirtyDayCheckoutImage && thirtyDayCheckoutImage !== '' ? thirtyDayCheckoutImage : '/course/30days_desktop.svg')
+                          : (item.heroImage || '/course/30days_desktop.svg');
+
+                        return (
+                          <div key={item.id} className="pb-6 border-b last:border-b-0 border-gray-100 flex flex-col gap-4">
+                            <div className="flex flex-col md:flex-row gap-4">
+                              {/* Image wrapper: full-width 16:9 on mobile, fixed 200px width 16:9 on desktop */}
+                              <div className="w-full md:w-[200px] md:shrink-0">
+                                <div className="relative w-full" style={{ aspectRatio: '16/9' }}>
+                                  <img
+                                    src={itemImage}
+                                    alt={t(item.title)}
+                                    className="absolute inset-0 w-full h-full object-cover rounded-ios-lg shadow-sm"
+                                    onError={e => { e.currentTarget.src = '/course/30days_desktop.svg'; }}
+                                  />
+                                </div>
                               </div>
-                              <div className="price text-lg font-bold text-primary">
-                                {item.price.currency === 'VNĐ'
-                                  ? currencyFormatter.format(parseInt(item.price.amount.replace(/\./g, '')) * item.quantity)
-                                  : `${item.price.currency} ${item.price.amount}`
-                                }
-                              </div>
-                            </div>
-                          </div>
-                        </div>
 
-                        {/* Promo Course attached to this item if applicable */}
-                        {ENABLE_PROMO_THUONG_HIEU_CUA_BAN && t(item.title).toLowerCase().includes('là chính mình') && promoCourse && (
-                          <div className="flex relative pl-[30px] mt-2">
-                             <div className="absolute left-[8px] top-4 bottom-4 w-[2px] bg-gray-300"></div>
-                             <div className="flex flex-col md:flex-row gap-4 py-2 w-full relative">
-                               <img 
-                                 src={promoCourse.heroImage || "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&auto=format&fit=crop&q=60"}
-                                 alt={t(promoCourse.title)}
-                                 className="w-full md:w-[120px] h-[80px] object-cover rounded-lg shadow-sm"
-                               />
-                               <div className="flex-1 flex justify-between">
-                                  <div>
-                                    <h4 className="font-bold text-base text-text-primary">{t(promoCourse.title)}</h4>
-                                    <p className="text-text-secondary text-sm mb-2">{promoCourse.category.map(c => t(c)).join(', ')}</p>
-                                    <span className="px-2 py-0.5 bg-gray-100 rounded text-xs font-semibold text-gray-500">x{item.quantity}</span>
+                              <div className="flex-1 flex flex-col justify-center">
+                                <div className="flex items-start justify-between gap-3 mb-1">
+                                  <h3 className="text-lg font-bold text-text-primary">{t(item.title)}</h3>
+                                  <button
+                                    type="button"
+                                    onClick={() => removeFromCart(item.id)}
+                                    className="h-8 w-8 rounded-full flex items-center justify-center text-red-500 hover:text-red-600 hover:bg-red-50 transition-colors shrink-0"
+                                    aria-label={`Xóa ${t(item.title)} khỏi giỏ hàng`}
+                                  >
+                                    <Trash2 className="w-4 h-4" />
+                                  </button>
+                                </div>
+                                <p className="text-text-secondary mb-2 text-sm">{item.category.map(c => t(c)).join(', ')}</p>
+                                <div className="flex items-center justify-between mt-auto">
+                                  <div className="inline-flex items-center rounded-lg border border-gray-200 bg-white overflow-hidden h-9">
+                                    <button
+                                      type="button"
+                                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                      className="h-full w-9 flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-gray-50 transition-colors"
+                                      aria-label={`Giảm số lượng ${t(item.title)}`}
+                                    >
+                                      <Minus className="w-3.5 h-3.5" />
+                                    </button>
+                                    <span className="h-full min-w-[2.25rem] px-2 flex items-center justify-center text-sm font-semibold text-text-primary border-x border-gray-200">
+                                      {item.quantity}
+                                    </span>
+                                    <button
+                                      type="button"
+                                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                      className="h-full w-9 flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-gray-50 transition-colors"
+                                      aria-label={`Tăng số lượng ${t(item.title)}`}
+                                    >
+                                      <Plus className="w-3.5 h-3.5" />
+                                    </button>
                                   </div>
-                                  <div className="flex items-end flex-col justify-end">
+                                  <div className="price text-lg font-bold text-primary">
+                                    {item.price.currency === 'VNĐ'
+                                      ? currencyFormatter.format(parseInt(item.price.amount.replace(/\./g, '')) * item.quantity)
+                                      : `${item.price.currency} ${item.price.amount}`
+                                    }
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Promo Course attached to this item if applicable */}
+                            {ENABLE_PROMO_THUONG_HIEU_CUA_BAN && t(item.title).toLowerCase().includes('là chính mình') && promoCourse && (
+                              <div className="flex relative pl-[30px] mt-2">
+                                <div className="absolute left-[8px] top-4 bottom-4 w-[2px] bg-gray-300"></div>
+                                <div className="flex flex-col md:flex-row gap-4 py-2 w-full relative">
+                                  {/* Promo image: full-width 16:9 on mobile, 160px width 16:9 on desktop */}
+                                  <div className="w-full md:w-[160px] md:shrink-0">
+                                    <div className="relative w-full" style={{ aspectRatio: '16/9' }}>
+                                      <img
+                                        src={promoCourse.heroImage || "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&auto=format&fit=crop&q=60"}
+                                        alt={t(promoCourse.title)}
+                                        className="absolute inset-0 w-full h-full object-cover rounded-lg shadow-sm"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div className="flex-1 flex justify-between">
+                                    <div>
+                                      <h4 className="font-bold text-base text-text-primary">{t(promoCourse.title)}</h4>
+                                      <p className="text-text-secondary text-sm mb-2">{promoCourse.category.map(c => t(c)).join(', ')}</p>
+                                      <span className="px-2 py-0.5 bg-gray-100 rounded text-xs font-semibold text-gray-500">x{item.quantity}</span>
+                                    </div>
+                                    <div className="flex items-end flex-col justify-end">
                                       <span className="text-gray-400 line-through text-sm font-normal">
                                         {promoCourse.price.currency === 'VNĐ'
                                           ? currencyFormatter.format(parseInt(promoCourse.price.amount.replace(/\./g, '')) * item.quantity)
                                           : `${promoCourse.price.currency} ${parseFloat(promoCourse.price.amount) * item.quantity}`
                                         }
                                       </span>
+                                    </div>
                                   </div>
-                               </div>
-                             </div>
+                                </div>
+                              </div>
+                            )}
                           </div>
-                        )}
-                      </div>
-                      );
-                    })}
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
 
-                {/* Payment Form */}
-                <div className="bg-white rounded-ios-xl shadow-ios-card p-5 sm:p-8 border border-white/40">
-                  <h2 className="text-xl font-bold mb-6 text-text-primary">
-                    {t("checkout.customer_info_title")}
-                  </h2>
+                  {/* Payment Form */}
+                  <div className="bg-white rounded-ios-xl shadow-ios-card p-5 sm:p-8 border border-white/40">
+                    <h2 className="text-xl font-bold mb-6 text-text-primary">
+                      {t("checkout.customer_info_title")}
+                    </h2>
 
-                  <form id="checkout-form" onSubmit={handleSubmit} className="space-y-5">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                      <div>
-                        <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base ml-1">
-                          {t("checkout.form.name")} <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          required
-                          placeholder={t("checkout.form.placeholders.name")}
-                          value={formData.name}
-                          onChange={(e) => handleInputChange('name', e.target.value)}
-                          className="w-full bg-gray-50 border border-gray-200 rounded-ios-md px-4 py-3 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm sm:text-base appearance-none ios-haptic-active"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base ml-1">
-                          {t("checkout.form.email")} <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="email"
-                          required
-                          placeholder={t("checkout.form.placeholders.email")}
-                          value={formData.email}
-                          onChange={(e) => handleInputChange('email', e.target.value)}
-                          className="w-full bg-gray-50 border border-gray-200 rounded-ios-md px-4 py-3 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm sm:text-base appearance-none ios-haptic-active"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base ml-1">
-                          {t("checkout.form.phone")} <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="tel"
-                          required
-                          placeholder={t("checkout.form.placeholders.phone")}
-                          value={formData.phone}
-                          onChange={(e) => handleInputChange('phone', e.target.value)}
-                          className="w-full bg-gray-50 border border-gray-200 rounded-ios-md px-4 py-3 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm sm:text-base appearance-none ios-haptic-active"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base ml-1">
-                          {t("checkout.form.telegram")} <span className="text-red-500">*</span>
-                        </label>
-                        <div className="relative">
+                    <form id="checkout-form" onSubmit={handleSubmit} className="space-y-5">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div>
+                          <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base ml-1">
+                            {t("checkout.form.name")} <span className="text-red-500">*</span>
+                          </label>
                           <input
                             type="text"
                             required
-                            placeholder={t("checkout.form.placeholders.telegram")}
-                            value={formData.telegram}
-                            onChange={(e) => handleInputChange('telegram', e.target.value)}
-                            className="peer w-full bg-gray-50 border border-gray-200 rounded-ios-md pl-9 pr-4 py-3 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm sm:text-base appearance-none ios-haptic-active"
+                            placeholder={t("checkout.form.placeholders.name")}
+                            value={formData.name}
+                            onChange={(e) => handleInputChange('name', e.target.value)}
+                            className="w-full bg-gray-50 border border-gray-200 rounded-ios-md px-4 py-3 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm sm:text-base appearance-none ios-haptic-active"
                           />
-                          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none z-10 peer-focus:text-primary transition-colors">@</span>
+                        </div>
+
+                        <div>
+                          <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base ml-1">
+                            {t("checkout.form.email")} <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            type="email"
+                            required
+                            placeholder={t("checkout.form.placeholders.email")}
+                            value={formData.email}
+                            onChange={(e) => handleInputChange('email', e.target.value)}
+                            className="w-full bg-gray-50 border border-gray-200 rounded-ios-md px-4 py-3 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm sm:text-base appearance-none ios-haptic-active"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base ml-1">
+                            {t("checkout.form.phone")} <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            type="tel"
+                            required
+                            placeholder={t("checkout.form.placeholders.phone")}
+                            value={formData.phone}
+                            onChange={(e) => handleInputChange('phone', e.target.value)}
+                            className="w-full bg-gray-50 border border-gray-200 rounded-ios-md px-4 py-3 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm sm:text-base appearance-none ios-haptic-active"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base ml-1">
+                            {t("checkout.form.telegram")} <span className="text-red-500">*</span>
+                          </label>
+                          <div className="relative">
+                            <input
+                              type="text"
+                              required
+                              placeholder={t("checkout.form.placeholders.telegram")}
+                              value={formData.telegram}
+                              onChange={(e) => handleInputChange('telegram', e.target.value)}
+                              className="peer w-full bg-gray-50 border border-gray-200 rounded-ios-md pl-9 pr-4 py-3 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm sm:text-base appearance-none ios-haptic-active"
+                            />
+                            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none z-10 peer-focus:text-primary transition-colors">@</span>
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base ml-1">
+                            {t("checkout.form.birthdate")} <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            type="date"
+                            required
+                            value={formData.birthdate}
+                            onChange={(e) => handleInputChange('birthdate', e.target.value)}
+                            className="w-full bg-gray-50 border border-gray-200 rounded-ios-md px-4 py-3 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm sm:text-base appearance-none ios-haptic-active"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base ml-1">
+                            {t("checkout.form.gender")} <span className="text-red-500">*</span>
+                          </label>
+                          <div className="relative">
+                            <select
+                              required
+                              value={formData.gender}
+                              onChange={(e) => handleInputChange('gender', e.target.value)}
+                              className="w-full bg-gray-50 border border-gray-200 rounded-ios-md px-4 py-3 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm sm:text-base appearance-none ios-haptic-active"
+                            >
+                              <option value="">{t("checkout.form.gender_options.select")}</option>
+                              <option value="female">{t("checkout.form.gender_options.female")}</option>
+                              <option value="male">{t("checkout.form.gender_options.male")}</option>
+                              <option value="other">{t("checkout.form.gender_options.other")}</option>
+                            </select>
+                            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-400">
+                              <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+                            </div>
+                          </div>
                         </div>
                       </div>
 
                       <div>
                         <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base ml-1">
-                          {t("checkout.form.birthdate")} <span className="text-red-500">*</span>
+                          {t("checkout.form.address")}
                         </label>
                         <input
-                          type="date"
-                          required
-                          value={formData.birthdate}
-                          onChange={(e) => handleInputChange('birthdate', e.target.value)}
+                          type="text"
+                          placeholder={t("checkout.form.placeholders.address")}
+                          value={formData.address}
+                          onChange={(e) => handleInputChange('address', e.target.value)}
                           className="w-full bg-gray-50 border border-gray-200 rounded-ios-md px-4 py-3 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm sm:text-base appearance-none ios-haptic-active"
                         />
                       </div>
 
                       <div>
                         <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base ml-1">
-                          {t("checkout.form.gender")} <span className="text-red-500">*</span>
+                          {t("checkout.form.note")}
                         </label>
-                        <div className="relative">
-                          <select
-                            required
-                            value={formData.gender}
-                            onChange={(e) => handleInputChange('gender', e.target.value)}
-                            className="w-full bg-gray-50 border border-gray-200 rounded-ios-md px-4 py-3 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm sm:text-base appearance-none ios-haptic-active"
-                          >
-                            <option value="">{t("checkout.form.gender_options.select")}</option>
-                            <option value="female">{t("checkout.form.gender_options.female")}</option>
-                            <option value="male">{t("checkout.form.gender_options.male")}</option>
-                            <option value="other">{t("checkout.form.gender_options.other")}</option>
-                          </select>
-                          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-400">
-                            <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base ml-1">
-                        {t("checkout.form.address")}
-                      </label>
-                      <input
-                        type="text"
-                        placeholder={t("checkout.form.placeholders.address")}
-                        value={formData.address}
-                        onChange={(e) => handleInputChange('address', e.target.value)}
-                        className="w-full bg-gray-50 border border-gray-200 rounded-ios-md px-4 py-3 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm sm:text-base appearance-none ios-haptic-active"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base ml-1">
-                        {t("checkout.form.note")}
-                      </label>
-                      <textarea
-                        rows={3}
-                        placeholder={t("checkout.form.placeholders.note")}
-                        value={formData.note}
-                        onChange={(e) => handleInputChange('note', e.target.value)}
-                        className="w-full bg-gray-50 border border-gray-200 rounded-ios-md px-4 py-3 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm sm:text-base appearance-none ios-haptic-active resize-y min-h-[100px]"
-                      />
-                    </div>
-
-                    <div className="flex items-start bg-blue-50/50 p-4 rounded-ios-lg border border-blue-100 mt-6">
-                      <input
-                        type="checkbox"
-                        id="terms"
-                        required
-                        checked={agreed}
-                        onChange={(e) => setAgreed(e.target.checked)}
-                        className="mt-1 mr-3 w-5 h-5 text-primary rounded focus:ring-primary border-gray-300"
-                      />
-                      <label htmlFor="terms" className="text-sm text-text-primary leading-relaxed">
-                        {t("checkout.terms_agreement")}{' '}
-                        <Link href="/policy" target="_blank" rel="noopener noreferrer" className="text-primary font-bold hover:underline">
-                          {t("policy.title")}
-                        </Link>{' '}
-                        &{' '}
-                        <Link href="/terms" target="_blank" rel="noopener noreferrer" className="text-primary font-bold hover:underline">
-                          {t("terms.title")}
-                        </Link>
-                      </label>
-                    </div>
-
-                    {/* Error Display */}
-                    {errors.length > 0 && (
-                      <div className="bg-red-50 border border-red-200 rounded-ios-lg p-4 mb-6 animate-shake">
-                        <h4 className="text-red-800 font-semibold mb-2 flex items-center">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                          </svg>
-                          Lỗi:
-                        </h4>
-                        <ul className="list-disc list-inside text-red-700 ml-2">
-                          {errors.map((error, index) => (
-                            <li key={index}>{error}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </form>
-                </div>
-              </div>
-
-              {/* Order Summary */}
-              <div className="lg:col-span-1">
-                <div className="bg-white rounded-ios-xl shadow-ios-card p-5 sm:p-8 sticky top-24 sm:top-28 border border-white/40">
-                  <h2 className="text-lg sm:text-xl font-bold mb-6 text-text-primary border-b pb-4">
-                    {t("cart.summary_title")}
-                  </h2>
-
-                  <div className="mb-6">
-                    <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base">
-                      {t("checkout.discount_code")}
-                    </label>
-                    <div className="flex gap-2">
-                      <div className="flex-1 relative">
-                        <input
-                          type="text"
-                          value={discountCode}
-                          onChange={(e) => setDiscountCode(e.target.value)}
-                          placeholder={t("checkout.discount_code")}
-                          className="w-full bg-gray-50 border border-gray-200 rounded-ios-md px-4 py-2 h-[44px] focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm font-medium uppercase placeholder:normal-case ios-haptic-active"
+                        <textarea
+                          rows={3}
+                          placeholder={t("checkout.form.placeholders.note")}
+                          value={formData.note}
+                          onChange={(e) => handleInputChange('note', e.target.value)}
+                          className="w-full bg-gray-50 border border-gray-200 rounded-ios-md px-4 py-3 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm sm:text-base appearance-none ios-haptic-active resize-y min-h-[100px]"
                         />
-                        <Tag className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
                       </div>
-                      <button
-                        type="button"
-                        onClick={handleApplyDiscount}
-                        className="px-4 bg-gray-800 text-white rounded-ios-md hover:bg-black transition-all duration-300 h-[44px] font-bold text-sm shadow-sm ios-haptic-active"
-                      >
-                        {t("checkout.apply_btn")}
-                      </button>
-                    </div>
-                    {discount > 0 && (
-                      <div className="mt-2 text-success text-xs sm:text-sm font-bold flex items-center animate-pulse">
-                        <span className="w-2 h-2 rounded-full bg-success mr-2"></span>
-                        {t("checkout.applied_discount")} {discountType === 'percentage' ? `${discount}%` : `-${currencyFormatter.format(discount)}`}
-                      </div>
-                    )}
-                  </div>
 
-                  <div className="space-y-4 mb-8 bg-gray-50 p-4 rounded-ios-lg">
-                    <div className="flex justify-between text-sm sm:text-base">
-                      <span className="text-text-secondary">{t("checkout.subtotal")}</span>
-                      <span className="font-semibold">{currencyFormatter.format(subtotal)}</span>
+                      <div className="flex items-start bg-blue-50/50 p-4 rounded-ios-lg border border-blue-100 mt-6">
+                        <input
+                          type="checkbox"
+                          id="terms"
+                          required
+                          checked={agreed}
+                          onChange={(e) => setAgreed(e.target.checked)}
+                          className="mt-1 mr-3 w-5 h-5 text-primary rounded focus:ring-primary border-gray-300"
+                        />
+                        <label htmlFor="terms" className="text-sm text-text-primary leading-relaxed">
+                          {t("checkout.terms_agreement")}{' '}
+                          <Link href="/policy" target="_blank" rel="noopener noreferrer" className="text-primary font-bold hover:underline">
+                            {t("policy.title")}
+                          </Link>{' '}
+                          &{' '}
+                          <Link href="/terms" target="_blank" rel="noopener noreferrer" className="text-primary font-bold hover:underline">
+                            {t("terms.title")}
+                          </Link>
+                        </label>
+                      </div>
+
+                      {/* Error Display */}
+                      {errors.length > 0 && (
+                        <div className="bg-red-50 border border-red-200 rounded-ios-lg p-4 mb-6 animate-shake">
+                          <h4 className="text-red-800 font-semibold mb-2 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                            </svg>
+                            Lỗi:
+                          </h4>
+                          <ul className="list-disc list-inside text-red-700 ml-2">
+                            {errors.map((error, index) => (
+                              <li key={index}>{error}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </form>
+                  </div>
+                </div>
+
+                {/* Order Summary */}
+                <div className="lg:col-span-1">
+                  <div className="bg-white rounded-ios-xl shadow-ios-card p-5 sm:p-8 sticky top-24 sm:top-28 border border-white/40">
+                    <h2 className="text-lg sm:text-xl font-bold mb-6 text-text-primary border-b pb-4">
+                      {t("cart.summary_title")}
+                    </h2>
+
+                    <div className="mb-6">
+                      <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base">
+                        {t("checkout.discount_code")}
+                      </label>
+                      <div className="flex gap-2">
+                        <div className="flex-1 relative">
+                          <input
+                            type="text"
+                            value={discountCode}
+                            onChange={(e) => setDiscountCode(e.target.value)}
+                            placeholder={t("checkout.discount_code")}
+                            className="w-full bg-gray-50 border border-gray-200 rounded-ios-md px-4 py-2 h-[44px] focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm font-medium uppercase placeholder:normal-case ios-haptic-active"
+                          />
+                          <Tag className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                        </div>
+                        <button
+                          type="button"
+                          onClick={handleApplyDiscount}
+                          className="px-4 bg-gray-800 text-white rounded-ios-md hover:bg-black transition-all duration-300 h-[44px] font-bold text-sm shadow-sm ios-haptic-active"
+                        >
+                          {t("checkout.apply_btn")}
+                        </button>
+                      </div>
+                      {discount > 0 && (
+                        <div className="mt-2 text-success text-xs sm:text-sm font-bold flex items-center animate-pulse">
+                          <span className="w-2 h-2 rounded-full bg-success mr-2"></span>
+                          {t("checkout.applied_discount")} {discountType === 'percentage' ? `${discount}%` : `-${currencyFormatter.format(discount)}`}
+                        </div>
+                      )}
                     </div>
-                    {discount > 0 && (
+
+                    <div className="space-y-4 mb-8 bg-gray-50 p-4 rounded-ios-lg">
                       <div className="flex justify-between text-sm sm:text-base">
-                        <span className="text-success font-medium">{t("checkout.discount")}</span>
-                        <span className="font-bold text-success">-{currencyFormatter.format(discountAmount)}</span>
+                        <span className="text-text-secondary">{t("checkout.subtotal")}</span>
+                        <span className="font-semibold">{currencyFormatter.format(subtotal)}</span>
                       </div>
-                    )}
-                    <div className="border-t border-gray-200 pt-3 flex justify-between text-base sm:text-lg font-bold items-center">
-                      <span>{t("checkout.total")}</span>
-                      <span className="price text-primary text-xl">{currencyFormatter.format(total)}</span>
+                      {discount > 0 && (
+                        <div className="flex justify-between text-sm sm:text-base">
+                          <span className="text-success font-medium">{t("checkout.discount")}</span>
+                          <span className="font-bold text-success">-{currencyFormatter.format(discountAmount)}</span>
+                        </div>
+                      )}
+                      <div className="border-t border-gray-200 pt-3 flex justify-between text-base sm:text-lg font-bold items-center">
+                        <span>{t("checkout.total")}</span>
+                        <span className="price text-primary text-xl">{currencyFormatter.format(total)}</span>
+                      </div>
                     </div>
+
+                    <button
+                      form="checkout-form"
+                      type="submit"
+                      disabled={isLoading || !agreed}
+                      className="w-full flex items-center justify-center bg-primary text-white font-bold py-3.5 rounded-full shadow-ios-md hover:shadow-ios-lg hover:brightness-105 disabled:bg-gray-300 disabled:shadow-none disabled:cursor-not-allowed active:scale-[0.98] transition-all duration-300 text-base ios-haptic-active"
+                    >
+                      {isLoading ? (
+                        <div className="flex items-center justify-center">
+                          <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          {t("checkout.processing")}
+                        </div>
+                      ) : (
+                        t("checkout.confirm_pay_btn")
+                      )}
+                    </button>
+
+                    <Link
+                      href="/cart"
+                      className="w-full mt-4 text-center text-gray-500 hover:text-primary font-semibold transition block text-sm sm:text-base py-2 rounded-lg hover:bg-gray-50"
+                    >
+                      Quay lại giỏ hàng
+                    </Link>
                   </div>
-
-                  <button
-                    form="checkout-form"
-                    type="submit"
-                    disabled={isLoading || !agreed}
-                    className="w-full flex items-center justify-center bg-primary text-white font-bold py-3.5 rounded-full shadow-ios-md hover:shadow-ios-lg hover:brightness-105 disabled:bg-gray-300 disabled:shadow-none disabled:cursor-not-allowed active:scale-[0.98] transition-all duration-300 text-base ios-haptic-active"
-                  >
-                    {isLoading ? (
-                      <div className="flex items-center justify-center">
-                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        {t("checkout.processing")}
-                      </div>
-                    ) : (
-                      t("checkout.confirm_pay_btn")
-                    )}
-                  </button>
-
-                  <Link
-                    href="/cart"
-                    className="w-full mt-4 text-center text-gray-500 hover:text-primary font-semibold transition block text-sm sm:text-base py-2 rounded-lg hover:bg-gray-50"
-                  >
-                    Quay lại giỏ hàng
-                  </Link>
                 </div>
               </div>
-            </div>
-          </>
-        )
-        }
+            </>
+          )
+          }
         </div>
       </div>
     </div>
