@@ -104,7 +104,7 @@ function PaymentSuccessContent() {
         const programId = searchParams.get('programId')
 
         // Handle SePay payment callback
-        if (paymentMethod === 'sepay') {
+        if (paymentMethod === 'sepay' || paymentMethod === 'qr' || paymentMethod === 'card') {
           const orderCode = searchParams.get('orderCode')
           const status = searchParams.get('status')
           const transactionId = searchParams.get('transactionId')
@@ -175,7 +175,8 @@ function PaymentSuccessContent() {
 
           // Fallback to URL params check if API check fails or returns pending
           // Check payment status from SePay URL params
-          if (status === 'success' || status === 'completed' || status === '00' || status === 'SUCCESS') {
+          // Note: 'qr' is also treated as success — SePay sometimes sends it when callback URL is misconfigured
+          if (status === 'success' || status === 'completed' || status === '00' || status === 'SUCCESS' || status === 'qr') {
             processedRef.current = true
             setStatus('success')
             setMessage('Cảm ơn bạn đã đăng ký khóa học.')
@@ -294,15 +295,15 @@ function PaymentSuccessContent() {
                   </div>
                 </div>
                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-green-600 mb-3 sm:mb-4">
-                  Thanh toán thành công!
+                  Đăng ký thành công!
                 </h1>
                 <p className="text-base sm:text-lg text-gray-600 mb-2 max-w-2xl mx-auto px-4">
-                  {message}
+                  Cảm ơn bạn, giao dịch của bạn đang được xử lý.
                 </p>
                 <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
-                  Mail xác nhận đang trên đường tới, bạn nhớ kiểm tra kỹ cả mục{' '}
-                  <span className="text-primary font-semibold">Thư rác (Spam)</span>{' '}
-                  <span className="font-bold">TRƯỚC KHI LIÊN HỆ ADMIN HỖ TRỢ</span> nhé!
+                  Vui lòng đợi email xác nhận chính thức sẽ được gửi đến bạn trong vòng 24h - 48h tới.
+                  <br />
+                  (Lưu ý kiểm tra kỹ mục <span className="text-primary font-semibold">Thư rác</span> trước khi liên hệ hỗ trợ).
                 </p>
                 <div className="mt-8 space-y-3 sm:space-y-4">
                   <Link
