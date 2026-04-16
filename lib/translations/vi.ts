@@ -620,7 +620,7 @@ export const vi = {
             heading: "30 NGÀY CÓ GÌ?",
             col_1: {
                 title: "Thử thách 30 ngày là gì?",
-                content: "Đây là hành trình 30 ngày hành động liên tục dưới sự quan sát và thúc đẩy của Nhi Lê, ngoài ra còn được hỗ trợ 24/7 từ đội ngũ chuyên nghiệp.\n\nMỗi ngày, bạn chỉ cần dành 5–10 phút để thực hiện một nhiệm vụ đơn giản và check-in trong nhóm.\n\nTừng bước nhỏ, nhưng đủ để bạn cảm nhận mình đang thay đổi."
+                content: "Đây là hành trình 30 ngày hành động liên tục, nơi bạn được đồng hành và dẫn dắt bởi đội ngũ Nedu. Chúng mình không chỉ quan sát mà còn là người thúc đẩy, hỗ trợ bạn sát sao 24/7 trong suốt quá trình rèn luyện.\n\nMỗi ngày, bạn chỉ cần dành ra 5–10 phút để thực hiện một nhiệm vụ đơn giản và check-in trong nhóm.\n\nTừng bước nhỏ, với sự hỗ trợ tận tâm từ Nedu, bạn sẽ cảm nhận rõ rệt sự thay đổi tích cực trong chính con người mình."
             },
             col_2: {
                 title: "Ai nên tham gia?",
@@ -717,22 +717,22 @@ export const vi = {
         timeline: {
             heading: "SAU 30 NGÀY BẠN ĐƯỢC...?",
             block_1: {
-                title: "Nắm rõ thu và chi mỗi tháng",
-                quote: "“Tiền không khó quản lý, khó là mình không nhìn rõ nó.”",
-                collapsed: "NẮM RÕ\\nTHU VÀ CHI",
-                content: "Sau 30 ngày, bạn sẽ biết rõ mỗi tháng tiền đi đâu, số dư ra sao. Không còn 'sao tiền hết nhanh thế', không còn cảm giác mơ hồ – bạn nắm được bức tranh tài chính cá nhân thật sự."
+                title: "Hiểu khách hàng muốn gì",
+                quote: "“Bán hàng đơn giản là tìm đúng người gặp khó khăn và giúp họ giải quyết nó.”",
+                collapsed: "HIỂU KHÁCH HÀNG\\nMUỐN GÌ",
+                content: "Thay vì cố gắng 'ép' khách mua, bạn học cách lắng nghe để biết họ thực sự cần gì. Khi bạn nói đúng điều họ muốn nghe, việc bán hàng tự nhiên như một cuộc trò chuyện giữa những người bạn."
             },
             block_2: {
-                title: "Chi tiêu có kiểm soát",
-                quote: "“Xài tiền không sai, xài mà không biết vì sao mới mệt.”",
-                collapsed: "CHI TIÊU\\nCÓ KIỂM SOÁT",
-                content: "Bạn sẽ bắt đầu suy nghĩ trước khi chi. Không phải kiểm soát quá mức, nhưng bạn đã chuyển từ chi tiêu vô thức sang chi tiêu có chủ đích, rõ ràng với từng đồng tiền ra – vào."
+                title: "Hết sợ bị từ chối",
+                quote: "“Lời từ chối không phải là dấu chấm hết, đó chỉ là bắt đầu của một sự quan tâm.”",
+                collapsed: "HẾT SỢ\\nBỊ TỪ CHỐI",
+                content: "Bạn không còn thấy ngại hay 'đứng hình' khi khách lắc đầu. Chương trình giúp bạn có tâm lý vững vàng hơn, tự tin mở lời và luôn giữ được năng lượng vui vẻ trong mọi cuộc trò chuyện, dù kết quả có ra sao."
             },
             block_3: {
-                title: "Xây dựng thói quen chi tiêu lành mạnh",
-                quote: "“Thứ làm bạn mệt không phải tiền, mà là cách xài tiền.”",
-                collapsed: "XÂY DỰNG\\nTHÓI QUEN\\nCHI TIÊU\\nLÀNH MẠNH",
-                content: "Sau 30 ngày, bạn hình thành được thói quen quản lý tiền rõ ràng và thực tế, đủ để duy trì lâu dài. Tiền bạc trở nên gọn gàng hơn, áp lực tài chính giảm đi, và bạn chủ động hơn trong các quyết định chi tiêu hàng ngày."
+                title: "Bán hàng bằng sự tử tế",
+                quote: "“Bạn không cần phải nịnh nọt để bán được hàng, bạn chỉ cần mang lại giá trị thật.”",
+                collapsed: "BÁN HÀNG\\nBẰNG SỰ\\nTỬ TẾ",
+                content: "Đừng lo phải đi 'năn nỉ' hay làm hài lòng khách quá mức. Bạn biết cách giữ vị thế riêng, đưa ra lời khuyên chân thành và có giới hạn rõ ràng. Khi bạn tin vào giá trị của mình, khách hàng tự tìm đến và tôn trọng quyết định của bạn."
             },
             time_label: "THỜI GIAN DIỄN RA",
             students_label: "30 VIDEO BÀI TẬP",
@@ -777,7 +777,7 @@ export const vi = {
             },
             membership: {
                 label: "Gói Membership",
-                per_year: "/ 12 tháng",
+                per_year: "/ 10 tháng",
                 badge: "KHUYÊN DÙNG",
                 button: "Chọn Gói Membership",
                 added: "Đã thêm vào giỏ hàng",
