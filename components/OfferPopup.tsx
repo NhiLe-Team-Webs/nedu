@@ -58,7 +58,7 @@ export default function OfferPopup({ isOpen, onClose, onAccept }: OfferPopupProp
 
           {/* Icon Hộp Quà */}
           <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white rounded-full flex items-center justify-center mx-auto text-[#ef4444] shadow-sm p-0 overflow-hidden shrink-0">
-             {/* eslint-disable-next-line @next/next/no-img-element */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/gift-box-logo-yellow.png" alt="Gift Logo" className="w-[120%] h-[120%] max-w-none object-cover rounded-full" />
           </div>
 
@@ -84,7 +84,7 @@ export default function OfferPopup({ isOpen, onClose, onAccept }: OfferPopupProp
               }}
               className="bg-[#ef4444] hover:bg-red-600 text-white font-bold py-3.5 px-6 rounded-xl w-full text-[15px] transition-all shadow-[0_8px_20px_rgba(239,68,68,0.3)] hover:-translate-y-0.5 flex items-center justify-center gap-2"
             >
-              Nhận Ưu Đãi Ngay <ArrowRight className="w-4 h-4" strokeWidth={3} />
+              NHẬN ƯU ĐÃI NGAY <ArrowRight className="w-4 h-4" strokeWidth={3} />
             </button>
 
             {/* Ghi chú phụ */}
