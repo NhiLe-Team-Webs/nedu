@@ -596,57 +596,93 @@ export default function CheckoutPage() {
                           : (item.heroImage || '/images/programs/thu-thach-30-ngay-desktop.png');
 
                         return (
-                          <div key={item.id} className="flex flex-col md:flex-row gap-4 pb-6 border-b last:border-b-0 border-gray-100">
-                            <img
-                              src={itemImage}
-                              alt={t(item.title)}
-                              className="w-full md:w-[150px] h-[100px] object-cover rounded-ios-lg shadow-sm"
-                              onError={e => { e.currentTarget.src = '/images/programs/thu-thach-30-ngay-desktop.png'; }}
-                            />
+                          <div key={item.id} className="pb-6 border-b last:border-b-0 border-gray-100">
+                            <div className="flex flex-col md:flex-row gap-4 relative z-10">
+                              <img
+                                src={itemImage}
+                                alt={t(item.title)}
+                                className="w-full md:w-[160px] aspect-video object-cover rounded-ios-lg shadow-sm shrink-0 relative z-10 bg-white"
+                                onError={e => { e.currentTarget.src = '/images/programs/thu-thach-30-ngay-desktop.png'; }}
+                              />
 
-                            <div className="flex-1 flex flex-col justify-center">
-                              <div className="flex items-start justify-between gap-3 mb-1">
-                                <h3 className="text-lg font-bold text-text-primary">{t(item.title)}</h3>
-                                <button
-                                  type="button"
-                                  onClick={() => removeFromCart(item.id)}
-                                  className="h-8 w-8 rounded-full flex items-center justify-center text-red-500 hover:text-red-600 hover:bg-red-50 transition-colors shrink-0"
-                                  aria-label={`Xóa ${t(item.title)} khỏi giỏ hàng`}
-                                >
-                                  <Trash2 className="w-4 h-4" />
-                                </button>
-                              </div>
-                              <p className="text-text-secondary mb-2 text-sm">{item.category.map(c => t(c)).join(', ')}</p>
-                              <div className="flex items-center justify-between mt-auto">
-                                <div className="inline-flex items-center rounded-lg border border-gray-200 bg-white overflow-hidden h-9">
+                              <div className="flex-1 flex flex-col justify-center">
+                                <div className="flex items-start justify-between gap-3 mb-1">
+                                  <h3 className="text-lg font-bold text-text-primary">{t(item.title)}</h3>
                                   <button
                                     type="button"
-                                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                                    className="h-full w-9 flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-gray-50 transition-colors"
-                                    aria-label={`Giảm số lượng ${t(item.title)}`}
+                                    onClick={() => removeFromCart(item.id)}
+                                    className="h-8 w-8 rounded-full flex items-center justify-center text-red-500 hover:text-red-600 hover:bg-red-50 transition-colors shrink-0"
+                                    aria-label={`Xóa ${t(item.title)} khỏi giỏ hàng`}
                                   >
-                                    <Minus className="w-3.5 h-3.5" />
-                                  </button>
-                                  <span className="h-full min-w-[2.25rem] px-2 flex items-center justify-center text-sm font-semibold text-text-primary border-x border-gray-200">
-                                    {item.quantity}
-                                  </span>
-                                  <button
-                                    type="button"
-                                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                    className="h-full w-9 flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-gray-50 transition-colors"
-                                    aria-label={`Tăng số lượng ${t(item.title)}`}
-                                  >
-                                    <Plus className="w-3.5 h-3.5" />
+                                    <Trash2 className="w-4 h-4" />
                                   </button>
                                 </div>
-                                <div className="price text-lg font-bold text-primary">
-                                  {item.price.currency === 'VNĐ'
-                                    ? currencyFormatter.format(parseInt(item.price.amount.replace(/\./g, '')) * item.quantity)
-                                    : `${item.price.currency} ${item.price.amount}`
-                                  }
+                                <p className="text-text-secondary mb-2 text-sm">{item.category.map(c => t(c)).join(', ')}</p>
+                                <div className="flex items-center justify-between mt-auto">
+                                  <div className="inline-flex items-center rounded-lg border border-gray-200 bg-white overflow-hidden h-9">
+                                    <button
+                                      type="button"
+                                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                      className="h-full w-9 flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-gray-50 transition-colors"
+                                      aria-label={`Giảm số lượng ${t(item.title)}`}
+                                    >
+                                      <Minus className="w-3.5 h-3.5" />
+                                    </button>
+                                    <span className="h-full min-w-[2.25rem] px-2 flex items-center justify-center text-sm font-semibold text-text-primary border-x border-gray-200">
+                                      {item.quantity}
+                                    </span>
+                                    <button
+                                      type="button"
+                                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                      className="h-full w-9 flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-gray-50 transition-colors"
+                                      aria-label={`Tăng số lượng ${t(item.title)}`}
+                                    >
+                                      <Plus className="w-3.5 h-3.5" />
+                                    </button>
+                                  </div>
+                                  <div className="price text-lg font-bold text-primary">
+                                    {item.price.currency === 'VNĐ'
+                                      ? currencyFormatter.format(parseInt(item.price.amount.replace(/\./g, '')) * item.quantity)
+                                      : `${item.price.currency} ${item.price.amount}`
+                                    }
+                                  </div>
                                 </div>
                               </div>
                             </div>
+                            
+                            {/* Gift Item for 'la-chinh-minh' */}
+                            {item.slug === 'la-chinh-minh' && ENABLE_PROMO_THUONG_HIEU_CUA_BAN && promoCourse && (
+                              <div className="flex mt-4 relative md:ml-8">
+                                <div className="hidden md:block absolute -top-8 left-0 w-0.5 h-16 bg-gray-300 rounded-full"></div>
+                                <div className="flex flex-col md:flex-row gap-4 md:ml-6 flex-1 items-center">
+                                  <img
+                                    src={promoCourse.heroImage || '/images/programs/thuong-hieu-cua-ban.jpg'}
+                                    alt={t(promoCourse.title)}
+                                    className="w-full md:w-[128px] aspect-video object-cover rounded-md shadow-sm opacity-90 shrink-0"
+                                    onError={e => { e.currentTarget.src = '/images/programs/thuong-hieu-cua-ban.jpg'; }}
+                                  />
+                                  <div className="flex-1 flex flex-col justify-center w-full">
+                                    <div className="flex items-start justify-between gap-3 mb-1">
+                                      <h3 className="text-base font-bold text-text-primary">{t(promoCourse.title)}</h3>
+                                    </div>
+                                    <p className="text-text-secondary mb-2 text-sm">{promoCourse.category.map(c => t(c)).join(', ')}</p>
+                                    <div className="flex items-center justify-between mt-auto">
+                                      <div className="inline-flex items-center rounded-lg bg-gray-100 overflow-hidden h-7 px-3">
+                                        <span className="text-xs font-semibold text-gray-500">x{item.quantity}</span>
+                                      </div>
+                                      <div className="flex items-center gap-2">
+                                        <span className="text-gray-400 line-through text-sm font-medium">
+                                          {promoCourse.price.currency === 'VNĐ'
+                                            ? currencyFormatter.format(parseInt(promoCourse.price.amount.replace(/\./g, '')) * item.quantity)
+                                            : `${promoCourse.price.currency} ${promoCourse.price.amount}`
+                                          }
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
                           </div>
                         );
                       })}

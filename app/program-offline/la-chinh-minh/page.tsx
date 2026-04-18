@@ -177,10 +177,11 @@ export default function LaChinhMinhPage() {
           ]}
         />
         <Mission
-          title={t("mission.title")}
+          title=""
           subtitle={t("mission.subtitle")}
           description={t("program_detail.courses.la_chinh_minh.mission_desc")}
           imgUrl="/images/programs/la-chinh-minh.jpg"
+          theme="light"
         />
 
         <section className="bg-white py-12 md:py-20 rounded-t-ios-2xl border-t border-white/20 -mt-6 z-10 relative shadow-ios-card-hover">
