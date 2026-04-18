@@ -84,7 +84,7 @@ export default function Home() {
             <div className="relative pb-[75%] md:pb-[56.25%] h-0 overflow-hidden rounded-[24px] md:rounded-lg shadow-ios-md md:shadow-none transition-all duration-300">
               <div className="absolute top-0 left-0 w-full h-full">
                 <iframe
-                  src="https://www.youtube.com/embed/7QJKkxXCpGY?autoplay=1&mute=1&loop=1&playlist=7QJKkxXCpGY&controls=1&playsinline=1&rel=0"
+                  src="https://www.youtube.com/embed/7QJKkxXCpGY?autoplay=1&mute=1&loop=1&playlist=oWAvYRk_uH0&controls=1&playsinline=1&rel=0"
                   title="N-EDU introduction video"
                   className="w-full h-full"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -130,24 +130,24 @@ export default function Home() {
       <Privilege />
       <Partners />
       <Connection />
-      
+
       {/* Gift Floating Button */}
-      <GiftButton 
-        isVisible={!isOfferPopupOpen} 
+      <GiftButton
+        isVisible={!isOfferPopupOpen}
         onClick={() => setIsOfferPopupOpen(true)}
       />
 
       {/* Auto Triggering Offer Popup Mockup */}
-      <OfferPopup 
-        isOpen={isOfferPopupOpen} 
-        onClose={() => setIsOfferPopupOpen(false)} 
+      <OfferPopup
+        isOpen={isOfferPopupOpen}
+        onClose={() => setIsOfferPopupOpen(false)}
         onAccept={() => {
-           const course = getCourseBySlug('la-chinh-minh');
-           if (course) {
-             addToCart(course);
-             router.push('/checkout');
-           }
-        }} 
+          const course = getCourseBySlug('la-chinh-minh');
+          if (course) {
+            addToCart(course);
+            router.push('/checkout');
+          }
+        }}
       />
     </div>
   );
