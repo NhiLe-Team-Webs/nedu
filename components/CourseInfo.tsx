@@ -39,7 +39,6 @@ const CourseInfo: React.FC<CourseInfoProps> = ({
           {title}
         </h1>
         <div className="flex flex-col w-full p-4 sm:p-6 lg:p-10 bg-white shadow-ios-card rounded-ios-xl border-[3px] border-gray-400">
-          <h2 className="mb-4 sm:mb-6 lg:mb-[24px] text-lg sm:text-xl lg:text-[24px] font-bold">THÔNG TIN KHÓA HỌC</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-4 sm:gap-y-6 lg:gap-y-8 gap-x-4">
             {details.map((detail, index) => {
               const IconComponent = Icon[detail.icon] as React.ElementType;

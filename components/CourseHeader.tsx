@@ -11,7 +11,7 @@ type CourseHeaderProps = {
   altText: string;
   time: string;
   tags: string[];
-  title: string;
+  title: React.ReactNode;
   cost: string;
   paymentLink: string;
   currency?: string;
@@ -82,7 +82,7 @@ const CourseHeader: React.FC<CourseHeaderProps> = ({
             </span>
           ))}
         </div>
-        <h1 className="text-2xl sm:text-3xl lg:text-5xl font-extrabold text-yellow-500 capitalize mb-4 sm:mb-6">
+        <h1 className="text-2xl sm:text-3xl lg:text-5xl font-extrabold text-yellow-500 mb-4 sm:mb-6">
           {title}
         </h1>
         <div className="flex justify-center items-center gap-1 sm:gap-2 mb-1 sm:mb-2">

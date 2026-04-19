@@ -655,7 +655,7 @@ export default function CheckoutPage() {
                                 </div>
                               </div>
                             </div>
-                            
+
                             {/* Gift Item for 'la-chinh-minh' */}
                             {item.slug === 'la-chinh-minh' && ENABLE_PROMO_THUONG_HIEU_CUA_BAN && promoCourse && (
                               <div className="flex mt-4 relative md:ml-8">
@@ -776,7 +776,7 @@ export default function CheckoutPage() {
                               >
                                 <option value="">Chọn khóa học</option>
                                 <option value="Money & You">Money & You</option>
-                                <option value="Igite 01">Igite 01</option>
+                                <option value="Ignite 01">Ignite 01</option>
                                 <option value="Ignite 02">Ignite 02</option>
                                 <option value="Là Chính Mình 01">Là Chính Mình 01</option>
                                 <option value="Là Chính Mình 02">Là Chính Mình 02</option>
