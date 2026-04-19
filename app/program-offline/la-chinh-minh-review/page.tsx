@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { HelpCircle, ChevronDown, BedDouble, Utensils, Info, CheckCircle, ShoppingBagIcon } from "lucide-react";
+import { BedDouble, Utensils, Info, CheckCircle, ShoppingBagIcon } from "lucide-react";
 import CourseHeader from "@/components/CourseHeader";
 import CourseInfo from "@/components/CourseInfo";
 import Organizers from "@/components/Organizers";
@@ -19,7 +19,6 @@ export default function LaChinhMinhReviewPage() {
     const course = getCourseBySlug('la-chinh-minh-review');
     const { t } = useLanguage();
     const router = useRouter();
-    const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
     const [isOfferPopupOpen, setIsOfferPopupOpen] = useState(false);
     const { addToCart, setShowSuccessPopup } = useCart();
     const [justAdded, setJustAdded] = useState(false);
@@ -36,9 +35,7 @@ export default function LaChinhMinhReviewPage() {
     };
 
 
-    const toggleFaq = (index: number) => {
-        setOpenFaqIndex(openFaqIndex === index ? null : index);
-    };
+
 
     // Danh sách các mục được bao gồm trong chi phí
     const includedItems = [
@@ -46,13 +43,13 @@ export default function LaChinhMinhReviewPage() {
             id: 1,
             icon: <BedDouble className="w-6 h-6" />,
             title: "Khách sạn lưu trú",
-            description: "Phòng tiêu chuẩn 4 sao (2 người/phòng) trong suốt 3 ngày 2 đêm diễn ra khóa học. Đã bao gồm các tiện ích gym, hồ bơi."
+            description: "Phòng tiêu chuẩn 5 sao trong suốt 3 ngày 3 đêm diễn ra khóa học."
         },
         {
             id: 2,
             icon: <Utensils className="w-6 h-6" />,
             title: "Ăn uống trọn gói",
-            description: "Bao gồm Buffet sáng, ăn trưa/tối set menu tại nhà hàng và 2 bữa Teabreak (trà, bánh, trái cây) mỗi ngày học."
+            description: "Bao gồm Buffet sáng, ăn trưa/tối tại nhà hàng và Teabreak (trà, bánh, trái cây) mỗi ngày học."
         }
     ];
 
@@ -180,95 +177,7 @@ export default function LaChinhMinhReviewPage() {
                 </section>
                 <Organizers />
 
-                {/* FAQ Section */}
-                <section className="bg-white py-16 lg:py-24">
-                    <div className="container mx-auto px-4 sm:px-6">
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
-                            {/* Left Column: Info */}
-                            <div className="lg:col-span-4">
-                                <div className="sticky top-32">
-                                    <div className="w-12 h-12 bg-yellow-50 rounded-full flex items-center justify-center mb-6">
-                                        <HelpCircle className="h-6 w-6 text-yellow-500" />
-                                    </div>
-                                    <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
-                                        {t("program_detail.courses.la_chinh_minh.faq.heading")}
-                                    </h2>
-                                    <p className="text-gray-500 text-lg mb-8 leading-relaxed">
-                                        {t("program_detail.courses.la_chinh_minh.faq.description")}
-                                    </p>
-                                    <Button
-                                        onClick={() => router.push('/contact')}
-                                        className="bg-gray-900 text-white hover:bg-gray-800 px-8 py-6 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
-                                    >
-                                        {t("program_detail.courses.la_chinh_minh.faq.contact_button")}
-                                    </Button>
-                                </div>
-                            </div>
 
-                            {/* Right Column: Accordion */}
-                            <div className="lg:col-span-8">
-                                <div className="space-y-4">
-                                    {(() => {
-                                        const items = t("program_detail.courses.la_chinh_minh.faq.items");
-                                        if (!Array.isArray(items)) return null;
-
-                                        const listItems = items as any[];
-                                        const displayedItems = listItems;
-
-                                        return displayedItems.map((item: any, index: number) => (
-                                            <div
-                                                key={index}
-                                                className={cn(
-                                                    "border rounded-2xl overflow-hidden transition-all duration-300",
-                                                    openFaqIndex === index
-                                                        ? "border-gray-200 bg-white shadow-lg"
-                                                        : "border-transparent bg-gray-50 hover:bg-gray-100"
-                                                )}
-                                            >
-                                                <button
-                                                    onClick={() => toggleFaq(index)}
-                                                    className="w-full flex items-center justify-between p-5 md:p-6 text-left transition-colors"
-                                                >
-                                                    <div className="flex gap-4 items-start pr-4">
-                                                        <span className="text-sm md:text-base font-bold text-gray-400 mt-0.5">
-                                                            {index + 1}/
-                                                        </span>
-                                                        <span className={cn(
-                                                            "text-base md:text-lg font-bold transition-colors",
-                                                            openFaqIndex === index ? "text-primary" : "text-gray-900"
-                                                        )}>
-                                                            {item.question}
-                                                        </span>
-                                                    </div>
-                                                    <ChevronDown
-                                                        className={cn(
-                                                            "h-5 w-5 text-gray-400 transition-transform duration-300 flex-shrink-0 mt-1",
-                                                            openFaqIndex === index ? "transform rotate-180 text-primary" : ""
-                                                        )}
-                                                    />
-                                                </button>
-                                                <div
-                                                    className={cn(
-                                                        "overflow-hidden transition-all duration-300 ease-in-out",
-                                                        openFaqIndex === index ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
-                                                    )}
-                                                >
-                                                    <div className="p-6 pt-0 pl-12 md:pl-14 text-gray-600 leading-relaxed whitespace-pre-line text-base md:text-lg">
-                                                        {item.answer ? item.answer.split('\\n').map((line: string, i: number) => (
-                                                            <span key={i} className="block mb-2 last:mb-0">{line}</span>
-                                                        )) : ''}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ));
-                                    })()}
-                                </div>
-
-
-                            </div>
-                        </div>
-                    </div>
-                </section>
 
             </div>
 
