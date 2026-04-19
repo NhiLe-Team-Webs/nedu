@@ -43,7 +43,7 @@ export default function LaChinhMinhReviewPage() {
             id: 1,
             icon: <BedDouble className="w-6 h-6" />,
             title: "Khách sạn lưu trú",
-            description: "Phòng tiêu chuẩn 5 sao trong suốt 3 ngày 3 đêm diễn ra khóa học."
+            description: "Phòng khách sạn lưu trú cùng không gian học tập (để tiện di chuyển và tham gia các hoạt động trong lớp ) trong vòng 4 ngày 3 đêm."
         },
         {
             id: 2,
@@ -82,7 +82,11 @@ export default function LaChinhMinhReviewPage() {
                         {
                             icon: "Star",
                             label: t("program_detail.info.topic"),
-                            value: t("program_detail.courses.la_chinh_minh.topic"),
+                            value: (
+                                <>
+                                    Phát triển bản thân và<br /> khám phá nội tâm
+                                </>
+                            ),
                         },
                         { icon: "Clock", label: t("program_detail.info.schedule"), value: t("program_detail.courses.la_chinh_minh.schedule") },
                         {
@@ -96,7 +100,7 @@ export default function LaChinhMinhReviewPage() {
                             label: t("program_detail.info.location"),
                             value: t("program_detail.courses.la_chinh_minh.location"),
                         },
-                        { icon: "Users", label: t("program_detail.info.capacity"), value: t("program_detail.courses.la_chinh_minh.capacity") },
+
                     ]}
                 />
                 <section className="bg-white py-16 px-4 sm:px-6 lg:px-8 font-sans">
