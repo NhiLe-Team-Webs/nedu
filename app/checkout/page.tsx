@@ -765,7 +765,7 @@ export default function CheckoutPage() {
                         {items.some(item => item.slug === 'la-chinh-minh-review') && (
                           <div className="sm:col-span-2">
                             <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base ml-1">
-                              Bạn quay về từ khóa nào? <span className="text-red-500">*</span>
+                              Bạn quay về từ khóa nào? (hãy chọn khoá học gần nhất bạn đã tham gia)<span className="text-red-500">*</span>
                             </label>
                             <div className="relative">
                               <select
