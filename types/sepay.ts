@@ -11,6 +11,7 @@ export interface SePayPaymentRequest {
   gender: string;
   address?: string;
   note?: string;
+  previousCourse?: string;
   programId?: string;
   programIds?: string[]; // For multiple courses
   amount: number; // Amount in VND
