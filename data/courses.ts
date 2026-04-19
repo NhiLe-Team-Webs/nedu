@@ -167,6 +167,56 @@ export const courses: Course[] = [
     audience: [],
     privileges: []
   },
+  {
+    id: 9,
+    slug: 'la-chinh-minh-review',
+    mode: 'offline',
+    title: 'Là Chính Mình 05 (Review)',
+    category: ['categories.personal_development', 'categories.be_yourself'],
+    heroImage: '/images/programs/la-chinh-minh.jpg',
+    price: {
+      amount: '11.296.000',
+      currency: 'VNĐ'
+    },
+    paymentId: 57,
+    info: {
+      topic: 'program_detail.courses.la_chinh_minh.topic',
+      schedule: '27 - 30 tháng 8 / 2026',
+      instructor: 'program_detail.courses.la_chinh_minh.instructor',
+      sessions: 'program_detail.courses.la_chinh_minh.sessions',
+      location: 'program_detail.courses.la_chinh_minh.location',
+      capacity: 'program_detail.courses.la_chinh_minh.capacity'
+    },
+    mission: 'program_detail.courses.la_chinh_minh.mission_desc',
+    testimonials: ['PFWDwSf5EGc', 'RAaXaJxFXpE', '8qq6WDQFFQk'],
+    curriculum: '/images/programs/la-chinh-minh.jpg',
+    instructors: [
+      {
+        name: 'NhiLe',
+        title: 'Doanh nhân',
+        avatar: '/images/people/nhile.jpg',
+        bio: [
+          '15 năm kinh nghiệm trên thương trường tại Singapore và Việt Nam',
+          'Là một Doanh nhân | Nhà Tâm lý học | Người lãnh đạo cộng đồng',
+          'Thay đổi và tạo cảm hứng cho hơn 2000 người Việt ở khắp nơi trên thế giới.',
+          'Làm việc và là nhà lãnh đạo trong nhiều lĩnh vực tại cả Việt Nam và Singapore.'
+        ],
+        education: [
+          'Professional Certificate in Business Coaching (SMU) | Chứng chỉ Chuyên nghiệp về Đào tạo Doanh nghiệp (Đại học SMU)',
+          'Resilient Leadership and Business Sustainability Series (SMU) | Chuỗi chương trình Lãnh đạo Kiên cường và Phát triển Bền vững trong Kinh doanh (Đại học SMU)',
+          'Certification in Artificial Intelligence (AI) in Marketing (SMU) | Chứng chỉ về Ứng dụng Trí tuệ Nhân tạo (AI) trong Marketing (Đại học SMU)',
+          'Diploma in Psychology – Kaplan Singapore | Văn bằng Tâm lý học - Đại học Kaplan, Singapore'
+        ],
+        social: {
+          linkedin: 'https://www.linkedin.com/in/nhisg/',
+          facebook: 'https://www.facebook.com/nhile.sg',
+          instagram: 'https://www.instagram.com/nhile.sg/'
+        }
+      }
+    ],
+    audience: [],
+    privileges: []
+  },
   /*
     {
       id: 3,

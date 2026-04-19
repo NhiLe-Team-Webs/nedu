@@ -28,6 +28,7 @@ export interface SePayPaymentFormData {
   gender: string;
   address?: string;
   note?: string;
+  previousCourse?: string;
   programId?: string;
   programIds?: string[];
   amount: number;
@@ -247,6 +248,7 @@ export function prepareSePayPaymentData(
     gender: formData.gender,
     address: formData.address || undefined,
     note: formData.note || undefined,
+    previousCourse: formData.previousCourse || undefined,
     amount: amount,
     courseName: courseName,
     couponCode: couponCode

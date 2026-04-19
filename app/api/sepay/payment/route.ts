@@ -187,6 +187,7 @@ export async function POST(request: NextRequest) {
         gender: body.gender,
         address: body.address,
         note: body.note,
+        previousCourse: body.previousCourse,
         courseName: body.courseName,
         couponCode: body.couponCode,
         amount: body.amount,

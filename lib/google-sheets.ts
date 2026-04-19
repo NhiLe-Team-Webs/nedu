@@ -82,6 +82,7 @@ const ensureHeaders = async (sheet: any) => {
         'Order Code',
         'Status',
         'Payment Time',
+        'Previous Course',
         'Sent Emails'
     ];
 
@@ -100,6 +101,7 @@ const ensureHeaders = async (sheet: any) => {
         'Amount',
         'Order Code',
         'Status',
+        'Previous Course',
         'Sent Emails',
         'Payment Time'
     ];
@@ -158,6 +160,7 @@ export const appendToSheet = async (data: {
     amount: number;
     orderCode: string;
     status: string;
+    previousCourse?: string;
 }) => {
     if (!GOOGLE_SERVICE_ACCOUNT_EMAIL || !GOOGLE_PRIVATE_KEY) {
         console.error('Google Sheets credentials missing');
@@ -210,6 +213,7 @@ export const appendToSheet = async (data: {
             'Order Code': normalizedOrderCode,
             Status: data.status,
             'Payment Time': '',
+            'Previous Course': data.previousCourse || '',
             'Sent Emails': '',
         });
 
