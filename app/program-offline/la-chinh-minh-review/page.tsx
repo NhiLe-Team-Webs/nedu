@@ -148,7 +148,7 @@ export default function LaChinhMinhReviewPage() {
                             <div className="flex items-center gap-2">
                                 <Info className="w-5 h-5 text-slate-400 flex-shrink-0" />
                                 <p className="leading-none translate-y-[8px]">
-                                    <strong>Lưu ý:</strong> Chi phí trên chưa bao gồm vé máy bay / phương tiện di chuyển cá nhân đến địa điểm tổ chức.
+                                    <strong>Lưu ý:</strong> Chi phí trên chưa bao gồm vé máy bay / phương tiện di chuyển cá nhân đến địa điểm tổ chức
                                 </p>
                             </div>
                         </div>
