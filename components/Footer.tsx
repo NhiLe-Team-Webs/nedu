@@ -52,13 +52,13 @@ const Footer = () => {
                 />
               </div>
             </div>
-            <div className="text-left">
+            {/* <div className="text-left">
               <p className="font-bold text-sm sm:text-base text-white mb-2">{t("footer.company_name")}</p>
               <ul className="text-sm space-y-1 text-gray-400">
                 <li>{t("footer.tax_code")}: 0317268736</li>
                 <li className="break-words">{t("footer.address")}</li>
               </ul>
-            </div>
+            </div> */}
           </div>
         </div>
 
