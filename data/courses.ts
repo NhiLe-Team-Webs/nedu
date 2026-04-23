@@ -273,7 +273,7 @@ export const courses: Course[] = [
     paymentId: 53,
     info: {
       topic: 'program_detail.courses.thuong_hieu_cua_ban.topic',
-      schedule: '5/3-8/3/2025',
+      schedule: 'program_detail.courses.thuong_hieu_cua_ban.schedule',
       instructor: 'program_detail.courses.thuong_hieu_cua_ban.instructor',
       sessions: 'program_detail.courses.thuong_hieu_cua_ban.sessions',
       location: 'program_detail.courses.thuong_hieu_cua_ban.location',
@@ -313,7 +313,7 @@ export const courses: Course[] = [
     paymentId: 54,
     info: {
       topic: 'program_detail.courses.cuoc_song_cua_ban.topic',
-      schedule: '5/3-8/3/2025',
+      schedule: 'program_detail.courses.cuoc_song_cua_ban.schedule',
       instructor: 'program_detail.courses.cuoc_song_cua_ban.instructor',
       sessions: 'program_detail.courses.cuoc_song_cua_ban.sessions',
       location: 'program_detail.courses.cuoc_song_cua_ban.location',
