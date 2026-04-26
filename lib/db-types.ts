@@ -45,6 +45,11 @@ export interface Database {
                 Insert: PaymentHistoryInsert;
                 Update: PaymentHistoryUpdate;
             };
+            referral_codes: {
+                Row: ReferralRow;
+                Insert: ReferralInsert;
+                Update: ReferralUpdate;
+            };
         };
         Views: Record<string, never>;
         Functions: Record<string, never>;
@@ -77,6 +82,7 @@ export interface OrderRow {
     receipt_id: number | null;
     coupon_code: string | null;
     course_name: string | null;
+    referral_code: string | null;
 }
 
 export interface OrderInsert {
@@ -100,6 +106,7 @@ export interface OrderInsert {
     receipt_id?: number | null;
     coupon_code?: string | null;
     course_name?: string | null;
+    referral_code?: string | null;
 }
 
 export interface OrderUpdate {
@@ -121,6 +128,7 @@ export interface OrderUpdate {
     receipt_id?: number | null;
     coupon_code?: string | null;
     course_name?: string | null;
+    referral_code?: string | null;
 }
 
 // =====================================================
@@ -328,6 +336,54 @@ export interface PaymentHistoryUpdate {
     message?: string | null;
     rsp_code?: string | null;
     params?: string | null;
+}
+
+// =====================================================
+// REFERRAL_CODES TABLE
+// =====================================================
+export interface ReferralRow {
+    id: number;
+    created_at: string;
+    alumni_name: string;
+    alumni_email: string;
+    alumni_phone: string;
+    alumni_user_tele: string;
+    alumni_birth_date: string;
+    alumni_gender: string;
+    previous_course: string;
+    referral_code: string;
+    status: string | null;
+    new_student_order_id: number | null;
+    new_student_name: string | null;
+}
+
+export interface ReferralInsert {
+    created_at?: string;
+    alumni_name: string;
+    alumni_email: string;
+    alumni_phone: string;
+    alumni_user_tele: string;
+    alumni_birth_date: string;
+    alumni_gender: string;
+    previous_course: string;
+    referral_code: string;
+    status?: string | null;
+    new_student_order_id?: number | null;
+    new_student_name?: string | null;
+}
+
+export interface ReferralUpdate {
+    alumni_name?: string;
+    alumni_email?: string;
+    alumni_phone?: string;
+    alumni_user_tele?: string;
+    alumni_birth_date?: string;
+    alumni_gender?: string;
+    previous_course?: string;
+    referral_code?: string;
+    status?: string | null;
+    new_student_order_id?: number | null;
+    new_student_name?: string | null;
 }
 
 // =====================================================

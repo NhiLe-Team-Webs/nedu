@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { appendToSheet } from '@/lib/google-sheets';
 import { SEPAY_ACCOUNTS } from '@/lib/sepay-config';
 import { OrderStore } from '@/lib/order-store';
+import { isSupabaseConfigured } from '@/lib/db';
+import { OrderRepository, TransactionRepository } from '@/lib/repositories';
 
 export async function POST(request: Request) {
     try {
@@ -13,20 +15,7 @@ export async function POST(request: Request) {
         }
 
         // Generate specific Order Code
-        // Format: TT30N + Random 4 digits to keep it short for transfer content
-        const randomSuffix = Math.floor(1000 + Math.random() * 9000);
-        // Using phone last 4 digits is also good for admin to search, but let's use a random suffix to avoid duplicates if they register twice.
-        // Or maybe TT + Phone number.
-        // User wants admin to track easily. 
-        // Let's use: TT30N + Phone number (last 6 digits?) or just full phone if it fits.
-        // Bank transfer content usually limited. 
-        // Let's stick to a generated code: T30 + Random(6 chars).
-
-        // Better: "TT30N" + phone number is easy to link. 
-        // But if they have multiple payments?
-        // Let's use a unique string ID. 
         const orderCode = `TT30N${Math.floor(Date.now() % 1000000)}`;
-
         let amount = 396000;
 
         // ⚠️ TEST MODE: Override amount for payment testing
@@ -36,10 +25,50 @@ export async function POST(request: Request) {
             amount = testAmount;
         }
 
-        const description = `${orderCode} ${phone}`;
-        // Description length limited, keep it short. Sepay matches regex usually.
+        // 1. Save to Supabase (Database)
+        let dbOrderId: number | null = null;
+        let dbTransactionId: number | null = null;
 
-        // 1. Save to Google Sheet
+        if (isSupabaseConfigured()) {
+            try {
+                console.log('[RegisterChallenge] Saving to Supabase...');
+                const order = await OrderRepository.create({
+                    fullName: name,
+                    email,
+                    phone,
+                    telegram,
+                    birthday: dob,
+                    gender,
+                    address,
+                    note,
+                    program: 'Thử Thách 30 Ngày Thay Đổi Bản Thân',
+                    price: amount,
+                    courseName: 'Thử Thách 30 Ngày Thay Đổi Bản Thân',
+                    orderCode: orderCode, // Pass the generated code
+                    programData: {
+                        programId: 'challenge-30-days'
+                    }
+                });
+                dbOrderId = order.id;
+
+                const transaction = await TransactionRepository.create({
+                    orderId: order.id,
+                    orderCode: orderCode,
+                    amount,
+                    gateway: 'sepay'
+                });
+                dbTransactionId = transaction.id;
+
+                // Link transaction to order
+                await OrderRepository.setTransactionId(order.id, transaction.id);
+                console.log(`[RegisterChallenge] Supabase save success: orderId=${dbOrderId}, transactionId=${dbTransactionId}`);
+            } catch (dbError) {
+                console.error('[RegisterChallenge] Supabase error:', dbError);
+                // Continue with Sheet backup if DB fails
+            }
+        }
+
+        // 2. Save to Google Sheet (Backup)
         try {
             console.log('[RegisterChallenge] Calling appendToSheet with payload:', {
                 orderCode,
@@ -60,23 +89,22 @@ export async function POST(request: Request) {
                 address,
                 note,
                 courseName: 'Thử Thách 30 Ngày Thay Đổi Bản Thân',
-                couponCode: '', // No coupon for this form yet
+                couponCode: '',
                 amount,
                 orderCode,
-                status: 'Chờ thanh toán', // Pending Payment
+                status: 'Chờ thanh toán',
             });
 
             console.log(`[RegisterChallenge] appendToSheet success for orderCode=${orderCode}`);
         } catch (sheetError) {
             console.error(`[RegisterChallenge] appendToSheet failed for orderCode=${orderCode}:`, sheetError);
-            // We might still want to return success so they can pay, but admin won't see it on sheet.
-            // Better error out or alert admin? 
-            // For now, allow flow to continue but log payload? 
-            // No, user requirement is "save to sheet". If that fails, we should tell them.
-            return NextResponse.json({ error: 'System error: Could not save registration. Please try again later.' }, { status: 500 });
+            // If both DB and Sheet fail, return error
+            if (!dbOrderId) {
+                return NextResponse.json({ error: 'System error: Could not save registration. Please try again later.' }, { status: 500 });
+            }
         }
 
-        // 2. Save to OrderStore (for ephemeral status checking)
+        // 3. Save to OrderStore (for ephemeral status checking)
         OrderStore.set(orderCode, {
             orderCode,
             amount,
@@ -86,12 +114,14 @@ export async function POST(request: Request) {
                 fullName: name,
                 email,
                 phone,
-                telegram: telegram || '' // Now collected
+                telegram: telegram || ''
             },
-            programId: 'challenge-30-days'
+            programId: 'challenge-30-days',
+            dbOrderId,
+            dbTransactionId
         });
 
-        // 3. Generate QR Url - All courses now use BUSINESS account (ACB)
+        // 4. Generate QR Url - All courses now use BUSINESS account (ACB)
         const account = SEPAY_ACCOUNTS.BUSINESS;
         const qrUrl = `https://qr.sepay.vn/img?acc=${account.ACCOUNT_NUMBER}&bank=${account.BANK_CODE}&amount=${amount}&des=${orderCode}`;
 
@@ -102,7 +132,9 @@ export async function POST(request: Request) {
             amount,
             accountNumber: account.ACCOUNT_NUMBER,
             bankCode: account.BANK_CODE,
-            accountName: account.ACCOUNT_NAME
+            accountName: account.ACCOUNT_NAME,
+            orderId: dbOrderId,
+            transactionId: dbTransactionId
         });
 
     } catch (error) {
