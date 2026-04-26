@@ -18,6 +18,8 @@ export interface Order {
     programId?: string;
     programIds?: string[];
     transactionId?: string;
+    dbOrderId?: number | null;
+    dbTransactionId?: number | null;
     transferAmount?: number;
     transactionDate?: string;
     gateway?: string;

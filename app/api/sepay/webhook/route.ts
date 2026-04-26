@@ -16,7 +16,8 @@ import {
   OrderRepository,
   TransactionRepository,
   ReceiptRepository,
-  WebhookLogRepository
+  WebhookLogRepository,
+  ReferralRepository
 } from '@/lib/repositories';
 import { OrderStatus, TransactionStatus } from '@/lib/db-types';
 
@@ -182,6 +183,19 @@ export async function POST(request: NextRequest) {
             try {
               const order = await OrderRepository.getById(transaction.order_id);
               if (order) {
+                // If there's a referral code, mark it as success and link to this order
+                if (order.referral_code) {
+                  try {
+                    await ReferralRepository.updateStatus(order.referral_code, 'success', order.id, order.full_name || undefined);
+                    // Sync to Google Sheet
+                    const { updateReferralInSheet } = await import('@/lib/google-sheet-referral-service');
+                    await updateReferralInSheet(order.referral_code, 'success', order.id, order.full_name || undefined);
+                    console.log(`[Webhook] Referral code ${order.referral_code} updated to success for order ${order.id}`);
+                  } catch (referralError) {
+                    console.error('Error updating referral status:', referralError);
+                  }
+                }
+
                 // Check if receipt already exists
                 const existingReceipt = await ReceiptRepository.getByOrderId(order.id);
                 if (!existingReceipt) {

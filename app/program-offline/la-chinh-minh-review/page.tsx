@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { BedDouble, Utensils, Info, CheckCircle, ShoppingBagIcon } from "lucide-react";
+import { BedDouble, Utensils, Info, CheckCircle, ShoppingBagIcon, Gift } from "lucide-react";
 import CourseHeader from "@/components/CourseHeader";
 import CourseInfo from "@/components/CourseInfo";
 import Organizers from "@/components/Organizers";
 import OfferPopup from "@/components/OfferPopup";
 import GiftButton from "@/components/GiftButton";
+import ReferralModal from "@/components/ReferralModal";
 import { getCourseBySlug } from "@/data/courses";
 import { useLanguage } from "@/lib/LanguageContext";
 import { cn } from "@/lib/utils";
@@ -22,6 +23,7 @@ export default function LaChinhMinhReviewPage() {
     const [isOfferPopupOpen, setIsOfferPopupOpen] = useState(false);
     const { addToCart, setShowSuccessPopup } = useCart();
     const [justAdded, setJustAdded] = useState(false);
+    const [isReferralModalOpen, setIsReferralModalOpen] = useState(false);
 
     const handleAddToCart = () => {
         if (course) {
@@ -73,6 +75,15 @@ export default function LaChinhMinhReviewPage() {
                 cost={course?.price.amount || "68.690.000"}
                 paymentLink="/payment/57"
                 courseSlug="la-chinh-minh-review"
+                secondaryAction={
+                    <button
+                        onClick={() => setIsReferralModalOpen(true)}
+                        className="inline-flex items-center justify-center px-6 py-3 rounded-ios-btn font-bold text-sm sm:text-base lg:text-lg border-2 border-yellow-500 text-yellow-500 hover:bg-yellow-50 transition-all duration-300 shadow-ios-sm"
+                    >
+                        <Gift className="mr-2 w-5 h-5" />
+                        Mã Giới Thiệu
+                    </button>
+                }
             />
 
             <div className="ios-safe-padding-bottom">
@@ -206,6 +217,10 @@ export default function LaChinhMinhReviewPage() {
                         router.push('/checkout');
                     }
                 }}
+            />
+            <ReferralModal 
+                isOpen={isReferralModalOpen}
+                onClose={() => setIsReferralModalOpen(false)}
             />
         </div>
     );

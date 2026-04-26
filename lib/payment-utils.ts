@@ -34,6 +34,7 @@ export interface SePayPaymentFormData {
   amount: number;
   courseName?: string;
   couponCode?: string;
+  referralCode?: string;
 }
 
 export const currencyFormatter = new Intl.NumberFormat('vi-VN', {
@@ -235,7 +236,8 @@ export function prepareSePayPaymentData(
   programId?: string,
   programIds?: string[],
   courseName?: string,
-  couponCode?: string
+  couponCode?: string,
+  referralCode?: string
 ): SePayPaymentFormData {
   const formattedBirthday = formatBirthdayToDateOnly(formData.birthdate);
 
@@ -251,7 +253,8 @@ export function prepareSePayPaymentData(
     previousCourse: formData.previousCourse || undefined,
     amount: amount,
     courseName: courseName,
-    couponCode: couponCode
+    couponCode: couponCode,
+    referralCode: referralCode
   };
 
   if (programIds && programIds.length > 0) {

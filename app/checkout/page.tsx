@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Tag, ShoppingCart, Minus, Plus, Trash2 } from 'lucide-react';
+import { ArrowLeft, Tag, ShoppingCart, Minus, Plus, Trash2, UserPlus } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
 import { courses } from '@/data/courses';
 import { useRouter } from 'next/navigation';
@@ -33,6 +33,7 @@ export default function CheckoutPage() {
     previousCourse: ''
   });
   const [discountCode, setDiscountCode] = useState('');
+  const [referralCode, setReferralCode] = useState('');
   const [discount, setDiscount] = useState(0);
   const [discountType, setDiscountType] = useState<'percentage' | 'fixed'>('percentage');
   const [agreed, setAgreed] = useState(false);
@@ -253,7 +254,8 @@ export default function CheckoutPage() {
         undefined, // No single programId for checkout
         programIds, // Use programIds for multiple courses
         courseName,
-        appliedCouponCode
+        appliedCouponCode,
+        referralCode
       );
 
       console.log('Sending SePay payment request:', sepayData);
@@ -899,6 +901,26 @@ export default function CheckoutPage() {
                     <h2 className="text-lg sm:text-xl font-bold mb-6 text-text-primary border-b pb-4">
                       {t("cart.summary_title")}
                     </h2>
+
+                    {items.some(item => item.slug === 'la-chinh-minh') && (
+                      <div className="mb-6">
+                        <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base">
+                          Mã giới thiệu (Nếu có)
+                        </label>
+                        <div className="flex gap-2">
+                          <div className="flex-1 relative">
+                            <input
+                              type="text"
+                              value={referralCode}
+                              onChange={(e) => setReferralCode(e.target.value)}
+                              placeholder="Nhập mã giới thiệu"
+                              className="w-full bg-gray-50 border border-gray-200 rounded-ios-md px-4 py-2 h-[44px] focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm font-medium uppercase placeholder:normal-case ios-haptic-active"
+                            />
+                            <UserPlus className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                          </div>
+                        </div>
+                      </div>
+                    )}
 
                     <div className="mb-6">
                       <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base">

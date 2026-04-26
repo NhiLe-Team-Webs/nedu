@@ -110,6 +110,7 @@ export async function POST(request: NextRequest) {
           price: body.amount,
           courseName: body.courseName,
           couponCode: body.couponCode,
+          referralCode: body.referralCode,
           programData: {
             programIds: body.programIds,
             orderCode: orderCode,
@@ -315,6 +316,19 @@ export async function GET(request: NextRequest) {
           const transaction = await TransactionRepository.getByOrderCode(orderCode);
           if (transaction) {
             await OrderRepository.updateStatus(transaction.order_id, OrderStatus.COMPLETED);
+            
+            // Try to update referral code if present
+            const dbOrder = await OrderRepository.getById(transaction.order_id);
+            if (dbOrder && dbOrder.referral_code) {
+               try {
+                 const { ReferralRepository } = await import('@/lib/repositories');
+                 await ReferralRepository.updateStatus(dbOrder.referral_code, 'success', dbOrder.id, dbOrder.full_name || undefined);
+                 const { updateReferralInSheet } = await import('@/lib/google-sheet-referral-service');
+                 await updateReferralInSheet(dbOrder.referral_code, 'success', dbOrder.id, dbOrder.full_name || undefined);
+               } catch (err) {
+                 console.error('Error simulating referral success:', err);
+               }
+            }
           }
         } catch (dbError) {
           console.error('Database update error:', dbError);
@@ -379,6 +393,21 @@ export async function PATCH(request: NextRequest) {
         const transaction = await TransactionRepository.getByOrderCode(orderCode);
         if (transaction) {
           await OrderRepository.updateStatus(transaction.order_id, orderStatusMap[status] || OrderStatus.PENDING);
+          
+          if (status === 'success') {
+            // Try to update referral code if present
+            const dbOrder = await OrderRepository.getById(transaction.order_id);
+            if (dbOrder && dbOrder.referral_code) {
+               try {
+                 const { ReferralRepository } = await import('@/lib/repositories');
+                 await ReferralRepository.updateStatus(dbOrder.referral_code, 'success', dbOrder.id, dbOrder.full_name || undefined);
+                 const { updateReferralInSheet: updateReferralSheet } = await import('@/lib/google-sheet-referral-service');
+                 await updateReferralSheet(dbOrder.referral_code, 'success', dbOrder.id, dbOrder.full_name || undefined);
+               } catch (err) {
+                 console.error('Error simulating referral success via PATCH:', err);
+               }
+            }
+          }
         }
       } catch (dbError) {
         console.error('Database update error:', dbError);
