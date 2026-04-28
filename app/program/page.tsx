@@ -75,8 +75,26 @@ const CourseCardSkeleton = () => (
   </div>
 );
 
+const orderedSlugs = [
+  "la-chinh-minh",
+  "la-chinh-minh-review",
+  "thu-thach-30-ngay",
+  "cuoc-song-cua-ban",
+  "thuong-hieu-cua-ban",
+  "suc-manh-vo-han"
+];
+
+const sortedCoursesData = [...coursesData].sort((a, b) => {
+  const indexA = orderedSlugs.indexOf(a.slug);
+  const indexB = orderedSlugs.indexOf(b.slug);
+  if (indexA === -1 && indexB === -1) return 0;
+  if (indexA === -1) return 1;
+  if (indexB === -1) return -1;
+  return indexA - indexB;
+});
+
 export default function ProgramPage() {
-  const [courses, setCourses] = useState(coursesData);
+  const [courses, setCourses] = useState(sortedCoursesData);
   const [filter, setFilter] = useState("all");
   const router = useRouter();
   const { t } = useLanguage();

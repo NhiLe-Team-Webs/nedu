@@ -164,12 +164,12 @@ export default function LaChinhMinhReviewPage() {
                             </div>
                         </div>
 
-                        {/* Nút Thêm vào giỏ hàng */}
-                        <div className="flex justify-center mt-8">
+                        {/* Các nút hành động */}
+                        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
                             <button
                                 onClick={handleAddToCart}
                                 disabled={justAdded}
-                                className={`inline-flex items-center justify-center px-8 py-4 rounded-ios-btn font-extrabold text-lg transition-all duration-300 ease-out shadow-ios-md hover:shadow-ios-lg ${justAdded
+                                className={`inline-flex items-center justify-center px-8 py-4 rounded-ios-btn font-extrabold text-lg transition-all duration-300 ease-out shadow-ios-md hover:shadow-ios-lg w-full sm:w-auto ${justAdded
                                     ? 'bg-transparent border-2 border-green-500 text-green-500 cursor-default'
                                     : 'bg-yellow-500 hover:bg-yellow-600 text-white ios-haptic-active'
                                     }`}
@@ -185,6 +185,14 @@ export default function LaChinhMinhReviewPage() {
                                         <ShoppingBagIcon className="ml-2 w-6 h-6" />
                                     </>
                                 )}
+                            </button>
+
+                            <button
+                                onClick={() => setIsReferralModalOpen(true)}
+                                className="inline-flex items-center justify-center px-8 py-4 rounded-ios-btn font-extrabold text-lg border-2 border-yellow-500 text-yellow-500 hover:bg-yellow-50 transition-all duration-300 shadow-ios-sm w-full sm:w-auto"
+                            >
+                                <Gift className="mr-2 w-6 h-6" />
+                                Mã Giới Thiệu
                             </button>
                         </div>
 
