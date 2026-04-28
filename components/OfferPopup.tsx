@@ -52,7 +52,7 @@ export default function OfferPopup({ isOpen, onClose, onAccept }: OfferPopupProp
         </div>
 
         {/* Nửa Phải: Nội dung Text và Nút */}
-        <div className="w-full md:w-[50%] p-4 sm:p-6 flex flex-col justify-center text-center h-full relative z-10 bg-white gap-4 sm:gap-6">
+        <div className="w-full md:w-[50%] p-4 sm:p-8 md:pt-16 md:pb-12 flex flex-col justify-center text-center h-full relative z-10 bg-white gap-4 sm:gap-6">
           {/* Thanh viền màu vàng bên cạnh phải */}
           <div className="hidden md:block absolute top-1/2 -translate-y-1/2 right-0 w-2 h-1/3 bg-[#f5b716] rounded-l-md z-20"></div>
 
