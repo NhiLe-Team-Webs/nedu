@@ -18,6 +18,7 @@ export interface SePayPaymentRequest {
   returnUrl?: string;
   courseName?: string; // Optional: specific course name if known
   couponCode?: string; // Optional: discount code used
+  referralCode?: string; // Optional: referral code used
 }
 
 export interface SePayPaymentResponse {
