@@ -35,6 +35,10 @@ export interface SePayPaymentFormData {
   courseName?: string;
   couponCode?: string;
   referralCode?: string;
+  companyName?: string;
+  taxCode?: string;
+  companyAddress?: string;
+  companyEmail?: string;
 }
 
 export const currencyFormatter = new Intl.NumberFormat('vi-VN', {
@@ -237,7 +241,13 @@ export function prepareSePayPaymentData(
   programIds?: string[],
   courseName?: string,
   couponCode?: string,
-  referralCode?: string
+  referralCode?: string,
+  vatData?: {
+    companyName: string;
+    taxCode: string;
+    companyAddress: string;
+    companyEmail: string;
+  }
 ): SePayPaymentFormData {
   const formattedBirthday = formatBirthdayToDateOnly(formData.birthdate);
 
@@ -254,7 +264,11 @@ export function prepareSePayPaymentData(
     amount: amount,
     courseName: courseName,
     couponCode: couponCode,
-    referralCode: referralCode
+    referralCode: referralCode,
+    companyName: vatData?.companyName,
+    taxCode: vatData?.taxCode,
+    companyAddress: vatData?.companyAddress,
+    companyEmail: vatData?.companyEmail
   };
 
   if (programIds && programIds.length > 0) {

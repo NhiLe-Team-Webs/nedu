@@ -255,7 +255,8 @@ export default function CheckoutPage() {
         programIds, // Use programIds for multiple courses
         courseName,
         appliedCouponCode,
-        referralCode
+        referralCode,
+        wantVatInvoice ? vatData : undefined
       );
 
       console.log('Sending SePay payment request:', sepayData);

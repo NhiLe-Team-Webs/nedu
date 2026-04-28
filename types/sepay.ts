@@ -19,6 +19,10 @@ export interface SePayPaymentRequest {
   courseName?: string; // Optional: specific course name if known
   couponCode?: string; // Optional: discount code used
   referralCode?: string; // Optional: referral code used
+  companyName?: string; // Optional: VAT company name
+  taxCode?: string; // Optional: VAT tax code
+  companyAddress?: string; // Optional: VAT company address
+  companyEmail?: string; // Optional: VAT company email
 }
 
 export interface SePayPaymentResponse {
