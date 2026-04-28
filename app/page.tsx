@@ -77,11 +77,11 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section with Google Drive Video */}
-      <section className="bg-white pt-0 pb-8 md:pb-0">
+      <section className="bg-white pt-2 md:pt-3 pb-8 md:pb-0">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="w-full">
+          <div className="w-full max-w-[95%] md:max-w-5xl lg:max-w-6xl mx-auto">
             {/* Mobile: Taller aspect ratio + iOS styling */}
-            <div className="relative pb-[75%] md:pb-[56.25%] h-0 overflow-hidden rounded-[24px] md:rounded-lg shadow-ios-md md:shadow-none transition-all duration-300">
+            <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-[24px] md:rounded-2xl shadow-ios-md transition-all duration-300">
               <div className="absolute top-0 left-0 w-full h-full">
                 <iframe
                   src="https://www.youtube.com/embed/7QJKkxXCpGY?autoplay=1&mute=1&loop=1&playlist=oWAvYRk_uH0&controls=1&playsinline=1&rel=0"
