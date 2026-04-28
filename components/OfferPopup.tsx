@@ -30,15 +30,15 @@ export default function OfferPopup({ isOpen, onClose, onAccept }: OfferPopupProp
     >
       {/* Main Modal Container */}
       <div
-        className="bg-white w-full max-w-[900px] max-h-[90vh] rounded-[24px] shadow-2xl relative flex flex-col md:flex-row overflow-y-auto md:overflow-hidden transform transition-transform duration-300"
+        className="bg-white w-[88%] sm:w-full max-w-[900px] max-h-[85vh] sm:max-h-[90vh] rounded-[24px] shadow-2xl relative flex flex-col md:flex-row overflow-hidden transform transition-transform duration-300 mx-auto"
         onClick={(e) => e.stopPropagation()} // Prevent clicks inside modal from closing it
       >
         {/* Nút Đóng */}
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 sm:top-4 sm:right-4 text-gray-500 hover:text-gray-800 bg-gray-100 hover:bg-gray-200 rounded-full w-8 h-8 flex items-center justify-center z-20 transition-colors shadow-sm"
+          className="absolute top-0 right-0 text-black z-20 transition-colors p-2"
         >
-          <X className="w-4 h-4" strokeWidth={3} />
+          <X className="w-5 h-5" strokeWidth={2.5} />
         </button>
 
         {/* Nửa Trái: Phần Ảnh Cover */}
@@ -52,7 +52,7 @@ export default function OfferPopup({ isOpen, onClose, onAccept }: OfferPopupProp
         </div>
 
         {/* Nửa Phải: Nội dung Text và Nút */}
-        <div className="w-full md:w-[50%] p-6 sm:p-10 flex flex-col justify-center text-center h-full relative z-10 bg-white gap-6 sm:gap-8">
+        <div className="w-full md:w-[50%] p-4 sm:p-6 flex flex-col justify-center text-center h-full relative z-10 bg-white gap-4 sm:gap-6">
           {/* Thanh viền màu vàng bên cạnh phải */}
           <div className="hidden md:block absolute top-1/2 -translate-y-1/2 right-0 w-2 h-1/3 bg-[#f5b716] rounded-l-md z-20"></div>
 
@@ -64,7 +64,7 @@ export default function OfferPopup({ isOpen, onClose, onAccept }: OfferPopupProp
 
           <div className="flex flex-col gap-2">
             {/* Tiêu đề */}
-            <h2 className="text-[22px] sm:text-[28px] font-black text-[#1e293b] leading-tight uppercase tracking-tight m-0">
+            <h2 className="text-[20px] sm:text-[28px] font-black text-[#1e293b] leading-tight uppercase tracking-tight m-0">
               TẶNG CÔNG THỨC<br />
               <span className="text-[#f5b716]">KIẾM TIỀN</span>
             </h2>
@@ -82,13 +82,10 @@ export default function OfferPopup({ isOpen, onClose, onAccept }: OfferPopupProp
                 onAccept();
                 onClose();
               }}
-              className="bg-[#ef4444] hover:bg-red-600 text-white font-bold py-3.5 px-6 rounded-xl w-full text-[15px] transition-all shadow-[0_8px_20px_rgba(239,68,68,0.3)] hover:-translate-y-0.5 flex items-center justify-center gap-2"
+              className="bg-[#ef4444] hover:bg-red-600 text-white font-bold py-3 px-6 sm:py-3.5 rounded-xl w-full text-[14px] sm:text-[15px] transition-all shadow-[0_8px_20px_rgba(239,68,68,0.3)] hover:-translate-y-0.5 flex items-center justify-center gap-2"
             >
               NHẬN ƯU ĐÃI NGAY <ArrowRight className="w-4 h-4" strokeWidth={3} />
             </button>
-
-            {/* Ghi chú phụ */}
-            <p className="text-[12px] text-gray-400 mt-4 font-medium">* Ưu đãi sẽ tự động áp dụng tại giỏ hàng</p>
           </div>
         </div>
       </div>
