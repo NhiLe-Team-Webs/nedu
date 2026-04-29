@@ -28,11 +28,17 @@ export interface SePayPaymentFormData {
   gender: string;
   address?: string;
   note?: string;
+  previousCourse?: string;
   programId?: string;
   programIds?: string[];
   amount: number;
   courseName?: string;
   couponCode?: string;
+  referralCode?: string;
+  companyName?: string;
+  taxCode?: string;
+  companyAddress?: string;
+  companyEmail?: string;
 }
 
 export const currencyFormatter = new Intl.NumberFormat('vi-VN', {
@@ -234,7 +240,14 @@ export function prepareSePayPaymentData(
   programId?: string,
   programIds?: string[],
   courseName?: string,
-  couponCode?: string
+  couponCode?: string,
+  referralCode?: string,
+  vatData?: {
+    companyName: string;
+    taxCode: string;
+    companyAddress: string;
+    companyEmail: string;
+  }
 ): SePayPaymentFormData {
   const formattedBirthday = formatBirthdayToDateOnly(formData.birthdate);
 
@@ -247,9 +260,15 @@ export function prepareSePayPaymentData(
     gender: formData.gender,
     address: formData.address || undefined,
     note: formData.note || undefined,
+    previousCourse: formData.previousCourse || undefined,
     amount: amount,
     courseName: courseName,
-    couponCode: couponCode
+    couponCode: couponCode,
+    referralCode: referralCode,
+    companyName: vatData?.companyName,
+    taxCode: vatData?.taxCode,
+    companyAddress: vatData?.companyAddress,
+    companyEmail: vatData?.companyEmail
   };
 
   if (programIds && programIds.length > 0) {

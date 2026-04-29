@@ -75,8 +75,26 @@ const CourseCardSkeleton = () => (
   </div>
 );
 
+const orderedSlugs = [
+  "la-chinh-minh",
+  "la-chinh-minh-review",
+  "thu-thach-30-ngay",
+  "cuoc-song-cua-ban",
+  "thuong-hieu-cua-ban",
+  "suc-manh-vo-han"
+];
+
+const sortedCoursesData = [...coursesData].sort((a, b) => {
+  const indexA = orderedSlugs.indexOf(a.slug);
+  const indexB = orderedSlugs.indexOf(b.slug);
+  if (indexA === -1 && indexB === -1) return 0;
+  if (indexA === -1) return 1;
+  if (indexB === -1) return -1;
+  return indexA - indexB;
+});
+
 export default function ProgramPage() {
-  const [courses, setCourses] = useState(coursesData);
+  const [courses, setCourses] = useState(sortedCoursesData);
   const [filter, setFilter] = useState("all");
   const router = useRouter();
   const { t } = useLanguage();
@@ -301,73 +319,74 @@ export default function ProgramPage() {
                   const actionState = getCourseActionState(course.slug);
 
                   return (
-                  <motion.div
-                    key={course.id}
-                    variants={cardVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="hidden"
-                    data-course-card="true"
-                    className="w-[270px] md:w-[420px] flex-shrink-0 snap-center flex flex-col justify-between"
-                  >
-                    <Link
-                      href={`/program-${course.mode}/${course.slug}`}
-                      className="group block w-full relative aspect-video overflow-hidden transition-transform duration-300 ease-in-out hover:scale-[1.02]"
+                    <motion.div
+                      key={course.id}
+                      variants={cardVariants}
+                      initial="hidden"
+                      animate="visible"
+                      exit="hidden"
+                      data-course-card="true"
+                      className="w-[270px] md:w-[420px] flex-shrink-0 snap-center flex flex-col justify-between"
                     >
-                      <img
-                        alt={t(course.title)}
-                        src={course.heroImage}
-                        className={`w-full h-full object-cover rounded-[30px] ${course.slug === 'thu-thach-30-ngay' ? 'object-top' : ''}`}
-                      />
-                    </Link>
-                    <div className="flex flex-col items-center text-center w-full max-w-full pb-10 flex-grow">
-                      <div className="flex gap-2 mt-4 h-5 items-center">
-                        <p className="text-orange-600 font-medium text-xs m-0 text-center w-full">
-                          {t(course.info.topic)}
+                      <Link
+                        href={`/program-${course.mode}/${course.slug}`}
+                        className="group block w-full relative aspect-video overflow-hidden transition-transform duration-300 ease-in-out hover:scale-[1.02]"
+                      >
+                        <img
+                          alt={t(course.title)}
+                          src={course.heroImage}
+                          className={`w-full h-full object-cover rounded-[30px] ${course.slug === 'thu-thach-30-ngay' ? 'object-top' : ''}`}
+                        />
+                      </Link>
+                      <div className="flex flex-col items-center text-center w-full max-w-full pb-10 flex-grow">
+                        <div className="flex gap-2 mt-4 h-5 items-center">
+                          <p className="text-orange-600 font-medium text-xs m-0 text-center w-full">
+                            {t(course.info.topic)}
+                          </p>
+                        </div>
+                        <h3 className="text-2xl font-semibold text-gray-900 mb-0 leading-tight flex flex-col justify-center h-16">
+                          <span className="block">{t(course.title)}</span>
+                        </h3>
+                        <div className="text-gray-500 text-sm max-w-[90%] mx-auto mb-4 min-h-[40px]">
+                          <span className="block">{t(course.mission).substring(0, 80)}...</span>
+                        </div>
+                        <p className="text-base font-medium mb-4">
+                          {course.price.currency === 'VNĐ'
+                            ? `${parseInt(course.price.amount.replace(/[.,]/g, '')).toLocaleString('vi-VN')}\u00A0₫`
+                            : `${course.price.currency} ${course.price.amount}`
+                          }
                         </p>
-                      </div>
-                      <h3 className="text-2xl font-semibold text-gray-900 mb-0 leading-tight flex flex-col justify-center h-16">
-                        <span className="block">{t(course.title)}</span>
-                      </h3>
-                      <div className="text-gray-500 text-sm max-w-[90%] mx-auto mb-4 min-h-[40px]">
-                        <span className="block">{t(course.mission).substring(0, 80)}...</span>
-                      </div>
-                      <p className="text-base font-medium mb-4">
-                        {course.price.currency === 'VNĐ'
-                          ? `${parseInt(course.price.amount.replace(/[.,]/g, '')).toLocaleString('vi-VN')}\u00A0₫`
-                          : `${course.price.currency} ${course.price.amount}`
-                        }
-                      </p>
-                      <div className="flex flex-col items-center justify-center gap-3 mt-auto w-full px-2">
-                        <div className="flex items-center justify-center gap-2 w-full">
-                          <button
-                            onClick={() => handleAddToCart(course)}
-                            title={actionState.label}
-                            aria-disabled={actionState.isDisabled}
-                            disabled={actionState.isDisabled}
-                            className="h-10 inline-flex items-center justify-center gap-2 rounded-lg bg-[#ffeeee] text-[#d0011b] border border-[#d0011b] transition-all hover:bg-[#ffdada] active:scale-95 px-3 w-fit disabled:pointer-events-none disabled:cursor-not-allowed disabled:border-gray-300 disabled:bg-gray-100 disabled:text-gray-400 disabled:hover:bg-gray-100 disabled:active:scale-100"
-                          >
-                            <ShoppingCart className="w-4 h-4 flex-shrink-0" />
-                            <span className="font-bold text-xs sm:text-sm whitespace-nowrap">
-                              {actionState.label}
-                            </span>
-                          </button>
-                          <button
-                            onClick={() => {
-                              buyNow(course);
-                              router.push("/checkout");
-                            }}
-                            aria-disabled={actionState.isDisabled}
-                            disabled={actionState.isDisabled}
-                            className="inline-flex items-center justify-center h-10 rounded-lg bg-[#d0011b] text-white transition-all hover:bg-[#b00118] active:scale-95 shadow-md font-bold text-sm px-3 w-fit disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500 disabled:hover:bg-gray-300 disabled:active:scale-100"
-                          >
-                            {actionState.secondaryLabel}
-                          </button>
+                        <div className="flex flex-col items-center justify-center gap-3 mt-auto w-full px-2">
+                          <div className="flex items-center justify-center gap-2 w-full">
+                            <button
+                              onClick={() => handleAddToCart(course)}
+                              title={actionState.label}
+                              aria-disabled={actionState.isDisabled}
+                              disabled={actionState.isDisabled}
+                              className="h-10 inline-flex items-center justify-center gap-2 rounded-lg bg-[#ffeeee] text-[#d0011b] border border-[#d0011b] transition-all hover:bg-[#ffdada] active:scale-95 px-3 w-fit disabled:pointer-events-none disabled:cursor-not-allowed disabled:border-gray-300 disabled:bg-gray-100 disabled:text-gray-400 disabled:hover:bg-gray-100 disabled:active:scale-100"
+                            >
+                              <ShoppingCart className="w-4 h-4 flex-shrink-0" />
+                              <span className="font-bold text-xs sm:text-sm whitespace-nowrap">
+                                {actionState.label}
+                              </span>
+                            </button>
+                            <button
+                              onClick={() => {
+                                buyNow(course);
+                                router.push("/checkout");
+                              }}
+                              aria-disabled={actionState.isDisabled}
+                              disabled={actionState.isDisabled}
+                              className="inline-flex items-center justify-center h-10 rounded-lg bg-[#d0011b] text-white transition-all hover:bg-[#b00118] active:scale-95 shadow-md font-bold text-sm px-3 w-fit disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500 disabled:hover:bg-gray-300 disabled:active:scale-100"
+                            >
+                              {actionState.secondaryLabel}
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </motion.div>
-                )})}
+                    </motion.div>
+                  )
+                })}
             </div>
           </div>
           <div className="container max-w-7xl mx-auto px-4 mt-4 flex justify-end gap-2">

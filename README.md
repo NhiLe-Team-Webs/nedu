@@ -1,4 +1,4 @@
-# N-EDU Web App
+# N-EDU Web App/
 
 Website giới thiệu chương trình học và hỗ trợ thanh toán trực tuyến cho N-EDU, được xây dựng bằng **Next.js + TypeScript**.
 

@@ -52,24 +52,24 @@ const Footer = () => {
                 />
               </div>
             </div>
-            <div className="text-left">
+            {/* <div className="text-left">
               <p className="font-bold text-sm sm:text-base text-white mb-2">{t("footer.company_name")}</p>
               <ul className="text-sm space-y-1 text-gray-400">
                 <li>{t("footer.tax_code")}: 0317268736</li>
                 <li className="break-words">{t("footer.address")}</li>
               </ul>
-            </div>
+            </div> */}
           </div>
         </div>
 
         {/* Lower Footer */}
         <div className="mt-10 pt-6 border-t border-white/10 flex flex-col lg:flex-row justify-between items-center gap-6 text-sm text-gray-500">
           <p className="order-last lg:order-first">© 2024 N-EDU. {t("footer.rights_reserved")}</p>
-          <div className="flex flex-wrap justify-center gap-6">
+          {/* <div className="flex flex-wrap justify-center gap-6">
             <Link href="/guide-payment" className="hover:text-primary transition-colors">{t("footer.payment_guide")}</Link>
             <Link href="/policy" className="hover:text-primary transition-colors">{t("footer.privacy_policy")}</Link>
             <Link href="/terms" className="hover:text-primary transition-colors">{t("footer.terms_of_use")}</Link>
-          </div>
+          </div> */}
         </div>
       </div>
     </footer>

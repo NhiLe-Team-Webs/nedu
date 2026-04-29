@@ -8,7 +8,7 @@ interface CourseInfoProps {
   title: string;
   details: {
     label: string;
-    value: string;
+    value: React.ReactNode;
     icon: keyof typeof Icon; // Ensures compatibility with lucide-react icons
   }[];
   buttonText?: string;
@@ -39,18 +39,20 @@ const CourseInfo: React.FC<CourseInfoProps> = ({
           {title}
         </h1>
         <div className="flex flex-col w-full p-4 sm:p-6 lg:p-10 bg-white shadow-ios-card rounded-ios-xl border-[3px] border-gray-400">
-          <h2 className="mb-4 sm:mb-6 lg:mb-[24px] text-lg sm:text-xl lg:text-[24px] font-bold">THÔNG TIN KHÓA HỌC</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-4 sm:gap-y-6 lg:gap-y-8 gap-x-4">
+          <div className="flex flex-wrap justify-center gap-y-10 sm:gap-y-12 gap-x-6 sm:gap-x-10 lg:gap-x-16">
             {details.map((detail, index) => {
               const IconComponent = Icon[detail.icon] as React.ElementType;
               return (
-                <div key={index} className="flex items-start mb-4 sm:mb-6">
-                  <div className="text-yellow-500 text-lg sm:text-xl mr-3 sm:mr-4">
-                    {IconComponent && <IconComponent />}
+                <div 
+                  key={index} 
+                  className="flex flex-col items-center text-center w-full sm:w-[calc(45%-1rem)] lg:w-[calc(30%-1rem)] min-w-[200px] max-w-[300px]"
+                >
+                  <div className="text-yellow-500 text-3xl mb-4 bg-yellow-50 p-4 rounded-full flex items-center justify-center">
+                    {IconComponent && <IconComponent strokeWidth={2.5} />}
                   </div>
-                  <div>
-                    <p className="text-sm sm:text-base font-normal text-gray-600">{detail.label}</p>
-                    <p className="text-sm sm:text-base font-bold text-gray-900">{detail.value}</p>
+                  <div className="flex flex-col items-center">
+                    <p className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-1.5">{detail.label}</p>
+                    <p className="text-base sm:text-lg font-bold text-gray-900 leading-tight">{detail.value}</p>
                   </div>
                 </div>
               );

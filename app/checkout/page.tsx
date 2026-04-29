@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Tag, ShoppingCart, Minus, Plus, Trash2 } from 'lucide-react';
+import { ArrowLeft, Tag, ShoppingCart, Minus, Plus, Trash2, UserPlus } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
 import { courses } from '@/data/courses';
 import { useRouter } from 'next/navigation';
@@ -29,9 +29,11 @@ export default function CheckoutPage() {
     birthdate: '',
     gender: '',
     address: '',
-    note: ''
+    note: '',
+    previousCourse: ''
   });
   const [discountCode, setDiscountCode] = useState('');
+  const [referralCode, setReferralCode] = useState('');
   const [discount, setDiscount] = useState(0);
   const [discountType, setDiscountType] = useState<'percentage' | 'fixed'>('percentage');
   const [agreed, setAgreed] = useState(false);
@@ -153,6 +155,11 @@ export default function CheckoutPage() {
     if (!formData.birthdate) validationErrors.push('Vui lòng chọn ngày sinh');
     if (!formData.gender) validationErrors.push('Vui lòng chọn giới tính');
 
+    const hasReviewCourse = items.some(item => item.slug === 'la-chinh-minh-review');
+    if (hasReviewCourse && !formData.previousCourse) {
+      validationErrors.push('Vui lòng chọn khóa học bạn quay về');
+    }
+
     if (validationErrors.length > 0) {
       setErrors(validationErrors);
       // Scroll to error display
@@ -247,7 +254,9 @@ export default function CheckoutPage() {
         undefined, // No single programId for checkout
         programIds, // Use programIds for multiple courses
         courseName,
-        appliedCouponCode
+        appliedCouponCode,
+        referralCode,
+        wantVatInvoice ? vatData : undefined
       );
 
       console.log('Sending SePay payment request:', sepayData);
@@ -592,61 +601,97 @@ export default function CheckoutPage() {
                     <div className="space-y-6">
                       {items.map((item) => {
                         const itemImage = item.slug === 'thu-thach-30-ngay'
-                          ? (thirtyDayCheckoutImage && thirtyDayCheckoutImage !== '' ? thirtyDayCheckoutImage : '/images/programs/thu-thach-30-ngay-desktop.png')
-                          : (item.heroImage || '/images/programs/thu-thach-30-ngay-desktop.png');
+                          ? (thirtyDayCheckoutImage && thirtyDayCheckoutImage !== '' ? thirtyDayCheckoutImage : '/course/30days_desktop.svg')
+                          : (item.heroImage || '/course/30days_desktop.svg');
 
                         return (
-                          <div key={item.id} className="flex flex-col md:flex-row gap-4 pb-6 border-b last:border-b-0 border-gray-100">
-                            <img
-                              src={itemImage}
-                              alt={t(item.title)}
-                              className="w-full md:w-[150px] h-[100px] object-cover rounded-ios-lg shadow-sm"
-                              onError={e => { e.currentTarget.src = '/images/programs/thu-thach-30-ngay-desktop.png'; }}
-                            />
+                          <div key={item.id} className="pb-6 border-b last:border-b-0 border-gray-100">
+                            <div className="flex flex-col md:flex-row gap-4 relative z-10">
+                              <img
+                                src={itemImage}
+                                alt={t(item.title)}
+                                className="w-full md:w-[160px] aspect-video object-cover rounded-ios-lg shadow-sm shrink-0 relative z-10 bg-white"
+                                onError={e => { e.currentTarget.src = '/course/30days_desktop.svg'; }}
+                              />
 
-                            <div className="flex-1 flex flex-col justify-center">
-                              <div className="flex items-start justify-between gap-3 mb-1">
-                                <h3 className="text-lg font-bold text-text-primary">{t(item.title)}</h3>
-                                <button
-                                  type="button"
-                                  onClick={() => removeFromCart(item.id)}
-                                  className="h-8 w-8 rounded-full flex items-center justify-center text-red-500 hover:text-red-600 hover:bg-red-50 transition-colors shrink-0"
-                                  aria-label={`Xóa ${t(item.title)} khỏi giỏ hàng`}
-                                >
-                                  <Trash2 className="w-4 h-4" />
-                                </button>
-                              </div>
-                              <p className="text-text-secondary mb-2 text-sm">{item.category.map(c => t(c)).join(', ')}</p>
-                              <div className="flex items-center justify-between mt-auto">
-                                <div className="inline-flex items-center rounded-lg border border-gray-200 bg-white overflow-hidden h-9">
+                              <div className="flex-1 flex flex-col justify-center">
+                                <div className="flex items-start justify-between gap-3 mb-1">
+                                  <h3 className="text-lg font-bold text-text-primary">{t(item.title)}</h3>
                                   <button
                                     type="button"
-                                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                                    className="h-full w-9 flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-gray-50 transition-colors"
-                                    aria-label={`Giảm số lượng ${t(item.title)}`}
+                                    onClick={() => removeFromCart(item.id)}
+                                    className="h-8 w-8 rounded-full flex items-center justify-center text-red-500 hover:text-red-600 hover:bg-red-50 transition-colors shrink-0"
+                                    aria-label={`Xóa ${t(item.title)} khỏi giỏ hàng`}
                                   >
-                                    <Minus className="w-3.5 h-3.5" />
-                                  </button>
-                                  <span className="h-full min-w-[2.25rem] px-2 flex items-center justify-center text-sm font-semibold text-text-primary border-x border-gray-200">
-                                    {item.quantity}
-                                  </span>
-                                  <button
-                                    type="button"
-                                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                    className="h-full w-9 flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-gray-50 transition-colors"
-                                    aria-label={`Tăng số lượng ${t(item.title)}`}
-                                  >
-                                    <Plus className="w-3.5 h-3.5" />
+                                    <Trash2 className="w-4 h-4" />
                                   </button>
                                 </div>
-                                <div className="price text-lg font-bold text-primary">
-                                  {item.price.currency === 'VNĐ'
-                                    ? currencyFormatter.format(parseInt(item.price.amount.replace(/\./g, '')) * item.quantity)
-                                    : `${item.price.currency} ${item.price.amount}`
-                                  }
+                                <p className="text-text-secondary mb-2 text-sm">{item.category.map(c => t(c)).join(', ')}</p>
+                                <div className="flex items-center justify-between mt-auto">
+                                  <div className="inline-flex items-center rounded-lg border border-gray-200 bg-white overflow-hidden h-9">
+                                    <button
+                                      type="button"
+                                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                      className="h-full w-9 flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-gray-50 transition-colors"
+                                      aria-label={`Giảm số lượng ${t(item.title)}`}
+                                    >
+                                      <Minus className="w-3.5 h-3.5" />
+                                    </button>
+                                    <span className="h-full min-w-[2.25rem] px-2 flex items-center justify-center text-sm font-semibold text-text-primary border-x border-gray-200">
+                                      {item.quantity}
+                                    </span>
+                                    <button
+                                      type="button"
+                                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                      className="h-full w-9 flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-gray-50 transition-colors"
+                                      aria-label={`Tăng số lượng ${t(item.title)}`}
+                                    >
+                                      <Plus className="w-3.5 h-3.5" />
+                                    </button>
+                                  </div>
+                                  <div className="price text-lg font-bold text-primary">
+                                    {item.price.currency === 'VNĐ'
+                                      ? currencyFormatter.format(parseInt(item.price.amount.replace(/\./g, '')) * item.quantity)
+                                      : `${item.price.currency} ${item.price.amount}`
+                                    }
+                                  </div>
                                 </div>
                               </div>
                             </div>
+
+                            {/* Gift Item for 'la-chinh-minh' */}
+                            {item.slug === 'la-chinh-minh' && ENABLE_PROMO_THUONG_HIEU_CUA_BAN && promoCourse && (
+                              <div className="flex mt-4 relative md:ml-8">
+                                <div className="hidden md:block absolute -top-8 left-0 w-0.5 h-16 bg-gray-300 rounded-full"></div>
+                                <div className="flex flex-col md:flex-row gap-4 md:ml-6 flex-1 items-center">
+                                  <img
+                                    src={promoCourse.heroImage || '/images/programs/thuong-hieu-cua-ban.jpg'}
+                                    alt={t(promoCourse.title)}
+                                    className="w-full md:w-[128px] aspect-video object-cover rounded-md shadow-sm opacity-90 shrink-0"
+                                    onError={e => { e.currentTarget.src = '/images/programs/thuong-hieu-cua-ban.jpg'; }}
+                                  />
+                                  <div className="flex-1 flex flex-col justify-center w-full">
+                                    <div className="flex items-start justify-between gap-3 mb-1">
+                                      <h3 className="text-base font-bold text-text-primary">{t(promoCourse.title)}</h3>
+                                    </div>
+                                    <p className="text-text-secondary mb-2 text-sm">{promoCourse.category.map(c => t(c)).join(', ')}</p>
+                                    <div className="flex items-center justify-between mt-auto">
+                                      <div className="inline-flex items-center rounded-lg bg-gray-100 overflow-hidden h-7 px-3">
+                                        <span className="text-xs font-semibold text-gray-500">x{item.quantity}</span>
+                                      </div>
+                                      <div className="flex items-center gap-2">
+                                        <span className="text-gray-400 line-through text-sm font-medium">
+                                          {promoCourse.price.currency === 'VNĐ'
+                                            ? currencyFormatter.format(parseInt(promoCourse.price.amount.replace(/\./g, '')) * item.quantity)
+                                            : `${promoCourse.price.currency} ${promoCourse.price.amount}`
+                                          }
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
                           </div>
                         );
                       })}
@@ -719,6 +764,34 @@ export default function CheckoutPage() {
                             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none z-10 peer-focus:text-primary transition-colors">@</span>
                           </div>
                         </div>
+
+                        {items.some(item => item.slug === 'la-chinh-minh-review') && (
+                          <div className="sm:col-span-2">
+                            <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base ml-1">
+                              Bạn quay về từ khóa nào? (hãy chọn khoá học gần nhất bạn đã tham gia)<span className="text-red-500">*</span>
+                            </label>
+                            <div className="relative">
+                              <select
+                                required
+                                value={formData.previousCourse}
+                                onChange={(e) => handleInputChange('previousCourse', e.target.value)}
+                                className="w-full bg-gray-50 border border-gray-200 rounded-ios-md px-4 py-3 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm sm:text-base appearance-none ios-haptic-active"
+                              >
+                                <option value="">Chọn khóa học</option>
+                                <option value="Money & You">Money & You</option>
+                                <option value="Ignite 01">Ignite 01</option>
+                                <option value="Ignite 02">Ignite 02</option>
+                                <option value="Là Chính Mình 01">Là Chính Mình 01</option>
+                                <option value="Là Chính Mình 02">Là Chính Mình 02</option>
+                                <option value="Là Chính Mình 03">Là Chính Mình 03</option>
+                                <option value="Là Chính Mình 04">Là Chính Mình 04</option>
+                              </select>
+                              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-400">
+                                <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+                              </div>
+                            </div>
+                          </div>
+                        )}
 
                         <div>
                           <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base ml-1">
@@ -829,6 +902,26 @@ export default function CheckoutPage() {
                     <h2 className="text-lg sm:text-xl font-bold mb-6 text-text-primary border-b pb-4">
                       {t("cart.summary_title")}
                     </h2>
+
+                    {items.some(item => item.slug === 'la-chinh-minh') && (
+                      <div className="mb-6">
+                        <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base">
+                          Mã giới thiệu (Nếu có)
+                        </label>
+                        <div className="flex gap-2">
+                          <div className="flex-1 relative">
+                            <input
+                              type="text"
+                              value={referralCode}
+                              onChange={(e) => setReferralCode(e.target.value)}
+                              placeholder="Nhập mã giới thiệu"
+                              className="w-full bg-gray-50 border border-gray-200 rounded-ios-md px-4 py-2 h-[44px] focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-sm font-medium uppercase placeholder:normal-case ios-haptic-active"
+                            />
+                            <UserPlus className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                          </div>
+                        </div>
+                      </div>
+                    )}
 
                     <div className="mb-6">
                       <label className="block text-text-primary font-semibold mb-2 text-sm sm:text-base">

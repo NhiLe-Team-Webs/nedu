@@ -51,9 +51,9 @@ export default function SucManhVoHanPage() {
 
   const instructors = getInstructorsByIds(["nhi-le", "mel"]);
   return (
-    <div className="min-h-screen bg-[#F2F2F7] pb-20 override-header-spacing">
+    <div className="min-h-screen bg-white pb-20 override-header-spacing">
       <CourseHeader
-        bannerUrl="/images/programs/suc-manh-vo-han.jpg"
+        imageUrl="/images/programs/suc-manh-vo-han.jpg"
         altText={t("program_detail.courses.suc_manh_vo_han.title")}
         time={t("program_detail.common.offline_course")}
         tags={[t("categories.entrepreneur"), t("categories.business")]}
@@ -73,9 +73,11 @@ export default function SucManhVoHanPage() {
         />
 
         <Mission
-          title={t("mission.title")}
+          title=""
           subtitle={t("mission.subtitle")}
           description={t("program_detail.courses.suc_manh_vo_han.mission_desc")}
+          imgUrl="/images/programs/suc-manh-vo-han.jpg"
+          theme="light"
         />
 
         <Testimonials {...testimonials} />

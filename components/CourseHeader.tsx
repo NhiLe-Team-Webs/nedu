@@ -11,7 +11,7 @@ type CourseHeaderProps = {
   altText: string;
   time: string;
   tags: string[];
-  title: string;
+  title: React.ReactNode;
   cost: string;
   paymentLink: string;
   currency?: string;
@@ -19,6 +19,7 @@ type CourseHeaderProps = {
   dep_currency?: string;
   description?: string; // Added the missing description property
   courseSlug?: string; // Added courseSlug for cart functionality
+  secondaryAction?: React.ReactNode; // Optional secondary action (e.g. Referral Code)
 };
 
 const CourseHeader: React.FC<CourseHeaderProps> = ({
@@ -35,6 +36,7 @@ const CourseHeader: React.FC<CourseHeaderProps> = ({
   deposit,
   dep_currency = "VND",
   courseSlug,
+  secondaryAction,
 }) => {
   const { addToCart, items, setShowSuccessPopup } = useCart();
   const { t } = useLanguage();
@@ -82,7 +84,7 @@ const CourseHeader: React.FC<CourseHeaderProps> = ({
             </span>
           ))}
         </div>
-        <h1 className="text-2xl sm:text-3xl lg:text-5xl font-extrabold text-yellow-500 capitalize mb-4 sm:mb-6">
+        <h1 className="text-2xl sm:text-3xl lg:text-5xl font-extrabold text-yellow-500 mb-4 sm:mb-6">
           {title}
         </h1>
         <div className="flex justify-center items-center gap-1 sm:gap-2 mb-1 sm:mb-2">
@@ -97,26 +99,29 @@ const CourseHeader: React.FC<CourseHeaderProps> = ({
             <p className="text-sm sm:text-base lg:text-lg font-semibold">{dep_currency}</p>
           </div>
         )}
-        <button
-          onClick={handleAddToCart}
-          disabled={justAdded}
-          className={`inline-flex items-center justify-center px-6 py-3 rounded-ios-btn font-semibold text-sm sm:text-base lg:text-lg mt-4 sm:mt-[24px] min-h-[44px] transition-all duration-300 ease-out ${justAdded
-            ? 'bg-transparent border-2 border-green-500 text-green-500 cursor-default'
-            : 'bg-primary hover:bg-yellow-600 text-white shadow-ios-sm hover:shadow-ios-md ios-haptic-active'
-            }`}
-        >
-          {justAdded ? (
-            <>
-              <Icons.CheckCircle className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.5} />
-              <span className="ml-2">{t("cart_popup.added")}</span>
-            </>
-          ) : (
-            <>
-              {t("program_detail.common.add_to_cart")}
-              <Icons.ShoppingBagIcon className="ml-1 sm:ml-2 w-5 h-5" />
-            </>
-          )}
-        </button>
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-4 sm:mt-[24px]">
+          <button
+            onClick={handleAddToCart}
+            disabled={justAdded}
+            className={`inline-flex items-center justify-center px-6 py-3 rounded-ios-btn font-semibold text-sm sm:text-base lg:text-lg min-h-[44px] transition-all duration-300 ease-out ${justAdded
+              ? 'bg-transparent border-2 border-green-500 text-green-500 cursor-default'
+              : 'bg-primary hover:bg-yellow-600 text-white shadow-ios-sm hover:shadow-ios-md ios-haptic-active'
+              }`}
+          >
+            {justAdded ? (
+              <>
+                <Icons.CheckCircle className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.5} />
+                <span className="ml-2">{t("cart_popup.added")}</span>
+              </>
+            ) : (
+              <>
+                {t("program_detail.common.add_to_cart")}
+                <Icons.ShoppingBagIcon className="ml-1 sm:ml-2 w-5 h-5" />
+              </>
+            )}
+          </button>
+          {secondaryAction}
+        </div>
       </div>
       {imageUrl && (
         <div className="relative flex flex-col w-full max-w-[900px] bg-none mt-8 sm:mt-12 lg:mt-20 mx-auto">
