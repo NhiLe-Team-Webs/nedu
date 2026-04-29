@@ -115,6 +115,14 @@ export async function POST(request: NextRequest) {
             programIds: body.programIds,
             orderCode: orderCode,
           },
+          vatData: (body.companyName || body.taxCode || body.companyAddress || body.companyEmail)
+            ? {
+                companyName: body.companyName,
+                taxCode: body.taxCode,
+                companyAddress: body.companyAddress,
+                companyEmail: body.companyEmail,
+              }
+            : undefined,
         });
 
         dbOrderId = order.id;

@@ -4,8 +4,15 @@
  */
 
 import { supabaseAdmin, isSupabaseConfigured, withErrorHandling } from '../db';
-import { Order, OrderInsert, OrderUpdate, OrderStatus } from '../db-types';
+import { Json, Order, OrderInsert, OrderUpdate, OrderStatus } from '../db-types';
 import { generateOrderCode } from '../sepay-utils';
+
+export interface VatData {
+    companyName?: string;
+    taxCode?: string;
+    companyAddress?: string;
+    companyEmail?: string;
+}
 
 export interface CreateOrderData {
     fullName: string;
@@ -24,6 +31,7 @@ export interface CreateOrderData {
     couponCode?: string;
     referralCode?: string;
     orderCode?: string;
+    vatData?: VatData;
 }
 
 export interface OrderWithTransaction extends Order {
@@ -61,7 +69,11 @@ export const OrderRepository = {
             program: data.program,
             program_id: data.programId,
             price: data.price,
-            program_data: { ...data.programData, orderCode }, // Store orderCode here
+            program_data: {
+                ...data.programData,
+                orderCode,
+                ...(data.vatData ? { vat: data.vatData } : {}),
+            } as unknown as Json,
             status: OrderStatus.PENDING,
             course_name: data.courseName,
             coupon_code: data.couponCode,
