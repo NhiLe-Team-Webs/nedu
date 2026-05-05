@@ -717,22 +717,22 @@ export const vi = {
         timeline: {
             heading: "SAU 30 NGÀY BẠN ĐƯỢC...?",
             block_1: {
-                title: "Hiểu khách hàng muốn gì",
-                quote: "“Bán hàng đơn giản là tìm đúng người gặp khó khăn và giúp họ giải quyết nó.”",
-                collapsed: "HIỂU KHÁCH HÀNG\\nMUỐN GÌ",
-                content: "Thay vì cố gắng 'ép' khách mua, bạn học cách lắng nghe để biết họ thực sự cần gì. Khi bạn nói đúng điều họ muốn nghe, việc bán hàng tự nhiên như một cuộc trò chuyện giữa những người bạn."
+                title: "Làm chủ công nghệ dễ dàng",
+                quote: "“AI không thay thế con người, nhưng người biết dùng AI sẽ thay thế những người còn lại.”",
+                collapsed: "LÀM CHỦ CÔNG NGHỆ\\nDỄ DÀNG",
+                content: "Thay vì sợ hãi những thuật toán phức tạp, bạn học cách điều khiển AI như một trợ lý đắc lực. Khi bạn biết cách 'giao việc' đúng, những tác vụ tốn hàng giờ đồng hồ sẽ được xử lý xong chỉ trong vài phút."
             },
             block_2: {
-                title: "Hết sợ bị từ chối",
-                quote: "“Lời từ chối không phải là dấu chấm hết, đó chỉ là bắt đầu của một sự quan tâm.”",
-                collapsed: "HẾT SỢ\\nBỊ TỪ CHỐI",
-                content: "Bạn không còn thấy ngại hay 'đứng hình' khi khách lắc đầu. Chương trình giúp bạn có tâm lý vững vàng hơn, tự tin mở lời và luôn giữ được năng lượng vui vẻ trong mọi cuộc trò chuyện, dù kết quả có ra sao."
+                title: "Tối ưu hóa hiệu suất làm việc",
+                quote: "“Làm việc thông minh hơn thay vì chỉ chăm chỉ đơn thuần.”",
+                collapsed: "TỐI ƯU HIỆU SUẤT\\nLÀM VIỆC",
+                content: "Bạn không còn loay hoay với những đầu việc thủ công lặp đi lặp lại. AI giúp bạn tự động hóa quy trình, sáng tạo nội dung,... giúp bạn rảnh tay để tập trung vào những chiến lược quan trọng hơn"
             },
             block_3: {
-                title: "Bán hàng bằng sự tử tế",
-                quote: "“Bạn không cần phải nịnh nọt để bán được hàng, bạn chỉ cần mang lại giá trị thật.”",
-                collapsed: "BÁN HÀNG\\nBẰNG SỰ\\nTỬ TẾ",
-                content: "Đừng lo phải đi 'năn nỉ' hay làm hài lòng khách quá mức. Bạn biết cách giữ vị thế riêng, đưa ra lời khuyên chân thành và có giới hạn rõ ràng. Khi bạn tin vào giá trị của mình, khách hàng tự tìm đến và tôn trọng quyết định của bạn."
+                title: "Sáng tạo không giới hạn",
+                quote: "“Công nghệ là đòn bẩy để những ý tưởng điên rồ nhất trở thành hiện thực.”",
+                collapsed: "SÁNG TẠO KHÔNG\\nGIỚI HẠN",
+                content: "AI không giới hạn khả năng của bạn, nó mở rộng nó ra. Bạn sẽ học cách 'hỏi đúng', điều khiển công cụ, biến ý tưởng mơ hồ thành kết quả cụ thể một cách nhanh chóng."
             },
             time_label: "THỜI GIAN DIỄN RA",
             students_label: "30 VIDEO BÀI TẬP",
