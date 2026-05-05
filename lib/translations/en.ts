@@ -717,26 +717,26 @@ export const en = {
         timeline: {
             heading: "AFTER 30 DAYS, WHAT DO YOU GET...?",
             block_1: {
-                title: "Know your income and expenses each month",
-                quote: "“Money isn't hard to manage, the hard part is not seeing it clearly.”",
-                collapsed: "KNOW YOUR\\nINCOME & EXPENSES",
-                content: "After 30 days, you'll know exactly where your money goes each month and your balance. No more 'why did my money run out so fast', no more vague feelings – you'll have a real picture of your personal finances."
+                title: "Master technology easily",
+                quote: "“AI will not replace humans, but humans who use AI will replace those who don't.”",
+                collapsed: "MASTER TECHNOLOGY\\nEASILY",
+                content: "Instead of fearing complex algorithms, you learn to control AI as a powerful assistant. When you know how to properly 'delegate', tasks that took hours will be completed in just a few minutes."
             },
             block_2: {
-                title: "Controlled spending",
-                quote: "“Spending isn't wrong, spending without knowing why is exhausting.”",
-                collapsed: "CONTROLLED\\nSPENDING",
-                content: "You'll start thinking before spending. Not over-controlling, but you've shifted from unconscious spending to purposeful spending, clear about every dollar in and out."
+                title: "Optimize work performance",
+                quote: "“Work smarter, not just harder.”",
+                collapsed: "OPTIMIZE WORK\\nPERFORMANCE",
+                content: "You no longer struggle with repetitive manual tasks. AI helps you automate processes, create content,... freeing you to focus on more important strategies."
             },
             block_3: {
-                title: "Build healthy spending habits",
-                quote: "“It's not money that tires you out, it's how you spend it.”",
-                collapsed: "BUILD\\nHEALTHY\\nSPENDING\\nHABITS",
-                content: "After 30 days, you'll form clear and practical money management habits that are sustainable long-term. Money becomes more organized, financial pressure decreases, and you're more proactive in daily spending decisions."
+                title: "Limitless creativity",
+                quote: "“Technology is the lever to turn the craziest ideas into reality.”",
+                collapsed: "LIMITLESS\\nCREATIVITY",
+                content: "AI does not limit your capabilities, it expands them. You will learn how to 'ask right', control tools, and turn vague ideas into concrete results quickly."
             },
             time_label: "DURATION",
-            students_label: "NUMBER OF STUDENTS",
-            students_count: "99 people",
+            students_label: "30 EXERCISE VIDEOS",
+            students_count: "Practice 1 exercise every day",
             location_label: "LOCATION",
             location_value: "Online via Zoom"
         },
