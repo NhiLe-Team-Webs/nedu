@@ -12,6 +12,7 @@ import { SePayPaymentResponse } from '@/types/sepay';
 import { useLanguage } from '@/lib/LanguageContext';
 import { validateCartAccountConsistency } from '@/lib/sepay-config';
 import { getCourseDetailBySlug } from '@/lib/services/courseService';
+import { processFreeCheckout } from './mockPaymentAction';
 
 export default function CheckoutPage() {
   const { t } = useLanguage();
@@ -110,6 +111,14 @@ export default function CheckoutPage() {
   const handleApplyDiscount = () => {
     const code = discountCode.trim().toUpperCase();
 
+    // TEMPORARY PROMO LOGIC
+    const hasReviewCourse = items.some(item => item.slug === 'la-chinh-minh-review');
+    if (code === 'LCMREVIEWFREE' && hasReviewCourse) {
+      setDiscount(100);
+      setDiscountType('percentage');
+      return;
+    }
+
     // Check if cart contains "Là Chính Mình 04" course
     const hasLaChinhMinh4 = items.some(item =>
       item.id === 2
@@ -171,6 +180,51 @@ export default function CheckoutPage() {
       }, 100);
       return;
     }
+
+    // --- TEMPORARY PROMO LOGIC ---
+    const code = discountCode.trim().toUpperCase();
+    const hasReviewCoursePromo = items.some(item => item.slug === 'la-chinh-minh-review');
+    
+    if (code === 'LCMREVIEWFREE' && hasReviewCoursePromo) {
+      setIsLoading(true);
+      try {
+        let courseName = items.map(item => t(item.title)).join(', ');
+        
+        const result = await processFreeCheckout({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          telegram: telegram,
+          dob: formData.birthdate,
+          gender: formData.gender,
+          address: formData.address,
+          note: formData.note,
+          previousCourse: formData.previousCourse,
+          courseName: courseName
+        });
+
+        if (result.success) {
+           clearCart();
+           const params = new URLSearchParams({
+             status: 'success',
+             paymentMethod: 'sepay',
+             orderCode: result.orderCode || '',
+             amount: '0',
+           });
+           router.push(`/payment-success?${params.toString()}`);
+           return;
+        } else {
+           setErrors([result.message || 'Lỗi không xác định']);
+           setIsLoading(false);
+           return;
+        }
+      } catch (error: any) {
+        setErrors([`Lỗi khi áp dụng mã: ${error.message}`]);
+        setIsLoading(false);
+        return;
+      }
+    }
+    // --- END TEMPORARY PROMO LOGIC ---
 
     // Move to payment step
     setCheckoutStep('payment');
