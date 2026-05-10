@@ -76,7 +76,7 @@ const ThirtyDayPage = () => {
   const dbMentor = courseData?.mentors?.[0];
 
   // Logic mapping fields FROM YOUR DATABASE LOG
-  const displaySchedule = courseData?.program?.total_sessions || t("28/04/2026 - 28/05/2026");
+  const displaySchedule = courseData?.program?.total_sessions || t("28/05/2026 - 28/06/2026");
 
   const displayStudentCount = t("thirty_day_challenge.timeline.students_count");
 
