@@ -9,7 +9,7 @@ const GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n')
 const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID || '1Ovc2sNrlw42s85ZHK4M8a6-lGTma3MpgqojR0uSzR-Q';
 const TARGET_SHEET_TITLE = 'GIO_HANG';
 
-export async function processFreeCheckout(data: any) {
+export async function processFreeCheckout(data: any, couponCode: string = 'LCMREVIEWFREE', maxUses: number = 3) {
   try {
     if (!GOOGLE_SERVICE_ACCOUNT_EMAIL || !GOOGLE_PRIVATE_KEY) {
       throw new Error('Thiếu cấu hình Google Sheets');
@@ -29,10 +29,10 @@ export async function processFreeCheckout(data: any) {
     const rows = await sheet.getRows();
     
     // Count how many times the coupon code has been used
-    const usageCount = rows.filter(r => r.get('Coupon Code') === 'LCMREVIEWFREE').length;
+    const usageCount = rows.filter(r => r.get('Coupon Code') === couponCode).length;
     
-    if (usageCount >= 3) {
-      return { success: false, message: 'Mã khuyến mãi này đã hết lượt sử dụng (Tối đa 3 lần).' };
+    if (usageCount >= maxUses) {
+      return { success: false, message: `Mã khuyến mãi này đã hết lượt sử dụng (Tối đa ${maxUses} lần).` };
     }
     
     // Generate a random order code
@@ -42,7 +42,7 @@ export async function processFreeCheckout(data: any) {
       ...data,
       orderCode,
       status: 'đã thanh toán',
-      couponCode: 'LCMREVIEWFREE',
+      couponCode: couponCode,
       amount: 0,
     });
     
