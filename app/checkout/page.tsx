@@ -119,6 +119,13 @@ export default function CheckoutPage() {
       return;
     }
 
+    const hasThirtyDayCoursePromoApply = items.some(item => item.slug === 'thu-thach-30-ngay');
+    if (code === 'NEDU30DAYFREE_SECRET2026' && hasThirtyDayCoursePromoApply) {
+      setDiscount(100);
+      setDiscountType('percentage');
+      return;
+    }
+
     // Check if cart contains "Là Chính Mình 04" course
     const hasLaChinhMinh4 = items.some(item =>
       item.id === 2
@@ -184,11 +191,13 @@ export default function CheckoutPage() {
     // --- TEMPORARY PROMO LOGIC ---
     const code = discountCode.trim().toUpperCase();
     const hasReviewCoursePromo = items.some(item => item.slug === 'la-chinh-minh-review');
+    const hasThirtyDayCoursePromo = items.some(item => item.slug === 'thu-thach-30-ngay');
     
-    if (code === 'LCMREVIEWFREE' && hasReviewCoursePromo) {
+    if ((code === 'LCMREVIEWFREE' && hasReviewCoursePromo) || (code === 'NEDU30DAYFREE_SECRET2026' && hasThirtyDayCoursePromo)) {
       setIsLoading(true);
       try {
         let courseName = items.map(item => t(item.title)).join(', ');
+        const maxUses = code === 'LCMREVIEWFREE' ? 3 : 9999;
         
         const result = await processFreeCheckout({
           name: formData.name,
@@ -201,7 +210,7 @@ export default function CheckoutPage() {
           note: formData.note,
           previousCourse: formData.previousCourse,
           courseName: courseName
-        });
+        }, code, maxUses);
 
         if (result.success) {
            clearCart();
