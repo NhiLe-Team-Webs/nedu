@@ -5,7 +5,7 @@ import { Order } from '@/lib/order-store';
 // Initialize the sheet - ensure these env vars are set
 const GOOGLE_SERVICE_ACCOUNT_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
 const GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'); // Handle newline characters
-const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID || '1Ovc2sNrlw42s85ZHK4M8a6-lGTma3MpgqojR0uSzR-Q'; // Default from user sheet link if not set
+const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID || '1Q73IPYL9Qqp7pAJggBiIl32uPkjNU-9fESIPBRWZNaU'; // Default from user sheet link if not set
 const TARGET_SHEET_TITLE = 'GIO_HANG';
 
 const getTargetSheet = (doc: any) =>
