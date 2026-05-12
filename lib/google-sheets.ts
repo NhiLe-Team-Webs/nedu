@@ -65,7 +65,6 @@ const getVietnamDateTimeSerialNow = (): number => {
 };
 
 const ensureHeaders = async (sheet: any) => {
-    await sheet.loadHeaderRow();
     const requiredHeaders = [
         'Timestamp',
         'Name',
@@ -110,9 +109,17 @@ const ensureHeaders = async (sheet: any) => {
         'Payment Time'
     ];
 
-    const currentHeaderSignature = sheet.headerValues.join('|');
-    const requiredHeaderSignature = requiredHeaders.join('|');
     const oldHeaderSignature = oldHeaderOrder.join('|');
+
+    try {
+        await sheet.loadHeaderRow();
+    } catch (e) {
+        console.log('[Sheet] No headers found, setting required headers...');
+        await sheet.setHeaderRow(requiredHeaders);
+        return;
+    }
+
+    const currentHeaderSignature = sheet.headerValues.join('|');
 
     if (currentHeaderSignature === oldHeaderSignature) {
         // Preserve existing values while swapping header positions so Payment Time moves to column O.
@@ -137,6 +144,7 @@ const ensureHeaders = async (sheet: any) => {
     }
 
     const headersMissing = requiredHeaders.some((h) => !sheet.headerValues.includes(h));
+    const requiredHeaderSignature = requiredHeaders.join('|');
     const headerOrderMismatch = currentHeaderSignature !== requiredHeaderSignature;
 
     if (headersMissing || headerOrderMismatch || sheet.headerValues.length < requiredHeaders.length) {
@@ -189,16 +197,6 @@ export const appendToSheet = async (data: {
         await doc.loadInfo(); // loads document properties and worksheets
 
         const sheet = getTargetSheet(doc);
-
-        // Check if header row exists, if not set it
-        await sheet.loadHeaderRow();
-
-        // If headers don't match or are empty, we might want to set them (careful not to overwrite if not intended)
-        // For now, we assume the user might have some headers or we append. 
-        // If sheet is empty (like in screenshot), we should set headers first.
-        if (sheet.rowCount === 0 || sheet.headerValues.length === 0) {
-            await ensureHeaders(sheet);
-        }
 
         await ensureHeaders(sheet);
 

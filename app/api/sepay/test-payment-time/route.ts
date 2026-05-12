@@ -109,7 +109,12 @@ const parsePaymentTimeToSerial = (value?: string): number | null => {
 };
 
 const ensurePaymentTimeInColumnO = async (sheet: any) => {
-  await sheet.loadHeaderRow();
+  try {
+    await sheet.loadHeaderRow();
+  } catch (e) {
+    await sheet.setHeaderRow(REQUIRED_HEADERS);
+    return;
+  }
 
   const currentHeaderSignature = sheet.headerValues.join('|');
   const requiredHeaderSignature = REQUIRED_HEADERS.join('|');

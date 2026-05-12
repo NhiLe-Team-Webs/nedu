@@ -38,12 +38,13 @@ export async function appendContactToSheet({
     const sheet = doc.sheetsByTitle[TARGET_SHEET_TITLE];
     if (!sheet) throw new Error(`Sheet ${TARGET_SHEET_TITLE} not found`);
 
-    // Chỉ load header, không set header nữa
-    await sheet.loadHeaderRow();
-    console.log('[ContactSheet] Header values:', sheet.headerValues);
-    if (sheet.headerValues.length === 0) {
-      throw new Error('Header values are not loaded!');
+    try {
+      await sheet.loadHeaderRow();
+    } catch (e) {
+      console.log('[ContactSheet] No header row found, setting it now...');
+      await sheet.setHeaderRow(['Thời gian gửi form', 'Họ và tên', 'Số điện thoại', 'Email', 'Nội dung']);
     }
+    console.log('[ContactSheet] Header values:', sheet.headerValues);
 
     await sheet.addRow({
       'Thời gian gửi form': thoiGianGuiForm,

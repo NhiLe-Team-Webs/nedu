@@ -46,7 +46,25 @@ export async function appendReferralToSheet(data: {
             throw new Error(`Sheet "${TARGET_SHEET_TITLE}" not found. Available: ${Object.keys(doc.sheetsByTitle).join(', ')}`);
         }
 
-        await sheet.loadHeaderRow();
+        try {
+            await sheet.loadHeaderRow();
+        } catch (e) {
+            console.log('[ReferralSheet] No header row found, setting it now...');
+            await sheet.setHeaderRow([
+                'Timestamp',
+                'Name',
+                'Email',
+                'Phone',
+                'Telegram',
+                'Birthday',
+                'Gender',
+                'Previous Course',
+                'Referral Code',
+                'Status',
+                'New Student Order ID',
+                'New Student Name'
+            ]);
+        }
         console.log('[ReferralSheet] Headers:', sheet.headerValues);
 
         await sheet.addRow({
@@ -103,7 +121,25 @@ export async function updateReferralInSheet(
             return false;
         }
 
-        await sheet.loadHeaderRow();
+        try {
+            await sheet.loadHeaderRow();
+        } catch (e) {
+            console.log('[ReferralSheet] No header row found, setting it now...');
+            await sheet.setHeaderRow([
+                'Timestamp',
+                'Name',
+                'Email',
+                'Phone',
+                'Telegram',
+                'Birthday',
+                'Gender',
+                'Previous Course',
+                'Referral Code',
+                'Status',
+                'New Student Order ID',
+                'New Student Name'
+            ]);
+        }
         const rows = await sheet.getRows();
 
         const row = rows.find((r: any) => {
