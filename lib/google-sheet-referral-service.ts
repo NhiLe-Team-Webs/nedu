@@ -3,7 +3,7 @@ import { JWT } from 'google-auth-library';
 
 const GOOGLE_SERVICE_ACCOUNT_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
 const GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n');
-const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID || '1Ovc2sNrlw42s85ZHK4M8a6-lGTma3MpgqojR0uSzR-Q';
+const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID || '1Q73IPYL9Qqp7pAJggBiIl32uPkjNU-9fESIPBRWZNaU';
 const TARGET_SHEET_TITLE = 'MA_GIOI_THIEU';
 
 const getVietnamDateTimeString = (): string => {
@@ -46,7 +46,25 @@ export async function appendReferralToSheet(data: {
             throw new Error(`Sheet "${TARGET_SHEET_TITLE}" not found. Available: ${Object.keys(doc.sheetsByTitle).join(', ')}`);
         }
 
-        await sheet.loadHeaderRow();
+        try {
+            await sheet.loadHeaderRow();
+        } catch (e) {
+            console.log('[ReferralSheet] No header row found, setting it now...');
+            await sheet.setHeaderRow([
+                'Timestamp',
+                'Name',
+                'Email',
+                'Phone',
+                'Telegram',
+                'Birthday',
+                'Gender',
+                'Previous Course',
+                'Referral Code',
+                'Status',
+                'New Student Order ID',
+                'New Student Name'
+            ]);
+        }
         console.log('[ReferralSheet] Headers:', sheet.headerValues);
 
         await sheet.addRow({
@@ -103,7 +121,25 @@ export async function updateReferralInSheet(
             return false;
         }
 
-        await sheet.loadHeaderRow();
+        try {
+            await sheet.loadHeaderRow();
+        } catch (e) {
+            console.log('[ReferralSheet] No header row found, setting it now...');
+            await sheet.setHeaderRow([
+                'Timestamp',
+                'Name',
+                'Email',
+                'Phone',
+                'Telegram',
+                'Birthday',
+                'Gender',
+                'Previous Course',
+                'Referral Code',
+                'Status',
+                'New Student Order ID',
+                'New Student Name'
+            ]);
+        }
         const rows = await sheet.getRows();
 
         const row = rows.find((r: any) => {

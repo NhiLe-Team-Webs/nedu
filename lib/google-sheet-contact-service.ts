@@ -4,7 +4,7 @@ import { JWT } from 'google-auth-library';
 
 const GOOGLE_SERVICE_ACCOUNT_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
 const GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n');
-const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID || '1Ovc2sNrlw42s85ZHK4M8a6-lGTma3MpgqojR0uSzR-Q';
+const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID || '1Q73IPYL9Qqp7pAJggBiIl32uPkjNU-9fESIPBRWZNaU';
 const TARGET_SHEET_TITLE = 'LIEN_HE';
 
 export async function appendContactToSheet({
@@ -38,12 +38,13 @@ export async function appendContactToSheet({
     const sheet = doc.sheetsByTitle[TARGET_SHEET_TITLE];
     if (!sheet) throw new Error(`Sheet ${TARGET_SHEET_TITLE} not found`);
 
-    // Chỉ load header, không set header nữa
-    await sheet.loadHeaderRow();
-    console.log('[ContactSheet] Header values:', sheet.headerValues);
-    if (sheet.headerValues.length === 0) {
-      throw new Error('Header values are not loaded!');
+    try {
+      await sheet.loadHeaderRow();
+    } catch (e) {
+      console.log('[ContactSheet] No header row found, setting it now...');
+      await sheet.setHeaderRow(['Thời gian gửi form', 'Họ và tên', 'Số điện thoại', 'Email', 'Nội dung']);
     }
+    console.log('[ContactSheet] Header values:', sheet.headerValues);
 
     await sheet.addRow({
       'Thời gian gửi form': thoiGianGuiForm,

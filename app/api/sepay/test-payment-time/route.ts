@@ -4,7 +4,7 @@ import { JWT } from 'google-auth-library';
 
 const GOOGLE_SERVICE_ACCOUNT_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
 const GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n');
-const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID || '1Ovc2sNrlw42s85ZHK4M8a6-lGTma3MpgqojR0uSzR-Q';
+const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID || '1Q73IPYL9Qqp7pAJggBiIl32uPkjNU-9fESIPBRWZNaU';
 const TARGET_SHEET_TITLE = 'GIO_HANG';
 const REQUIRED_HEADERS = [
   'Timestamp',
@@ -109,7 +109,12 @@ const parsePaymentTimeToSerial = (value?: string): number | null => {
 };
 
 const ensurePaymentTimeInColumnO = async (sheet: any) => {
-  await sheet.loadHeaderRow();
+  try {
+    await sheet.loadHeaderRow();
+  } catch (e) {
+    await sheet.setHeaderRow(REQUIRED_HEADERS);
+    return;
+  }
 
   const currentHeaderSignature = sheet.headerValues.join('|');
   const requiredHeaderSignature = REQUIRED_HEADERS.join('|');
