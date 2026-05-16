@@ -105,7 +105,7 @@ export default function CheckoutPage() {
     ? subtotal * (discount / 100)
     : discount;
   const afterDiscount = subtotal - discountAmount;
-  const vatAmount = Math.round(afterDiscount * 0.08);
+  const vatAmount = Math.round(afterDiscount * 0.1);
   const total = afterDiscount + vatAmount;
 
   const handleApplyDiscount = () => {
@@ -1029,7 +1029,7 @@ export default function CheckoutPage() {
                         </div>
                       )}
                       <div className="flex justify-between text-sm sm:text-base">
-                        <span className="text-text-secondary">Thuế GTGT (8%)</span>
+                        <span className="text-text-secondary">Thuế GTGT (10%)</span>
                         <span className="font-semibold">{currencyFormatter.format(vatAmount)}</span>
                       </div>
                       <div className="border-t border-gray-200 pt-3 flex justify-between text-base sm:text-lg font-bold items-center">
