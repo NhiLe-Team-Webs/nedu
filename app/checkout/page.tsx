@@ -59,6 +59,16 @@ export default function CheckoutPage() {
   const [showVatTerms, setShowVatTerms] = useState(false);
   const [thirtyDayCheckoutImage, setThirtyDayCheckoutImage] = useState<string | null>(null);
 
+  const [vatRate, setVatRate] = useState(0.08);
+  const [isVat10Percent, setIsVat10Percent] = useState(false);
+
+  useEffect(() => {
+    // Tự động tính VAT 10% từ ngày 18/05/2026
+    const _isVat10Percent = new Date() >= new Date('2026-05-18T00:00:00+07:00');
+    setIsVat10Percent(_isVat10Percent);
+    setVatRate(_isVat10Percent ? 0.1 : 0.08);
+  }, []);
+
   useEffect(() => {
     const hasThirtyDayCourse = items.some((item) => item.slug === 'thu-thach-30-ngay');
     if (!hasThirtyDayCourse) return;
@@ -105,7 +115,7 @@ export default function CheckoutPage() {
     ? subtotal * (discount / 100)
     : discount;
   const afterDiscount = subtotal - discountAmount;
-  const vatAmount = Math.round(afterDiscount * 0.08);
+  const vatAmount = Math.round(afterDiscount * vatRate);
   const total = afterDiscount + vatAmount;
 
   const handleApplyDiscount = () => {
@@ -1029,7 +1039,7 @@ export default function CheckoutPage() {
                         </div>
                       )}
                       <div className="flex justify-between text-sm sm:text-base">
-                        <span className="text-text-secondary">Thuế GTGT (8%)</span>
+                        <span className="text-text-secondary">Thuế GTGT ({isVat10Percent ? '10' : '8'}%)</span>
                         <span className="font-semibold">{currencyFormatter.format(vatAmount)}</span>
                       </div>
                       <div className="border-t border-gray-200 pt-3 flex justify-between text-base sm:text-lg font-bold items-center">
